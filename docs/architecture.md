@@ -19,7 +19,9 @@ Flutter + Dart, Drift (SQLite), Riverpod 3, go_router, freezed (encje domeny), `
 - Zależności między funkcjami (pilnuje ich `test/architecture/feature_boundaries_test.dart`):
   - wolno importować cudze `domain/` i publiczne providery (`data/*_providers.dart`), np. katalog ćwiczeń w edytorze szablonów;
   - nie wolno importować implementacji repozytoriów ani `presentation/` innej funkcji;
-  - ekrany innych funkcji (np. wybór ćwiczeń) otwiera się przez trasy routera w `lib/app/`, który jako jedyny łączy wszystkie funkcje.
+  - ekrany innych funkcji (np. wybór ćwiczeń) otwiera się przez trasy routera w `lib/app/`, który jako jedyny łączy wszystkie funkcje;
+  - gdy ekran jednej funkcji ma pokazać część innej (np. zakładki historii i wykresów na ekranie ćwiczenia), ekran przyjmuje zakładki jako parametr, a router je przekazuje;
+  - wspólne, niezależne od funkcji widżety (wykresy, okno „trwa inny trening”, tykający zegar) są w `lib/core/widgets/`.
 - `history` i `progress` korzystają z `workout/domain`.
 
 ## Wstrzykiwanie zależności

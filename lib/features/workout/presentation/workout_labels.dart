@@ -79,18 +79,15 @@ extension WorkoutLabels on AppLocalizations {
     Measurement m,
     WeightUnit unit,
     String locale,
-  ) {
-    final fields = [
-      for (final f in measuredFields(m))
-        if (setValue(set, f) != null) f,
-    ];
-    if (fields.isEmpty) return null;
-    return _joinFields(
-      fields,
-      (f) => fieldValue(f, setValue(set, f)!, unit, locale),
-      times: '×',
-    );
-  }
+  ) => formatSetValues(
+    unit: unit,
+    locale: locale,
+    weightG: m.weight ? set.weightG : null,
+    reps: m.reps ? set.reps : null,
+    durationS: m.duration ? set.durationS : null,
+    distanceM: m.distance ? set.distanceM : null,
+    metersUnit: workoutUnitMeters,
+  );
 
   /// Plan ćwiczenia, np. „3 × 8–12 · przerwa 2:00”.
   String sessionExercisePlan(SessionExercise exercise) {

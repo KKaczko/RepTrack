@@ -25,6 +25,14 @@ abstract interface class WorkoutRepository {
   /// Porzuca sesję: status `discarded` i miękkie usunięcie.
   Future<void> discard(String sessionId);
 
+  /// Zakończone sesje z ćwiczeniami i seriami, od najnowszej. Strumień
+  /// emituje tylko po zmianie zakończonych sesji (nie przy każdym zapisie
+  /// aktywnego treningu).
+  Stream<List<WorkoutSession>> watchCompleted();
+
+  /// Miękko usuwa zakończoną sesję z historii.
+  Future<void> delete(String sessionId);
+
   /// Zatwierdzone serie ćwiczenia z ostatniej zakończonej sesji, w której
   /// występuje (niezależnie od szablonu, ADR 0006). Pusta lista, gdy brak.
   Future<List<SessionSet>> lastCompletedSets(

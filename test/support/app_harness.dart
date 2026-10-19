@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:reptrack/app/app.dart';
 import 'package:reptrack/core/database/app_database.dart';
@@ -26,6 +27,7 @@ Future<AppDatabase> pumpRepTrack(
   Clock? clock,
   FakeRestNotifications? notifications,
   FakeScreenAwake? awake,
+  List<Override> overrides = const [],
 }) async {
   tester.platformDispatcher.localeTestValue = const Locale('pl', 'PL');
   tester.platformDispatcher.localesTestValue = const [Locale('pl', 'PL')];
@@ -51,6 +53,7 @@ Future<AppDatabase> pumpRepTrack(
         restNotificationsProvider.overrideWithValue(
           notifications ?? FakeRestNotifications(),
         ),
+        ...overrides,
       ],
       child: const RepTrackApp(),
     ),

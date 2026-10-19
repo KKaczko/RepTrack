@@ -21,12 +21,30 @@ String weightUnitLabel(WeightUnit unit) => switch (unit) {
 };
 
 /// Ciężar z jednostką, np. „82,5 kg”.
-String formatWeight(int grams, WeightUnit unit, String locale) =>
-    '${formatWeightValue(grams, unit, locale)} ${weightUnitLabel(unit)}';
+String formatWeight(
+  int grams,
+  WeightUnit unit,
+  String locale, {
+  int maxDecimals = 2,
+}) =>
+    '${formatWeightValue(grams, unit, locale, maxDecimals: maxDecimals)} '
+    '${weightUnitLabel(unit)}';
 
 /// Sama wartość ciężaru w jednostce wyświetlania, np. „82,5”.
-String formatWeightValue(int grams, WeightUnit unit, String locale) =>
-    formatDecimal(gramsToDisplay(grams, unit), locale);
+String formatWeightValue(
+  int grams,
+  WeightUnit unit,
+  String locale, {
+  int maxDecimals = 2,
+}) => formatDecimal(
+  gramsToDisplay(grams, unit),
+  locale,
+  maxDecimals: maxDecimals,
+);
+
+/// Szacowany 1RM z jednym miejscem po przecinku, np. „106,7 kg”.
+String formatEstimate(double grams, WeightUnit unit, String locale) =>
+    formatWeight(grams.round(), unit, locale, maxDecimals: 1);
 
 /// Parsuje ciężar wpisany w jednostce wyświetlania. Akceptuje przecinek
 /// i kropkę dziesiętną. Zwraca null dla pustego, niepoprawnego albo
@@ -72,3 +90,32 @@ String formatTarget(TargetKind kind, int? min, int? max) {
   }
   return kind == TargetKind.duration ? '$range s' : range;
 }
+
+/// Wartości serii, np. „80×10”, „10”, „1:30”, „30:00 · 5000 m”. Ciężar
+/// bez jednostki (jest w nagłówku), puste pola są pomijane. Null, gdy seria
+/// nie ma żadnej wartości.
+String? formatSetValues({
+  required WeightUnit unit,
+  required String locale,
+  int? weightG,
+  int? reps,
+  int? durationS,
+  int? distanceM,
+  String metersUnit = 'm',
+}) {
+  final load = [
+    if (weightG != null) formatWeightValue(weightG, unit, locale),
+    if (reps != null) '$reps',
+  ].join('×');
+  final parts = [
+    if (load.isNotEmpty) load,
+    if (durationS != null) formatClock(durationS),
+    if (distanceM != null) '$distanceM $metersUnit',
+  ];
+  return parts.isEmpty ? null : parts.join(' · ');
+}
+
+/// Objętość, np. „4520 kg” (bez miejsc po przecinku).
+String formatVolume(int grams, WeightUnit unit, String locale) =>
+    '${formatDecimal(gramsToDisplay(grams, unit), locale, maxDecimals: 0)} '
+    '${weightUnitLabel(unit)}';

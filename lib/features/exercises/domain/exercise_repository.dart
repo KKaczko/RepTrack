@@ -15,6 +15,9 @@ abstract interface class ExerciseRepository {
   /// Katalog ćwiczeń posortowany po nazwie, bez usuniętych.
   Stream<List<Exercise>> watchAll({bool includeArchived = false});
 
+  /// Katalog posortowany po nazwie, jednorazowo (bez obserwacji).
+  Future<List<Exercise>> findAll({bool includeArchived = false});
+
   Future<Exercise?> findById(String id);
 
   /// Dodaje albo aktualizuje ćwiczenie.

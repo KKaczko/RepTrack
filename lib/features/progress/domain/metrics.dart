@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 
+import '../../../core/domain/local_date.dart';
 import '../../../core/domain/training.dart';
 import '../../exercises/domain/exercise.dart';
 import '../../workout/domain/workout_session.dart';
@@ -153,4 +154,117 @@ List<RecordEvent> newRecords({
     events.add(MaxRepsRecord(reps));
   }
   return events;
+}
+
+/// Najlepszy szacowany 1RM w ćwiczeniu sesji (serie robocze, ADR 0007).
+double? bestEstimatedOneRepMax(SessionExercise exercise) => computeRecords([
+  for (final set in exercise.sets)
+    (set: set, loadMode: exercise.loadModeSnapshot),
+]).bestE1rmG;
+
+/// Punkt wykresu: dzień treningu i wartość.
+typedef ChartPoint = ({LocalDate date, double value});
+
+/// Najlepszy szacowany 1RM na dzień treningu, od najstarszego. Dni bez
+/// szacunku (np. tylko ponad 10 powtórzeń) są pomijane.
+List<ChartPoint> e1rmTrend(
+  Iterable<({LocalDate date, SessionExercise exercise})> performances,
+) {
+  final best = <LocalDate, double>{};
+  for (final p in performances) {
+    final e1rm = bestEstimatedOneRepMax(p.exercise);
+    if (e1rm == null) continue;
+    final old = best[p.date];
+    if (old == null || e1rm > old) best[p.date] = e1rm;
+  }
+  return _byDate(best);
+}
+
+/// Objętość ćwiczenia na dzień treningu (gramy, suma treningów z tego dnia),
+/// od najstarszego. Dni bez objętości (masa ciała, wspomaganie) są pomijane.
+List<ChartPoint> volumeTrend(
+  Iterable<({LocalDate date, SessionExercise exercise})> performances,
+) {
+  final total = <LocalDate, double>{};
+  for (final p in performances) {
+    final volume = exerciseVolumeG(p.exercise);
+    if (volume <= 0) continue;
+    total[p.date] = (total[p.date] ?? 0) + volume;
+  }
+  return _byDate(total);
+}
+
+List<ChartPoint> _byDate(Map<LocalDate, double> values) => [
+  for (final date in values.keys.sorted()) (date: date, value: values[date]!),
+];
+
+/// Rekord z dniem, w którym padł po raz pierwszy.
+typedef DatedValue<T> = ({T value, LocalDate date});
+
+/// Rekordy ćwiczenia z datami (ekran ćwiczenia, zakładka Rekordy).
+final class DatedRecords {
+  const DatedRecords({
+    this.bestE1rmG,
+    this.bestWeightForReps = const {},
+    this.maxReps,
+  });
+
+  final DatedValue<double>? bestE1rmG;
+
+  /// N powtórzeń → najcięższa seria z co najmniej N powtórzeniami.
+  final Map<int, DatedValue<int>> bestWeightForReps;
+  final DatedValue<int>? maxReps;
+
+  bool get isEmpty =>
+      bestE1rmG == null && bestWeightForReps.isEmpty && maxReps == null;
+}
+
+/// Rekordy z datą pierwszego osiągnięcia. Remis nie przesuwa daty.
+DatedRecords datedRecords(
+  Iterable<({LocalDate date, SessionExercise exercise})> performances,
+) {
+  DatedValue<double>? e1rm;
+  final forReps = <int, DatedValue<int>>{};
+  DatedValue<int>? maxReps;
+  final ordered = performances.sortedBy<LocalDate>((p) => p.date);
+  for (final p in ordered) {
+    final records = computeRecords([
+      for (final set in p.exercise.sets)
+        (set: set, loadMode: p.exercise.loadModeSnapshot),
+    ]);
+    if (records.bestE1rmG case final value?
+        when e1rm == null || value > e1rm.value) {
+      e1rm = (value: value, date: p.date);
+    }
+    for (final MapEntry(key: reps, value: weight)
+        in records.bestWeightForReps.entries) {
+      final old = forReps[reps];
+      if (old == null || weight > old.value) {
+        forReps[reps] = (value: weight, date: p.date);
+      }
+    }
+    if (records.maxReps case final value?
+        when maxReps == null || value > maxReps.value) {
+      maxReps = (value: value, date: p.date);
+    }
+  }
+  return DatedRecords(
+    bestE1rmG: e1rm,
+    bestWeightForReps: forReps,
+    maxReps: maxReps,
+  );
+}
+
+/// Rekordy „ciężar dla N powt.” bez wierszy, które wynikają z rekordu dla
+/// większej liczby powtórzeń: 85 kg × 8 sprawia, że „≥ 5 powt.: 85 kg” nic
+/// nie dodaje. Zostaje N, dla którego ciężar jest większy niż dla N + 1.
+List<({int reps, DatedValue<int> best})> distinctRepRecords(
+  Map<int, DatedValue<int>> bestWeightForReps,
+) {
+  final reps = bestWeightForReps.keys.toList()..sort();
+  return [
+    for (final n in reps)
+      if ((bestWeightForReps[n + 1]?.value ?? -1) < bestWeightForReps[n]!.value)
+        (reps: n, best: bestWeightForReps[n]!),
+  ];
 }

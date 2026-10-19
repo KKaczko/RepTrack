@@ -6,7 +6,7 @@ Stos: Flutter + Dart, Drift (SQLite), Riverpod, go_router.
 
 ## Stan
 
-Etapy 0–3 zaakceptowane. Etap 4 (aktywny trening) zakończony.
+Etapy 0–3 zaakceptowane. Etapy 4 (aktywny trening) i 5 (historia i progres) zakończone.
 
 ## Dokumentacja
 

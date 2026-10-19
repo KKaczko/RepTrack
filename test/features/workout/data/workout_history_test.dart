@@ -207,4 +207,64 @@ void main() {
     expect(reloaded.endedAt, isNull);
     expect(reloaded.status, SessionStatus.active);
   });
+
+  test(
+    'historia odświeża się tylko po zmianach zakończonych treningów',
+    () async {
+      final emissions = <List<String>>[];
+      final sub = workouts.watchCompleted().listen(
+        (list) => emissions.add([for (final s in list) s.id]),
+      );
+      addTearDown(sub.cancel);
+      await pumpEventQueue();
+      expect(emissions, [<String>[]]);
+
+      // Aktywny trening: każdy zapis to zmiana tabel, ale nie historii.
+      var active = buildSessionFromTemplate(
+        template: pushTemplate(),
+        exercises: catalog,
+        ids: SequentialIds('act'),
+        startedAt: DateTime.utc(2026, 10, 19, 16),
+        timeZone: 'Europe/Warsaw',
+      );
+      await workouts.save(active);
+      final benchEx = sortedExercises(active).first;
+      active = updateSet(
+        active,
+        benchEx.id,
+        sortedSets(benchEx)[1].id,
+        (s) => s.copyWith(weightG: 80000, reps: 8, completedAt: clock.nowUtc()),
+      );
+      await workouts.save(active);
+      await pumpEventQueue();
+      expect(emissions, hasLength(1));
+
+      // Zakończenie, korekta i usunięcie zmieniają historię.
+      final finished = active.copyWith(
+        status: SessionStatus.completed,
+        endedAt: DateTime.utc(2026, 10, 19, 17),
+      );
+      await workouts.save(finished);
+      await pumpEventQueue();
+      expect(emissions.last, [active.id]);
+
+      clock.advance(const Duration(minutes: 1));
+      await workouts.save(
+        updateSet(
+          finished,
+          benchEx.id,
+          sortedSets(benchEx)[1].id,
+          (s) => s.copyWith(reps: 9),
+        ),
+      );
+      await pumpEventQueue();
+      expect(emissions, hasLength(3));
+      final edited = (await workouts.watchCompleted().first).single;
+      expect(sortedSets(sortedExercises(edited).first)[1].reps, 9);
+
+      await workouts.delete(active.id);
+      await pumpEventQueue();
+      expect(emissions.last, isEmpty);
+    },
+  );
 }

@@ -58,6 +58,62 @@ final class DriftWorkoutRepository implements WorkoutRepository {
     );
   }
 
+  /// Odcisk zakończonych sesji: liczba i najnowsze `updated_at` sesji,
+  /// ćwiczeń i serii. Zmienia się przy zakończeniu, edycji i usunięciu
+  /// treningu z historii, ale nie przy zapisach aktywnego treningu.
+  static const _completedSignature = '''
+SELECT 'completed_history' AS watch_key,
+  (SELECT COUNT(*) || ':' || IFNULL(MAX(updated_at), 0)
+     FROM workout_sessions WHERE status = ?1 AND deleted_at IS NULL)
+  || '/' ||
+  (SELECT COUNT(*) || ':' || IFNULL(MAX(se.updated_at), 0)
+     FROM session_exercises se
+     JOIN workout_sessions ws ON ws.id = se.session_id
+    WHERE ws.status = ?1 AND ws.deleted_at IS NULL AND se.deleted_at IS NULL)
+  || '/' ||
+  (SELECT COUNT(*) || ':' || IFNULL(MAX(ss.updated_at), 0)
+     FROM session_sets ss
+     JOIN session_exercises se ON se.id = ss.session_exercise_id
+     JOIN workout_sessions ws ON ws.id = se.session_id
+    WHERE ws.status = ?1 AND ws.deleted_at IS NULL AND se.deleted_at IS NULL
+      AND ss.deleted_at IS NULL)
+  AS signature''';
+
+  @override
+  Stream<List<WorkoutSession>> watchCompleted() => _db
+      .customSelect(
+        _completedSignature,
+        variables: [Variable.withString(SessionStatus.completed.code)],
+        readsFrom: {_db.workoutSessions, _db.sessionExercises, _db.sessionSets},
+      )
+      .watch()
+      .map((rows) => rows.single.read<String>('signature'))
+      .distinct()
+      .asyncMap((_) => _loadCompleted());
+
+  Future<List<WorkoutSession>> _loadCompleted() async {
+    final rows =
+        await (_db.select(_db.workoutSessions)
+              ..where(
+                (t) =>
+                    t.status.equalsValue(SessionStatus.completed) &
+                    t.deletedAt.isNull(),
+              )
+              ..orderBy([(t) => OrderingTerm.desc(t.startedAt)]))
+            .get();
+    return _assembleAll(rows);
+  }
+
+  @override
+  Future<void> delete(String sessionId) async {
+    final now = _clock.nowUtc();
+    await (_db.update(
+      _db.workoutSessions,
+    )..where((t) => t.id.equals(sessionId) & t.deletedAt.isNull())).write(
+      WorkoutSessionsCompanion(deletedAt: Value(now), updatedAt: Value(now)),
+    );
+  }
+
   @override
   Future<List<SessionSet>> lastCompletedSets(
     String exerciseId, {
@@ -254,23 +310,54 @@ final class DriftWorkoutRepository implements WorkoutRepository {
     }
   }
 
-  Future<WorkoutSession> _assemble(WorkoutSessionRow row) async {
-    final exerciseRows =
+  Future<WorkoutSession> _assemble(WorkoutSessionRow row) async =>
+      (await _assembleAll([row])).single;
+
+  /// Składa sesje z ćwiczeniami i seriami trzema zapytaniami (w paczkach,
+  /// żeby nie przekroczyć limitu parametrów SQLite), zachowując kolejność
+  /// [rows].
+  Future<List<WorkoutSession>> _assembleAll(
+    List<WorkoutSessionRow> rows,
+  ) async {
+    final exerciseRows = <SessionExerciseRow>[];
+    for (final chunk in rows.map((r) => r.id).slices(_chunk)) {
+      exerciseRows.addAll(
         await (_db.select(_db.sessionExercises)
-              ..where((t) => t.sessionId.equals(row.id) & t.deletedAt.isNull())
+              ..where((t) => t.sessionId.isIn(chunk) & t.deletedAt.isNull())
               ..orderBy([(t) => OrderingTerm.asc(t.position)]))
-            .get();
-    final setRows =
+            .get(),
+      );
+    }
+    final setRows = <SessionSetRow>[];
+    for (final chunk in exerciseRows.map((r) => r.id).slices(_chunk)) {
+      setRows.addAll(
         await (_db.select(_db.sessionSets)
               ..where(
-                (t) =>
-                    t.sessionExerciseId.isIn(exerciseRows.map((r) => r.id)) &
-                    t.deletedAt.isNull(),
+                (t) => t.sessionExerciseId.isIn(chunk) & t.deletedAt.isNull(),
               )
               ..orderBy([(t) => OrderingTerm.asc(t.position)]))
-            .get();
+            .get(),
+      );
+    }
+    final exercisesBySession = exerciseRows.groupListsBy((r) => r.sessionId);
     final setsByExercise = setRows.groupListsBy((r) => r.sessionExerciseId);
+    return [
+      for (final row in rows)
+        _sessionFromRows(
+          row,
+          exercisesBySession[row.id] ?? const [],
+          setsByExercise,
+        ),
+    ];
+  }
 
+  static const _chunk = 500;
+
+  WorkoutSession _sessionFromRows(
+    WorkoutSessionRow row,
+    List<SessionExerciseRow> exerciseRows,
+    Map<String, List<SessionSetRow>> setsByExercise,
+  ) {
     return WorkoutSession(
       id: row.id,
       status: row.status,

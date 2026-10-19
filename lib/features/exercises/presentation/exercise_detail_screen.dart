@@ -16,19 +16,52 @@ import 'exercises_screen.dart';
 
 enum _Action { archive, unarchive, delete }
 
-/// Szczegóły ćwiczenia. Historia i rekordy dochodzą w Etapie 5.
+/// Dodatkowa zakładka ekranu ćwiczenia dostarczana przez inną funkcję
+/// (historia, rekordy, wykresy). Łączy je router w `lib/app/`.
+typedef ExerciseDetailTab = ({
+  String Function(AppLocalizations l10n) label,
+  Widget Function(String exerciseId) builder,
+});
+
+/// Szczegóły ćwiczenia: zakładka „Info” i zakładki z [extraTabs].
 class ExerciseDetailScreen extends ConsumerWidget {
-  const ExerciseDetailScreen({required this.exerciseId, super.key});
+  const ExerciseDetailScreen({
+    required this.exerciseId,
+    this.extraTabs = const [],
+    super.key,
+  });
 
   final String exerciseId;
+  final List<ExerciseDetailTab> extraTabs;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final exercise = ref.watch(exerciseByIdProvider(exerciseId));
     return switch (exercise) {
-      AsyncData(value: final Exercise exercise) => Scaffold(
+      AsyncData(value: final Exercise exercise) => _withTabs(
+        l10n,
+        exercise,
         appBar: AppBar(
+          title: extraTabs.isEmpty
+              ? null
+              : Text(
+                  exercise.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+          bottom: extraTabs.isEmpty
+              ? null
+              : TabBar(
+                  // Przewijane: cztery zakładki nie mieszczą się na 360 dp
+                  // przy większej czcionce.
+                  isScrollable: true,
+                  tabAlignment: TabAlignment.start,
+                  tabs: [
+                    Tab(text: l10n.exerciseTabInfo),
+                    for (final tab in extraTabs) Tab(text: tab.label(l10n)),
+                  ],
+                ),
           actions: [
             IconButton(
               tooltip: l10n.exerciseEdit,
@@ -61,7 +94,6 @@ class ExerciseDetailScreen extends ConsumerWidget {
             ),
           ],
         ),
-        body: _ExerciseDetails(exercise: exercise),
       ),
       AsyncData() => Scaffold(
         appBar: AppBar(),
@@ -80,6 +112,31 @@ class ExerciseDetailScreen extends ConsumerWidget {
         body: const Center(child: CircularProgressIndicator()),
       ),
     };
+  }
+
+  Widget _withTabs(
+    AppLocalizations l10n,
+    Exercise exercise, {
+    required PreferredSizeWidget appBar,
+  }) {
+    if (extraTabs.isEmpty) {
+      return Scaffold(
+        appBar: appBar,
+        body: _ExerciseDetails(exercise: exercise),
+      );
+    }
+    return DefaultTabController(
+      length: 1 + extraTabs.length,
+      child: Scaffold(
+        appBar: appBar,
+        body: TabBarView(
+          children: [
+            _ExerciseDetails(exercise: exercise),
+            for (final tab in extraTabs) tab.builder(exercise.id),
+          ],
+        ),
+      ),
+    );
   }
 
   Future<void> _onAction(
@@ -177,6 +234,7 @@ class _ExerciseDetails extends StatelessWidget {
         .toList();
 
     return ListView(
+      key: const PageStorageKey('exercise-info'),
       padding: const EdgeInsets.fromLTRB(
         AppSpacing.gutter,
         0,

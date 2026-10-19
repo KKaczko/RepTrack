@@ -19,6 +19,13 @@ Specyfikacja: szacowany 1RM wzorem Epleya z serii roboczych do 10 powtórzeń, o
   - `assisted`: bez metryk ciężaru (ciężar to wspomaganie).
 - **Treningi w tygodniu:** tydzień od poniedziałku, liczony z `local_date`.
 
+## Implementacja (Etap 5)
+
+- `lib/features/progress/domain/metrics.dart`: `e1rmTrend` (najlepszy e1RM na trening), `volumeTrend` (objętość ćwiczenia na trening), `datedRecords` (rekordy z dniem pierwszego osiągnięcia; remis nie przesuwa daty).
+- `lib/features/history/domain/history_queries.dart`: wykonania ćwiczenia, poprzednie wykonanie przed danym treningiem, porównanie, treningi w tygodniu i kolejność szablonów według ostatniego użycia.
+- Wszystko liczone w pamięci na liście zakończonych treningów (`watchCompleted`). Strumień porównuje odcisk zakończonych sesji (liczbę i najnowsze `updated_at` sesji, ćwiczeń i serii), więc zapisy aktywnego treningu nie przeładowują historii.
+- Wykres objętości pokazuje 12 ostatnich treningów, a wykres tygodni 12 ostatnich tygodni.
+
 ## Konsekwencje
 
 - Śledzenie masy ciała użytkownika (potrzebne do metryk dla ćwiczeń z masą ciała) trafia do backlogu.

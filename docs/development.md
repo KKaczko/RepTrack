@@ -93,7 +93,8 @@ Aplikacja przy starcie stosuje nowszy seed: dodaje nowe pozycje, aktualizuje zmi
 - `test/flutter_test_config.dart` sprawia, że stuknięcie w zasłonięty element kończy test błędem, a nie tylko ostrzeżeniem.
 - Zapis do bazy w teście widżetu wykonuj przez `tester.runAsync(...)`.
 
-## Pułapki Drift
+## Pułapki Drift i Riverpod
 
 - **Obserwacja agregatu z kilku tabel:** używaj `watchTables(db, 'klucz', {tabele})` z `lib/core/database/watch_tables.dart`. Drift współdzieli obserwowane zapytania o tym samym SQL bez względu na `readsFrom`, więc dwa repozytoria z `customSelect('SELECT 1')` dzieliły jeden strumień i zmiany szablonów nie docierały do listy, gdy jednocześnie obserwowano trening.
+- **Odczyt providera bez słuchaczy:** Riverpod 3 wstrzymuje provider, którego nikt nie obserwuje, więc `ref.read(provider.future)` może nigdy się nie zakończyć. Przykład: „Rozpocznij” na Starcie czekało na katalog ćwiczeń, którego nikt nie obserwował. Jednorazowe odczyty idą przez repozytorium (`findAll()`), a nie przez `.future`.
 - **Zapis pól null:** `insertOnConflictUpdate` pomija kolumny null w części UPDATE. `upsertIfChanged` zapisuje więc wszystkie kolumny jawnie; bez tego „przywróć dziedziczenie”, cofnięcie zatwierdzenia serii czy „Pomiń przerwę” nie trafiały do bazy.

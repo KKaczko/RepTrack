@@ -13,21 +13,29 @@ final class DriftExerciseRepository implements ExerciseRepository {
   final Clock _clock;
 
   @override
-  Stream<List<Exercise>> watchAll({bool includeArchived = false}) {
+  Stream<List<Exercise>> watchAll({bool includeArchived = false}) =>
+      _query(includeArchived: includeArchived).watch().map(_sorted);
+
+  @override
+  Future<List<Exercise>> findAll({bool includeArchived = false}) async =>
+      _sorted(await _query(includeArchived: includeArchived).get());
+
+  SimpleSelectStatement<$ExercisesTable, ExerciseRow> _query({
+    required bool includeArchived,
+  }) {
     final query = _db.select(_db.exercises)..where((t) => t.deletedAt.isNull());
     if (!includeArchived) {
       query.where((t) => t.archivedAt.isNull());
     }
-    return query.watch().map((rows) {
-      final exercises = rows.map(exerciseFromRow).toList();
-      // Sortowanie po nazwie bez diakrytyków: „Ławka” obok „Lina”, nie po „Z”.
-      exercises.sort(
+    return query;
+  }
+
+  /// Sortowanie po nazwie bez diakrytyków: „Ławka” obok „Lina”, nie po „Z”.
+  static List<Exercise> _sorted(List<ExerciseRow> rows) =>
+      rows.map(exerciseFromRow).toList()..sort(
         (a, b) =>
             normalizeForSearch(a.name).compareTo(normalizeForSearch(b.name)),
       );
-      return exercises;
-    });
-  }
 
   @override
   Future<Exercise?> findById(String id) async {

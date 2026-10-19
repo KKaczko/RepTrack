@@ -23,6 +23,11 @@ final activeSessionProvider = StreamProvider<WorkoutSession?>(
   (ref) => ref.watch(workoutRepositoryProvider).watchActive(),
 );
 
+/// Zakończone treningi od najnowszego (historia, progres, ekran Start).
+final completedSessionsProvider = StreamProvider<List<WorkoutSession>>(
+  (ref) => ref.watch(workoutRepositoryProvider).watchCompleted(),
+);
+
 /// Zatwierdzone serie ostatniego wykonania ćwiczenia poza bieżącą sesją
 /// (ADR 0006). Klucz: (id ćwiczenia, id bieżącej sesji).
 final previousSetsProvider = FutureProvider.autoDispose
@@ -43,7 +48,12 @@ final class WorkoutStarter {
 
   /// Zwraca false, gdy trwa już inny trening (najwyżej jeden aktywny).
   Future<bool> startFromTemplate(Template template) async {
-    final catalog = await _ref.read(exerciseCatalogProvider.future);
+    // Odczyt z repozytorium, nie z `exerciseCatalogProvider.future`:
+    // Riverpod 3 wstrzymuje provider bez słuchaczy, więc przyszła wartość
+    // nie nadeszłaby, gdy żaden ekran nie obserwuje katalogu (np. Start).
+    final catalog = await _ref
+        .read(exerciseRepositoryProvider)
+        .findAll(includeArchived: true);
     final exercises = {for (final e in catalog) e.id: e};
     return _start(
       (zone, now) => buildSessionFromTemplate(

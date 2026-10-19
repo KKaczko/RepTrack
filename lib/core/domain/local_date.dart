@@ -104,3 +104,11 @@ LocalDate localDateFor(DateTime utc, String ianaZone) {
   final local = tz.TZDateTime.from(utc.toUtc(), tz.getLocation(ianaZone));
   return LocalDate(local.year, local.month, local.day);
 }
+
+/// Godzina i minuta momentu [utc] w strefie [ianaZone], np. start treningu
+/// pokazany w strefie zapisanej przy starcie sesji.
+({int hour, int minute}) localTimeFor(DateTime utc, String ianaZone) {
+  ensureTimeZonesLoaded();
+  final local = tz.TZDateTime.from(utc.toUtc(), tz.getLocation(ianaZone));
+  return (hour: local.hour, minute: local.minute);
+}

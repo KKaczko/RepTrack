@@ -140,7 +140,18 @@ void main() {
     await tester.tap(find.text('Wyciskanie sztangi na ławce płaskiej'));
     await tester.pumpAndSettle();
     expect(find.text('Klatka piersiowa'), findsOneWidget);
-    await tester.scrollUntilVisible(find.text('Biblioteka wbudowana'), 300);
+    // Zakładka „Info” ma własną listę wewnątrz przewijanych zakładek.
+    final info = find
+        .descendant(
+          of: find.byKey(const PageStorageKey('exercise-info')),
+          matching: find.byType(Scrollable),
+        )
+        .first;
+    await tester.scrollUntilVisible(
+      find.text('Biblioteka wbudowana'),
+      300,
+      scrollable: info,
+    );
     expect(find.text('Licencja danych: Unlicense'), findsOneWidget);
 
     await tester.tap(find.byTooltip('Edytuj'));
@@ -159,14 +170,20 @@ void main() {
     await tester.pumpAndSettle();
 
     // Szczegóły były przewinięte do sekcji „Źródło”; wracamy do nagłówka.
-    await tester.scrollUntilVisible(find.text('Ławka płaska'), -300);
-    expect(find.text('Ławka płaska'), findsOneWidget);
+    await tester.scrollUntilVisible(
+      find.descendant(of: info, matching: find.text('Ławka płaska')),
+      -300,
+      scrollable: info,
+    );
+    // Nazwa w pasku tytułu i w nagłówku zakładki „Info”.
+    expect(find.text('Ławka płaska'), findsNWidgets(2));
     final row = await _rowByName(tester, db, 'Ławka płaska');
     expect(row!.userModified, isTrue);
     expect(row.source, ExerciseSource.builtin);
     await tester.scrollUntilVisible(
       find.textContaining('Zmienione przez Ciebie'),
       300,
+      scrollable: info,
     );
     expect(find.textContaining('Zmienione przez Ciebie'), findsOneWidget);
 

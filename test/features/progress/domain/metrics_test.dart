@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:reptrack/core/domain/local_date.dart';
 import 'package:reptrack/core/domain/training.dart';
 import 'package:reptrack/features/exercises/domain/exercise.dart';
 import 'package:reptrack/features/progress/domain/metrics.dart';
@@ -111,6 +112,85 @@ void main() {
           isEmpty,
         );
       },
+    );
+  });
+
+  group('trendy i rekordy z datami', () {
+    SessionExercise exercise(List<(int, int)> sets, {LoadMode? mode}) =>
+        SessionExercise(
+          id: 'e',
+          exerciseId: 'bench',
+          position: 0,
+          exerciseNameSnapshot: 'Wyciskanie',
+          measurementSnapshot: Measurement.weightAndReps,
+          loadModeSnapshot: mode ?? LoadMode.external,
+          weightSemanticsSnapshot: WeightSemantics.total,
+          isUnilateralSnapshot: false,
+          sets: [
+            for (final (i, (w, r)) in sets.indexed)
+              SessionSet(
+                id: 's$i',
+                position: i,
+                weightG: w,
+                reps: r,
+                completedAt: _at,
+              ),
+          ],
+        );
+    const d1 = LocalDate(2026, 10, 5);
+    const d2 = LocalDate(2026, 10, 12);
+    const d3 = LocalDate(2026, 10, 19);
+
+    test('najlepszy e1RM i objętość na trening, od najstarszego', () {
+      final performances = [
+        (date: d3, exercise: exercise([(80000, 12)])),
+        (date: d1, exercise: exercise([(70000, 10), (75000, 5)])),
+        (date: d2, exercise: exercise([(80000, 10)])),
+      ];
+
+      final e1rm = e1rmTrend(performances);
+      expect([for (final p in e1rm) p.date], [d1, d2]);
+      expect(e1rm.first.value, closeTo(70000 * (1 + 10 / 30), 0.01));
+
+      final volume = volumeTrend(performances);
+      expect([for (final p in volume) p.date], [d1, d2, d3]);
+      expect(volume.first.value, 70000 * 10 + 75000 * 5);
+    });
+
+    test('rekordy z dniem pierwszego osiągnięcia; remis nie przesuwa daty', () {
+      final records = datedRecords([
+        (date: d2, exercise: exercise([(80000, 8)])),
+        (date: d1, exercise: exercise([(80000, 8), (60000, 12)])),
+        (date: d3, exercise: exercise([(82500, 5)])),
+      ]);
+
+      expect(records.bestWeightForReps[8], (value: 80000, date: d1));
+      expect(records.bestWeightForReps[5], (value: 82500, date: d3));
+      expect(records.bestWeightForReps[12], (value: 60000, date: d1));
+      expect(records.bestE1rmG!.date, d1);
+      expect(records.maxReps, isNull);
+    });
+
+    test('masa ciała: rekord powtórzeń z datą', () {
+      final records = datedRecords([
+        (date: d1, exercise: exercise([(0, 12)], mode: LoadMode.bodyweight)),
+        (date: d2, exercise: exercise([(0, 15)], mode: LoadMode.bodyweight)),
+      ]);
+      expect(records.maxReps, (value: 15, date: d2));
+      expect(records.bestE1rmG, isNull);
+    });
+  });
+
+  test('rekordy powtórzeń bez wierszy wynikających z cięższych', () {
+    const d = LocalDate(2026, 10, 19);
+    final records = distinctRepRecords({
+      for (var n = 1; n <= 8; n++) n: (value: 85000, date: d),
+      9: (value: 80000, date: d),
+      10: (value: 80000, date: d),
+    });
+    expect(
+      [for (final r in records) (r.reps, r.best.value)],
+      [(8, 85000), (10, 80000)],
     );
   });
 }

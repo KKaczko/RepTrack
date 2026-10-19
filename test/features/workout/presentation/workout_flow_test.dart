@@ -1,9 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
+import 'package:reptrack/app/routes.dart';
 import 'package:reptrack/core/database/app_database.dart';
 import 'package:reptrack/features/exercises/data/drift_exercise_repository.dart';
 import 'package:reptrack/features/templates/data/drift_template_repository.dart';
 import 'package:reptrack/features/workout/data/drift_workout_repository.dart';
+import 'package:reptrack/features/workout/data/workout_providers.dart';
 import 'package:reptrack/features/workout/domain/session_builder.dart';
 import 'package:reptrack/features/workout/domain/session_editing.dart';
 import 'package:reptrack/features/workout/domain/workout_session.dart';
@@ -395,6 +400,52 @@ void main() {
     await _tap(tester, find.byTooltip('Zminimalizuj trening'));
     await _tap(tester, find.text('Wróć'));
     expect(find.text('Koniec przerwy na czas'), findsNothing);
+    expect(find.text('Zatwierdź serię 1'), findsOneWidget);
+
+    await closeRepTrack(tester, db);
+  });
+
+  testWidgets('nieaktualny pusty strumień nie zamyka nowego treningu', (
+    tester,
+  ) async {
+    // Na telefonie baza działa w osobnym wątku: tuż po starcie treningu
+    // strumień aktywnej sesji może jeszcze podawać „brak treningu”.
+    final db = widgetTestDatabase();
+    final session = buildSessionFromTemplate(
+      template: pushTemplate(),
+      exercises: catalog,
+      ids: SequentialIds('s'),
+      startedAt: testClock().nowUtc(),
+      timeZone: 'Europe/Warsaw',
+    );
+    await tester.runAsync(() async {
+      for (final e in catalog.values) {
+        await DriftExerciseRepository(db, testClock()).save(e);
+      }
+      await DriftTemplateRepository(db, testClock()).save(pushTemplate());
+      await DriftWorkoutRepository(db, testClock()).save(session);
+    });
+    final stream = StreamController<WorkoutSession?>();
+    addTearDown(stream.close);
+    stream.add(null);
+    await pumpRepTrack(
+      tester,
+      db: db,
+      clock: testClock(),
+      overrides: [activeSessionProvider.overrideWith((ref) => stream.stream)],
+    );
+
+    unawaited(
+      GoRouter.of(tester.element(find.byType(Scaffold).first))
+          .push(AppRoutes.workout),
+    );
+    // Ekran czeka na sesję (wskaźnik ładowania), więc bez pumpAndSettle.
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+    // Strumień dogania bazę dopiero po otwarciu ekranu treningu.
+    stream.add(session);
+    await tester.pumpAndSettle();
+
     expect(find.text('Zatwierdź serię 1'), findsOneWidget);
 
     await closeRepTrack(tester, db);

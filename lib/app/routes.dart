@@ -22,4 +22,9 @@ abstract final class AppRoutes {
   static String exerciseDetail(String id) => '/exercises/$id';
 
   static String exerciseEdit(String id) => '/exercises/$id/edit';
+
+  /// Zakończony trening (pełny ekran, z historii, Startu i ekranu ćwiczenia).
+  static String sessionDetail(String id) => '/sessions/$id';
+
+  static String sessionCompare(String id) => '/sessions/$id/compare';
 }

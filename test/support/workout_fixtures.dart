@@ -2,6 +2,9 @@ import 'package:reptrack/core/domain/training.dart';
 import 'package:reptrack/features/exercises/domain/exercise.dart';
 import 'package:reptrack/features/templates/domain/set_plan.dart';
 import 'package:reptrack/features/templates/domain/template.dart';
+import 'package:reptrack/features/workout/domain/session_builder.dart';
+import 'package:reptrack/features/workout/domain/session_editing.dart';
+import 'package:reptrack/features/workout/domain/workout_session.dart';
 
 import 'fakes.dart';
 
@@ -79,4 +82,37 @@ Template pushTemplate() {
   );
   pullTe = overrideSet(pullTe, 2, setType: SetType.amrap);
   return Template(id: 'tpl', name: 'Push A', exercises: [benchTe, pullTe]);
+}
+
+/// Zakończony trening „Push A” z zatwierdzonymi seriami roboczymi ławki
+/// (gramy, powtórzenia); rozgrzewka i podciąganie bez zatwierdzeń.
+WorkoutSession finishedPush(
+  String prefix,
+  DateTime start,
+  List<(int, int)> benchSets,
+) {
+  var session = buildSessionFromTemplate(
+    template: pushTemplate(),
+    exercises: catalog,
+    ids: SequentialIds(prefix),
+    startedAt: start,
+    timeZone: 'Europe/Warsaw',
+  );
+  final benchEx = sortedExercises(session).first;
+  for (final (i, (weight, reps)) in benchSets.indexed) {
+    session = updateSet(
+      session,
+      benchEx.id,
+      sortedSets(benchEx)[i + 1].id,
+      (s) => s.copyWith(
+        weightG: weight,
+        reps: reps,
+        completedAt: start.add(Duration(minutes: 5 + i * 3)),
+      ),
+    );
+  }
+  return session.copyWith(
+    status: SessionStatus.completed,
+    endedAt: start.add(const Duration(minutes: 50)),
+  );
 }

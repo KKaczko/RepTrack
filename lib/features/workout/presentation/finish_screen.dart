@@ -107,7 +107,10 @@ class _FinishWorkoutScreenState extends ConsumerState<FinishWorkoutScreen> {
                       l10n.finishDuration,
                       formatClock(summary.duration.inSeconds),
                     ),
-                    (l10n.finishVolume, _volume(summary.volumeG, unit, locale)),
+                    (
+                      l10n.finishVolume,
+                      formatVolume(summary.volumeG, unit, locale),
+                    ),
                     (l10n.finishSets, '${summary.completedSets}'),
                     (l10n.finishExercises, '${summary.exercisesDone}'),
                   ],
@@ -215,10 +218,6 @@ class _FinishWorkoutScreenState extends ConsumerState<FinishWorkoutScreen> {
     messenger.showSnackBar(SnackBar(content: Text(l10n.finishSavedSnack)));
   }
 
-  static String _volume(int grams, WeightUnit unit, String locale) =>
-      '${formatDecimal(gramsToDisplay(grams, unit), locale, maxDecimals: 0)} '
-      '${weightUnitLabel(unit)}';
-
   static String _recordLabel(
     AppLocalizations l10n,
     SessionRecord record,
@@ -229,8 +228,7 @@ class _FinishWorkoutScreenState extends ConsumerState<FinishWorkoutScreen> {
     return switch (record.event) {
       E1rmRecord(:final e1rmG) => l10n.recordE1rm(
         name,
-        '${formatDecimal(gramsToDisplay(e1rmG.round(), unit), locale, maxDecimals: 1)} '
-        '${weightUnitLabel(unit)}',
+        formatEstimate(e1rmG, unit, locale),
       ),
       RepsWeightRecord(:final reps, :final weightG) => l10n.recordRepsWeight(
         name,

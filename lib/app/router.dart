@@ -6,7 +6,10 @@ import '../features/exercises/presentation/exercise_detail_screen.dart';
 import '../features/exercises/presentation/exercise_form_screen.dart';
 import '../features/exercises/presentation/exercise_picker_screen.dart';
 import '../features/exercises/presentation/exercises_screen.dart';
+import '../features/history/presentation/exercise_progress_tabs.dart';
 import '../features/history/presentation/history_screen.dart';
+import '../features/history/presentation/session_compare_screen.dart';
+import '../features/history/presentation/session_detail_screen.dart';
 import '../features/home/presentation/home_screen.dart';
 import '../features/settings/presentation/licenses_screen.dart';
 import '../features/settings/presentation/settings_screen.dart';
@@ -83,6 +86,7 @@ final routerProvider = Provider<GoRouter>((ref) {
                     path: ':id',
                     builder: (context, state) => ExerciseDetailScreen(
                       exerciseId: state.pathParameters['id']!,
+                      extraTabs: exerciseProgressTabs(),
                     ),
                     routes: [
                       GoRoute(
@@ -107,6 +111,18 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: 'licenses',
             builder: (context, state) => const LicensesScreen(),
+          ),
+        ],
+      ),
+      GoRoute(
+        path: '/sessions/:id',
+        builder: (context, state) =>
+            SessionDetailScreen(sessionId: state.pathParameters['id']!),
+        routes: [
+          GoRoute(
+            path: 'compare',
+            builder: (context, state) =>
+                SessionCompareScreen(sessionId: state.pathParameters['id']!),
           ),
         ],
       ),

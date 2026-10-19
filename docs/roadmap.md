@@ -1,6 +1,6 @@
 # Plan etapów, testy i ryzyka
 
-Status: Etapy 0–3 zaakceptowane (2026-10-19). Etap 4 zakończony (2026-10-20). Szczegóły w sekcji „Odstępstwa od planu”.
+Status: Etapy 0–3 zaakceptowane (2026-10-19). Etapy 4 i 5 zakończone (2026-10-20); od Etapu 4 kolejne etapy idą bez czekania na akceptację (decyzja właściciela). Szczegóły w sekcji „Odstępstwa od planu”.
 
 ## Ustalenia
 
@@ -175,3 +175,16 @@ Testy integracyjne na urządzeniu (`integration_test`) dochodzą w Etapie 7. `ch
   - szara ikona ▶ na kafelku szablonu, chipy RIR nie mieszczące się w wierszu, drobne wartości w ustawieniach, czerwony przycisk przy porzuceniu i usunięciu.
 - **Ikona aplikacji** jest wciąż domyślna (Flutter); własna ikona w Etapie 7.
 - **Do sprawdzenia przez właściciela na Samsungu:** powiadomienie przerwy przy zablokowanym ekranie (z dokładnymi alarmami i bez) oraz zachowanie One UI przy usypianiu aplikacji.
+
+### Etap 5
+
+- **Szczegóły treningu** są trasą `/sessions/:id` poza zakładkami, a nie `/history/:id` z planu ([ux.md](ux.md#historia-i-progres-etap-5)).
+- **Historia liczona w pamięci** z listy zakończonych treningów; strumień odświeża się tylko po zmianie zakończonych sesji ([ADR 0007](decisions/0007-metryki.md)).
+- **Wykresy:** `fl_chart` 1.2.0 (MIT), zgodnie z planem. Kolory, znaczniki i dostępność według [ux.md](ux.md#historia-i-progres-etap-5).
+- **Błąd wychwycony testem i naprawiony:** „Rozpocznij” na Starcie nie startowało treningu, gdy żaden ekran nie obserwował katalogu ćwiczeń (Riverpod 3 wstrzymuje takie providery). Opis w [development.md](development.md#pułapki-drift-i-riverpod).
+- **Usuwanie treningu z historii** (z potwierdzeniem) dodane, choć spec. 5.4 go nie wymienia. Bez niego błędnie zapisany trening zostałby na zawsze w statystykach.
+- **Edycja zakończonego treningu** obejmuje też notatkę i samopoczucie.
+- **Błąd z Etapu 4 wychwycony na emulatorze i naprawiony:** po „Rozpocznij” ekran treningu czasem od razu się zamykał. Strumień aktywnej sesji (baza w osobnym wątku) nie zdążył jeszcze pokazać nowej sesji, a ekran uznawał to za koniec treningu. Teraz przed wyjściem sprawdza stan w bazie. Test widżetu odtwarza ten wyścig na kontrolowanym strumieniu.
+- **Rekordy „najcięższa seria”** pokazują tylko N, dla których ciężar różni się od rekordu dla N + 1 (np. „≥ 8 powt.: 85 kg” zamiast ośmiu wierszy z tym samym ciężarem).
+- **Wykresy ćwiczenia** mają jeden punkt na dzień (najlepszy e1RM, suma objętości), żeby dwa treningi jednego dnia nie dawały pionowej kreski.
+- **Sprawdzone na emulatorze:** szybki start ze Startu, lista historii, szczegóły, porównanie, progres (wykres tygodni, e1RM, objętość) i zakładki ćwiczenia.

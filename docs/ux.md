@@ -11,7 +11,7 @@ Shell z dolną nawigacją (StatefulShellRoute, 4 zakładki):
 ├─ Szablony /templates        lista (przełącznik archiwum) → /templates/new, /templates/:id edytor
 │                             → arkusz konfiguracji serii ćwiczenia (nadpisania, „przywróć dziedziczenie”)
 ├─ Historia /history          [Sesje | Progres]
-│    Sesje → /history/:id szczegóły + tryb edycji → /history/:id/compare
+│    Sesje → /sessions/:id szczegóły + tryb edycji → /sessions/:id/compare
 │    Progres → treningi/tydzień, wybór ćwiczenia → wykresy e1RM i objętości
 └─ Ćwiczenia /exercises       szukaj + filtry → /exercises/:id [Info | Historia | Rekordy | Wykresy]
                               → /exercises/:id/edit, /exercises/new
@@ -19,6 +19,8 @@ Shell z dolną nawigacją (StatefulShellRoute, 4 zakładki):
 Poza shellem (pełny ekran):
   /workout                    aktywny trening (arkusze: wybór ćwiczenia, kolejność, zamiana)
   /workout/finish             podsumowanie, notatka, samopoczucie, diff „zaktualizuj szablon”
+  /sessions/:id               zakończony trening: szczegóły, edycja, usunięcie (z Historii, Startu, ekranu ćwiczenia)
+  /sessions/:id/compare       porównanie z poprzednim wykonaniem każdego ćwiczenia
   /settings → /settings/backup (backup, przywracanie, CSV, MD) · /settings/licenses
   /pick-exercises             wspólny wybór ćwiczeń (szablony, trening, filtr eksportu); zwraca listę id
                               ?single=true: jedno ćwiczenie jednym tapnięciem (zamiana w treningu)
@@ -66,7 +68,7 @@ Sprawdzany testami widżetów w Etapach 4 i 5.
 | Seria zgodna z podpowiedzią | ✓ | 1 (1) |
 | Ciężar o jeden krok | + → ✓ | 2 (≤ 2) |
 | Inne powtórzenia | pole powt. → wybór liczby z siatki → ✓ | 3 (≤ 3) |
-| Start → pierwsza seria | zakładka Szablony → ▶ na kafelku → ✓ (Etap 4); „Rozpocznij: Push A” na Starcie → ✓ (Etap 5) | 3 (≤ 3), potem 2 |
+| Start → pierwsza seria | „Rozpocznij: Push A” na Starcie → ✓ (od Etapu 5); wcześniej zakładka Szablony → ▶ → ✓ | 2 (≤ 3) |
 
 Przy pierwszym w ogóle treningu dochodzą jednorazowe okna zgód: systemowa zgoda na powiadomienia i prośba o dokładne alarmy. Nie wliczają się do budżetu, bo pojawiają się tylko raz.
 
@@ -84,3 +86,11 @@ Przy pierwszym w ogóle treningu dochodzą jednorazowe okna zgód: systemowa zgo
 - Każda zmiana zapisuje się od razu. Minimalizacja (⌄ albo przycisk wstecz) zostawia trening aktywnym; wraca się do niego paskiem nad nawigacją albo banerem na Starcie, także po ponownym uruchomieniu aplikacji.
 - Ekran nie gaśnie tylko na ekranie treningu i tylko przy włączonym ustawieniu.
 - Porzucenie i usunięcie ćwiczenia wymagają potwierdzenia. Zamiana ćwiczenia z zatwierdzonymi seriami też, bo czyści ich wartości.
+
+## Historia i progres (Etap 5)
+
+- Szczegóły treningu są pełnoekranową trasą `/sessions/:id`, a nie trasą w zakładce Historia, bo otwiera się je także ze Startu i z ekranu ćwiczenia. Push do trasy innej zakładki przełączałby zakładkę.
+- Edycja zakończonego treningu działa na kopii: „Zapisz” zapisuje, ✕ i przycisk wstecz pytają o odrzucenie zmian. Stuknięcie serii w trybie edycji otwiera arkusz: wartości, wysiłek, „Seria zatwierdzona” i „Usuń serię”. „Dodaj serię” dopisuje zatwierdzoną serię z wartościami ostatniej.
+- Ekran ćwiczenia ma zakładki Info, Historia, Rekordy i Wykresy. Zakładki historii dostarcza funkcja „historia”, a łączy je router (`exerciseProgressTabs()`), bo ekran ćwiczeń nie może importować ekranów innej funkcji.
+- Wykresy mają jedną serię i nie mają legendy; tytuł nad wykresem mówi, co pokazuje. Linia ma 2 dp, kropki 8 dp z obwódką w kolorze tła, a słupki najwyżej 24 dp z zaokrąglonym końcem. Kolor serii to akcent volt w ciemnym motywie i ciemniejszy akcent w jasnym (kontrast ≥ 3:1). Dotknięcie pokazuje wartość w dymku, a czytnik ekranu dostaje opis z liczbą punktów i ostatnią wartością. Tabelę wartości zastępuje zakładka Historia.
+- Start: „Rozpocznij: <ostatni szablon>” (ostatnio użyty, a gdy żadnego nie użyto, pierwszy alfabetycznie), do trzech innych szablonów, pusty trening, liczba treningów w tym tygodniu i ostatni trening.

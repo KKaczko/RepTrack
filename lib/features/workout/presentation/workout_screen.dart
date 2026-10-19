@@ -19,6 +19,7 @@ import '../../../core/theme/tokens.dart';
 import '../../../core/widgets/empty_state.dart';
 import '../../../core/widgets/ticker_builder.dart';
 import '../../exercises/data/exercise_providers.dart';
+import '../../exercises/domain/exercise.dart';
 import '../../settings/data/settings_providers.dart';
 import '../../settings/domain/app_settings.dart';
 import '../data/workout_providers.dart';
@@ -524,10 +525,14 @@ class _WorkoutScreenState extends ConsumerState<WorkoutScreen> {
     return ids ?? const [];
   }
 
+  /// Katalog z repozytorium (provider bez słuchaczy jest wstrzymany).
+  Future<List<Exercise>> _catalog() =>
+      ref.read(exerciseRepositoryProvider).findAll(includeArchived: true);
+
   Future<void> _addExercises() async {
     final ids = await _pickExercises();
     if (ids.isEmpty) return;
-    final catalog = await ref.read(exerciseCatalogProvider.future);
+    final catalog = await _catalog();
     final byId = {for (final e in catalog) e.id: e};
     final added = await _controller.addExercises([
       for (final id in ids) ?byId[id],
@@ -549,7 +554,7 @@ class _WorkoutScreenState extends ConsumerState<WorkoutScreen> {
     }
     final ids = await _pickExercises(single: true);
     if (ids.isEmpty) return;
-    final catalog = await ref.read(exerciseCatalogProvider.future);
+    final catalog = await _catalog();
     final replacement = catalog.firstWhereOrNull((e) => e.id == ids.first);
     if (replacement == null) return;
     await _controller.replaceExercise(current.id, replacement);
@@ -619,13 +624,16 @@ class _WorkoutScreenState extends ConsumerState<WorkoutScreen> {
   }
 
   /// Sesja zniknęła (zakończona albo porzucona gdzie indziej): ekran
-  /// treningu nie ma czego pokazać.
+  /// treningu nie ma czego pokazać. Pusty strumień tuż po starcie treningu
+  /// może być nieaktualny (baza działa w osobnym wątku), więc przed
+  /// wyjściem stan jest sprawdzany w bazie.
   void _leaveWhenGone() {
     if (_leaving || _leavePending) return;
     _leavePending = true;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final active = await ref.read(workoutRepositoryProvider).findActive();
       _leavePending = false;
-      if (!mounted || _leaving) return;
+      if (!mounted || _leaving || active != null) return;
       if (!(ModalRoute.of(context)?.isCurrent ?? false)) return;
       _leaving = true;
       if (context.canPop()) {
