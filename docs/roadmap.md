@@ -1,6 +1,6 @@
 # Plan etapów, testy i ryzyka
 
-Status: Etapy 0–2 zaakceptowane (2026-10-19). Etap 3 zakończony, czeka na akceptację. Szczegóły w sekcji „Odstępstwa od planu”.
+Status: Etapy 0–3 zaakceptowane (2026-10-19). Etap 4 zakończony (2026-10-20). Szczegóły w sekcji „Odstępstwa od planu”.
 
 ## Ustalenia
 
@@ -156,3 +156,22 @@ Testy integracyjne na urządzeniu (`integration_test`) dochodzą w Etapie 7. `ch
   - karty serii zlewające się z tłem arkusza;
   - snackbar zasłaniający przycisk „Nowy szablon”.
 - **Snackbary w zakładkach:** każda zakładka ma własny `ScaffoldMessenger` (`branchContainer` w `app_shell.dart`), a edytory zwracają wynik i komunikat pokazuje ekran, do którego wracasz.
+
+### Etap 4
+
+- **Dwa błędy z wcześniejszych etapów wychwycone testami treningu i naprawione** (opis w [development.md](development.md#pułapki-drift)):
+  - zapis nie czyścił pól ustawionych na null, więc „przywróć dziedziczenie” w szablonie nie trafiało do bazy;
+  - lista szablonów nie odświeżała się, gdy jednocześnie obserwowano trening (Drift współdzielił strumienie o tym samym SQL).
+
+  Oba mają testy regresji.
+- **Start treningu** w tym etapie: przycisk ▶ na kafelku szablonu (3 tapnięcia od uruchomienia do pierwszej serii) i „Pusty trening” na Starcie. „Rozpocznij: <ostatni szablon>” na Starcie dochodzi w Etapie 5 razem z resztą ekranu Start.
+- **Brakująca wartość przy zatwierdzeniu** otwiera wpis pola zamiast snackbara, bo snackbar zasłaniał przycisk „Zatwierdź” (wychwycone testem).
+- **Blokada podwójnego tapnięcia:** 350 ms po zatwierdzeniu serii.
+- **Niezatwierdzone serie** zostają w zakończonym treningu (nie liczą się do statystyk); ekran podsumowania mówi, ile ich jest. „Zaktualizuj szablon” przenosi strukturę treningu (ćwiczenia, kolejność, liczba serii), a cele i ciężary szablonu zostają.
+- **Po zakończeniu albo porzuceniu** aplikacja wraca na Start i pokazuje komunikat.
+- **Sprawdzone na emulatorze (Android 16, 360 dp):** start z szablonu, zgoda na powiadomienia, przerwa z odliczaniem w powiadomieniu i alarmem końca, pasek treningu i baner na Starcie, ustawienia, zakończenie z podsumowaniem, wznowienie po wymuszonym zamknięciu, porzucenie. Poprawione po tym sprawdzeniu:
+  - podpowiedź z wcześniejszej serii tego treningu przy pierwszym wykonaniu ćwiczenia ([ADR 0006](decisions/0006-poprzednie-wykonanie-i-podpowiedzi.md));
+  - jednorazowa prośba o dokładne alarmy, bo bez niej koniec przerwy przyszedł około 80 s później, i przywracanie powiadomienia przerwy po restarcie ([ADR 0009](decisions/0009-timer-przerwy.md));
+  - szara ikona ▶ na kafelku szablonu, chipy RIR nie mieszczące się w wierszu, drobne wartości w ustawieniach, czerwony przycisk przy porzuceniu i usunięciu.
+- **Ikona aplikacji** jest wciąż domyślna (Flutter); własna ikona w Etapie 7.
+- **Do sprawdzenia przez właściciela na Samsungu:** powiadomienie przerwy przy zablokowanym ekranie (z dokładnymi alarmami i bez) oraz zachowanie One UI przy usypianiu aplikacji.

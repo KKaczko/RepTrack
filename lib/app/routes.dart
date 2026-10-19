@@ -9,9 +9,13 @@ abstract final class AppRoutes {
 
   /// Wybór ćwiczeń; zwraca listę identyfikatorów (`List<String>`).
   static const exercisePicker = '/pick-exercises';
+
+  /// Wybór jednego ćwiczenia (zamiana w treningu); zwraca listę z jednym id.
+  static const exercisePickerSingle = '/pick-exercises?single=true';
   static const settings = '/settings';
   static const licenses = '/settings/licenses';
   static const workout = '/workout';
+  static const workoutFinish = '/workout/finish';
 
   static String templateEdit(String id) => '/templates/$id';
 

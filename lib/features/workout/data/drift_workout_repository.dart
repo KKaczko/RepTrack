@@ -3,8 +3,10 @@ import 'package:drift/drift.dart';
 
 import '../../../core/database/app_database.dart';
 import '../../../core/database/upsert.dart';
+import '../../../core/database/watch_tables.dart';
 import '../../../core/domain/clock.dart';
 import '../../exercises/domain/exercise.dart';
+import '../../progress/domain/metrics.dart';
 import '../domain/workout_repository.dart';
 import '../domain/workout_session.dart';
 
@@ -15,13 +17,11 @@ final class DriftWorkoutRepository implements WorkoutRepository {
   final Clock _clock;
 
   @override
-  Stream<WorkoutSession?> watchActive() => _db
-      .customSelect(
-        'SELECT 1',
-        readsFrom: {_db.workoutSessions, _db.sessionExercises, _db.sessionSets},
-      )
-      .watch()
-      .asyncMap((_) => findActive());
+  Stream<WorkoutSession?> watchActive() => watchTables(_db, 'workout', {
+    _db.workoutSessions,
+    _db.sessionExercises,
+    _db.sessionSets,
+  }).asyncMap((_) => findActive());
 
   @override
   Future<WorkoutSession?> findActive() async {
@@ -41,6 +41,96 @@ final class DriftWorkoutRepository implements WorkoutRepository {
       _db.workoutSessions,
     )..where((t) => t.id.equals(id) & t.deletedAt.isNull())).getSingleOrNull();
     return row == null ? null : _assemble(row);
+  }
+
+  @override
+  Future<void> discard(String sessionId) async {
+    final now = _clock.nowUtc();
+    await (_db.update(
+      _db.workoutSessions,
+    )..where((t) => t.id.equals(sessionId))).write(
+      WorkoutSessionsCompanion(
+        status: const Value(SessionStatus.discarded),
+        restEndsAt: const Value(null),
+        deletedAt: Value(now),
+        updatedAt: Value(now),
+      ),
+    );
+  }
+
+  @override
+  Future<List<SessionSet>> lastCompletedSets(
+    String exerciseId, {
+    String? excludeSessionId,
+  }) async {
+    final latest = await _db
+        .customSelect(
+          'SELECT se.id AS id FROM session_exercises se '
+          'JOIN workout_sessions ws ON ws.id = se.session_id '
+          'WHERE se.exercise_id = ?1 AND se.deleted_at IS NULL '
+          '  AND ws.deleted_at IS NULL AND ws.status = ?2 '
+          '  AND ws.id IS NOT ?3 '
+          'ORDER BY ws.started_at DESC, se.position ASC LIMIT 1',
+          variables: [
+            Variable.withString(exerciseId),
+            Variable.withString(SessionStatus.completed.code),
+            Variable(excludeSessionId),
+          ],
+          readsFrom: {_db.sessionExercises, _db.workoutSessions},
+        )
+        .getSingleOrNull();
+    if (latest == null) return const [];
+    final rows =
+        await (_db.select(_db.sessionSets)
+              ..where(
+                (t) =>
+                    t.sessionExerciseId.equals(latest.read<String>('id')) &
+                    t.deletedAt.isNull() &
+                    t.completedAt.isNotNull(),
+              )
+              ..orderBy([(t) => OrderingTerm.asc(t.position)]))
+            .get();
+    return [for (final row in rows) _setFromRow(row)];
+  }
+
+  @override
+  Future<Map<String, List<PerformedSet>>> completedSetsFor(
+    Set<String> exerciseIds, {
+    String? excludeSessionId,
+  }) async {
+    if (exerciseIds.isEmpty) return const {};
+    final query =
+        _db.select(_db.sessionSets).join([
+          innerJoin(
+            _db.sessionExercises,
+            _db.sessionExercises.id.equalsExp(
+              _db.sessionSets.sessionExerciseId,
+            ),
+          ),
+          innerJoin(
+            _db.workoutSessions,
+            _db.workoutSessions.id.equalsExp(_db.sessionExercises.sessionId),
+          ),
+        ])..where(
+          _db.sessionExercises.exerciseId.isIn(exerciseIds) &
+              _db.sessionSets.deletedAt.isNull() &
+              _db.sessionSets.completedAt.isNotNull() &
+              _db.sessionExercises.deletedAt.isNull() &
+              _db.workoutSessions.deletedAt.isNull() &
+              _db.workoutSessions.status.equalsValue(SessionStatus.completed),
+        );
+    if (excludeSessionId != null) {
+      query.where(_db.workoutSessions.id.equals(excludeSessionId).not());
+    }
+    final result = <String, List<PerformedSet>>{};
+    for (final row in await query.get()) {
+      final exercise = row.readTable(_db.sessionExercises);
+      (result[exercise.exerciseId] ??= []).add((
+        set: _setFromRow(row.readTable(_db.sessionSets)),
+        loadMode: exercise.loadModeSnapshot,
+      ));
+    }
+    return result;
   }
 
   @override
@@ -215,30 +305,32 @@ final class DriftWorkoutRepository implements WorkoutRepository {
             groupId: e.groupId,
             sets: [
               for (final s in setsByExercise[e.id] ?? <SessionSetRow>[])
-                SessionSet(
-                  id: s.id,
-                  position: s.position,
-                  setType: s.setType,
-                  targetKind: s.targetKind,
-                  targetMin: s.targetMin,
-                  targetMax: s.targetMax,
-                  targetWeightG: s.targetWeightG,
-                  restSeconds: s.restSeconds,
-                  weightG: s.weightG,
-                  reps: s.reps,
-                  durationS: s.durationS,
-                  distanceM: s.distanceM,
-                  effortScale: s.effortScale,
-                  effortTenths: s.effortTenths,
-                  side: s.side,
-                  completedAt: s.completedAt,
-                ),
+                _setFromRow(s),
             ],
           ),
       ],
     );
   }
 }
+
+SessionSet _setFromRow(SessionSetRow s) => SessionSet(
+  id: s.id,
+  position: s.position,
+  setType: s.setType,
+  targetKind: s.targetKind,
+  targetMin: s.targetMin,
+  targetMax: s.targetMax,
+  targetWeightG: s.targetWeightG,
+  restSeconds: s.restSeconds,
+  weightG: s.weightG,
+  reps: s.reps,
+  durationS: s.durationS,
+  distanceM: s.distanceM,
+  effortScale: s.effortScale,
+  effortTenths: s.effortTenths,
+  side: s.side,
+  completedAt: s.completedAt,
+);
 
 SessionExerciseRow _exerciseRow(
   String sessionId,

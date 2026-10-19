@@ -23,3 +23,12 @@ Aktywny trening pokazuje wynik poprzedniego wykonania przy każdej serii i wstę
 
 - Po wznowieniu sesji podpowiedzi są te same, bo zakończone sesje się nie zmieniają (chyba że użytkownik je edytuje).
 - Brak kolumn na podpowiedzi w `session_sets`.
+
+## Implementacja (Etap 4)
+
+- `lib/features/workout/domain/set_hints.dart`: `matchPreviousSets`, `hintForSet`, `confirmSet` (jedyne miejsce, które ustawia `completed_at`).
+- Dodatkowe, czwarte źródło podpowiedzi: wcześniejsza seria tego samego rodzaju (rozgrzewkowa albo robocza) w bieżącym treningu. Działa tylko, gdy brak wpisu, poprzedniego wykonania i planu, np. przy pierwszym wykonaniu ćwiczenia: po wpisaniu ciężaru w serii 1 kolejne serie zatwierdza się jednym tapnięciem (`hintsForExercise`). Brak tego źródła wyszedł przy sprawdzaniu na emulatorze.
+- Dla masy ciała z dociążeniem i wspomagania brak ciężaru w podpowiedzi oznacza 0 (na samym końcu kolejności).
+- Podpowiedzi są wyszarzone (kolor `textHint`, zwykła grubość), wpisane i zatwierdzone wartości mają pełny kontrast i pogrubienie. Czytnik ekranu dostaje „Ciężar: 80 kg, podpowiedź”.
+- Zatwierdzenie w kontrolerze liczy podpowiedź od nowa z bazy, więc nie zależy od stanu ekranu.
+- Test widżetu sprawdza, że wpisanie wartości i upływ czasu nie zatwierdzają serii.

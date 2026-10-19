@@ -3,6 +3,7 @@ import 'package:drift/drift.dart';
 
 import '../../../core/database/app_database.dart';
 import '../../../core/database/upsert.dart';
+import '../../../core/database/watch_tables.dart';
 import '../../../core/domain/clock.dart';
 import '../../../core/domain/text_normalize.dart';
 import '../domain/template.dart';
@@ -15,13 +16,12 @@ final class DriftTemplateRepository implements TemplateRepository {
   final Clock _clock;
 
   @override
-  Stream<List<Template>> watchAll({bool includeArchived = false}) => _db
-      .customSelect(
-        'SELECT 1',
-        readsFrom: {_db.templates, _db.templateExercises, _db.templateSets},
-      )
-      .watch()
-      .asyncMap((_) => _loadAll(includeArchived: includeArchived));
+  Stream<List<Template>> watchAll({bool includeArchived = false}) =>
+      watchTables(_db, 'templates', {
+        _db.templates,
+        _db.templateExercises,
+        _db.templateSets,
+      }).asyncMap((_) => _loadAll(includeArchived: includeArchived));
 
   @override
   Future<Template?> findById(String id) async {

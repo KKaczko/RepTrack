@@ -99,6 +99,34 @@ void main() {
     },
   );
 
+  test(
+    'wyczyszczone pola zapisują się jako null (przywrócenie dziedziczenia)',
+    () async {
+      await repo.save(_push());
+
+      await repo.save(
+        _push().copyWith(
+          description: null,
+          exercises: [
+            restoreInheritance(
+              _push().exercises.first,
+              2,
+            ).copyWith(restSeconds: null),
+            _push().exercises[1].copyWith(groupId: null),
+          ],
+        ),
+      );
+
+      final saved = (await repo.findById('t1'))!;
+      expect(saved.description, isNull);
+      final bench = saved.exercises.first;
+      expect(bench.restSeconds, isNull);
+      final b2 = bench.sets.firstWhere((s) => s.id == 'b2');
+      expect((b2.targetMin, b2.targetMax), (null, null));
+      expect(saved.exercises[1].groupId, isNull);
+    },
+  );
+
   test('niezmienione wiersze zachowują updated_at', () async {
     await repo.save(_push());
     clock.advance(const Duration(minutes: 5));

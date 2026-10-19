@@ -1,3 +1,4 @@
+import '../../progress/domain/metrics.dart';
 import 'workout_session.dart';
 
 /// Próba utworzenia drugiej aktywnej sesji.
@@ -20,4 +21,21 @@ abstract interface class WorkoutRepository {
   /// ma już w [session], są miękko usuwane. Rzuca
   /// [ActiveSessionExistsException], gdy inna sesja jest już aktywna.
   Future<void> save(WorkoutSession session);
+
+  /// Porzuca sesję: status `discarded` i miękkie usunięcie.
+  Future<void> discard(String sessionId);
+
+  /// Zatwierdzone serie ćwiczenia z ostatniej zakończonej sesji, w której
+  /// występuje (niezależnie od szablonu, ADR 0006). Pusta lista, gdy brak.
+  Future<List<SessionSet>> lastCompletedSets(
+    String exerciseId, {
+    String? excludeSessionId,
+  });
+
+  /// Wszystkie zatwierdzone serie podanych ćwiczeń z zakończonych sesji,
+  /// z trybem obciążenia z chwili wykonania (do rekordów).
+  Future<Map<String, List<PerformedSet>>> completedSetsFor(
+    Set<String> exerciseIds, {
+    String? excludeSessionId,
+  });
 }

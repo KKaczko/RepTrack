@@ -12,6 +12,7 @@ import '../features/settings/presentation/licenses_screen.dart';
 import '../features/settings/presentation/settings_screen.dart';
 import '../features/templates/presentation/template_editor_screen.dart';
 import '../features/templates/presentation/templates_screen.dart';
+import '../features/workout/presentation/finish_screen.dart';
 import '../features/workout/presentation/workout_screen.dart';
 import 'app_shell.dart';
 import 'routes.dart';
@@ -111,11 +112,19 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: AppRoutes.exercisePicker,
-        builder: (context, state) => const ExercisePickerScreen(),
+        builder: (context, state) => ExercisePickerScreen(
+          single: state.uri.queryParameters['single'] == 'true',
+        ),
       ),
       GoRoute(
         path: AppRoutes.workout,
         builder: (context, state) => const WorkoutScreen(),
+        routes: [
+          GoRoute(
+            path: 'finish',
+            builder: (context, state) => const FinishWorkoutScreen(),
+          ),
+        ],
       ),
     ],
   );

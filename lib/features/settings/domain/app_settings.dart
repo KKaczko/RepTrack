@@ -32,5 +32,31 @@ abstract class AppSettings with _$AppSettings {
     @Default(EffortScale.rir) EffortScale? effortScale,
     @Default(120) int defaultRestSeconds,
     @Default(true) bool keepScreenOn,
+
+    /// Prośba o dokładne alarmy końca przerwy była już pokazana.
+    @Default(false) bool exactAlarmPrompted,
   }) = _AppSettings;
 }
+
+/// Kroki ciężaru do wyboru w danej jednostce.
+List<double> weightStepOptions(WeightUnit unit) => switch (unit) {
+  WeightUnit.kg => const [0.5, 1, 1.25, 2.5, 5],
+  WeightUnit.lb => const [1, 2.5, 5, 10],
+};
+
+/// Domyślny krok ciężaru: 2,5 kg albo 5 lb (najmniejsze typowe talerze
+/// parami).
+double defaultWeightStep(WeightUnit unit) => switch (unit) {
+  WeightUnit.kg => 2.5,
+  WeightUnit.lb => 5,
+};
+
+/// Zmiana jednostki. Krok spoza listy nowej jednostki wraca do domyślnego,
+/// bo np. 1,25 lb nie odpowiada żadnemu talerzowi.
+AppSettings withWeightUnit(AppSettings settings, WeightUnit unit) =>
+    settings.copyWith(
+      weightUnit: unit,
+      weightStep: weightStepOptions(unit).contains(settings.weightStep)
+          ? settings.weightStep
+          : defaultWeightStep(unit),
+    );

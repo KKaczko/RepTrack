@@ -6,38 +6,57 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:reptrack/app/app.dart';
 import 'package:reptrack/core/database/app_database.dart';
 import 'package:reptrack/core/database/database_providers.dart';
+import 'package:reptrack/core/domain/clock.dart';
+import 'package:reptrack/core/platform/device_services.dart';
+import 'package:reptrack/core/platform/rest_notifications.dart';
 import 'package:reptrack/features/exercises/data/exercise_seeder.dart';
 import 'package:reptrack/features/exercises/data/seed_catalog.dart';
 
+import 'fake_devices.dart';
 import 'test_database.dart';
 
 /// Uruchamia całą aplikację po polsku na bazie testowej, opcjonalnie
-/// z wbudowaną biblioteką ćwiczeń.
+/// z wbudowaną biblioteką ćwiczeń. Podanie [db] uruchamia aplikację ponownie
+/// na istniejącej bazie (symulacja restartu). Usługi urządzenia są
+/// podmienione na atrapy.
 Future<AppDatabase> pumpRepTrack(
   WidgetTester tester, {
   bool seed = true,
+  AppDatabase? db,
+  Clock? clock,
+  FakeRestNotifications? notifications,
+  FakeScreenAwake? awake,
 }) async {
   tester.platformDispatcher.localeTestValue = const Locale('pl', 'PL');
   tester.platformDispatcher.localesTestValue = const [Locale('pl', 'PL')];
   addTearDown(tester.platformDispatcher.clearAllTestValues);
 
-  final db = widgetTestDatabase();
-  if (seed) {
+  final reopened = db != null;
+  final database = db ?? widgetTestDatabase();
+  if (seed && !reopened) {
     await tester.runAsync(() async {
       final catalog = parseSeedCatalog(
         await File(seedAssetPath).readAsString(),
       );
-      await ExerciseSeeder(db, testClock()).apply(catalog);
+      await ExerciseSeeder(database, testClock()).apply(catalog);
     });
   }
   await tester.pumpWidget(
     ProviderScope(
-      overrides: [appDatabaseProvider.overrideWithValue(db)],
+      overrides: [
+        appDatabaseProvider.overrideWithValue(database),
+        if (clock != null) clockProvider.overrideWithValue(clock),
+        deviceTimeZoneProvider.overrideWithValue(const FixedTimeZone()),
+        screenAwakeProvider.overrideWithValue(awake ?? FakeScreenAwake()),
+        restNotificationsProvider.overrideWithValue(
+          notifications ?? FakeRestNotifications(),
+        ),
+      ],
       child: const RepTrackApp(),
     ),
   );
   await tester.pumpAndSettle();
-  return db;
+  return database;
 }
 
 /// Zamyka drzewo widżetów przed bazą, żeby strumienie Drift się zakończyły.

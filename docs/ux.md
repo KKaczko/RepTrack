@@ -1,6 +1,6 @@
 # UX: mapa ekranów i aktywny trening
 
-Status: Etap 0 (plan), zatwierdzony 2026-10-19. Kierunek wizualny: [ADR 0012](decisions/0012-wyglad.md).
+Status: plan z Etapu 0 (zatwierdzony 2026-10-19), aktywny trening zaimplementowany w Etapie 4. Kierunek wizualny: [ADR 0012](decisions/0012-wyglad.md).
 
 ## Mapa ekranów
 
@@ -21,6 +21,7 @@ Poza shellem (pełny ekran):
   /workout/finish             podsumowanie, notatka, samopoczucie, diff „zaktualizuj szablon”
   /settings → /settings/backup (backup, przywracanie, CSV, MD) · /settings/licenses
   /pick-exercises             wspólny wybór ćwiczeń (szablony, trening, filtr eksportu); zwraca listę id
+                              ?single=true: jedno ćwiczenie jednym tapnięciem (zamiana w treningu)
 ```
 
 Gdy trwa sesja, nad dolną nawigacją wisi pasek „Trening trwa 32:10 · Wróć” na każdym ekranie shella.
@@ -44,11 +45,16 @@ Gdy trwa sesja, nad dolną nawigacją wisi pasek „Trening trwa 32:10 · Wróć
 │ ┌ Ciężar ───────────┐ ┌ Powt. ───┐ │
 │ │ [ − ]  80 kg [ + ]│ │[−] 9 [+] │ │  steppery 56 dp, krok z ustawień
 │ └───────────────────┘ └──────────┘ │
+│ RIR  0 1 2 3 4 5                   │  wysiłek, gdy skala włączona w ustawieniach
 │ ┌────────────────────────────────┐ │
 │ │      ✓  ZATWIERDŹ SERIĘ 2      │ │  64 dp, kolor akcentu
 │ └────────────────────────────────┘ │
-│ Przerwa 1:45   [−15] [+15] [Pomiń] │  pasek timera po zatwierdzeniu
 └────────────────────────────────────┘
+```
+
+W implementacji pasek przerwy („Przerwa 1:45 [−15] [+15] [Pomiń]”) jest na górze strefy kciuka, nad stepperami. Strefa kciuka jest przyklejona do dołu ekranu, więc pojawienie się timera zmniejsza tabelę serii, a przycisk „Zatwierdź” zostaje w tym samym miejscu.
+
+```
 ```
 
 ## Budżet tapnięć
@@ -60,7 +66,9 @@ Sprawdzany testami widżetów w Etapach 4 i 5.
 | Seria zgodna z podpowiedzią | ✓ | 1 (1) |
 | Ciężar o jeden krok | + → ✓ | 2 (≤ 2) |
 | Inne powtórzenia | pole powt. → wybór liczby z siatki → ✓ | 3 (≤ 3) |
-| Start → pierwsza seria | „Rozpocznij: Push A” → ✓ | 2 (≤ 3) |
+| Start → pierwsza seria | zakładka Szablony → ▶ na kafelku → ✓ (Etap 4); „Rozpocznij: Push A” na Starcie → ✓ (Etap 5) | 3 (≤ 3), potem 2 |
+
+Przy pierwszym w ogóle treningu dochodzą jednorazowe okna zgód: systemowa zgoda na powiadomienia i prośba o dokładne alarmy. Nie wliczają się do budżetu, bo pojawiają się tylko raz.
 
 ## Zachowanie
 
@@ -69,3 +77,10 @@ Sprawdzany testami widżetów w Etapach 4 i 5.
 - Po ostatniej serii ćwiczenia wyróżniam „Następne ćwiczenie ▶” zamiast samoczynnie przewijać.
 - Podpowiedzi są wizualnie odróżnione od wpisanych wartości i mają etykietę dla czytnika ekranu („podpowiedź: 80 kg”).
 - Seria nigdy nie jest oznaczana jako wykonana automatycznie.
+- Główny przycisk zależy od wybranej serii: „Zatwierdź serię N”, „Cofnij serię N” (seria już zatwierdzona, przycisk obrysowany), „Następne ćwiczenie” albo „Zakończ trening”, gdy wszystkie serie są zatwierdzone.
+- Kółko w wierszu też zatwierdza serię albo cofa zatwierdzenie. Przytrzymanie wiersza otwiera usunięcie serii.
+- Po zatwierdzeniu kolejne tapnięcie w ciągu 350 ms jest ignorowane, żeby przypadkowe podwójne tapnięcie nie zatwierdziło dwóch serii.
+- Gdy brakuje wartości i podpowiedzi (np. pierwsze wykonanie bez planu), „Zatwierdź” otwiera wpis brakującego pola („Uzupełnij: Ciężar”) zamiast komunikatu, który zasłaniałby strefę kciuka.
+- Każda zmiana zapisuje się od razu. Minimalizacja (⌄ albo przycisk wstecz) zostawia trening aktywnym; wraca się do niego paskiem nad nawigacją albo banerem na Starcie, także po ponownym uruchomieniu aplikacji.
+- Ekran nie gaśnie tylko na ekranie treningu i tylko przy włączonym ustawieniu.
+- Porzucenie i usunięcie ćwiczenia wymagają potwierdzenia. Zamiana ćwiczenia z zatwierdzonymi seriami też, bo czyści ich wartości.

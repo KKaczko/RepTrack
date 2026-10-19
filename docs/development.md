@@ -88,6 +88,12 @@ Aplikacja przy starcie stosuje nowszy seed: dodaje nowe pozycje, aktualizuje zmi
 
 - Testy repozytoriów używają prawdziwej bazy SQLite w pamięci (`memoryDatabase()`) albo w pliku (`fileDatabase()`, symulacja ubicia procesu).
 - Testy widżetów używają `widgetTestDatabase()`: połączenie z `closeStreamsSynchronously: true` i zamknięcie przez `tester.runAsync(db.close)`. Bez tego `db.close()` zawiesza test, bo Drift odracza zamykanie strumieni timerem, którego fałszywy zegar `testWidgets` nie uruchamia.
-- Testy całej aplikacji uruchamia `pumpRepTrack()` z `test/support/app_harness.dart` (polski język, baza testowa, opcjonalnie seed).
+- Testy całej aplikacji uruchamia `pumpRepTrack()` z `test/support/app_harness.dart` (polski język, baza testowa, opcjonalnie seed). Usługi urządzenia są podmienione na atrapy z `test/support/fake_devices.dart`: strefa czasowa, blokada wygaszania ekranu i powiadomienia przerwy (zapamiętują wywołania). Parametr `db:` uruchamia aplikację ponownie na tej samej bazie (symulacja restartu), a `clock:` ustala czas.
+- Testy aktywnego treningu ustawiają ekran 360 × 800 dp, więc przepełnienie układu na małym telefonie kończy test błędem. Po zatwierdzeniu serii trzeba odczekać `pump(400 ms)`, bo kolejne tapnięcie w ciągu 350 ms jest celowo ignorowane.
 - `test/flutter_test_config.dart` sprawia, że stuknięcie w zasłonięty element kończy test błędem, a nie tylko ostrzeżeniem.
 - Zapis do bazy w teście widżetu wykonuj przez `tester.runAsync(...)`.
+
+## Pułapki Drift
+
+- **Obserwacja agregatu z kilku tabel:** używaj `watchTables(db, 'klucz', {tabele})` z `lib/core/database/watch_tables.dart`. Drift współdzieli obserwowane zapytania o tym samym SQL bez względu na `readsFrom`, więc dwa repozytoria z `customSelect('SELECT 1')` dzieliły jeden strumień i zmiany szablonów nie docierały do listy, gdy jednocześnie obserwowano trening.
+- **Zapis pól null:** `insertOnConflictUpdate` pomija kolumny null w części UPDATE. `upsertIfChanged` zapisuje więc wszystkie kolumny jawnie; bez tego „przywróć dziedziczenie”, cofnięcie zatwierdzenia serii czy „Pomiń przerwę” nie trafiały do bazy.

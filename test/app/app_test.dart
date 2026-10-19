@@ -35,6 +35,8 @@ void main() {
     expect(find.text('Ustawienia'), findsOneWidget);
     expect(find.byType(NavigationBar), findsNothing);
 
+    await tester.scrollUntilVisible(find.text('Licencje i źródła'), 200);
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Licencje i źródła'));
     await tester.pumpAndSettle();
     expect(find.textContaining('free-exercise-db'), findsOneWidget);

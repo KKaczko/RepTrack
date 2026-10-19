@@ -6,7 +6,7 @@ import '../domain/set_plan.dart';
 import '../domain/template.dart';
 
 /// Przerwy do wyboru w szablonie (s); null = domyślna z ustawień.
-const restOptions = <int?>[null, 30, 45, 60, 90, 120, 150, 180, 240, 300];
+const restOptions = <int?>[null, ...restChoicesSeconds];
 
 extension TemplateLabels on AppLocalizations {
   String setType(SetType type) => switch (type) {

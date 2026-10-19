@@ -7,6 +7,9 @@ abstract final class SettingKeys {
   static const defaultRestSeconds = 'default_rest_seconds';
   static const keepScreenOn = 'keep_screen_on';
 
+  /// Czy pokazano już prośbę o dokładne alarmy końca przerwy (ADR 0009).
+  static const exactAlarmPrompted = 'exact_alarm_prompted';
+
   /// Wersja ostatnio zastosowanego seeda biblioteki ćwiczeń (wewnętrzne).
   static const seedVersion = 'seed_version';
 }

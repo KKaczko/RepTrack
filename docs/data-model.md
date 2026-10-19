@@ -33,7 +33,7 @@ Model rozdziela trzy warstwy: definicję ćwiczenia, plan (szablon) i wykonanie 
 | AppThemeMode (ustawienia) | dark, light, system |
 | WeightUnit (ustawienia) | kg, lb |
 
-Klucze `settings`: `theme_mode`, `weight_unit`, `weight_step`, `effort_scale` (`off` / `rir` / `rpe`), `default_rest_seconds`, `keep_screen_on`.
+Klucze `settings`: `theme_mode`, `weight_unit`, `weight_step`, `effort_scale` (`off` / `rir` / `rpe`), `default_rest_seconds`, `keep_screen_on`, `exact_alarm_prompted` (czy pokazano prośbę o dokładne alarmy).
 
 ## `exercises`
 

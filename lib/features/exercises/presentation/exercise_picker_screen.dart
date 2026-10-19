@@ -13,7 +13,10 @@ import 'exercise_labels.dart';
 /// Wybór ćwiczeń dla szablonów i treningu. Zwraca listę identyfikatorów
 /// w kolejności zaznaczania (`context.pop(List<String>)`).
 class ExercisePickerScreen extends ConsumerStatefulWidget {
-  const ExercisePickerScreen({super.key});
+  const ExercisePickerScreen({this.single = false, super.key});
+
+  /// Wybór jednego ćwiczenia: tapnięcie od razu zwraca `[id]`.
+  final bool single;
 
   @override
   ConsumerState<ExercisePickerScreen> createState() =>
@@ -109,6 +112,16 @@ class _ExercisePickerScreenState extends ConsumerState<ExercisePickerScreen> {
                   final exercise = value[index];
                   final selected = _selected.contains(exercise.id);
                   final summary = l10n.exerciseSummary(exercise);
+                  if (widget.single) {
+                    return ListTile(
+                      title: Text(exercise.name),
+                      subtitle: summary.isEmpty ? null : Text(summary),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: AppSpacing.gutter,
+                      ),
+                      onTap: () => context.pop([exercise.id]),
+                    );
+                  }
                   return CheckboxListTile(
                     value: selected,
                     onChanged: (_) => _toggle(exercise.id),
@@ -125,20 +138,21 @@ class _ExercisePickerScreenState extends ConsumerState<ExercisePickerScreen> {
               _ => const Center(child: CircularProgressIndicator()),
             },
           ),
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.gutter),
-              child: SizedBox(
-                height: AppSizes.stepper,
-                child: FilledButton(
-                  onPressed: _selected.isEmpty
-                      ? null
-                      : () => context.pop(List<String>.of(_selected)),
-                  child: Text(l10n.pickerAdd(_selected.length)),
+          if (!widget.single)
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(AppSpacing.gutter),
+                child: SizedBox(
+                  height: AppSizes.stepper,
+                  child: FilledButton(
+                    onPressed: _selected.isEmpty
+                        ? null
+                        : () => context.pop(List<String>.of(_selected)),
+                    child: Text(l10n.pickerAdd(_selected.length)),
+                  ),
                 ),
               ),
             ),
-          ),
         ],
       ),
     );

@@ -5,9 +5,12 @@ import 'package:go_router/go_router.dart';
 import '../../../app/routes.dart';
 import '../../../core/database/database_providers.dart';
 import '../../../core/l10n/generated/app_localizations.dart';
+import '../../../core/theme/app_theme.dart';
 import '../../../core/theme/tokens.dart';
+import '../../../core/widgets/active_workout_dialog.dart';
 import '../../../core/widgets/empty_state.dart';
 import '../../exercises/data/exercise_providers.dart';
+import '../../workout/data/workout_providers.dart';
 import '../data/template_providers.dart';
 import '../domain/template.dart';
 import '../domain/template_editing.dart';
@@ -87,6 +90,7 @@ class _TemplatesScreenState extends ConsumerState<TemplatesScreen> {
         template: templates[index],
         onAction: (action) => _onAction(templates[index], action),
         onOpen: () => _openEditor(AppRoutes.templateEdit(templates[index].id)),
+        onStart: () => _start(templates[index]),
       ),
     );
   }
@@ -97,6 +101,17 @@ class _TemplatesScreenState extends ConsumerState<TemplatesScreen> {
     final saved = await context.push<bool>(location);
     if (saved ?? false) {
       messenger.showSnackBar(SnackBar(content: Text(l10n.templateSavedSnack)));
+    }
+  }
+
+  /// Start treningu z szablonu: jedno tapnięcie, potem ekran treningu.
+  Future<void> _start(Template template) async {
+    final started = await ref
+        .read(workoutStarterProvider)
+        .startFromTemplate(template);
+    if (!mounted) return;
+    if (started || await showActiveWorkoutDialog(context)) {
+      if (mounted) await context.push(AppRoutes.workout);
     }
   }
 
@@ -153,11 +168,13 @@ class _TemplateTile extends ConsumerWidget {
     required this.template,
     required this.onAction,
     required this.onOpen,
+    required this.onStart,
   });
 
   final Template template;
   final ValueChanged<_TemplateAction> onAction;
   final VoidCallback onOpen;
+  final VoidCallback onStart;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -194,31 +211,51 @@ class _TemplateTile extends ConsumerWidget {
         ],
       ),
       onTap: onOpen,
-      trailing: PopupMenuButton<_TemplateAction>(
-        tooltip: l10n.templateActions,
-        onSelected: onAction,
-        itemBuilder: (context) => [
-          if (!template.isArchived)
-            PopupMenuItem(
-              value: _TemplateAction.duplicate,
-              child: Text(l10n.templateDuplicate),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (!template.isArchived && template.exercises.isNotEmpty)
+            IconButton.filled(
+              tooltip: l10n.workoutStart,
+              onPressed: onStart,
+              style: IconButton.styleFrom(
+                backgroundColor: context.appColors.accentFill,
+                foregroundColor: context.appColors.onAccentFill,
+              ),
+              icon: Icon(
+                Icons.play_arrow_rounded,
+                color: context.appColors.onAccentFill,
+              ),
             ),
-          if (template.isArchived)
-            PopupMenuItem(
-              value: _TemplateAction.unarchive,
-              child: Text(l10n.templateUnarchive),
-            )
-          else
-            PopupMenuItem(
-              value: _TemplateAction.archive,
-              child: Text(l10n.templateArchive),
-            ),
-          PopupMenuItem(
-            value: _TemplateAction.delete,
-            child: Text(l10n.commonDelete),
-          ),
+          _menu(l10n),
         ],
       ),
     );
   }
+
+  Widget _menu(AppLocalizations l10n) => PopupMenuButton<_TemplateAction>(
+    tooltip: l10n.templateActions,
+    onSelected: onAction,
+    itemBuilder: (context) => [
+      if (!template.isArchived)
+        PopupMenuItem(
+          value: _TemplateAction.duplicate,
+          child: Text(l10n.templateDuplicate),
+        ),
+      if (template.isArchived)
+        PopupMenuItem(
+          value: _TemplateAction.unarchive,
+          child: Text(l10n.templateUnarchive),
+        )
+      else
+        PopupMenuItem(
+          value: _TemplateAction.archive,
+          child: Text(l10n.templateArchive),
+        ),
+      PopupMenuItem(
+        value: _TemplateAction.delete,
+        child: Text(l10n.commonDelete),
+      ),
+    ],
+  );
 }

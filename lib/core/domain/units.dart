@@ -33,3 +33,17 @@ double roundToStep(double value, double step) {
   // Unika artefaktów typu 82.50000000000001.
   return double.parse((steps * step).toStringAsFixed(3));
 }
+
+/// Następna wielokrotność [step] powyżej ([direction] > 0) albo poniżej
+/// [value], nie mniej niż zero. Wartość spoza siatki kroku trafia na
+/// najbliższy punkt siatki w danym kierunku (81 → 82,5 albo 80 przy 2,5).
+double stepValue(double value, double step, int direction) {
+  if (step <= 0) return value;
+  const epsilon = 1e-6;
+  final k = value / step;
+  final target = direction > 0
+      ? (k + epsilon).floor() + 1
+      : (k - epsilon).ceil() - 1;
+  final result = roundToStep(target * step, step);
+  return result < 0 ? 0 : result;
+}

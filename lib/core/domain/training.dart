@@ -38,3 +38,6 @@ enum EffortScale implements CodedEnum {
   @override
   final String code;
 }
+
+/// Długości przerw do wyboru w szablonie i ustawieniach (s).
+const restChoicesSeconds = <int>[30, 45, 60, 90, 120, 150, 180, 240, 300];

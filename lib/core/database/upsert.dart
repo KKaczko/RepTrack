@@ -14,9 +14,13 @@ Future<void> upsertIfChanged<T extends Table, R extends DataClass>(
   required R Function(R row) touch,
 }) async {
   if (existing == candidate) return;
-  await db
-      .into(table)
-      .insertOnConflictUpdate(touch(candidate) as Insertable<R>);
+  // `insertOnConflictUpdate` pomija kolumny null w części UPDATE
+  // (`toColumns(true)`), więc wyczyszczone pole (np. przywrócone
+  // dziedziczenie, cofnięte zatwierdzenie serii) nie trafiłoby do bazy.
+  final values = RawValuesInsertable<R>(
+    (touch(candidate) as Insertable<R>).toColumns(false),
+  );
+  await db.into(table).insert(values, onConflict: DoUpdate((_) => values));
 }
 
 /// Miękko usuwa nieusunięte wiersze [table], w których [column] = [value].

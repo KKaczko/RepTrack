@@ -44,6 +44,17 @@ void main() {
       expect(roundToStep(80.1, 2.5), 80.0);
       expect(roundToStep(0.1 + 0.2, 0.1), 0.3);
     });
+
+    test('stepValue idzie do następnego punktu siatki kroku', () {
+      expect(stepValue(80, 2.5, 1), 82.5);
+      expect(stepValue(80, 2.5, -1), 77.5);
+      // Wartość spoza siatki trafia na najbliższy punkt w danym kierunku.
+      expect(stepValue(81, 2.5, 1), 82.5);
+      expect(stepValue(81, 2.5, -1), 80);
+      expect(stepValue(0, 2.5, -1), 0);
+      expect(stepValue(1, 2.5, -1), 0);
+      expect(stepValue(20, 1.25, 1), 21.25);
+    });
   });
 
   group('normalizeForSearch', () {
