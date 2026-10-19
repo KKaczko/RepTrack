@@ -1,6 +1,6 @@
 # Plan etapów, testy i ryzyka
 
-Status: Etap 0 (plan), zatwierdzony 2026-10-19.
+Status: Etap 0 zatwierdzony 2026-10-19. Etap 1 zakończony (czeka na akceptację), szczegóły w sekcji „Odstępstwa od planu”.
 
 ## Ustalenia
 
@@ -106,7 +106,7 @@ Testy integracyjne na urządzeniu (`integration_test`) dochodzą w Etapie 7. `ch
 | Ryzyko | Mitygacja |
 | --- | --- |
 | Timer przerwy w tle. Exact alarms są domyślnie zablokowane od Androida 14, `USE_EXACT_ALARM` jest zastrzeżony dla aplikacji typu budzik/zegar, a One UI na Samsungu usypia aplikacje w tle. | [ADR 0009](decisions/0009-timer-przerwy.md). Test na telefonie w Etapie 4. Plan B: foreground service. |
-| sqlite3 3.x (build hooks) w testach na Windows | Weryfikacja w Etapie 1. Awaryjnie wskazanie `sqlite3.dll`. |
+| sqlite3 3.x (build hooks) w testach na Windows | **Rozwiązane w Etapie 1:** testy na prawdziwej bazie SQLite działają na Windows bez dodatkowej konfiguracji. |
 | Brak toolchainu, mało miejsca na C: | Wszystko na `D:`, ścieżki cache przez zmienne środowiskowe, testy na telefonie przez USB bez emulatora. |
 | Auto Backup i WAL | Checkpoint `TRUNCATE` przy pauzie aplikacji. Reguły obejmują `.db` i `-wal`. Test backup → reinstalacja → restore. |
 | Jakość polskich nazw w katalogu | Nazwy i aliasy pisane ręcznie, w Etapie 2 lista do przeglądu przez właściciela. |
@@ -119,3 +119,13 @@ Testy integracyjne na urządzeniu (`integration_test`) dochodzą w Etapie 7. `ch
 - **Każdy etap:** `bash tool/check.sh` przechodzi (format, analiza bez ostrzeżeń, testy, build release APK), commit na `main` (bez push bez zgody właściciela) i raport.
 - **Etap 1:** `flutter doctor` bez błędów dla Androida, aplikacja-szkielet startuje na telefonie (`flutter run`), test migracji v1 przechodzi.
 - **Koniec MVP:** wszystkie kontrole automatyczne z sekcji 9 specyfikacji są pokryte testami z tabeli powyżej, a właściciel przechodzi listę kontroli ręcznych na telefonie.
+
+## Odstępstwa od planu
+
+### Etap 1
+
+- **JDK** pobrany jako oficjalny zip Microsoft OpenJDK 17 zamiast przez winget, żeby trafił na `D:` bez instalatora i akceptowania umowy.
+- **Android SDK:** `sdkmanager` został zastąpiony nowym `android` CLI i nie ma już kroku `--licenses`. Warunki SDK zaakceptował właściciel przed instalacją pakietów. Szczegóły w [development.md](development.md).
+- **Kody enumów** w bazie i backupie to nazwy wartości enumów w Dart (camelCase, np. `weightedBodyweight`), a nie snake_case z pierwszej wersji `data-model.md`. Lista kodów jest w [data-model.md](data-model.md).
+- **`build_runner`** w wersji 2.16 ignoruje flagę `--delete-conflicting-outputs`, więc `check.sh` jej nie używa.
+- **Testy widżetów z bazą** wymagają połączenia z `closeStreamsSynchronously: true` (opis w [development.md](development.md)).

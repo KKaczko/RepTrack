@@ -1,0 +1,38 @@
+{
+  "@@locale": "pl",
+  "appTitle": "RepTrack",
+  "@appTitle": {"description": "Nazwa aplikacji"},
+
+  "navStart": "Start",
+  "@navStart": {"description": "Zakładka dolnej nawigacji: ekran startowy"},
+  "navTemplates": "Szablony",
+  "@navTemplates": {"description": "Zakładka dolnej nawigacji: szablony treningów"},
+  "navHistory": "Historia",
+  "@navHistory": {"description": "Zakładka dolnej nawigacji: historia treningów i progres"},
+  "navExercises": "Ćwiczenia",
+  "@navExercises": {"description": "Zakładka dolnej nawigacji: biblioteka ćwiczeń"},
+
+  "settingsTitle": "Ustawienia",
+  "@settingsTitle": {"description": "Tytuł ekranu ustawień"},
+  "openSettings": "Otwórz ustawienia",
+  "@openSettings": {"description": "Etykieta dostępności przycisku ustawień"},
+  "workoutTitle": "Trening",
+  "@workoutTitle": {"description": "Tytuł ekranu aktywnego treningu"},
+  "startEmptyWorkout": "Pusty trening",
+  "@startEmptyWorkout": {"description": "Przycisk rozpoczęcia treningu bez szablonu"},
+
+  "comingSoonTitle": "Wkrótce",
+  "@comingSoonTitle": {"description": "Nagłówek ekranu, który powstanie w kolejnym etapie"},
+  "homePlaceholder": "Tu pojawi się szybki start ostatniego szablonu, ostatnia sesja i treningi w tym tygodniu.",
+  "@homePlaceholder": {"description": "Opis zaślepki ekranu Start"},
+  "templatesPlaceholder": "Tu stworzysz szablony treningów i skonfigurujesz serie.",
+  "@templatesPlaceholder": {"description": "Opis zaślepki ekranu Szablony"},
+  "historyPlaceholder": "Tu znajdziesz zakończone treningi, rekordy i wykresy progresu.",
+  "@historyPlaceholder": {"description": "Opis zaślepki ekranu Historia"},
+  "exercisesPlaceholder": "Tu przeszukasz bibliotekę ćwiczeń i dodasz własne.",
+  "@exercisesPlaceholder": {"description": "Opis zaślepki ekranu Ćwiczenia"},
+  "settingsPlaceholder": "Tu zmienisz motyw, jednostki, krok ciężaru i domyślną przerwę.",
+  "@settingsPlaceholder": {"description": "Opis zaślepki ekranu Ustawienia"},
+  "workoutPlaceholder": "Tu będziesz zapisywać serie i odliczać przerwy.",
+  "@workoutPlaceholder": {"description": "Opis zaślepki ekranu aktywnego treningu"}
+}

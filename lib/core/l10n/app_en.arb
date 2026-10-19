@@ -1,0 +1,22 @@
+{
+  "@@locale": "en",
+  "appTitle": "RepTrack",
+
+  "navStart": "Home",
+  "navTemplates": "Templates",
+  "navHistory": "History",
+  "navExercises": "Exercises",
+
+  "settingsTitle": "Settings",
+  "openSettings": "Open settings",
+  "workoutTitle": "Workout",
+  "startEmptyWorkout": "Empty workout",
+
+  "comingSoonTitle": "Coming soon",
+  "homePlaceholder": "Quick start for your last template, your last session and this week's workouts will appear here.",
+  "templatesPlaceholder": "Create workout templates and configure their sets here.",
+  "historyPlaceholder": "Finished workouts, records and progress charts will appear here.",
+  "exercisesPlaceholder": "Search the exercise library and add your own exercises here.",
+  "settingsPlaceholder": "Change the theme, units, weight step and default rest time here.",
+  "workoutPlaceholder": "Log your sets and count down rest periods here."
+}

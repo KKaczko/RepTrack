@@ -1,0 +1,15 @@
+# Podpis wydania RepTrack
+#
+# 1. Wygeneruj keystore poza repozytorium (JDK z D:\Dev\tools\jdk-17):
+#      keytool -genkey -v -keystore D:\Klucze\reptrack-upload.jks -keyalg RSA -keysize 4096 -validity 10000 -alias upload
+# 2. Skopiuj ten plik jako android/key.properties (jest w .gitignore) i uzupełnij wartości.
+# 3. Zrób kopię zapasową keystore i haseł w bezpiecznym miejscu.
+#
+# Przy publikacji w Google Play włącz Play App Signing: Google trzyma klucz podpisujący
+# aplikację, a ten keystore służy tylko jako klucz przesyłania (upload key). Utratę klucza
+# przesyłania da się wtedy odwrócić przez reset w Play Console.
+
+storePassword=ZMIEN_MNIE
+keyPassword=ZMIEN_MNIE
+keyAlias=upload
+storeFile=D:/Klucze/reptrack-upload.jks

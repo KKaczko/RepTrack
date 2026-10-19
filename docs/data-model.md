@@ -1,6 +1,6 @@
 # Model danych (Drift, schemat v1)
 
-Status: Etap 0 (plan), zatwierdzony 2026-10-19. Implementacja w Etapie 1. Decyzje: [ADR 0003](decisions/0003-identyfikatory-i-usuwanie.md), [ADR 0004](decisions/0004-dziedziczenie-serii.md), [ADR 0005](decisions/0005-katalog-cwiczen.md).
+Status: zaimplementowany w Etapie 1 jako schemat v1 (`lib/core/database/tables.dart`, zrzut `drift_schemas/app_database/drift_schema_v1.json`). Decyzje: [ADR 0003](decisions/0003-identyfikatory-i-usuwanie.md), [ADR 0004](decisions/0004-dziedziczenie-serii.md), [ADR 0005](decisions/0005-katalog-cwiczen.md).
 
 Model rozdziela trzy warstwy: definicję ćwiczenia, plan (szablon) i wykonanie (sesję). Sesja jest kopią planu z chwili startu. Zmiany szablonu i ćwiczenia nigdy nie modyfikują istniejących sesji. Ręczna korekta zakończonej sesji jest dozwolona i aktualizuje `updated_at`.
 
@@ -11,7 +11,27 @@ Model rozdziela trzy warstwy: definicję ćwiczenia, plan (szablon) i wykonanie 
 - **Usuwanie:** wyłącznie miękkie. Zapytania domyślnie filtrują `deleted_at IS NULL`.
 - **Klucze obce:** `PRAGMA foreign_keys = ON`, tryb WAL.
 - **Jednostki:** ciężar w gramach (`INT`), dystans w metrach, czas w sekundach, RIR/RPE w dziesiątych częściach (`INT`, np. RPE 8,5 → 85). Konwersja kg/lb wyłącznie w UI.
-- **Enumy:** zapisywane jako stabilne kody tekstowe, nie indeksy.
+- **Enumy:** zapisywane jako stabilne kody tekstowe, nie indeksy. Kod to nazwa wartości enumu w Dart (camelCase), tak samo w bazie i w backupie. Wartości wolno dodawać, nie wolno ich zmieniać ani usuwać bez migracji.
+
+### Kody enumów (v1)
+
+| Enum | Kody |
+| --- | --- |
+| MuscleGroup | abdominals, abductors, adductors, biceps, calves, chest, forearms, glutes, hamstrings, lats, lowerBack, middleBack, neck, quadriceps, shoulders, traps, triceps |
+| Equipment | barbell, dumbbell, kettlebell, cable, machine, smithMachine, ezBar, bodyweight, bands, medicineBall, exerciseBall, foamRoll, other |
+| ExerciseCategory | strength, cardio, mobility, plyometrics, olympic, strongman |
+| Mechanic | compound, isolation |
+| Force | push, pull, static |
+| LoadMode | external, bodyweight, weightedBodyweight, assisted |
+| WeightSemantics | total, perHand, perSide |
+| ExerciseSource | builtin, user |
+| SetType | warmup, working, drop, amrap |
+| TargetKind | reps, duration |
+| EffortScale | rir, rpe |
+| SessionStatus | active, completed, discarded |
+| Side | both, left, right |
+
+Klucze `settings`: `theme_mode`, `weight_unit`, `weight_step`, `effort_scale` (`off` / `rir` / `rpe`), `default_rest_seconds`, `keep_screen_on`.
 
 ## `exercises`
 
