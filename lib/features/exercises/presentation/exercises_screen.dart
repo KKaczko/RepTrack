@@ -96,7 +96,7 @@ class _ExercisesScreenState extends ConsumerState<ExercisesScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => context.push(AppRoutes.exerciseNew),
+        onPressed: () => openExerciseForm(context, AppRoutes.exerciseNew),
         icon: const Icon(Icons.add_rounded),
         label: Text(l10n.exercisesAdd),
       ),
@@ -111,6 +111,17 @@ class _ExercisesScreenState extends ConsumerState<ExercisesScreen> {
         _ => const Center(child: CircularProgressIndicator()),
       },
     );
+  }
+}
+
+/// Otwiera formularz ćwiczenia i po zapisie pokazuje komunikat na ekranie,
+/// z którego go otwarto.
+Future<void> openExerciseForm(BuildContext context, String location) async {
+  final l10n = AppLocalizations.of(context);
+  final messenger = ScaffoldMessenger.of(context);
+  final saved = await context.push<bool>(location);
+  if (saved ?? false) {
+    messenger.showSnackBar(SnackBar(content: Text(l10n.exerciseSavedSnack)));
   }
 }
 

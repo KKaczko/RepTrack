@@ -5,12 +5,6 @@ import '../data/exercise_providers.dart';
 import '../domain/exercise.dart';
 import '../domain/exercise_filter.dart';
 
-/// Cały katalog, także zarchiwizowany; filtrowanie odbywa się w pamięci.
-final exerciseCatalogProvider = StreamProvider<List<Exercise>>(
-  (ref) =>
-      ref.watch(exerciseRepositoryProvider).watchAll(includeArchived: true),
-);
-
 final exerciseFilterProvider =
     NotifierProvider<ExerciseFilterNotifier, ExerciseFilter>(
       ExerciseFilterNotifier.new,

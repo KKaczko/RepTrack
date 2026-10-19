@@ -20,7 +20,7 @@ void main() {
 
     await tester.tap(navTab('Szablony'));
     await tester.pumpAndSettle();
-    expect(find.textContaining('szablony treningów'), findsOneWidget);
+    expect(find.text('Brak szablonów'), findsOneWidget);
 
     await closeRepTrack(tester, db);
   });

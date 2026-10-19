@@ -12,6 +12,7 @@ import '../domain/exercise.dart';
 import '../domain/exercise_repository.dart';
 import 'exercise_labels.dart';
 import 'exercise_providers.dart';
+import 'exercises_screen.dart';
 
 enum _Action { archive, unarchive, delete }
 
@@ -32,8 +33,10 @@ class ExerciseDetailScreen extends ConsumerWidget {
             IconButton(
               tooltip: l10n.exerciseEdit,
               icon: const Icon(Icons.edit_outlined),
-              onPressed: () =>
-                  context.push(AppRoutes.exerciseEdit(exercise.id)),
+              onPressed: () => openExerciseForm(
+                context,
+                AppRoutes.exerciseEdit(exercise.id),
+              ),
             ),
             PopupMenuButton<_Action>(
               tooltip: l10n.exerciseMoreActions,

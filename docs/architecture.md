@@ -16,7 +16,11 @@ Flutter + Dart, Drift (SQLite), Riverpod 3, go_router, freezed (encje domeny), `
 
 - Baza jest jedynym źródłem prawdy. UI obserwuje strumienie Drift (`watch`), a każda akcja użytkownika to transakcja w repozytorium. Strumień emituje nowy stan, więc nie ma osobnego stanu w pamięci, który mógłby zginąć przy ubiciu procesu.
 - Repozytoria są interfejsami w domenie. Przyszła synchronizacja dodaje implementację (np. dekorator z kolejką zmian) bez zmian w logice treningowej.
-- Zależności między funkcjami: wolno importować cudze `domain/`, nie wolno cudzego `data/` ani `presentation/`. `history` i `progress` korzystają z `workout/domain`.
+- Zależności między funkcjami (pilnuje ich `test/architecture/feature_boundaries_test.dart`):
+  - wolno importować cudze `domain/` i publiczne providery (`data/*_providers.dart`), np. katalog ćwiczeń w edytorze szablonów;
+  - nie wolno importować implementacji repozytoriów ani `presentation/` innej funkcji;
+  - ekrany innych funkcji (np. wybór ćwiczeń) otwiera się przez trasy routera w `lib/app/`, który jako jedyny łączy wszystkie funkcje.
+- `history` i `progress` korzystają z `workout/domain`.
 
 ## Wstrzykiwanie zależności
 

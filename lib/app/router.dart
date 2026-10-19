@@ -4,11 +4,13 @@ import 'package:go_router/go_router.dart';
 
 import '../features/exercises/presentation/exercise_detail_screen.dart';
 import '../features/exercises/presentation/exercise_form_screen.dart';
+import '../features/exercises/presentation/exercise_picker_screen.dart';
 import '../features/exercises/presentation/exercises_screen.dart';
 import '../features/history/presentation/history_screen.dart';
 import '../features/home/presentation/home_screen.dart';
 import '../features/settings/presentation/licenses_screen.dart';
 import '../features/settings/presentation/settings_screen.dart';
+import '../features/templates/presentation/template_editor_screen.dart';
 import '../features/templates/presentation/templates_screen.dart';
 import '../features/workout/presentation/workout_screen.dart';
 import 'app_shell.dart';
@@ -23,8 +25,9 @@ final routerProvider = Provider<GoRouter>((ref) {
     navigatorKey: rootKey,
     initialLocation: AppRoutes.home,
     routes: [
-      StatefulShellRoute.indexedStack(
+      StatefulShellRoute(
         builder: (context, state, shell) => AppShell(shell: shell),
+        navigatorContainerBuilder: branchContainer,
         branches: [
           StatefulShellBranch(
             routes: [
@@ -39,6 +42,20 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoutes.templates,
                 builder: (context, state) => const TemplatesScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'new',
+                    parentNavigatorKey: rootKey,
+                    builder: (context, state) => const TemplateEditorScreen(),
+                  ),
+                  GoRoute(
+                    path: ':id',
+                    parentNavigatorKey: rootKey,
+                    builder: (context, state) => TemplateEditorScreen(
+                      templateId: state.pathParameters['id'],
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -91,6 +108,10 @@ final routerProvider = Provider<GoRouter>((ref) {
             builder: (context, state) => const LicensesScreen(),
           ),
         ],
+      ),
+      GoRoute(
+        path: AppRoutes.exercisePicker,
+        builder: (context, state) => const ExercisePickerScreen(),
       ),
       GoRoute(
         path: AppRoutes.workout,

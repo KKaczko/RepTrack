@@ -99,7 +99,6 @@ class _ExerciseFormScreenState extends ConsumerState<ExerciseFormScreen> {
   }
 
   Future<void> _save() async {
-    final l10n = AppLocalizations.of(context);
     final validName = _formKey.currentState!.validate();
     final validMeasurement = _draft.measurement.isValid;
     setState(() => _measurementError = !validMeasurement);
@@ -121,19 +120,18 @@ class _ExerciseFormScreenState extends ConsumerState<ExerciseFormScreen> {
         : built.copyWith(
             userModified: original.isBuiltin || original.userModified,
           );
-    final messenger = ScaffoldMessenger.of(context);
     await ref.read(exerciseRepositoryProvider).save(exercise);
     if (!mounted) return;
-    messenger.showSnackBar(SnackBar(content: Text(l10n.exerciseSavedSnack)));
-    _leave();
+    // Komunikat pokazuje ekran, do którego wracamy.
+    _leave(saved: true);
   }
 
   /// Zamyka ekran po przebudowie z `canPop: true`, żeby PopScope nie
   /// zablokował wyjścia.
-  void _leave() {
+  void _leave({bool saved = false}) {
     setState(() => _allowPop = true);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) context.pop();
+      if (mounted) context.pop(saved);
     });
   }
 
@@ -168,9 +166,16 @@ class _ExerciseFormScreenState extends ConsumerState<ExerciseFormScreen> {
     final isNew = widget.exerciseId == null;
 
     return PopScope(
-      canPop: _allowPop || !_isDirty,
+      // canPop liczone przy budowie bywa nieaktualne (np. tuż po wpisaniu
+      // tekstu), więc decyzja zapada w chwili próby wyjścia.
+      canPop: _allowPop,
       onPopInvokedWithResult: (didPop, _) {
-        if (!didPop) unawaited(_confirmDiscard());
+        if (didPop) return;
+        if (_isDirty) {
+          unawaited(_confirmDiscard());
+        } else {
+          _leave();
+        }
       },
       child: Scaffold(
         appBar: AppBar(

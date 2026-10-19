@@ -3,6 +3,27 @@ import 'package:go_router/go_router.dart';
 
 import '../core/l10n/generated/app_localizations.dart';
 
+/// Kontener nawigatorów zakładek. Każda zakładka ma własny
+/// [ScaffoldMessenger]: snackbary układają się w scaffoldzie ekranu (nad jego
+/// FAB), a nie w scaffoldzie z dolną nawigacją, i nie dublują się między
+/// zakładkami. Nieaktywne zakładki są ukryte jak w `indexedStack` go_routera.
+Widget branchContainer(
+  BuildContext context,
+  StatefulNavigationShell shell,
+  List<Widget> children,
+) => Stack(
+  children: [
+    for (final (index, child) in children.indexed)
+      Offstage(
+        offstage: index != shell.currentIndex,
+        child: TickerMode(
+          enabled: index == shell.currentIndex,
+          child: ScaffoldMessenger(child: child),
+        ),
+      ),
+  ],
+);
+
 /// Rama z dolną nawigacją dla czterech zakładek.
 class AppShell extends StatelessWidget {
   const AppShell({required this.shell, super.key});

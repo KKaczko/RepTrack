@@ -1,6 +1,6 @@
 # Plan etapów, testy i ryzyka
 
-Status: Etapy 0–2 zaakceptowane (2026-10-19). W trakcie: Etap 3. Szczegóły w sekcji „Odstępstwa od planu”.
+Status: Etapy 0–2 zaakceptowane (2026-10-19). Etap 3 zakończony, czeka na akceptację. Szczegóły w sekcji „Odstępstwa od planu”.
 
 ## Ustalenia
 
@@ -137,3 +137,22 @@ Testy integracyjne na urządzeniu (`integration_test`) dochodzą w Etapie 7. `ch
 - **Formularz ćwiczenia** używa `SingleChildScrollView` zamiast `ListView`. `ListView` niszczył pola poza ekranem, więc walidacja pomijała pustą nazwę po przewinięciu do „Zapisz”. Błąd wychwycił test widżetu.
 - **Arkusz filtrów** otwiera się na głównym nawigatorze, bo snackbar zasłaniał przycisk „Pokaż wyniki”. Również wychwycone testem.
 - **Ekran ustawień** zawiera na razie tylko „Licencje i źródła”. Motyw, jednostki, krok ciężaru, skala wysiłku i przerwa dojdą w Etapie 4 razem z funkcjami, które z nich korzystają.
+
+### Etap 3
+
+- **Granice między funkcjami** doprecyzowane w [architecture.md](architecture.md). Wolno importować cudze `domain/` i publiczne providery (`data/*_providers.dart`), a ekrany innych funkcji otwiera się przez trasy routera. Pilnuje tego nowy test `feature_boundaries_test.dart`.
+- **Edytor szablonu** zapisuje zmiany przyciskiem „Zapisz” (z potwierdzeniem porzucenia zmian), a nie automatycznie. Natychmiastowy zapis każdej zmiany dotyczy aktywnego treningu (Etap 4).
+- **Domyślne ustawienia nowego ćwiczenia w szablonie:**
+  - powtórzenia: 3 × 8–12;
+  - tylko czas: 3 × 30–60 s;
+  - kardio: 1 seria bez celu;
+  - pozostałe: 3 serie bez celu.
+- **Przerwa** wybierana z listy: domyślna z ustawień albo 0:30–5:00. Własne wartości po MVP.
+- **Wyjście z edytorów** (szablon, ćwiczenie): decyzja o potwierdzeniu zapada w chwili próby wyjścia. `canPop` liczone przy budowie bywało nieaktualne tuż po wpisaniu tekstu; wychwycił to test.
+- **Usterki znalezione na emulatorze i poprawione:**
+  - ucięta etykieta nazwy w edytorze;
+  - przycisk „Dodaj (N)” chowający się pod klawiaturą;
+  - klawiatura wracająca po wyborze ćwiczeń;
+  - karty serii zlewające się z tłem arkusza;
+  - snackbar zasłaniający przycisk „Nowy szablon”.
+- **Snackbary w zakładkach:** każda zakładka ma własny `ScaffoldMessenger` (`branchContainer` w `app_shell.dart`), a edytory zwracają wynik i komunikat pokazuje ekran, do którego wracasz.

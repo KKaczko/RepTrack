@@ -18,3 +18,10 @@ Specyfikacja (sekcja 4) przewiduje pole „liczba serii” w `TemplateExercise` 
 
 - Brak niespójności licznika i wierszy.
 - Znane ograniczenie: nie da się nadpisać wartością „brak” (np. seria bez docelowego ciężaru, gdy ćwiczenie ma cel). Jeśli okaże się potrzebne, dojdą flagi nadpisań w osobnej migracji.
+
+## Implementacja w UI (Etap 3)
+
+- W edytorze serii puste pole celu oznacza wartość wspólną. Wpisanie tylko „Do 10” przy wspólnym 8–12 zapisuje nadpisanie 8–10. Oba pola puste usuwają nadpisanie celu.
+- Typ serii i przerwa mają opcję „Wspólne”, która zapisuje NULL.
+- „Przywróć dziedziczenie” czyści wszystkie nadpisania serii.
+

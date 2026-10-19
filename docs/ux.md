@@ -8,7 +8,7 @@ Status: Etap 0 (plan), zatwierdzony 2026-10-19. Kierunek wizualny: [ADR 0012](de
 Shell z dolną nawigacją (StatefulShellRoute, 4 zakładki):
 ├─ Start /                    baner wznowienia · „Rozpocznij: <ostatni szablon>” · ostatnie szablony
 │                             · pusty trening · ostatnia sesja · treningi w tym tygodniu · ⚙ → Ustawienia
-├─ Szablony /templates        lista (archiwum w filtrze) → /templates/:id edytor
+├─ Szablony /templates        lista (przełącznik archiwum) → /templates/new, /templates/:id edytor
 │                             → arkusz konfiguracji serii ćwiczenia (nadpisania, „przywróć dziedziczenie”)
 ├─ Historia /history          [Sesje | Progres]
 │    Sesje → /history/:id szczegóły + tryb edycji → /history/:id/compare
@@ -20,7 +20,7 @@ Poza shellem (pełny ekran):
   /workout                    aktywny trening (arkusze: wybór ćwiczenia, kolejność, zamiana)
   /workout/finish             podsumowanie, notatka, samopoczucie, diff „zaktualizuj szablon”
   /settings → /settings/backup (backup, przywracanie, CSV, MD) · /settings/licenses
-Wspólny picker ćwiczeń: używany w szablonach, treningu i filtrze eksportu.
+  /pick-exercises             wspólny wybór ćwiczeń (szablony, trening, filtr eksportu); zwraca listę id
 ```
 
 Gdy trwa sesja, nad dolną nawigacją wisi pasek „Trening trwa 32:10 · Wróć” na każdym ekranie shella.
