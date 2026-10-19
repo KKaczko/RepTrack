@@ -1,11 +1,21 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../core/domain/coded_enum.dart';
 import '../../../core/domain/training.dart';
 import '../../../core/domain/units.dart';
 
 part 'app_settings.freezed.dart';
 
-enum AppThemeMode { dark, light, system }
+enum AppThemeMode implements CodedEnum {
+  dark('dark'),
+  light('light'),
+  system('system');
+
+  const AppThemeMode(this.code);
+
+  @override
+  final String code;
+}
 
 /// Ustawienia aplikacji (ADR 0010). Przechowywane w bazie, więc backup
 /// obejmuje je automatycznie.

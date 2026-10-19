@@ -11,25 +11,27 @@ Model rozdziela trzy warstwy: definicję ćwiczenia, plan (szablon) i wykonanie 
 - **Usuwanie:** wyłącznie miękkie. Zapytania domyślnie filtrują `deleted_at IS NULL`.
 - **Klucze obce:** `PRAGMA foreign_keys = ON`, tryb WAL.
 - **Jednostki:** ciężar w gramach (`INT`), dystans w metrach, czas w sekundach, RIR/RPE w dziesiątych częściach (`INT`, np. RPE 8,5 → 85). Konwersja kg/lb wyłącznie w UI.
-- **Enumy:** zapisywane jako stabilne kody tekstowe, nie indeksy. Kod to nazwa wartości enumu w Dart (camelCase), tak samo w bazie i w backupie. Wartości wolno dodawać, nie wolno ich zmieniać ani usuwać bez migracji.
+- **Enumy:** zapisywane jako stabilne kody tekstowe w snake_case, nie indeksy ani nazwy z Dart ([ADR 0013](decisions/0013-kody-enumow.md)). Te same kody trafiają do bazy i backupu. Wartości wolno dodawać, a zmiana lub usunięcie kodu wymaga migracji. Kody przypina test `test/core/domain/enum_codes_test.dart`.
 
 ### Kody enumów (v1)
 
 | Enum | Kody |
 | --- | --- |
-| MuscleGroup | abdominals, abductors, adductors, biceps, calves, chest, forearms, glutes, hamstrings, lats, lowerBack, middleBack, neck, quadriceps, shoulders, traps, triceps |
-| Equipment | barbell, dumbbell, kettlebell, cable, machine, smithMachine, ezBar, bodyweight, bands, medicineBall, exerciseBall, foamRoll, other |
+| MuscleGroup | abdominals, abductors, adductors, biceps, calves, chest, forearms, glutes, hamstrings, lats, lower_back, middle_back, neck, quadriceps, shoulders, traps, triceps |
+| Equipment | barbell, dumbbell, kettlebell, cable, machine, smith_machine, ez_bar, bodyweight, bands, medicine_ball, exercise_ball, foam_roll, other |
 | ExerciseCategory | strength, cardio, mobility, plyometrics, olympic, strongman |
 | Mechanic | compound, isolation |
 | Force | push, pull, static |
-| LoadMode | external, bodyweight, weightedBodyweight, assisted |
-| WeightSemantics | total, perHand, perSide |
+| LoadMode | external, bodyweight, weighted_bodyweight, assisted |
+| WeightSemantics | total, per_hand, per_side |
 | ExerciseSource | builtin, user |
 | SetType | warmup, working, drop, amrap |
 | TargetKind | reps, duration |
 | EffortScale | rir, rpe |
 | SessionStatus | active, completed, discarded |
 | Side | both, left, right |
+| AppThemeMode (ustawienia) | dark, light, system |
+| WeightUnit (ustawienia) | kg, lb |
 
 Klucze `settings`: `theme_mode`, `weight_unit`, `weight_step`, `effort_scale` (`off` / `rir` / `rpe`), `default_rest_seconds`, `keep_screen_on`.
 

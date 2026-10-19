@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import '../../../core/database/app_database.dart';
 import '../../../core/domain/clock.dart';
+import '../../../core/domain/coded_enum.dart';
 import '../../../core/domain/training.dart';
 import '../../../core/domain/units.dart';
 import '../domain/app_settings.dart';
@@ -50,10 +51,10 @@ final class DriftSettingsRepository implements SettingsRepository {
   });
 
   static Map<String, Object?> _toMap(AppSettings s) => {
-    SettingKeys.themeMode: s.themeMode.name,
-    SettingKeys.weightUnit: s.weightUnit.name,
+    SettingKeys.themeMode: s.themeMode.code,
+    SettingKeys.weightUnit: s.weightUnit.code,
     SettingKeys.weightStep: s.weightStep,
-    SettingKeys.effortScale: s.effortScale?.name ?? 'off',
+    SettingKeys.effortScale: s.effortScale?.code ?? 'off',
     SettingKeys.defaultRestSeconds: s.defaultRestSeconds,
     SettingKeys.keepScreenOn: s.keepScreenOn,
   };
@@ -81,12 +82,12 @@ final class DriftSettingsRepository implements SettingsRepository {
       themeMode: pick(
         SettingKeys.themeMode,
         defaults.themeMode,
-        (raw) => AppThemeMode.values.asNameMap()[raw],
+        (raw) => tryEnumFromCode(AppThemeMode.values, raw),
       ),
       weightUnit: pick(
         SettingKeys.weightUnit,
         defaults.weightUnit,
-        (raw) => WeightUnit.values.asNameMap()[raw],
+        (raw) => tryEnumFromCode(WeightUnit.values, raw),
       ),
       weightStep: pick(
         SettingKeys.weightStep,
@@ -98,7 +99,7 @@ final class DriftSettingsRepository implements SettingsRepository {
           : pick(
               SettingKeys.effortScale,
               defaults.effortScale,
-              (raw) => EffortScale.values.asNameMap()[raw],
+              (raw) => tryEnumFromCode(EffortScale.values, raw),
             ),
       defaultRestSeconds: pick(
         SettingKeys.defaultRestSeconds,

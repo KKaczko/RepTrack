@@ -1,5 +1,15 @@
+import 'coded_enum.dart';
+
 /// Jednostki wyświetlania ciężaru. Baza zawsze przechowuje gramy (ADR 0010).
-enum WeightUnit { kg, lb }
+enum WeightUnit implements CodedEnum {
+  kg('kg'),
+  lb('lb');
+
+  const WeightUnit(this.code);
+
+  @override
+  final String code;
+}
 
 /// Gramy w jednym funcie (definicja międzynarodowa).
 const double gramsPerPound = 453.59237;

@@ -1,16 +1,36 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../core/domain/coded_enum.dart';
 import '../../../core/domain/local_date.dart';
 import '../../../core/domain/training.dart';
 import '../../exercises/domain/exercise.dart';
 
 part 'workout_session.freezed.dart';
 
-/// Stan sesji. Najwyżej jedna sesja może być aktywna (wymusza to indeks w bazie).
-enum SessionStatus { active, completed, discarded }
+/// Stan sesji. Najwyżej jedna sesja może być aktywna (wymusza to indeks
+/// w bazie, który zależy od kodu `active`).
+enum SessionStatus implements CodedEnum {
+  active('active'),
+  completed('completed'),
+  discarded('discarded');
+
+  const SessionStatus(this.code);
+
+  @override
+  final String code;
+}
 
 /// Strona ciała dla ćwiczeń jednostronnych. W MVP seria oznacza obie strony.
-enum Side { both, left, right }
+enum Side implements CodedEnum {
+  both('both'),
+  left('left'),
+  right('right');
+
+  const Side(this.code);
+
+  @override
+  final String code;
+}
 
 /// Rzeczywiste wykonanie treningu: niezależna kopia planu z chwili startu.
 @freezed

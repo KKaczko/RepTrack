@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:drift/drift.dart';
 
+import '../domain/coded_enum.dart';
 import '../domain/local_date.dart';
 
 /// Moment czasu jako epoch ms UTC (docs/data-model.md).
@@ -39,19 +40,33 @@ final class StringListConverter extends TypeConverter<List<String>, String> {
   String toSql(List<String> value) => jsonEncode(value);
 }
 
-/// Lista enumów jako tablica JSON stabilnych kodów (nazw wartości).
-final class EnumListConverter<T extends Enum>
+/// Enum jako jego stabilny kod snake_case (ADR 0013), nie nazwa w Dart.
+final class CodedEnumConverter<T extends CodedEnum>
+    extends TypeConverter<T, String> {
+  const CodedEnumConverter(this.values);
+
+  final List<T> values;
+
+  @override
+  T fromSql(String fromDb) => enumFromCode(values, fromDb);
+
+  @override
+  String toSql(T value) => value.code;
+}
+
+/// Lista enumów jako tablica JSON stabilnych kodów.
+final class CodedEnumListConverter<T extends CodedEnum>
     extends TypeConverter<List<T>, String> {
-  const EnumListConverter(this.values);
+  const CodedEnumListConverter(this.values);
 
   final List<T> values;
 
   @override
   List<T> fromSql(String fromDb) => [
-    for (final name in (jsonDecode(fromDb) as List<dynamic>).cast<String>())
-      values.byName(name),
+    for (final code in (jsonDecode(fromDb) as List<dynamic>).cast<String>())
+      enumFromCode(values, code),
   ];
 
   @override
-  String toSql(List<T> value) => jsonEncode([for (final v in value) v.name]);
+  String toSql(List<T> value) => jsonEncode([for (final v in value) v.code]);
 }

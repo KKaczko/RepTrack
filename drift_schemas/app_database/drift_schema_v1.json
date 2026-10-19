@@ -111,7 +111,7 @@
             "default_client_dart": null,
             "dsl_features": [],
             "type_converter": {
-              "dart_expr": "const EnumListConverter<MuscleGroup>(MuscleGroup.values)",
+              "dart_expr": "const CodedEnumListConverter<MuscleGroup>(MuscleGroup.values)",
               "dart_type_name": "List<MuscleGroup>"
             }
           },
@@ -125,7 +125,7 @@
             "default_client_dart": null,
             "dsl_features": [],
             "type_converter": {
-              "dart_expr": "const EnumListConverter<MuscleGroup>(MuscleGroup.values)",
+              "dart_expr": "const CodedEnumListConverter<MuscleGroup>(MuscleGroup.values)",
               "dart_type_name": "List<MuscleGroup>"
             }
           },
@@ -139,7 +139,7 @@
             "default_client_dart": null,
             "dsl_features": [],
             "type_converter": {
-              "dart_expr": "const EnumNameConverter<Equipment>(Equipment.values)",
+              "dart_expr": "const CodedEnumConverter<Equipment>(Equipment.values)",
               "dart_type_name": "Equipment"
             }
           },
@@ -153,7 +153,7 @@
             "default_client_dart": null,
             "dsl_features": [],
             "type_converter": {
-              "dart_expr": "const EnumNameConverter<ExerciseCategory>(ExerciseCategory.values)",
+              "dart_expr": "const CodedEnumConverter<ExerciseCategory>(ExerciseCategory.values)",
               "dart_type_name": "ExerciseCategory"
             }
           },
@@ -167,7 +167,7 @@
             "default_client_dart": null,
             "dsl_features": [],
             "type_converter": {
-              "dart_expr": "const EnumNameConverter<Mechanic>(Mechanic.values)",
+              "dart_expr": "const CodedEnumConverter<Mechanic>(Mechanic.values)",
               "dart_type_name": "Mechanic"
             }
           },
@@ -181,7 +181,7 @@
             "default_client_dart": null,
             "dsl_features": [],
             "type_converter": {
-              "dart_expr": "const EnumNameConverter<Force>(Force.values)",
+              "dart_expr": "const CodedEnumConverter<Force>(Force.values)",
               "dart_type_name": "Force"
             }
           },
@@ -261,7 +261,7 @@
             "default_client_dart": null,
             "dsl_features": [],
             "type_converter": {
-              "dart_expr": "const EnumNameConverter<LoadMode>(LoadMode.values)",
+              "dart_expr": "const CodedEnumConverter<LoadMode>(LoadMode.values)",
               "dart_type_name": "LoadMode"
             }
           },
@@ -275,7 +275,7 @@
             "default_client_dart": null,
             "dsl_features": [],
             "type_converter": {
-              "dart_expr": "const EnumNameConverter<WeightSemantics>(WeightSemantics.values)",
+              "dart_expr": "const CodedEnumConverter<WeightSemantics>(WeightSemantics.values)",
               "dart_type_name": "WeightSemantics"
             }
           },
@@ -313,7 +313,7 @@
             "default_client_dart": null,
             "dsl_features": [],
             "type_converter": {
-              "dart_expr": "const EnumNameConverter<ExerciseSource>(ExerciseSource.values)",
+              "dart_expr": "const CodedEnumConverter<ExerciseSource>(ExerciseSource.values)",
               "dart_type_name": "ExerciseSource"
             }
           },
@@ -634,7 +634,7 @@
             "default_client_dart": null,
             "dsl_features": [],
             "type_converter": {
-              "dart_expr": "const EnumNameConverter<TargetKind>(TargetKind.values)",
+              "dart_expr": "const CodedEnumConverter<TargetKind>(TargetKind.values)",
               "dart_type_name": "TargetKind"
             }
           },
@@ -688,7 +688,7 @@
             "default_client_dart": null,
             "dsl_features": [],
             "type_converter": {
-              "dart_expr": "const EnumNameConverter<SetType>(SetType.values)",
+              "dart_expr": "const CodedEnumConverter<SetType>(SetType.values)",
               "dart_type_name": "SetType"
             }
           },
@@ -829,7 +829,7 @@
             "default_client_dart": null,
             "dsl_features": [],
             "type_converter": {
-              "dart_expr": "const EnumNameConverter<SetType>(SetType.values)",
+              "dart_expr": "const CodedEnumConverter<SetType>(SetType.values)",
               "dart_type_name": "SetType"
             }
           },
@@ -954,7 +954,7 @@
             "default_client_dart": null,
             "dsl_features": [],
             "type_converter": {
-              "dart_expr": "const EnumNameConverter<SessionStatus>(SessionStatus.values)",
+              "dart_expr": "const CodedEnumConverter<SessionStatus>(SessionStatus.values)",
               "dart_type_name": "SessionStatus"
             }
           },
@@ -1329,7 +1329,7 @@
             "default_client_dart": null,
             "dsl_features": [],
             "type_converter": {
-              "dart_expr": "const EnumNameConverter<LoadMode>(LoadMode.values)",
+              "dart_expr": "const CodedEnumConverter<LoadMode>(LoadMode.values)",
               "dart_type_name": "LoadMode"
             }
           },
@@ -1343,7 +1343,7 @@
             "default_client_dart": null,
             "dsl_features": [],
             "type_converter": {
-              "dart_expr": "const EnumNameConverter<WeightSemantics>(WeightSemantics.values)",
+              "dart_expr": "const CodedEnumConverter<WeightSemantics>(WeightSemantics.values)",
               "dart_type_name": "WeightSemantics"
             }
           },
@@ -1498,7 +1498,7 @@
             "default_client_dart": null,
             "dsl_features": [],
             "type_converter": {
-              "dart_expr": "const EnumNameConverter<SetType>(SetType.values)",
+              "dart_expr": "const CodedEnumConverter<SetType>(SetType.values)",
               "dart_type_name": "SetType"
             }
           },
@@ -1512,7 +1512,7 @@
             "default_client_dart": null,
             "dsl_features": [],
             "type_converter": {
-              "dart_expr": "const EnumNameConverter<TargetKind>(TargetKind.values)",
+              "dart_expr": "const CodedEnumConverter<TargetKind>(TargetKind.values)",
               "dart_type_name": "TargetKind"
             }
           },
@@ -1663,7 +1663,7 @@
             "default_client_dart": null,
             "dsl_features": [],
             "type_converter": {
-              "dart_expr": "const EnumNameConverter<EffortScale>(EffortScale.values)",
+              "dart_expr": "const CodedEnumConverter<EffortScale>(EffortScale.values)",
               "dart_type_name": "EffortScale"
             }
           },
@@ -1687,7 +1687,7 @@
             "default_client_dart": null,
             "dsl_features": [],
             "type_converter": {
-              "dart_expr": "const EnumNameConverter<Side>(Side.values)",
+              "dart_expr": "const CodedEnumConverter<Side>(Side.values)",
               "dart_type_name": "Side"
             }
           },

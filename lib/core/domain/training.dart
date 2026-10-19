@@ -1,12 +1,40 @@
-/// Typy wspólne dla szablonów i sesji. Nazwy wartości są stabilnymi kodami
-/// zapisywanymi w bazie i backupie, więc nie wolno ich zmieniać.
+/// Typy wspólne dla szablonów i sesji. Kody (`code`) są zapisywane w bazie
+/// i backupie, więc nie wolno ich zmieniać (ADR 0013).
 library;
 
+import 'coded_enum.dart';
+
 /// Typ serii. Serie rozgrzewkowe są wykluczone z objętości i rekordów.
-enum SetType { warmup, working, drop, amrap }
+enum SetType implements CodedEnum {
+  warmup('warmup'),
+  working('working'),
+  drop('drop'),
+  amrap('amrap');
+
+  const SetType(this.code);
+
+  @override
+  final String code;
+}
 
 /// Rodzaj celu serii: zakres powtórzeń albo czasu (w sekundach).
-enum TargetKind { reps, duration }
+enum TargetKind implements CodedEnum {
+  reps('reps'),
+  duration('duration');
+
+  const TargetKind(this.code);
+
+  @override
+  final String code;
+}
 
 /// Skala wysiłku zapisywana przy serii.
-enum EffortScale { rir, rpe }
+enum EffortScale implements CodedEnum {
+  rir('rir'),
+  rpe('rpe');
+
+  const EffortScale(this.code);
+
+  @override
+  final String code;
+}

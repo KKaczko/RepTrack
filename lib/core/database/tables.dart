@@ -27,24 +27,38 @@ class Exercises extends Table with SyncColumns {
   TextColumn get name => text()();
   TextColumn get aliases => text().map(const StringListConverter())();
   TextColumn get searchText => text()();
-  TextColumn get primaryMuscles =>
-      text().map(const EnumListConverter<MuscleGroup>(MuscleGroup.values))();
-  TextColumn get secondaryMuscles =>
-      text().map(const EnumListConverter<MuscleGroup>(MuscleGroup.values))();
-  TextColumn get equipment => textEnum<Equipment>().nullable()();
-  TextColumn get category => textEnum<ExerciseCategory>()();
-  TextColumn get mechanic => textEnum<Mechanic>().nullable()();
-  TextColumn get force => textEnum<Force>().nullable()();
+  TextColumn get primaryMuscles => text().map(
+    const CodedEnumListConverter<MuscleGroup>(MuscleGroup.values),
+  )();
+  TextColumn get secondaryMuscles => text().map(
+    const CodedEnumListConverter<MuscleGroup>(MuscleGroup.values),
+  )();
+  TextColumn get equipment => text()
+      .map(const CodedEnumConverter<Equipment>(Equipment.values))
+      .nullable()();
+  TextColumn get category => text().map(
+    const CodedEnumConverter<ExerciseCategory>(ExerciseCategory.values),
+  )();
+  TextColumn get mechanic => text()
+      .map(const CodedEnumConverter<Mechanic>(Mechanic.values))
+      .nullable()();
+  TextColumn get force =>
+      text().map(const CodedEnumConverter<Force>(Force.values)).nullable()();
   TextColumn get instructions => text().nullable()();
   BoolColumn get measureWeight => boolean()();
   BoolColumn get measureReps => boolean()();
   BoolColumn get measureDuration => boolean()();
   BoolColumn get measureDistance => boolean()();
-  TextColumn get loadMode => textEnum<LoadMode>()();
-  TextColumn get weightSemantics => textEnum<WeightSemantics>()();
+  TextColumn get loadMode =>
+      text().map(const CodedEnumConverter<LoadMode>(LoadMode.values))();
+  TextColumn get weightSemantics => text().map(
+    const CodedEnumConverter<WeightSemantics>(WeightSemantics.values),
+  )();
   BoolColumn get isUnilateral => boolean()();
   TextColumn get imageRef => text().nullable()();
-  TextColumn get source => textEnum<ExerciseSource>()();
+  TextColumn get source => text().map(
+    const CodedEnumConverter<ExerciseSource>(ExerciseSource.values),
+  )();
   TextColumn get originRef => text().nullable()();
   TextColumn get license => text().nullable()();
   TextColumn get licenseAuthor => text().nullable()();
@@ -77,12 +91,14 @@ class TemplateExercises extends Table with SyncColumns {
   TextColumn get templateId => text().references(Templates, #id)();
   TextColumn get exerciseId => text().references(Exercises, #id)();
   IntColumn get position => integer()();
-  TextColumn get targetKind => textEnum<TargetKind>()();
+  TextColumn get targetKind =>
+      text().map(const CodedEnumConverter<TargetKind>(TargetKind.values))();
   IntColumn get targetMin => integer().nullable()();
   IntColumn get targetMax => integer().nullable()();
   IntColumn get targetWeightG => integer().nullable()();
   IntColumn get restSeconds => integer().nullable()();
-  TextColumn get defaultSetType => textEnum<SetType>()();
+  TextColumn get defaultSetType =>
+      text().map(const CodedEnumConverter<SetType>(SetType.values))();
   TextColumn get note => text().nullable()();
   TextColumn get groupId => text().nullable()();
 }
@@ -97,7 +113,9 @@ class TemplateSets extends Table with SyncColumns {
   TextColumn get templateExerciseId =>
       text().references(TemplateExercises, #id)();
   IntColumn get position => integer()();
-  TextColumn get setType => textEnum<SetType>().nullable()();
+  TextColumn get setType => text()
+      .map(const CodedEnumConverter<SetType>(SetType.values))
+      .nullable()();
   IntColumn get targetMin => integer().nullable()();
   IntColumn get targetMax => integer().nullable()();
   IntColumn get targetWeightG => integer().nullable()();
@@ -116,7 +134,9 @@ class TemplateSets extends Table with SyncColumns {
   columns: {#templateId, #startedAt},
 )
 class WorkoutSessions extends Table with SyncColumns {
-  TextColumn get status => textEnum<SessionStatus>()();
+  TextColumn get status => text().map(
+    const CodedEnumConverter<SessionStatus>(SessionStatus.values),
+  )();
   IntColumn get startedAt => integer().map(const UtcMillisConverter())();
   IntColumn get endedAt =>
       integer().map(const UtcMillisConverter()).nullable()();
@@ -150,8 +170,11 @@ class SessionExercises extends Table with SyncColumns {
   BoolColumn get measureRepsSnapshot => boolean()();
   BoolColumn get measureDurationSnapshot => boolean()();
   BoolColumn get measureDistanceSnapshot => boolean()();
-  TextColumn get loadModeSnapshot => textEnum<LoadMode>()();
-  TextColumn get weightSemanticsSnapshot => textEnum<WeightSemantics>()();
+  TextColumn get loadModeSnapshot =>
+      text().map(const CodedEnumConverter<LoadMode>(LoadMode.values))();
+  TextColumn get weightSemanticsSnapshot => text().map(
+    const CodedEnumConverter<WeightSemantics>(WeightSemantics.values),
+  )();
   BoolColumn get isUnilateralSnapshot => boolean()();
   TextColumn get note => text().nullable()();
   TextColumn get groupId => text().nullable()();
@@ -166,8 +189,11 @@ class SessionSets extends Table with SyncColumns {
   TextColumn get sessionExerciseId =>
       text().references(SessionExercises, #id)();
   IntColumn get position => integer()();
-  TextColumn get setType => textEnum<SetType>()();
-  TextColumn get targetKind => textEnum<TargetKind>().nullable()();
+  TextColumn get setType =>
+      text().map(const CodedEnumConverter<SetType>(SetType.values))();
+  TextColumn get targetKind => text()
+      .map(const CodedEnumConverter<TargetKind>(TargetKind.values))
+      .nullable()();
   IntColumn get targetMin => integer().nullable()();
   IntColumn get targetMax => integer().nullable()();
   IntColumn get targetWeightG => integer().nullable()();
@@ -179,9 +205,12 @@ class SessionSets extends Table with SyncColumns {
       integer().nullable().check(durationS.isBiggerOrEqualValue(0))();
   IntColumn get distanceM =>
       integer().nullable().check(distanceM.isBiggerOrEqualValue(0))();
-  TextColumn get effortScale => textEnum<EffortScale>().nullable()();
+  TextColumn get effortScale => text()
+      .map(const CodedEnumConverter<EffortScale>(EffortScale.values))
+      .nullable()();
   IntColumn get effortTenths => integer().nullable()();
-  TextColumn get side => textEnum<Side>().nullable()();
+  TextColumn get side =>
+      text().map(const CodedEnumConverter<Side>(Side.values)).nullable()();
   IntColumn get completedAt =>
       integer().map(const UtcMillisConverter()).nullable()();
 }

@@ -51,6 +51,30 @@ void main() {
     },
   );
 
+  test('w bazie zapisują się kody snake_case, nie nazwy z Dart', () async {
+    await repo.save(
+      testExercise('e1').copyWith(
+        primaryMuscles: const [MuscleGroup.lowerBack],
+        equipment: Equipment.smithMachine,
+        loadMode: LoadMode.weightedBodyweight,
+        weightSemantics: WeightSemantics.perHand,
+      ),
+    );
+
+    final row = await db
+        .customSelect(
+          'SELECT primary_muscles, equipment, load_mode, weight_semantics, '
+          'source FROM exercises',
+        )
+        .getSingle();
+
+    expect(row.read<String>('primary_muscles'), '["lower_back"]');
+    expect(row.read<String>('equipment'), 'smith_machine');
+    expect(row.read<String>('load_mode'), 'weighted_bodyweight');
+    expect(row.read<String>('weight_semantics'), 'per_hand');
+    expect(row.read<String>('source'), 'user');
+  });
+
   test('odrzuca ćwiczenie bez mierzonych pól', () {
     expect(
       () => repo.save(testExercise('e1', measurement: const Measurement())),

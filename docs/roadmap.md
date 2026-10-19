@@ -126,6 +126,6 @@ Testy integracyjne na urządzeniu (`integration_test`) dochodzą w Etapie 7. `ch
 
 - **JDK** pobrany jako oficjalny zip Microsoft OpenJDK 17 zamiast przez winget, żeby trafił na `D:` bez instalatora i akceptowania umowy.
 - **Android SDK:** `sdkmanager` został zastąpiony nowym `android` CLI i nie ma już kroku `--licenses`. Warunki SDK zaakceptował właściciel przed instalacją pakietów. Szczegóły w [development.md](development.md).
-- **Kody enumów** w bazie i backupie to nazwy wartości enumów w Dart (camelCase, np. `weightedBodyweight`), a nie snake_case z pierwszej wersji `data-model.md`. Lista kodów jest w [data-model.md](data-model.md).
+- **Kody enumów:** pierwsza implementacja zapisywała nazwy z Dart (camelCase). Na decyzję właściciela zmienione na jawne kody snake_case ([ADR 0013](decisions/0013-kody-enumow.md)); zrzut schematu v1 wygenerowany ponownie, bo nie było jeszcze żadnych danych.
 - **`build_runner`** w wersji 2.16 ignoruje flagę `--delete-conflicting-outputs`, więc `check.sh` jej nie używa.
 - **Testy widżetów z bazą** wymagają połączenia z `closeStreamsSynchronously: true` (opis w [development.md](development.md)).
