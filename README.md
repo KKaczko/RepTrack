@@ -6,7 +6,7 @@ Stos: Flutter + Dart, Drift (SQLite), Riverpod, go_router.
 
 ## Stan
 
-Etapy 0–1 zaakceptowane. Etap 2 (biblioteka ćwiczeń) czeka na akceptację.
+Etapy 0–2 zaakceptowane. W trakcie: Etap 3 (szablony).
 
 ## Dokumentacja
 

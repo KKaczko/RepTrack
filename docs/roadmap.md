@@ -1,6 +1,6 @@
 # Plan etapów, testy i ryzyka
 
-Status: Etapy 0–1 zaakceptowane (2026-10-19). Etap 2 zakończony, czeka na akceptację. Szczegóły w sekcji „Odstępstwa od planu”.
+Status: Etapy 0–2 zaakceptowane (2026-10-19). W trakcie: Etap 3. Szczegóły w sekcji „Odstępstwa od planu”.
 
 ## Ustalenia
 
@@ -107,7 +107,7 @@ Testy integracyjne na urządzeniu (`integration_test`) dochodzą w Etapie 7. `ch
 | --- | --- |
 | Timer przerwy w tle. Exact alarms są domyślnie zablokowane od Androida 14, `USE_EXACT_ALARM` jest zastrzeżony dla aplikacji typu budzik/zegar, a One UI na Samsungu usypia aplikacje w tle. | [ADR 0009](decisions/0009-timer-przerwy.md). Test na telefonie w Etapie 4. Plan B: foreground service. |
 | sqlite3 3.x (build hooks) w testach na Windows | **Rozwiązane w Etapie 1:** testy na prawdziwej bazie SQLite działają na Windows bez dodatkowej konfiguracji. |
-| Brak toolchainu, mało miejsca na C: | Wszystko na `D:`, ścieżki cache przez zmienne środowiskowe, testy na telefonie przez USB bez emulatora. |
+| Brak toolchainu, mało miejsca na C: | Wszystko na `D:`, ścieżki cache przez zmienne środowiskowe. Po Etapie 2 dodany emulator `RepTrack_360dp` (Android 36, 360 dp) do testów automatycznych; telefon zostaje do kontroli ręcznych. |
 | Auto Backup i WAL | Checkpoint `TRUNCATE` przy pauzie aplikacji. Reguły obejmują `.db` i `-wal`. Test backup → reinstalacja → restore. |
 | Jakość polskich nazw w katalogu | Nazwy i aliasy pisane ręcznie, w Etapie 2 lista do przeglądu przez właściciela. |
 | Wymagania Google Play zmieniają się co roku | `docs/publishing.md` z datą weryfikacji. Target API 36 od 31.08.2026 potwierdzony na developer.android.com (2026-10-19). |

@@ -21,6 +21,31 @@ Od cmdline-tools 16111833 `sdkmanager` jest przestarzały. Pakiety instaluje si�
 D:/Dev/tools/android-sdk/cmdline-tools/latest/bin/android.exe --no-metrics --sdk=D:/Dev/tools/android-sdk sdk install platforms/android-36
 ```
 
+## Emulator i telefon
+
+| Urządzenie | Do czego |
+| --- | --- |
+| Emulator `RepTrack_360dp` | automatyczne testy na prawdziwym Androidzie, zrzuty ekranu, różne rozmiary i ustawienia; uruchamia go agent |
+| Samsung Galaxy S20 FE (Android 13, One UI 5.1, 360 dp) | kontrole ręczne właściciela (sekcja 9 specyfikacji), zachowania One UI: usypianie w tle, powiadomienia, wibracje |
+
+Emulator: Android 36 (Google APIs, x86_64), 1080×2400 przy 480 dpi, czyli 360×800 dp jak telefon testowy. Język pl-PL, strefa Europe/Warsaw. Wirtualne urządzenia są w `D:\Dev\tools\avd` (zmienna `ANDROID_AVD_HOME`). Wymaga włączonej funkcji Windows „Platforma funkcji hypervisor”.
+
+```bash
+bash tool/emulator.sh
+```
+
+Instalacja wersji release na emulatorze:
+
+```bash
+D:/Dev/tools/android-sdk/platform-tools/adb.exe -s emulator-5554 install -r build/app/outputs/flutter-apk/app-release.apk
+```
+
+Na Samsungu z włączonym Bezpiecznym folderem polecenia `adb` dotyczące pakietów wymagają `--user 0`, inaczej kończą się błędem „Shell does not have permission to access user 150”:
+
+```bash
+D:/Dev/tools/android-sdk/platform-tools/adb.exe -d install -r --user 0 build/app/outputs/flutter-apk/app-release.apk
+```
+
 ## Komendy
 
 ```bash
