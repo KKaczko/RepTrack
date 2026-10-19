@@ -1,0 +1,1273 @@
+# Katalog wbudowanych ćwiczeń RepTrack (ADR 0005).
+#
+# Pola strukturalne (mięśnie, sprzęt, kategoria, mechanika, kierunek siły)
+# pochodzą z free-exercise-db (Unlicense) dla pozycji z `source`. Polskie
+# nazwy, aliasy i wskazówki techniki to opracowanie własne RepTrack.
+#
+# Budowanie: dart run tool/seed/build_seed.dart --source <free-exercise-db/dist/exercises.json>
+# Po zmianie treści pozycji podbij `seed_version`; skrypt odmówi zapisu bez tego.
+#
+# Pola pozycji:
+#   key        stabilny klucz (nie zmieniać; z niego wynika id w ids.json)
+#   source     id w free-exercise-db; brak = opracowanie własne
+#   name       nazwa wyświetlana (PL)
+#   aliases    aliasy PL i EN do wyszukiwania
+#   cues       2–3 krótkie wskazówki techniki
+#   measure    pola pomiaru (domyślnie [weight, reps])
+#   load       external | bodyweight | weighted_bodyweight | assisted (domyślnie external)
+#   semantics  total | per_hand | per_side (domyślnie total)
+#   unilateral true/false (domyślnie false)
+#   equipment, category, mechanic, force, primary, secondary: nadpisania danych źródła
+
+seed_version: 1
+
+exercises:
+  # ── Klatka piersiowa ─────────────────────────────────────────────
+  - key: barbell_bench_press
+    source: Barbell_Bench_Press_-_Medium_Grip
+    name: Wyciskanie sztangi na ławce płaskiej
+    aliases: [Wyciskanie na płaskiej, Klata płaska, Bench press, Barbell bench press]
+    cues:
+      - Łopatki ściągnięte i opuszczone, stopy mocno na podłodze.
+      - Opuszczaj sztangę pod kontrolą do dolnej części mostka.
+      - Łokcie pod kątem ok. 45–70° do tułowia, nadgarstki proste.
+    secondary: [shoulders, triceps]
+
+  - key: incline_barbell_bench_press
+    source: Barbell_Incline_Bench_Press_-_Medium_Grip
+    name: Wyciskanie sztangi na ławce skośnej
+    aliases: [Wyciskanie na skosie, Skos dodatni, Incline bench press]
+    cues:
+      - Oparcie ustawione pod kątem ok. 30–45°.
+      - Opuszczaj sztangę do górnej części klatki, łopatki ściągnięte.
+      - Nie odrywaj pośladków od ławki.
+    secondary: [shoulders, triceps]
+
+  - key: decline_barbell_bench_press
+    source: Decline_Barbell_Bench_Press
+    name: Wyciskanie sztangi na ławce ujemnej
+    aliases: [Skos ujemny, Decline bench press]
+    cues:
+      - Nogi zablokowane pod wałkami, łopatki ściągnięte.
+      - Opuszczaj sztangę do dolnej części klatki.
+      - Wyciskaj w linii prostej nad barkami.
+    secondary: [shoulders, triceps]
+
+  - key: dumbbell_bench_press
+    source: Dumbbell_Bench_Press
+    name: Wyciskanie hantli na ławce płaskiej
+    aliases: [Hantle na płaskiej, Dumbbell bench press, DB bench press]
+    semantics: per_hand
+    cues:
+      - Łopatki ściągnięte, hantle na wysokości klatki.
+      - Opuszczaj hantle po łuku do lekkiego rozciągnięcia klatki.
+      - Wyciskaj nad barki bez uderzania hantlami o siebie.
+    secondary: [shoulders, triceps]
+
+  - key: incline_dumbbell_press
+    source: Incline_Dumbbell_Press
+    name: Wyciskanie hantli na ławce skośnej
+    aliases: [Hantle na skosie, Incline dumbbell press]
+    semantics: per_hand
+    cues:
+      - Oparcie ustawione pod kątem ok. 30–45°.
+      - Łokcie lekko pod tułowiem, nie rozkładaj ich w linii barków.
+      - Pełny zakres ruchu, kontrolowane opuszczanie.
+    secondary: [shoulders, triceps]
+
+  - key: dumbbell_flyes
+    source: Dumbbell_Flyes
+    name: Rozpiętki z hantlami na ławce płaskiej
+    aliases: [Rozpiętki płaskie, Dumbbell flyes, Dumbbell fly]
+    semantics: per_hand
+    cues:
+      - Łokcie lekko ugięte i zablokowane w tej pozycji przez całą serię.
+      - Opuszczaj hantle szeroko do rozciągnięcia klatki, bez bólu barku.
+      - Zbliżaj ramiona ruchem „obejmowania beczki”.
+    mechanic: isolation
+
+  - key: incline_dumbbell_flyes
+    source: Incline_Dumbbell_Flyes
+    name: Rozpiętki z hantlami na ławce skośnej
+    aliases: [Rozpiętki na skosie, Incline dumbbell flyes]
+    semantics: per_hand
+    cues:
+      - Oparcie pod kątem ok. 30°, łokcie lekko ugięte.
+      - Opuszczaj hantle do linii barków, nie niżej.
+      - Ruch tylko w stawie barkowym.
+    mechanic: isolation
+
+  - key: cable_crossover
+    source: Cable_Crossover
+    name: Krzyżowanie linek wyciągu
+    aliases: [Brama, Rozpiętki na bramie, Cable crossover, Cable fly]
+    cues:
+      - Krok w przód, tułów lekko pochylony, łokcie lekko ugięte.
+      - Prowadź uchwyty łukiem w dół i do środka.
+      - Zatrzymaj ruch na chwilę przy pełnym spięciu klatki.
+
+  - key: pec_deck
+    source: Butterfly
+    name: Rozpiętki na maszynie
+    aliases: [Butterfly, Pec deck, Motylek]
+    cues:
+      - Ustaw siedzisko tak, by uchwyty były na wysokości klatki.
+      - Łopatki przyklejone do oparcia, łokcie lekko ugięte.
+      - Wracaj powoli do rozciągnięcia.
+    force: push
+
+  - key: machine_chest_press
+    source: Leverage_Chest_Press
+    name: Wyciskanie na maszynie siedząc
+    aliases: [Chest press, Maszyna na klatkę]
+    cues:
+      - Uchwyty na wysokości środka klatki.
+      - Łopatki przy oparciu przez cały ruch.
+      - Nie prostuj łokci do pełnego zablokowania.
+    secondary: [shoulders, triceps]
+
+  - key: smith_bench_press
+    source: Smith_Machine_Bench_Press
+    name: Wyciskanie na suwnicy Smitha na ławce płaskiej
+    aliases: [Smith płaska, Smith machine bench press]
+    equipment: smith_machine
+    cues:
+      - Ustaw ławkę tak, by gryf opadał na dolną część mostka.
+      - Łopatki ściągnięte, łokcie pod kątem ok. 45–70°.
+      - Ustaw zabezpieczenia na wysokości klatki.
+    secondary: [shoulders, triceps]
+
+  - key: smith_incline_bench_press
+    source: Smith_Machine_Incline_Bench_Press
+    name: Wyciskanie na suwnicy Smitha na ławce skośnej
+    aliases: [Smith skos, Smith machine incline press]
+    equipment: smith_machine
+    cues:
+      - Ławka pod kątem ok. 30–45°, gryf nad górną częścią klatki.
+      - Łopatki ściągnięte, pośladki na ławce.
+      - Kontrolowane opuszczanie do lekkiego dotknięcia klatki.
+    secondary: [shoulders, triceps]
+
+  - key: push_ups
+    source: Pushups
+    name: Pompki
+    aliases: [Pompki klasyczne, Push-ups, Push up]
+    measure: [reps]
+    load: bodyweight
+    cues:
+      - Ciało w jednej linii od głowy do pięt, brzuch napięty.
+      - Dłonie nieco szerzej niż barki, łokcie ok. 45° od tułowia.
+      - Schodź klatką prawie do podłogi.
+    secondary: [shoulders, triceps]
+
+  - key: dips_chest
+    source: Dips_-_Chest_Version
+    name: Pompki na poręczach z akcentem na klatkę
+    aliases: [Dipy na klatkę, Chest dips]
+    load: weighted_bodyweight
+    cues:
+      - Tułów pochylony w przód, łokcie lekko na zewnątrz.
+      - Schodź do lekkiego rozciągnięcia klatki, barki nie wychodzą przed linię.
+      - Ciężar wpisuj jako dociążenie; 0 kg bez dociążenia.
+    equipment: other
+
+  # ── Plecy ────────────────────────────────────────────────────────
+  - key: pull_ups
+    source: Pullups
+    name: Podciąganie na drążku nachwytem
+    aliases: [Podciąganie, Drążek nachwyt, Pull-ups, Pull up]
+    load: weighted_bodyweight
+    cues:
+      - Chwyt nieco szerzej niż barki, start z pełnego zwisu.
+      - Najpierw ściągnij łopatki, potem ciągnij łokcie do żeber.
+      - Broda nad drążek; ciężar wpisuj jako dociążenie.
+    secondary: [biceps, middle_back]
+
+  - key: chin_ups
+    source: Chin-Up
+    name: Podciąganie na drążku podchwytem
+    aliases: [Drążek podchwyt, Chin-ups, Chin up]
+    load: weighted_bodyweight
+    cues:
+      - Chwyt na szerokość barków, dłonie zwrócone do siebie.
+      - Ciągnij łokcie w dół wzdłuż tułowia.
+      - Opuszczaj się do pełnego wyprostu ramion.
+    secondary: [biceps, middle_back]
+
+  - key: assisted_pull_up
+    name: Podciąganie z asystą na maszynie
+    aliases: [Podciąganie wspomagane, Assisted pull-up, Gravitron]
+    load: assisted
+    equipment: machine
+    category: strength
+    mechanic: compound
+    force: pull
+    primary: [lats]
+    secondary: [biceps, middle_back]
+    cues:
+      - Ciężar oznacza wspomaganie; mniejszy ciężar = trudniejsza seria.
+      - Start z pełnego zwisu, łopatki ściągnięte przed ruchem ramion.
+      - Broda nad uchwyty, kontrolowany powrót.
+
+  - key: lat_pulldown
+    source: Wide-Grip_Lat_Pulldown
+    name: Ściąganie drążka wyciągu górnego szerokim nachwytem
+    aliases: [Ściąganie do klatki, Wyciąg górny, Lat pulldown]
+    cues:
+      - Uda zablokowane pod wałkiem, lekkie odchylenie tułowia.
+      - Ściągaj drążek do górnej części klatki, łokcie w dół.
+      - Nie bujaj tułowiem i wracaj do pełnego wyprostu ramion.
+    secondary: [biceps, middle_back]
+
+  - key: close_grip_pulldown
+    source: V-Bar_Pulldown
+    name: Ściąganie wyciągu górnego wąskim uchwytem
+    aliases: [Ściąganie uchwytem V, Close-grip lat pulldown, V-bar pulldown]
+    cues:
+      - Uchwyt V, tułów lekko odchylony.
+      - Ciągnij uchwyt do mostka, łokcie blisko tułowia.
+      - Pełne rozciągnięcie w górze.
+    secondary: [biceps, middle_back]
+
+  - key: straight_arm_pulldown
+    source: Straight-Arm_Pulldown
+    name: Ściąganie drążka wyciągu prostymi ramionami
+    aliases: [Narciarz, Straight-arm pulldown, Pullover na wyciągu]
+    cues:
+      - Ramiona prawie proste, łokcie lekko ugięte i stałe.
+      - Prowadź drążek łukiem do ud.
+      - Tułów stabilny, bez pomagania biodrami.
+
+  - key: barbell_row
+    source: Bent_Over_Barbell_Row
+    name: Wiosłowanie sztangą w opadzie tułowia
+    aliases: [Wiosłowanie sztangą, Barbell row, Bent-over row]
+    cues:
+      - Tułów pochylony ok. 45° lub niżej, plecy proste.
+      - Przyciągaj sztangę do dolnej części brzucha.
+      - Nie szarp tułowiem w górę.
+    secondary: [lats, biceps, lower_back]
+
+  - key: reverse_grip_row
+    source: Reverse_Grip_Bent-Over_Rows
+    name: Wiosłowanie sztangą podchwytem
+    aliases: [Wiosłowanie Yatesa, Reverse grip row, Yates row]
+    cues:
+      - Chwyt podchwytem na szerokość barków, tułów lekko wyżej niż przy nachwycie.
+      - Łokcie blisko tułowia, sztanga do pępka.
+      - Plecy proste przez całą serię.
+    secondary: [lats, biceps]
+
+  - key: dumbbell_row
+    source: One-Arm_Dumbbell_Row
+    name: Wiosłowanie hantlem jednorącz
+    aliases: [Wiosłowanie hantlem, One-arm dumbbell row, DB row]
+    semantics: per_hand
+    unilateral: true
+    cues:
+      - Podpór kolanem i ręką na ławce, plecy równolegle do podłogi.
+      - Ciągnij łokieć w stronę biodra.
+      - Bez rotacji tułowia na końcu ruchu.
+    secondary: [lats, biceps]
+
+  - key: t_bar_row
+    source: T-Bar_Row_with_Handle
+    name: Wiosłowanie T-sztangą
+    aliases: [T-bar row, Wiosłowanie końcem sztangi]
+    cues:
+      - Kolana lekko ugięte, plecy proste.
+      - Przyciągaj uchwyt do klatki, ściągając łopatki.
+      - Kontrolowany powrót do pełnego wyprostu ramion.
+    secondary: [lats, biceps]
+
+  - key: seated_cable_row
+    source: Seated_Cable_Rows
+    name: Przyciąganie linki wyciągu dolnego siedząc
+    aliases: [Wiosłowanie na wyciągu, Wyciąg dolny siedząc, Seated cable row]
+    cues:
+      - Plecy proste, lekkie ugięcie kolan.
+      - Przyciągaj uchwyt do brzucha, ściągając łopatki.
+      - Nie odchylaj tułowia do tyłu ponad pion.
+    secondary: [lats, biceps]
+
+  - key: machine_row
+    source: Leverage_Iso_Row
+    name: Wiosłowanie na maszynie
+    aliases: [Maszyna do wiosłowania, Machine row, Hammer row]
+    cues:
+      - Klatka oparta o podpórkę.
+      - Ciągnij łokcie do tyłu, ściągając łopatki.
+      - Pełne rozciągnięcie przy powrocie.
+    secondary: [middle_back, biceps]
+
+  - key: chest_supported_row
+    source: Dumbbell_Incline_Row
+    name: Wiosłowanie hantlami w leżeniu przodem na ławce skośnej
+    aliases: [Wiosłowanie z podparciem klatki, Chest-supported row]
+    semantics: per_hand
+    cues:
+      - Klatka oparta o ławkę ustawioną pod kątem ok. 30°.
+      - Ciągnij hantle do bioder, łopatki do środka.
+      - Bez odrywania klatki od ławki.
+    secondary: [lats, biceps]
+
+  - key: inverted_row
+    source: Inverted_Row
+    name: Wiosłowanie australijskie
+    aliases: [Podciąganie australijskie, Inverted row]
+    measure: [reps]
+    load: bodyweight
+    equipment: bodyweight
+    cues:
+      - Ciało w jednej linii, pięty na podłodze.
+      - Przyciągaj klatkę do drążka, ściągając łopatki.
+      - Im bardziej poziomo, tym trudniej.
+    secondary: [lats, biceps]
+
+  - key: dumbbell_pullover
+    source: Bent-Arm_Dumbbell_Pullover
+    name: Przenoszenie hantla za głowę leżąc
+    aliases: [Pullover, Dumbbell pullover]
+    cues:
+      - Hantel trzymany oburącz nad klatką, łokcie lekko ugięte.
+      - Opuszczaj hantel łukiem za głowę do rozciągnięcia.
+      - Biodra stabilne, brzuch napięty.
+    primary: [lats, chest]
+
+  - key: back_extension
+    source: Hyperextensions_Back_Extensions
+    name: Wyprosty tułowia na ławce rzymskiej
+    aliases: [Ławka rzymska, Hiperekstensje, Back extension, Hyperextension]
+    load: weighted_bodyweight
+    cues:
+      - Biodra na krawędzi podpórki, ruch ze stawu biodrowego.
+      - Prostuj tułów do linii z nogami, bez przeprostu.
+      - Ciężar wpisuj jako dociążenie (np. talerz przy klatce).
+    secondary: [glutes, hamstrings]
+
+  - key: barbell_shrug
+    source: Barbell_Shrug
+    name: Szrugsy ze sztangą
+    aliases: [Wzruszanie ramion ze sztangą, Barbell shrug]
+    cues:
+      - Ramiona proste, sztanga przy udach.
+      - Unoś barki pionowo do uszu, bez krążenia.
+      - Krótkie zatrzymanie w górze.
+
+  - key: dumbbell_shrug
+    source: Dumbbell_Shrug
+    name: Szrugsy z hantlami
+    aliases: [Wzruszanie ramion z hantlami, Dumbbell shrug]
+    semantics: per_hand
+    cues:
+      - Hantle wzdłuż tułowia, ramiona proste.
+      - Unoś barki pionowo w górę.
+      - Kontrolowane opuszczanie do pełnego rozciągnięcia.
+
+  # ── Nogi i pośladki ──────────────────────────────────────────────
+  - key: back_squat
+    source: Barbell_Squat
+    name: Przysiad ze sztangą na plecach
+    aliases: [Przysiad, Przysiad tylny, Back squat, Barbell squat]
+    cues:
+      - Sztanga na czworobocznych, łopatki ściągnięte, brzuch napięty.
+      - Kolana podążają za palcami stóp, pięty na podłodze.
+      - Schodź co najmniej do równoległej ud z podłogą, plecy proste.
+    secondary: [glutes, hamstrings, lower_back]
+
+  - key: front_squat
+    source: Front_Barbell_Squat
+    name: Przysiad przedni ze sztangą
+    aliases: [Przysiad przedni, Front squat]
+    cues:
+      - Sztanga na przednich aktonach barków, łokcie wysoko.
+      - Tułów pionowo, kolana mocno w przód.
+      - Głęboki przysiad bez opadania łokci.
+    secondary: [glutes, abdominals]
+
+  - key: goblet_squat
+    source: Goblet_Squat
+    name: Przysiad goblet
+    aliases: [Goblet squat, Przysiad z kettlebell przy klatce]
+    cues:
+      - Ciężar trzymany oburącz przy klatce.
+      - Łokcie między kolanami w dolnej pozycji.
+      - Tułów wyprostowany, pięty na podłodze.
+    secondary: [glutes]
+
+  - key: smith_squat
+    source: Smith_Machine_Squat
+    name: Przysiad na suwnicy Smitha
+    aliases: [Przysiad Smith, Smith machine squat]
+    equipment: smith_machine
+    cues:
+      - Stopy nieco przed linią gryfu.
+      - Kontrolowane zejście do równoległej lub niżej.
+      - Ustaw zabezpieczenia na bezpiecznej wysokości.
+    secondary: [glutes, hamstrings]
+
+  - key: hack_squat
+    source: Hack_Squat
+    name: Przysiad na maszynie hack
+    aliases: [Hack squat, Hacken]
+    cues:
+      - Plecy i barki przyklejone do oparcia.
+      - Stopy na środku platformy na szerokość bioder.
+      - Schodź głęboko, kolana za palcami stóp.
+    secondary: [glutes, hamstrings]
+
+  - key: leg_press
+    source: Leg_Press
+    name: Wypychanie nóg na suwnicy
+    aliases: [Suwnica, Leg press, Prasa nożna]
+    cues:
+      - Lędźwia przyklejone do oparcia przez cały ruch.
+      - Kolana w linii ze stopami, bez zapadania do środka.
+      - Nie blokuj kolan w pełnym wyproście.
+    secondary: [glutes, hamstrings]
+
+  - key: bulgarian_split_squat
+    name: Przysiad bułgarski z hantlami
+    aliases: [Bułgarski przysiad, Bulgarian split squat, BSS]
+    semantics: per_hand
+    unilateral: true
+    equipment: dumbbell
+    category: strength
+    mechanic: compound
+    force: push
+    primary: [quadriceps, glutes]
+    secondary: [hamstrings, adductors]
+    cues:
+      - Tylna stopa na ławce, przednia na tyle daleko, by pięta została na podłodze.
+      - Schodź pionowo w dół, tułów lekko pochylony.
+      - Wpisuj wynik dla jednej nogi; druga noga ma tę samą serię.
+
+  - key: split_squat
+    source: Split_Squat_with_Dumbbells
+    name: Przysiad wykroczny z hantlami
+    aliases: [Wykrok w miejscu, Split squat]
+    semantics: per_hand
+    unilateral: true
+    cues:
+      - Stopy w rozkroku wykrocznym, ciężar na przedniej nodze.
+      - Opuszczaj tylne kolano prawie do podłogi.
+      - Tułów pionowo, kolano przednie stabilne.
+    secondary: [glutes, hamstrings]
+
+  - key: dumbbell_lunges
+    source: Dumbbell_Lunges
+    name: Wykroki z hantlami
+    aliases: [Wypady z hantlami, Dumbbell lunges]
+    semantics: per_hand
+    cues:
+      - Długi krok w przód, oba kolana zgięte ok. 90°.
+      - Odpychaj się piętą przedniej nogi.
+      - Tułów wyprostowany, nogi naprzemiennie.
+    secondary: [glutes, hamstrings]
+
+  - key: barbell_walking_lunge
+    source: Barbell_Walking_Lunge
+    name: Wykroki chodzone ze sztangą
+    aliases: [Wypady chodzone, Walking lunges]
+    cues:
+      - Sztanga na plecach jak w przysiadzie.
+      - Krok w przód, tylne kolano prawie do podłogi.
+      - Zachowaj równowagę i stałe tempo kroków.
+    secondary: [glutes, hamstrings]
+
+  - key: dumbbell_step_ups
+    source: Dumbbell_Step_Ups
+    name: Wchodzenie na podwyższenie z hantlami
+    aliases: [Step-up, Wejścia na skrzynię, Dumbbell step-ups]
+    semantics: per_hand
+    unilateral: true
+    cues:
+      - Cała stopa na podwyższeniu, kolano nad stopą.
+      - Wchodź siłą nogi na podwyższeniu, bez odbicia z dolnej nogi.
+      - Kontrolowane zejście.
+    secondary: [glutes, hamstrings]
+
+  - key: deadlift
+    source: Barbell_Deadlift
+    name: Martwy ciąg klasyczny
+    aliases: [Martwy ciąg, MC, Deadlift]
+    cues:
+      - Sztanga nad środkiem stopy, plecy proste, łopatki nad sztangą.
+      - Napnij brzuch i „wypchnij podłogę” nogami, sztanga blisko nóg.
+      - Zakończ wyprostem bioder bez odchylania tułowia.
+    primary: [lower_back, glutes, hamstrings]
+    secondary: [quadriceps, traps, forearms]
+
+  - key: sumo_deadlift
+    source: Sumo_Deadlift
+    name: Martwy ciąg sumo
+    aliases: [Sumo, Sumo deadlift]
+    cues:
+      - Szeroki rozstaw stóp, palce na zewnątrz, chwyt między nogami.
+      - Kolana wypchnięte na zewnątrz, tułów bardziej pionowo niż w klasyku.
+      - Sztanga blisko ciała przez cały ruch.
+    primary: [glutes, hamstrings, adductors]
+    secondary: [quadriceps, lower_back]
+
+  - key: romanian_deadlift
+    source: Romanian_Deadlift
+    name: Martwy ciąg rumuński
+    aliases: [RDL, Rumuński martwy ciąg, Romanian deadlift]
+    cues:
+      - Kolana lekko ugięte i stałe, ruch z bioder w tył.
+      - Sztanga sunie po udach do rozciągnięcia tyłu ud.
+      - Plecy proste, powrót przez wypchnięcie bioder w przód.
+    primary: [hamstrings]
+    secondary: [glutes, lower_back]
+
+  - key: stiff_leg_deadlift
+    source: Stiff-Legged_Barbell_Deadlift
+    name: Martwy ciąg na prostych nogach
+    aliases: [Martwy ciąg prosty, Stiff-legged deadlift, SLDL]
+    cues:
+      - Nogi prawie proste, plecy proste.
+      - Opuszczaj sztangę do maksymalnego rozciągnięcia tyłu ud.
+      - Nie zaokrąglaj odcinka lędźwiowego.
+    secondary: [glutes, lower_back]
+
+  - key: dumbbell_romanian_deadlift
+    source: Stiff-Legged_Dumbbell_Deadlift
+    name: Martwy ciąg rumuński z hantlami
+    aliases: [RDL z hantlami, Dumbbell RDL]
+    semantics: per_hand
+    cues:
+      - Hantle przed udami, kolana lekko ugięte.
+      - Biodra w tył, hantle blisko nóg.
+      - Plecy proste, pełne rozciągnięcie tyłu ud.
+    secondary: [glutes, lower_back]
+
+  - key: trap_bar_deadlift
+    source: Trap_Bar_Deadlift
+    name: Martwy ciąg z gryfem heksagonalnym
+    aliases: [Trap bar, Hex bar deadlift, Martwy ciąg trap bar]
+    cues:
+      - Stań w środku gryfu, chwyt neutralny.
+      - Biodra niżej niż w klasyku, tułów bardziej pionowo.
+      - Wstań, prostując jednocześnie kolana i biodra.
+    primary: [quadriceps, glutes]
+    secondary: [hamstrings, lower_back, traps]
+
+  - key: rack_pull
+    source: Rack_Pulls
+    name: Martwy ciąg z podwyższenia
+    aliases: [Rack pull, Martwy ciąg z klatki]
+    cues:
+      - Sztanga na zabezpieczeniach na wysokości kolan lub nieco niżej.
+      - Plecy proste, łopatki nad sztangą.
+      - Zakończ pełnym wyprostem bioder.
+    secondary: [glutes, hamstrings, traps]
+
+  - key: good_morning
+    source: Good_Morning
+    name: Skłony ze sztangą na karku
+    aliases: [Dzień dobry, Good morning]
+    cues:
+      - Sztanga na plecach, kolana lekko ugięte.
+      - Pochylaj tułów, cofając biodra, plecy proste.
+      - Schodź tylko do granicy rozciągnięcia tyłu ud.
+    secondary: [glutes, lower_back]
+
+  - key: hip_thrust
+    source: Barbell_Hip_Thrust
+    name: Hip thrust ze sztangą
+    aliases: [Wypychanie bioder, Hip thrust, Unoszenie bioder z oparciem]
+    cues:
+      - Łopatki oparte o ławkę, sztanga na biodrach z podkładką.
+      - Wypychaj biodra w górę do linii z tułowiem, broda lekko przy klatce.
+      - Zatrzymaj ruch na chwilę z napiętymi pośladkami.
+    secondary: [hamstrings]
+
+  - key: glute_bridge
+    source: Barbell_Glute_Bridge
+    name: Mostek biodrowy ze sztangą
+    aliases: [Glute bridge, Most biodrowy]
+    cues:
+      - Plecy na podłodze, sztanga na biodrach.
+      - Wypychaj biodra w górę przez pięty.
+      - Nie przeprostowuj lędźwi w górnej pozycji.
+    secondary: [hamstrings]
+
+  - key: leg_extension
+    source: Leg_Extensions
+    name: Prostowanie nóg na maszynie
+    aliases: [Prostowanie nóg, Leg extension, Wyprosty nóg]
+    cues:
+      - Oś maszyny na wysokości stawu kolanowego.
+      - Prostuj nogi do pełnego wyprostu i zatrzymaj na chwilę.
+      - Wolne opuszczanie.
+
+  - key: lying_leg_curl
+    source: Lying_Leg_Curls
+    name: Uginanie nóg na maszynie leżąc
+    aliases: [Uginanie nóg leżąc, Lying leg curl]
+    cues:
+      - Biodra przyciśnięte do ławki.
+      - Uginaj nogi do pełnego skurczu tyłu ud.
+      - Kontrolowane prostowanie bez uderzania ciężarem.
+
+  - key: seated_leg_curl
+    source: Seated_Leg_Curl
+    name: Uginanie nóg na maszynie siedząc
+    aliases: [Uginanie nóg siedząc, Seated leg curl]
+    cues:
+      - Uda zablokowane wałkiem, oś maszyny na wysokości kolan.
+      - Uginaj nogi maksymalnie pod siedzisko.
+      - Wolny powrót do wyprostu.
+
+  - key: glute_ham_raise
+    source: Glute_Ham_Raise
+    name: Glute-ham raise
+    aliases: [GHR, Uginanie nóg na ławce GHD]
+    load: weighted_bodyweight
+    cues:
+      - Kolana za podpórką, stopy zablokowane.
+      - Opuszczaj tułów, prostując kolana, biodra wyprostowane.
+      - Wracaj siłą tyłu ud; ciężar wpisuj jako dociążenie.
+    secondary: [glutes, calves]
+
+  - key: hip_adduction_machine
+    source: Thigh_Adductor
+    name: Przywodzenie nóg na maszynie
+    aliases: [Przywodziciele na maszynie, Hip adduction, Adductor machine]
+    cues:
+      - Plecy przy oparciu, podkładki po wewnętrznej stronie kolan.
+      - Ściągaj nogi do środka do pełnego skurczu.
+      - Kontrolowany powrót.
+
+  - key: hip_abduction_machine
+    source: Thigh_Abductor
+    name: Odwodzenie nóg na maszynie
+    aliases: [Odwodziciele na maszynie, Hip abduction, Abductor machine]
+    cues:
+      - Plecy przy oparciu, podkładki po zewnętrznej stronie kolan.
+      - Rozsuwaj nogi na zewnątrz.
+      - Wolny powrót, bez uderzania ciężarem.
+    secondary: [glutes]
+
+  - key: cable_kickback
+    source: One-Legged_Cable_Kickback
+    name: Wykop nogą w tył na wyciągu
+    aliases: [Kickback na wyciągu, Cable glute kickback]
+    unilateral: true
+    cues:
+      - Mankiet na kostce, tułów lekko pochylony.
+      - Prowadź nogę w tył siłą pośladka.
+      - Bez przeprostu w odcinku lędźwiowym.
+
+  - key: standing_calf_raise
+    source: Standing_Calf_Raises
+    name: Wspięcia na palce stojąc na maszynie
+    aliases: [Łydki stojąc, Standing calf raise]
+    cues:
+      - Pięty opuszczone poniżej podestu do rozciągnięcia.
+      - Wspinaj się maksymalnie na palce.
+      - Krótka pauza w dolnej i górnej pozycji.
+
+  - key: seated_calf_raise
+    source: Seated_Calf_Raise
+    name: Wspięcia na palce siedząc na maszynie
+    aliases: [Łydki siedząc, Seated calf raise]
+    cues:
+      - Podkładki na udach tuż nad kolanami.
+      - Pełne opuszczenie pięt i maksymalne wspięcie.
+      - Wolne tempo, bez odbijania.
+
+  - key: leg_press_calf_raise
+    source: Calf_Press_On_The_Leg_Press_Machine
+    name: Wspięcia na palce na suwnicy
+    aliases: [Łydki na suwnicy, Calf press, Leg press calf raise]
+    cues:
+      - Na platformie tylko przednia część stopy.
+      - Kolana proste, ale nie zablokowane.
+      - Pełny zakres ruchu w stawie skokowym.
+
+  # ── Barki ────────────────────────────────────────────────────────
+  - key: overhead_press
+    source: Standing_Military_Press
+    name: Wyciskanie żołnierskie
+    aliases: [Wyciskanie sztangi nad głowę stojąc, OHP, Military press, Overhead press]
+    cues:
+      - Sztanga na przednich aktonach barków, pośladki i brzuch napięte.
+      - Wyciskaj pionowo, przesuwając głowę „pod sztangę”.
+      - Nie odchylaj tułowia do tyłu.
+    secondary: [triceps]
+
+  - key: seated_barbell_press
+    source: Seated_Barbell_Military_Press
+    name: Wyciskanie sztangi nad głowę siedząc
+    aliases: [OHP siedząc, Seated barbell press]
+    cues:
+      - Oparcie pionowo, plecy przy oparciu.
+      - Opuszczaj sztangę do górnej części klatki.
+      - Wyciskaj nad głowę bez blokowania łokci na siłę.
+    secondary: [triceps]
+
+  - key: dumbbell_shoulder_press
+    source: Dumbbell_Shoulder_Press
+    name: Wyciskanie hantli nad głowę siedząc
+    aliases: [Wyciskanie hantli siedząc, Dumbbell shoulder press]
+    semantics: per_hand
+    cues:
+      - Oparcie pionowo lub lekko odchylone.
+      - Hantle startują na wysokości uszu, łokcie lekko przed tułowiem.
+      - Wyciskaj nad głowę bez stukania hantlami.
+    secondary: [triceps]
+
+  - key: arnold_press
+    source: Arnold_Dumbbell_Press
+    name: Arnoldki
+    aliases: [Wyciskanie Arnolda, Arnold press]
+    semantics: per_hand
+    cues:
+      - Start z hantlami przed twarzą, dłonie zwrócone do siebie.
+      - W trakcie wyciskania obracaj dłonie na zewnątrz.
+      - Odwróć ruch przy opuszczaniu.
+    secondary: [triceps]
+
+  - key: machine_shoulder_press
+    source: Machine_Shoulder_Military_Press
+    name: Wyciskanie nad głowę na maszynie
+    aliases: [Barki na maszynie, Machine shoulder press]
+    cues:
+      - Uchwyty na wysokości barków lub nieco niżej.
+      - Plecy przy oparciu przez cały ruch.
+      - Kontrolowane opuszczanie.
+    secondary: [triceps]
+
+  - key: lateral_raise
+    source: Side_Lateral_Raise
+    name: Unoszenie hantli bokiem
+    aliases: [Wznosy bokiem, Odwodzenie ramion, Lateral raise]
+    semantics: per_hand
+    cues:
+      - Łokcie lekko ugięte, tułów lekko pochylony.
+      - Unoś ramiona bokiem do wysokości barków.
+      - Prowadź ruch łokciami, bez podrzucania tułowiem.
+
+  - key: cable_lateral_raise
+    source: Cable_Seated_Lateral_Raise
+    name: Unoszenie ramion bokiem na wyciągu
+    aliases: [Wznosy bokiem na wyciągu, Cable lateral raise]
+    cues:
+      - Linka przebiega przed ciałem, łokcie lekko ugięte.
+      - Unoś ramiona do wysokości barków.
+      - Stałe napięcie, wolny powrót.
+    secondary: []
+
+  - key: front_raise
+    source: Front_Dumbbell_Raise
+    name: Unoszenie hantli w przód
+    aliases: [Wznosy w przód, Front raise]
+    semantics: per_hand
+    cues:
+      - Ramiona prawie proste, tułów nieruchomy.
+      - Unoś hantle do wysokości oczu.
+      - Opuszczaj powoli.
+
+  - key: reverse_fly
+    source: Reverse_Flyes
+    name: Odwrotne rozpiętki z hantlami w opadzie
+    aliases: [Wznosy w opadzie, Reverse fly, Rear delt fly]
+    semantics: per_hand
+    cues:
+      - Tułów pochylony prawie poziomo, plecy proste.
+      - Unoś ramiona bokiem, łokcie lekko ugięte.
+      - Myśl o tylnych aktonach barków, nie o ściąganiu łopatek.
+    secondary: [middle_back]
+
+  - key: reverse_pec_deck
+    source: Reverse_Machine_Flyes
+    name: Odwrotne rozpiętki na maszynie
+    aliases: [Reverse pec deck, Tylne barki na maszynie]
+    cues:
+      - Klatka przy oparciu, uchwyty na wysokości barków.
+      - Prowadź ramiona szeroko do tyłu.
+      - Bez szarpania, pełny zakres ruchu.
+    secondary: [middle_back]
+
+  - key: face_pull
+    source: Face_Pull
+    name: Przyciąganie liny do twarzy
+    aliases: [Face pull, Facepull]
+    cues:
+      - Wyciąg na wysokości twarzy, chwyt liny kciukami do tyłu.
+      - Ciągnij linę do czoła, rozchylając ręce na boki.
+      - Łokcie wysoko, zakończ z rotacją zewnętrzną barków.
+    secondary: [middle_back, traps]
+
+  - key: upright_row
+    source: Upright_Barbell_Row
+    name: Podciąganie sztangi wzdłuż tułowia
+    aliases: [Wiosłowanie stojąc, Upright row]
+    cues:
+      - Chwyt nieco szerzej niż barki.
+      - Prowadź łokcie w górę, najwyżej do wysokości barków.
+      - Przerwij, jeśli pojawia się ból barku.
+    secondary: [traps]
+
+  # ── Biceps i przedramiona ────────────────────────────────────────
+  - key: barbell_curl
+    source: Barbell_Curl
+    name: Uginanie ramion ze sztangą stojąc
+    aliases: [Biceps ze sztangą, Barbell curl]
+    cues:
+      - Łokcie przy tułowiu i nieruchome.
+      - Uginaj ramiona bez bujania tułowiem.
+      - Pełny wyprost przy opuszczaniu.
+    secondary: [forearms]
+
+  - key: ez_bar_curl
+    source: EZ-Bar_Curl
+    name: Uginanie ramion z gryfem łamanym
+    aliases: [Biceps z łamaną, EZ-bar curl]
+    cues:
+      - Chwyt na zagięciach gryfu, łokcie przy tułowiu.
+      - Uginaj do pełnego skurczu.
+      - Opuszczaj powoli.
+    secondary: [forearms]
+
+  - key: dumbbell_curl
+    source: Dumbbell_Bicep_Curl
+    name: Uginanie ramion z hantlami
+    aliases: [Biceps z hantlami, Dumbbell curl]
+    semantics: per_hand
+    cues:
+      - Łokcie nieruchomo przy tułowiu.
+      - W trakcie uginania obracaj dłonie na zewnątrz (supinacja).
+      - Pełny zakres ruchu.
+    secondary: [forearms]
+
+  - key: hammer_curl
+    source: Hammer_Curls
+    name: Uginanie ramion z hantlami chwytem młotkowym
+    aliases: [Młotki, Hammer curl]
+    semantics: per_hand
+    cues:
+      - Chwyt neutralny, kciuki w górę.
+      - Łokcie przy tułowiu.
+      - Uginaj bez bujania tułowiem.
+    secondary: [forearms]
+
+  - key: incline_dumbbell_curl
+    source: Incline_Dumbbell_Curl
+    name: Uginanie ramion z hantlami na ławce skośnej
+    aliases: [Biceps na skosie, Incline dumbbell curl]
+    semantics: per_hand
+    cues:
+      - Oparcie pod kątem ok. 45–60°, ramiona zwisają pionowo.
+      - Uginaj bez przesuwania łokci w przód.
+      - Pełne rozciągnięcie bicepsa w dole.
+
+  - key: preacher_curl
+    source: Preacher_Curl
+    name: Uginanie ramion na modlitewniku
+    aliases: [Modlitewnik, Preacher curl]
+    equipment: ez_bar
+    cues:
+      - Tył ramion płasko na podpórce.
+      - Uginaj do pełnego skurczu.
+      - Nie prostuj łokci gwałtownie w dole.
+
+  - key: concentration_curl
+    source: Concentration_Curls
+    name: Uginanie ramienia z hantlem w podporze o udo
+    aliases: [Koncentryczne uginanie, Concentration curl]
+    semantics: per_hand
+    unilateral: true
+    cues:
+      - Siad, łokieć oparty o wewnętrzną stronę uda.
+      - Uginaj hantel do barku bez ruchu ramienia.
+      - Wolne opuszczanie.
+
+  - key: cable_curl
+    source: Standing_Biceps_Cable_Curl
+    name: Uginanie ramion na wyciągu dolnym
+    aliases: [Biceps na wyciągu, Cable curl]
+    cues:
+      - Łokcie przy tułowiu, tułów nieruchomy.
+      - Uginaj drążek do klatki.
+      - Stałe napięcie przez cały zakres.
+
+  - key: reverse_curl
+    source: Reverse_Barbell_Curl
+    name: Uginanie ramion ze sztangą nachwytem
+    aliases: [Uginanie nachwytem, Reverse curl]
+    cues:
+      - Chwyt nachwytem na szerokość barków.
+      - Łokcie przy tułowiu, nadgarstki proste.
+      - Ruch kontrolowany, bez bujania.
+    primary: [forearms, biceps]
+
+  - key: farmers_walk
+    source: Farmers_Walk
+    name: Spacer farmera
+    aliases: [Farmer walk, Farmer's walk, Noszenie ciężarów]
+    measure: [weight, distance]
+    semantics: per_hand
+    cues:
+      - Ciężary po bokach, barki ściągnięte w dół, brzuch napięty.
+      - Krótkie, szybkie kroki, tułów pionowo.
+      - Wpisuj ciężar w jednej ręce i przebyty dystans.
+    secondary: [traps, abdominals, quadriceps]
+
+  # ── Triceps ──────────────────────────────────────────────────────
+  - key: triceps_pushdown
+    source: Triceps_Pushdown
+    name: Prostowanie ramion na wyciągu górnym drążkiem
+    aliases: [Triceps na wyciągu, Pushdown, Triceps pushdown]
+    cues:
+      - Łokcie przy tułowiu i nieruchome.
+      - Prostuj ramiona do pełnego wyprostu.
+      - Wolny powrót do kąta ok. 90°.
+
+  - key: rope_pushdown
+    source: Triceps_Pushdown_-_Rope_Attachment
+    name: Prostowanie ramion na wyciągu górnym liną
+    aliases: [Triceps z liną, Rope pushdown]
+    cues:
+      - Łokcie przy tułowiu.
+      - Na dole rozciągnij końce liny na boki.
+      - Kontrolowany powrót.
+
+  - key: overhead_cable_extension
+    source: Cable_Rope_Overhead_Triceps_Extension
+    name: Prostowanie ramion nad głową z liną wyciągu
+    aliases: [Francuskie na wyciągu, Overhead cable extension]
+    cues:
+      - Tyłem do wyciągu, łokcie przy głowie skierowane w przód.
+      - Prostuj ramiona w przód i w górę.
+      - Pełne rozciągnięcie tricepsa przy powrocie.
+
+  - key: skullcrusher
+    source: EZ-Bar_Skullcrusher
+    name: Wyciskanie francuskie leżąc z gryfem łamanym
+    aliases: [Francuz leżąc, Skull crusher, Skullcrusher]
+    cues:
+      - Ramiona pionowo lub lekko odchylone za głowę.
+      - Uginaj tylko w łokciach, opuszczając gryf do czoła.
+      - Łokcie nie rozjeżdżają się na boki.
+
+  - key: overhead_dumbbell_extension
+    source: Standing_Dumbbell_Triceps_Extension
+    name: Wyciskanie francuskie hantlem oburącz
+    aliases: [Francuz z hantlem, Overhead dumbbell extension]
+    cues:
+      - Hantel trzymany oburącz za głową.
+      - Łokcie blisko głowy, skierowane w górę.
+      - Prostuj ramiona nad głowę bez wyginania lędźwi.
+
+  - key: close_grip_bench_press
+    source: Close-Grip_Barbell_Bench_Press
+    name: Wyciskanie sztangi wąskim chwytem
+    aliases: [Wąskie wyciskanie, Close-grip bench press, CGBP]
+    cues:
+      - Chwyt na szerokość barków lub nieco węziej.
+      - Łokcie blisko tułowia.
+      - Opuszczaj sztangę do dolnej części mostka.
+    secondary: [chest, shoulders]
+
+  - key: dips_triceps
+    source: Dips_-_Triceps_Version
+    name: Pompki na poręczach z akcentem na triceps
+    aliases: [Dipy, Poręcze, Triceps dips]
+    load: weighted_bodyweight
+    equipment: other
+    cues:
+      - Tułów pionowo, łokcie blisko ciała.
+      - Schodź do kąta ok. 90° w łokciach.
+      - Ciężar wpisuj jako dociążenie; 0 kg bez dociążenia.
+    secondary: [chest, shoulders]
+
+  - key: bench_dips
+    source: Bench_Dips
+    name: Pompki w podporze tyłem na ławce
+    aliases: [Dipy na ławce, Bench dips]
+    measure: [reps]
+    load: bodyweight
+    cues:
+      - Dłonie na krawędzi ławki, biodra blisko ławki.
+      - Uginaj łokcie do ok. 90°, łokcie w tył.
+      - Barki ściągnięte w dół.
+
+  - key: triceps_kickback
+    source: Tricep_Dumbbell_Kickback
+    name: Prostowanie ramienia z hantlem w opadzie
+    aliases: [Kickback, Triceps kickback]
+    semantics: per_hand
+    unilateral: true
+    cues:
+      - Ramię wzdłuż tułowia, równolegle do podłogi.
+      - Prostuj tylko przedramię do pełnego wyprostu.
+      - Bez machania ramieniem.
+
+  - key: close_grip_push_ups
+    source: Push-Ups_-_Close_Triceps_Position
+    name: Pompki wąskie
+    aliases: [Pompki diamentowe, Diamond push-ups, Close-grip push-ups]
+    measure: [reps]
+    load: bodyweight
+    cues:
+      - Dłonie blisko siebie pod klatką.
+      - Łokcie prowadzone wzdłuż tułowia.
+      - Ciało w jednej linii.
+    secondary: [chest, shoulders]
+
+  # ── Brzuch ───────────────────────────────────────────────────────
+  - key: plank
+    source: Plank
+    name: Deska
+    aliases: [Plank, Podpór przodem na przedramionach]
+    measure: [duration]
+    load: bodyweight
+    cues:
+      - Łokcie pod barkami, ciało w jednej linii.
+      - Pośladki i brzuch napięte, bez zapadania bioder.
+      - Oddychaj spokojnie przez cały czas trwania.
+
+  - key: side_plank
+    source: Side_Bridge
+    name: Deska bokiem
+    aliases: [Side plank, Podpór bokiem]
+    measure: [duration]
+    load: bodyweight
+    unilateral: true
+    cues:
+      - Łokieć pod barkiem, ciało w jednej linii.
+      - Biodra wysoko, nie opadają w stronę podłogi.
+      - Wpisuj czas dla jednej strony.
+    mechanic: isolation
+
+  - key: hanging_leg_raise
+    source: Hanging_Leg_Raise
+    name: Unoszenie nóg w zwisie na drążku
+    aliases: [Wznosy nóg w zwisie, Hanging leg raise]
+    measure: [reps]
+    load: bodyweight
+    cues:
+      - Pełny zwis, barki aktywne.
+      - Unoś nogi, podwijając miednicę, bez bujania.
+      - Wolne opuszczanie.
+
+  - key: captains_chair_knee_raise
+    source: Knee_Hip_Raise_On_Parallel_Bars
+    name: Unoszenie kolan w podporze na poręczach
+    aliases: [Krzesło kapitańskie, Captain's chair, Knee raise]
+    measure: [reps]
+    load: bodyweight
+    cues:
+      - Plecy przy oparciu, ramiona na podpórkach.
+      - Unoś kolana do klatki, podwijając miednicę.
+      - Bez rozbujania nóg.
+
+  - key: crunches
+    source: Crunches
+    name: Brzuszki
+    aliases: [Spięcia brzucha, Crunches, Crunch]
+    measure: [reps]
+    load: bodyweight
+    cues:
+      - Lędźwia przy podłodze, dłonie przy skroniach.
+      - Unoś łopatki, zbliżając żebra do miednicy.
+      - Nie ciągnij głowy rękami.
+
+  - key: cable_crunch
+    source: Cable_Crunch
+    name: Spięcia brzucha na wyciągu klęcząc
+    aliases: [Allahy, Cable crunch]
+    cues:
+      - Klęk przed wyciągiem, lina przy głowie.
+      - Zwijaj tułów, zbliżając łokcie do ud.
+      - Biodra nieruchome, ruch z brzucha.
+
+  - key: ab_wheel
+    source: Ab_Roller
+    name: Rolowanie kółkiem do ćwiczeń brzucha
+    aliases: [Kółko, Ab wheel, Ab rollout]
+    measure: [reps]
+    load: bodyweight
+    cues:
+      - Start w klęku, brzuch napięty, miednica podwinięta.
+      - Rozwijaj się tylko tak daleko, jak utrzymasz proste lędźwia.
+      - Wracaj siłą brzucha.
+
+  - key: russian_twist
+    source: Russian_Twist
+    name: Skręty tułowia w siadzie
+    aliases: [Russian twist, Rosyjskie skręty]
+    load: weighted_bodyweight
+    cues:
+      - Siad z odchylonym tułowiem, plecy proste.
+      - Skręcaj tułów na boki, prowadząc ciężar.
+      - Liczba powtórzeń obejmuje obie strony.
+
+  - key: reverse_crunch
+    source: Reverse_Crunch
+    name: Odwrotne brzuszki
+    aliases: [Reverse crunch, Unoszenie bioder leżąc]
+    measure: [reps]
+    load: bodyweight
+    cues:
+      - Leżenie tyłem, kolana ugięte nad biodrami.
+      - Podwijaj miednicę, unosząc biodra od podłogi.
+      - Wolne opuszczanie bez rozbujania.
+
+  - key: dead_bug
+    source: Dead_Bug
+    name: Martwy robak
+    aliases: [Dead bug]
+    measure: [reps]
+    load: bodyweight
+    cues:
+      - Lędźwia przyklejone do podłogi przez cały czas.
+      - Prostuj naprzemiennie przeciwną rękę i nogę.
+      - Powolny, kontrolowany ruch.
+
+  - key: pallof_press
+    source: Pallof_Press
+    name: Wypychanie Pallofa
+    aliases: [Pallof press, Antyrotacja na wyciągu]
+    unilateral: true
+    cues:
+      - Bokiem do wyciągu, uchwyt przy klatce.
+      - Wypychaj uchwyt przed siebie, nie pozwalając na rotację tułowia.
+      - Wpisuj wynik dla jednej strony.
+    secondary: [shoulders]
+
+  - key: ab_crunch_machine
+    source: Ab_Crunch_Machine
+    name: Spięcia brzucha na maszynie
+    aliases: [Maszyna na brzuch, Ab crunch machine]
+    cues:
+      - Ustaw siedzisko i podkładki według wzrostu.
+      - Zwijaj tułów siłą brzucha.
+      - Wolny powrót bez odbijania ciężaru.
+
+  - key: lying_leg_raise
+    source: Flat_Bench_Lying_Leg_Raise
+    name: Unoszenie nóg leżąc
+    aliases: [Wznosy nóg leżąc, Lying leg raise]
+    measure: [reps]
+    load: bodyweight
+    cues:
+      - Lędźwia przy podłożu, dłonie przytrzymują ławkę.
+      - Unoś proste nogi do pionu.
+      - Opuszczaj powoli, nie odrywając lędźwi.
+
+  # ── Kettlebell i całe ciało ──────────────────────────────────────
+  - key: kettlebell_swing
+    name: Swing z kettlebell oburącz
+    aliases: [Swing, Kettlebell swing, Wymachy kettlebell]
+    equipment: kettlebell
+    category: strength
+    mechanic: compound
+    force: pull
+    primary: [glutes, hamstrings]
+    secondary: [lower_back, shoulders, abdominals]
+    cues:
+      - Ruch z bioder (zawias), nie z przysiadu.
+      - Dynamiczny wyprost bioder wyrzuca kettlebell do wysokości klatki.
+      - Plecy proste, kettlebell blisko ciała w dolnej fazie.
+
+  - key: turkish_get_up
+    source: Kettlebell_Turkish_Get-Up_Lunge_style
+    name: Tureckie wstawanie z kettlebell
+    aliases: [Turkish get-up, TGU]
+    unilateral: true
+    cues:
+      - Ramię z kettlebell wyprostowane i pionowe przez cały ruch.
+      - "Wstawaj etapami: łokieć, dłoń, biodra, klęk, wstanie."
+      - Wpisuj wynik dla jednej strony.
+
+  - key: power_clean
+    source: Power_Clean
+    name: Zarzut siłowy
+    aliases: [Power clean, Zarzut]
+    category: olympic
+    cues:
+      - Start jak w martwym ciągu, sztanga blisko nóg.
+      - Dynamiczny wyprost bioder i kolan, potem szybkie podsiad pod sztangę.
+      - Odbierz sztangę na barkach z łokciami wysoko.
+    secondary: [quadriceps, glutes, traps, shoulders]
+    primary: [glutes, hamstrings, quadriceps]
+
+  # ── Kardio ───────────────────────────────────────────────────────
+  - key: treadmill_run
+    source: Running_Treadmill
+    name: Bieg na bieżni
+    aliases: [Bieżnia, Treadmill run, Running]
+    measure: [duration, distance]
+    load: bodyweight
+    cues:
+      - Lądowanie pod środkiem ciężkości, krótki krok.
+      - Wpisuj czas i dystans.
+    secondary: [hamstrings, calves, glutes]
+
+  - key: treadmill_walk
+    source: Walking_Treadmill
+    name: Marsz na bieżni
+    aliases: [Chód na bieżni, Treadmill walk, Marsz pod górę]
+    measure: [duration, distance]
+    load: bodyweight
+    cues:
+      - Wyprostowana sylwetka, nie trzymaj się poręczy.
+      - Nachylenie bieżni zwiększa intensywność.
+    secondary: [hamstrings, calves, glutes]
+
+  - key: stationary_bike
+    source: Bicycling_Stationary
+    name: Rower stacjonarny
+    aliases: [Rowerek, Stationary bike, Cycling]
+    measure: [duration, distance]
+    load: bodyweight
+    cues:
+      - Siodełko tak, by kolano było lekko ugięte w dolnym położeniu pedału.
+      - Wpisuj czas i dystans.
+
+  - key: rowing_machine
+    source: Rowing_Stationary
+    name: Ergometr wioślarski
+    aliases: [Wioślarz, Rowing machine, Rower ergometer, Concept2]
+    measure: [duration, distance]
+    load: bodyweight
+    cues:
+      - "Kolejność: nogi, tułów, ręce; w powrocie odwrotnie."
+      - Plecy proste, siła głównie z nóg.
+    secondary: [middle_back, lats, hamstrings]
+
+  - key: elliptical
+    source: Elliptical_Trainer
+    name: Orbitrek
+    aliases: [Trenażer eliptyczny, Elliptical]
+    measure: [duration, distance]
+    load: bodyweight
+    cues:
+      - Wyprostowana sylwetka, stopy płasko na pedałach.
+      - Wpisuj czas i dystans.
+
+  - key: stair_climber
+    source: Stairmaster
+    name: Schody ruchome
+    aliases: [Stepper, Stairmaster, Stair climber]
+    measure: [duration]
+    load: bodyweight
+    cues:
+      - Nie opieraj ciężaru ciała na poręczach.
+      - Stawiaj całą stopę na stopniu.
+    secondary: [glutes, calves]
+
+  - key: jump_rope
+    source: Rope_Jumping
+    name: Skakanka
+    aliases: [Skakanie na skakance, Jump rope]
+    measure: [duration]
+    load: bodyweight
+    cues:
+      - Niskie, sprężyste podskoki na przedniej części stopy.
+      - Obracaj skakankę nadgarstkami, łokcie blisko tułowia.
+    secondary: [quadriceps, shoulders]
+    primary: [calves]

@@ -6,7 +6,7 @@ Stos: Flutter + Dart, Drift (SQLite), Riverpod, go_router.
 
 ## Stan
 
-Etap 0 (plan) zatwierdzony 2026-10-19. Etap 1 (fundament: schemat bazy, repozytoria, motyw, nawigacja) czeka na akceptację.
+Etapy 0–1 zaakceptowane. Etap 2 (biblioteka ćwiczeń) czeka na akceptację.
 
 ## Dokumentacja
 

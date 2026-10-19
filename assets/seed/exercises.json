@@ -1,0 +1,3984 @@
+{
+  "formatVersion": 1,
+  "seedVersion": 1,
+  "source": {
+    "name": "free-exercise-db",
+    "url": "https://github.com/yuhonas/free-exercise-db",
+    "commit": "f00c92c7dcf1216a928a52c3706c7ce8e2f71ed5",
+    "license": "Unlicense"
+  },
+  "exercises": [
+    {
+      "id": "01a1552d-d0c5-7b5b-bc6d-0db401f9c6b8",
+      "key": "barbell_bench_press",
+      "rev": 1,
+      "name": "Wyciskanie sztangi na ławce płaskiej",
+      "aliases": [
+        "Wyciskanie na płaskiej",
+        "Klata płaska",
+        "Bench press",
+        "Barbell bench press"
+      ],
+      "primaryMuscles": [
+        "chest"
+      ],
+      "secondaryMuscles": [
+        "shoulders",
+        "triceps"
+      ],
+      "equipment": "barbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Łopatki ściągnięte i opuszczone, stopy mocno na podłodze.\nOpuszczaj sztangę pod kontrolą do dolnej części mostka.\nŁokcie pod kątem ok. 45–70° do tułowia, nadgarstki proste.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Barbell_Bench_Press_-_Medium_Grip",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0d5-723b-86d3-f4a5eb17eab3",
+      "key": "incline_barbell_bench_press",
+      "rev": 1,
+      "name": "Wyciskanie sztangi na ławce skośnej",
+      "aliases": [
+        "Wyciskanie na skosie",
+        "Skos dodatni",
+        "Incline bench press"
+      ],
+      "primaryMuscles": [
+        "chest"
+      ],
+      "secondaryMuscles": [
+        "shoulders",
+        "triceps"
+      ],
+      "equipment": "barbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Oparcie ustawione pod kątem ok. 30–45°.\nOpuszczaj sztangę do górnej części klatki, łopatki ściągnięte.\nNie odrywaj pośladków od ławki.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Barbell_Incline_Bench_Press_-_Medium_Grip",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0d5-79f6-9faa-238738ea1ef7",
+      "key": "decline_barbell_bench_press",
+      "rev": 1,
+      "name": "Wyciskanie sztangi na ławce ujemnej",
+      "aliases": [
+        "Skos ujemny",
+        "Decline bench press"
+      ],
+      "primaryMuscles": [
+        "chest"
+      ],
+      "secondaryMuscles": [
+        "shoulders",
+        "triceps"
+      ],
+      "equipment": "barbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Nogi zablokowane pod wałkami, łopatki ściągnięte.\nOpuszczaj sztangę do dolnej części klatki.\nWyciskaj w linii prostej nad barkami.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Decline_Barbell_Bench_Press",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0d5-77b9-8cbd-65078f49520c",
+      "key": "dumbbell_bench_press",
+      "rev": 1,
+      "name": "Wyciskanie hantli na ławce płaskiej",
+      "aliases": [
+        "Hantle na płaskiej",
+        "Dumbbell bench press",
+        "DB bench press"
+      ],
+      "primaryMuscles": [
+        "chest"
+      ],
+      "secondaryMuscles": [
+        "shoulders",
+        "triceps"
+      ],
+      "equipment": "dumbbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Łopatki ściągnięte, hantle na wysokości klatki.\nOpuszczaj hantle po łuku do lekkiego rozciągnięcia klatki.\nWyciskaj nad barki bez uderzania hantlami o siebie.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "per_hand",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Dumbbell_Bench_Press",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0d5-73db-a889-158374aef15d",
+      "key": "incline_dumbbell_press",
+      "rev": 1,
+      "name": "Wyciskanie hantli na ławce skośnej",
+      "aliases": [
+        "Hantle na skosie",
+        "Incline dumbbell press"
+      ],
+      "primaryMuscles": [
+        "chest"
+      ],
+      "secondaryMuscles": [
+        "shoulders",
+        "triceps"
+      ],
+      "equipment": "dumbbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Oparcie ustawione pod kątem ok. 30–45°.\nŁokcie lekko pod tułowiem, nie rozkładaj ich w linii barków.\nPełny zakres ruchu, kontrolowane opuszczanie.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "per_hand",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Incline_Dumbbell_Press",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0d5-7df1-9597-66fcaa8f8516",
+      "key": "dumbbell_flyes",
+      "rev": 1,
+      "name": "Rozpiętki z hantlami na ławce płaskiej",
+      "aliases": [
+        "Rozpiętki płaskie",
+        "Dumbbell flyes",
+        "Dumbbell fly"
+      ],
+      "primaryMuscles": [
+        "chest"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "dumbbell",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "push",
+      "instructions": "Łokcie lekko ugięte i zablokowane w tej pozycji przez całą serię.\nOpuszczaj hantle szeroko do rozciągnięcia klatki, bez bólu barku.\nZbliżaj ramiona ruchem „obejmowania beczki”.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "per_hand",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Dumbbell_Flyes",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0d7-7435-ab3e-404b4f3523c5",
+      "key": "incline_dumbbell_flyes",
+      "rev": 1,
+      "name": "Rozpiętki z hantlami na ławce skośnej",
+      "aliases": [
+        "Rozpiętki na skosie",
+        "Incline dumbbell flyes"
+      ],
+      "primaryMuscles": [
+        "chest"
+      ],
+      "secondaryMuscles": [
+        "shoulders"
+      ],
+      "equipment": "dumbbell",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "push",
+      "instructions": "Oparcie pod kątem ok. 30°, łokcie lekko ugięte.\nOpuszczaj hantle do linii barków, nie niżej.\nRuch tylko w stawie barkowym.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "per_hand",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Incline_Dumbbell_Flyes",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0d7-7394-a9f4-fb48d38471de",
+      "key": "cable_crossover",
+      "rev": 1,
+      "name": "Krzyżowanie linek wyciągu",
+      "aliases": [
+        "Brama",
+        "Rozpiętki na bramie",
+        "Cable crossover",
+        "Cable fly"
+      ],
+      "primaryMuscles": [
+        "chest"
+      ],
+      "secondaryMuscles": [
+        "shoulders"
+      ],
+      "equipment": "cable",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "push",
+      "instructions": "Krok w przód, tułów lekko pochylony, łokcie lekko ugięte.\nProwadź uchwyty łukiem w dół i do środka.\nZatrzymaj ruch na chwilę przy pełnym spięciu klatki.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Cable_Crossover",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0d7-7954-b9dc-e70afa5719d6",
+      "key": "pec_deck",
+      "rev": 1,
+      "name": "Rozpiętki na maszynie",
+      "aliases": [
+        "Butterfly",
+        "Pec deck",
+        "Motylek"
+      ],
+      "primaryMuscles": [
+        "chest"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "machine",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "push",
+      "instructions": "Ustaw siedzisko tak, by uchwyty były na wysokości klatki.\nŁopatki przyklejone do oparcia, łokcie lekko ugięte.\nWracaj powoli do rozciągnięcia.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Butterfly",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0d7-78ac-af22-77140b81f687",
+      "key": "machine_chest_press",
+      "rev": 1,
+      "name": "Wyciskanie na maszynie siedząc",
+      "aliases": [
+        "Chest press",
+        "Maszyna na klatkę"
+      ],
+      "primaryMuscles": [
+        "chest"
+      ],
+      "secondaryMuscles": [
+        "shoulders",
+        "triceps"
+      ],
+      "equipment": "machine",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Uchwyty na wysokości środka klatki.\nŁopatki przy oparciu przez cały ruch.\nNie prostuj łokci do pełnego zablokowania.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Leverage_Chest_Press",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0d7-7c15-91aa-4972d48532cf",
+      "key": "smith_bench_press",
+      "rev": 1,
+      "name": "Wyciskanie na suwnicy Smitha na ławce płaskiej",
+      "aliases": [
+        "Smith płaska",
+        "Smith machine bench press"
+      ],
+      "primaryMuscles": [
+        "chest"
+      ],
+      "secondaryMuscles": [
+        "shoulders",
+        "triceps"
+      ],
+      "equipment": "smith_machine",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Ustaw ławkę tak, by gryf opadał na dolną część mostka.\nŁopatki ściągnięte, łokcie pod kątem ok. 45–70°.\nUstaw zabezpieczenia na wysokości klatki.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Smith_Machine_Bench_Press",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0d8-7474-b8c3-0cd1e25ceb88",
+      "key": "smith_incline_bench_press",
+      "rev": 1,
+      "name": "Wyciskanie na suwnicy Smitha na ławce skośnej",
+      "aliases": [
+        "Smith skos",
+        "Smith machine incline press"
+      ],
+      "primaryMuscles": [
+        "chest"
+      ],
+      "secondaryMuscles": [
+        "shoulders",
+        "triceps"
+      ],
+      "equipment": "smith_machine",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Ławka pod kątem ok. 30–45°, gryf nad górną częścią klatki.\nŁopatki ściągnięte, pośladki na ławce.\nKontrolowane opuszczanie do lekkiego dotknięcia klatki.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Smith_Machine_Incline_Bench_Press",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0d8-778a-b02e-3708ac33a527",
+      "key": "push_ups",
+      "rev": 1,
+      "name": "Pompki",
+      "aliases": [
+        "Pompki klasyczne",
+        "Push-ups",
+        "Push up"
+      ],
+      "primaryMuscles": [
+        "chest"
+      ],
+      "secondaryMuscles": [
+        "shoulders",
+        "triceps"
+      ],
+      "equipment": "bodyweight",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Ciało w jednej linii od głowy do pięt, brzuch napięty.\nDłonie nieco szerzej niż barki, łokcie ok. 45° od tułowia.\nSchodź klatką prawie do podłogi.",
+      "measurement": {
+        "weight": false,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Pushups",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0da-7ed7-a7a2-ed1d684bcaf1",
+      "key": "dips_chest",
+      "rev": 1,
+      "name": "Pompki na poręczach z akcentem na klatkę",
+      "aliases": [
+        "Dipy na klatkę",
+        "Chest dips"
+      ],
+      "primaryMuscles": [
+        "chest"
+      ],
+      "secondaryMuscles": [
+        "shoulders",
+        "triceps"
+      ],
+      "equipment": "other",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Tułów pochylony w przód, łokcie lekko na zewnątrz.\nSchodź do lekkiego rozciągnięcia klatki, barki nie wychodzą przed linię.\nCiężar wpisuj jako dociążenie; 0 kg bez dociążenia.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "weighted_bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Dips_-_Chest_Version",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0da-71c7-bd82-ac2fc0f56061",
+      "key": "pull_ups",
+      "rev": 1,
+      "name": "Podciąganie na drążku nachwytem",
+      "aliases": [
+        "Podciąganie",
+        "Drążek nachwyt",
+        "Pull-ups",
+        "Pull up"
+      ],
+      "primaryMuscles": [
+        "lats"
+      ],
+      "secondaryMuscles": [
+        "biceps",
+        "middle_back"
+      ],
+      "equipment": "bodyweight",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "pull",
+      "instructions": "Chwyt nieco szerzej niż barki, start z pełnego zwisu.\nNajpierw ściągnij łopatki, potem ciągnij łokcie do żeber.\nBroda nad drążek; ciężar wpisuj jako dociążenie.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "weighted_bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Pullups",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0da-7b8e-af0b-45673d2f6096",
+      "key": "chin_ups",
+      "rev": 1,
+      "name": "Podciąganie na drążku podchwytem",
+      "aliases": [
+        "Drążek podchwyt",
+        "Chin-ups",
+        "Chin up"
+      ],
+      "primaryMuscles": [
+        "lats"
+      ],
+      "secondaryMuscles": [
+        "biceps",
+        "middle_back"
+      ],
+      "equipment": "bodyweight",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "pull",
+      "instructions": "Chwyt na szerokość barków, dłonie zwrócone do siebie.\nCiągnij łokcie w dół wzdłuż tułowia.\nOpuszczaj się do pełnego wyprostu ramion.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "weighted_bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Chin-Up",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0da-7928-935d-dd38404b2f58",
+      "key": "assisted_pull_up",
+      "rev": 1,
+      "name": "Podciąganie z asystą na maszynie",
+      "aliases": [
+        "Podciąganie wspomagane",
+        "Assisted pull-up",
+        "Gravitron"
+      ],
+      "primaryMuscles": [
+        "lats"
+      ],
+      "secondaryMuscles": [
+        "biceps",
+        "middle_back"
+      ],
+      "equipment": "machine",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "pull",
+      "instructions": "Ciężar oznacza wspomaganie; mniejszy ciężar = trudniejsza seria.\nStart z pełnego zwisu, łopatki ściągnięte przed ruchem ramion.\nBroda nad uchwyty, kontrolowany powrót.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "assisted",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "reptrack:assisted_pull_up",
+      "license": null,
+      "licenseAuthor": "RepTrack"
+    },
+    {
+      "id": "01a1552d-d0db-7ca4-9449-ba545d5ed874",
+      "key": "lat_pulldown",
+      "rev": 1,
+      "name": "Ściąganie drążka wyciągu górnego szerokim nachwytem",
+      "aliases": [
+        "Ściąganie do klatki",
+        "Wyciąg górny",
+        "Lat pulldown"
+      ],
+      "primaryMuscles": [
+        "lats"
+      ],
+      "secondaryMuscles": [
+        "biceps",
+        "middle_back"
+      ],
+      "equipment": "cable",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "pull",
+      "instructions": "Uda zablokowane pod wałkiem, lekkie odchylenie tułowia.\nŚciągaj drążek do górnej części klatki, łokcie w dół.\nNie bujaj tułowiem i wracaj do pełnego wyprostu ramion.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Wide-Grip_Lat_Pulldown",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0db-70b5-88cd-cff1bbdc87d9",
+      "key": "close_grip_pulldown",
+      "rev": 1,
+      "name": "Ściąganie wyciągu górnego wąskim uchwytem",
+      "aliases": [
+        "Ściąganie uchwytem V",
+        "Close-grip lat pulldown",
+        "V-bar pulldown"
+      ],
+      "primaryMuscles": [
+        "lats"
+      ],
+      "secondaryMuscles": [
+        "biceps",
+        "middle_back"
+      ],
+      "equipment": "cable",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "pull",
+      "instructions": "Uchwyt V, tułów lekko odchylony.\nCiągnij uchwyt do mostka, łokcie blisko tułowia.\nPełne rozciągnięcie w górze.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:V-Bar_Pulldown",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0db-7128-8dce-f5b74c8af7b2",
+      "key": "straight_arm_pulldown",
+      "rev": 1,
+      "name": "Ściąganie drążka wyciągu prostymi ramionami",
+      "aliases": [
+        "Narciarz",
+        "Straight-arm pulldown",
+        "Pullover na wyciągu"
+      ],
+      "primaryMuscles": [
+        "lats"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "cable",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "pull",
+      "instructions": "Ramiona prawie proste, łokcie lekko ugięte i stałe.\nProwadź drążek łukiem do ud.\nTułów stabilny, bez pomagania biodrami.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Straight-Arm_Pulldown",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0db-7a6d-bf97-07a05fb20087",
+      "key": "barbell_row",
+      "rev": 1,
+      "name": "Wiosłowanie sztangą w opadzie tułowia",
+      "aliases": [
+        "Wiosłowanie sztangą",
+        "Barbell row",
+        "Bent-over row"
+      ],
+      "primaryMuscles": [
+        "middle_back"
+      ],
+      "secondaryMuscles": [
+        "lats",
+        "biceps",
+        "lower_back"
+      ],
+      "equipment": "barbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "pull",
+      "instructions": "Tułów pochylony ok. 45° lub niżej, plecy proste.\nPrzyciągaj sztangę do dolnej części brzucha.\nNie szarp tułowiem w górę.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Bent_Over_Barbell_Row",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0db-7b29-bd77-6348bc5ed18d",
+      "key": "reverse_grip_row",
+      "rev": 1,
+      "name": "Wiosłowanie sztangą podchwytem",
+      "aliases": [
+        "Wiosłowanie Yatesa",
+        "Reverse grip row",
+        "Yates row"
+      ],
+      "primaryMuscles": [
+        "middle_back"
+      ],
+      "secondaryMuscles": [
+        "lats",
+        "biceps"
+      ],
+      "equipment": "barbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "pull",
+      "instructions": "Chwyt podchwytem na szerokość barków, tułów lekko wyżej niż przy nachwycie.\nŁokcie blisko tułowia, sztanga do pępka.\nPlecy proste przez całą serię.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Reverse_Grip_Bent-Over_Rows",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0db-770b-8aae-93a4403e56ee",
+      "key": "dumbbell_row",
+      "rev": 1,
+      "name": "Wiosłowanie hantlem jednorącz",
+      "aliases": [
+        "Wiosłowanie hantlem",
+        "One-arm dumbbell row",
+        "DB row"
+      ],
+      "primaryMuscles": [
+        "middle_back"
+      ],
+      "secondaryMuscles": [
+        "lats",
+        "biceps"
+      ],
+      "equipment": "dumbbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "pull",
+      "instructions": "Podpór kolanem i ręką na ławce, plecy równolegle do podłogi.\nCiągnij łokieć w stronę biodra.\nBez rotacji tułowia na końcu ruchu.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "per_hand",
+      "isUnilateral": true,
+      "originRef": "free-exercise-db:One-Arm_Dumbbell_Row",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0dc-7c69-9402-3d90a35d6eae",
+      "key": "t_bar_row",
+      "rev": 1,
+      "name": "Wiosłowanie T-sztangą",
+      "aliases": [
+        "T-bar row",
+        "Wiosłowanie końcem sztangi"
+      ],
+      "primaryMuscles": [
+        "middle_back"
+      ],
+      "secondaryMuscles": [
+        "lats",
+        "biceps"
+      ],
+      "equipment": "barbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "pull",
+      "instructions": "Kolana lekko ugięte, plecy proste.\nPrzyciągaj uchwyt do klatki, ściągając łopatki.\nKontrolowany powrót do pełnego wyprostu ramion.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:T-Bar_Row_with_Handle",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0dc-7a35-910f-99ed650e3774",
+      "key": "seated_cable_row",
+      "rev": 1,
+      "name": "Przyciąganie linki wyciągu dolnego siedząc",
+      "aliases": [
+        "Wiosłowanie na wyciągu",
+        "Wyciąg dolny siedząc",
+        "Seated cable row"
+      ],
+      "primaryMuscles": [
+        "middle_back"
+      ],
+      "secondaryMuscles": [
+        "lats",
+        "biceps"
+      ],
+      "equipment": "cable",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "pull",
+      "instructions": "Plecy proste, lekkie ugięcie kolan.\nPrzyciągaj uchwyt do brzucha, ściągając łopatki.\nNie odchylaj tułowia do tyłu ponad pion.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Seated_Cable_Rows",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0dd-7423-9e9e-d397b1463b71",
+      "key": "machine_row",
+      "rev": 1,
+      "name": "Wiosłowanie na maszynie",
+      "aliases": [
+        "Maszyna do wiosłowania",
+        "Machine row",
+        "Hammer row"
+      ],
+      "primaryMuscles": [
+        "lats"
+      ],
+      "secondaryMuscles": [
+        "middle_back",
+        "biceps"
+      ],
+      "equipment": "machine",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "pull",
+      "instructions": "Klatka oparta o podpórkę.\nCiągnij łokcie do tyłu, ściągając łopatki.\nPełne rozciągnięcie przy powrocie.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Leverage_Iso_Row",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0dd-797b-acc1-b71153772f8d",
+      "key": "chest_supported_row",
+      "rev": 1,
+      "name": "Wiosłowanie hantlami w leżeniu przodem na ławce skośnej",
+      "aliases": [
+        "Wiosłowanie z podparciem klatki",
+        "Chest-supported row"
+      ],
+      "primaryMuscles": [
+        "middle_back"
+      ],
+      "secondaryMuscles": [
+        "lats",
+        "biceps"
+      ],
+      "equipment": "dumbbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "pull",
+      "instructions": "Klatka oparta o ławkę ustawioną pod kątem ok. 30°.\nCiągnij hantle do bioder, łopatki do środka.\nBez odrywania klatki od ławki.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "per_hand",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Dumbbell_Incline_Row",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0dd-71b0-bcb7-cd8912f6a193",
+      "key": "inverted_row",
+      "rev": 1,
+      "name": "Wiosłowanie australijskie",
+      "aliases": [
+        "Podciąganie australijskie",
+        "Inverted row"
+      ],
+      "primaryMuscles": [
+        "middle_back"
+      ],
+      "secondaryMuscles": [
+        "lats",
+        "biceps"
+      ],
+      "equipment": "bodyweight",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "pull",
+      "instructions": "Ciało w jednej linii, pięty na podłodze.\nPrzyciągaj klatkę do drążka, ściągając łopatki.\nIm bardziej poziomo, tym trudniej.",
+      "measurement": {
+        "weight": false,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Inverted_Row",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0dd-7696-8c6e-792772760926",
+      "key": "dumbbell_pullover",
+      "rev": 1,
+      "name": "Przenoszenie hantla za głowę leżąc",
+      "aliases": [
+        "Pullover",
+        "Dumbbell pullover"
+      ],
+      "primaryMuscles": [
+        "lats",
+        "chest"
+      ],
+      "secondaryMuscles": [
+        "shoulders",
+        "triceps"
+      ],
+      "equipment": "dumbbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Hantel trzymany oburącz nad klatką, łokcie lekko ugięte.\nOpuszczaj hantel łukiem za głowę do rozciągnięcia.\nBiodra stabilne, brzuch napięty.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Bent-Arm_Dumbbell_Pullover",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0dd-7623-9a0a-c348dfda5b59",
+      "key": "back_extension",
+      "rev": 1,
+      "name": "Wyprosty tułowia na ławce rzymskiej",
+      "aliases": [
+        "Ławka rzymska",
+        "Hiperekstensje",
+        "Back extension",
+        "Hyperextension"
+      ],
+      "primaryMuscles": [
+        "lower_back"
+      ],
+      "secondaryMuscles": [
+        "glutes",
+        "hamstrings"
+      ],
+      "equipment": "other",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "pull",
+      "instructions": "Biodra na krawędzi podpórki, ruch ze stawu biodrowego.\nProstuj tułów do linii z nogami, bez przeprostu.\nCiężar wpisuj jako dociążenie (np. talerz przy klatce).",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "weighted_bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Hyperextensions_Back_Extensions",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0df-7d5a-929a-39d69d4b5703",
+      "key": "barbell_shrug",
+      "rev": 1,
+      "name": "Szrugsy ze sztangą",
+      "aliases": [
+        "Wzruszanie ramion ze sztangą",
+        "Barbell shrug"
+      ],
+      "primaryMuscles": [
+        "traps"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "barbell",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "pull",
+      "instructions": "Ramiona proste, sztanga przy udach.\nUnoś barki pionowo do uszu, bez krążenia.\nKrótkie zatrzymanie w górze.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Barbell_Shrug",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0df-7b18-85a0-7ec80722646d",
+      "key": "dumbbell_shrug",
+      "rev": 1,
+      "name": "Szrugsy z hantlami",
+      "aliases": [
+        "Wzruszanie ramion z hantlami",
+        "Dumbbell shrug"
+      ],
+      "primaryMuscles": [
+        "traps"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "dumbbell",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "pull",
+      "instructions": "Hantle wzdłuż tułowia, ramiona proste.\nUnoś barki pionowo w górę.\nKontrolowane opuszczanie do pełnego rozciągnięcia.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "per_hand",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Dumbbell_Shrug",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0df-7d40-a613-07de42f84ca3",
+      "key": "back_squat",
+      "rev": 1,
+      "name": "Przysiad ze sztangą na plecach",
+      "aliases": [
+        "Przysiad",
+        "Przysiad tylny",
+        "Back squat",
+        "Barbell squat"
+      ],
+      "primaryMuscles": [
+        "quadriceps"
+      ],
+      "secondaryMuscles": [
+        "glutes",
+        "hamstrings",
+        "lower_back"
+      ],
+      "equipment": "barbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Sztanga na czworobocznych, łopatki ściągnięte, brzuch napięty.\nKolana podążają za palcami stóp, pięty na podłodze.\nSchodź co najmniej do równoległej ud z podłogą, plecy proste.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Barbell_Squat",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0df-7a56-8649-f50fe7a19156",
+      "key": "front_squat",
+      "rev": 1,
+      "name": "Przysiad przedni ze sztangą",
+      "aliases": [
+        "Przysiad przedni",
+        "Front squat"
+      ],
+      "primaryMuscles": [
+        "quadriceps"
+      ],
+      "secondaryMuscles": [
+        "glutes",
+        "abdominals"
+      ],
+      "equipment": "barbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Sztanga na przednich aktonach barków, łokcie wysoko.\nTułów pionowo, kolana mocno w przód.\nGłęboki przysiad bez opadania łokci.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Front_Barbell_Squat",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0df-770c-8a8a-3176b26f4138",
+      "key": "goblet_squat",
+      "rev": 1,
+      "name": "Przysiad goblet",
+      "aliases": [
+        "Goblet squat",
+        "Przysiad z kettlebell przy klatce"
+      ],
+      "primaryMuscles": [
+        "quadriceps"
+      ],
+      "secondaryMuscles": [
+        "glutes"
+      ],
+      "equipment": "kettlebell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Ciężar trzymany oburącz przy klatce.\nŁokcie między kolanami w dolnej pozycji.\nTułów wyprostowany, pięty na podłodze.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Goblet_Squat",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0df-745d-bee2-d97c9cca8582",
+      "key": "smith_squat",
+      "rev": 1,
+      "name": "Przysiad na suwnicy Smitha",
+      "aliases": [
+        "Przysiad Smith",
+        "Smith machine squat"
+      ],
+      "primaryMuscles": [
+        "quadriceps"
+      ],
+      "secondaryMuscles": [
+        "glutes",
+        "hamstrings"
+      ],
+      "equipment": "smith_machine",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Stopy nieco przed linią gryfu.\nKontrolowane zejście do równoległej lub niżej.\nUstaw zabezpieczenia na bezpiecznej wysokości.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Smith_Machine_Squat",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0df-7d6b-884d-ecee165d4457",
+      "key": "hack_squat",
+      "rev": 1,
+      "name": "Przysiad na maszynie hack",
+      "aliases": [
+        "Hack squat",
+        "Hacken"
+      ],
+      "primaryMuscles": [
+        "quadriceps"
+      ],
+      "secondaryMuscles": [
+        "glutes",
+        "hamstrings"
+      ],
+      "equipment": "machine",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Plecy i barki przyklejone do oparcia.\nStopy na środku platformy na szerokość bioder.\nSchodź głęboko, kolana za palcami stóp.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Hack_Squat",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e0-7dc2-a1f9-c7ec3590b1ba",
+      "key": "leg_press",
+      "rev": 1,
+      "name": "Wypychanie nóg na suwnicy",
+      "aliases": [
+        "Suwnica",
+        "Leg press",
+        "Prasa nożna"
+      ],
+      "primaryMuscles": [
+        "quadriceps"
+      ],
+      "secondaryMuscles": [
+        "glutes",
+        "hamstrings"
+      ],
+      "equipment": "machine",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Lędźwia przyklejone do oparcia przez cały ruch.\nKolana w linii ze stopami, bez zapadania do środka.\nNie blokuj kolan w pełnym wyproście.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Leg_Press",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e0-7754-a64a-d29ac2e8fa8f",
+      "key": "bulgarian_split_squat",
+      "rev": 1,
+      "name": "Przysiad bułgarski z hantlami",
+      "aliases": [
+        "Bułgarski przysiad",
+        "Bulgarian split squat",
+        "BSS"
+      ],
+      "primaryMuscles": [
+        "quadriceps",
+        "glutes"
+      ],
+      "secondaryMuscles": [
+        "hamstrings",
+        "adductors"
+      ],
+      "equipment": "dumbbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Tylna stopa na ławce, przednia na tyle daleko, by pięta została na podłodze.\nSchodź pionowo w dół, tułów lekko pochylony.\nWpisuj wynik dla jednej nogi; druga noga ma tę samą serię.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "per_hand",
+      "isUnilateral": true,
+      "originRef": "reptrack:bulgarian_split_squat",
+      "license": null,
+      "licenseAuthor": "RepTrack"
+    },
+    {
+      "id": "01a1552d-d0e1-78c8-95da-5fbad61d65a6",
+      "key": "split_squat",
+      "rev": 1,
+      "name": "Przysiad wykroczny z hantlami",
+      "aliases": [
+        "Wykrok w miejscu",
+        "Split squat"
+      ],
+      "primaryMuscles": [
+        "quadriceps"
+      ],
+      "secondaryMuscles": [
+        "glutes",
+        "hamstrings"
+      ],
+      "equipment": "dumbbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Stopy w rozkroku wykrocznym, ciężar na przedniej nodze.\nOpuszczaj tylne kolano prawie do podłogi.\nTułów pionowo, kolano przednie stabilne.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "per_hand",
+      "isUnilateral": true,
+      "originRef": "free-exercise-db:Split_Squat_with_Dumbbells",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e1-7f2c-84c2-0a524992fa5d",
+      "key": "dumbbell_lunges",
+      "rev": 1,
+      "name": "Wykroki z hantlami",
+      "aliases": [
+        "Wypady z hantlami",
+        "Dumbbell lunges"
+      ],
+      "primaryMuscles": [
+        "quadriceps"
+      ],
+      "secondaryMuscles": [
+        "glutes",
+        "hamstrings"
+      ],
+      "equipment": "dumbbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Długi krok w przód, oba kolana zgięte ok. 90°.\nOdpychaj się piętą przedniej nogi.\nTułów wyprostowany, nogi naprzemiennie.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "per_hand",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Dumbbell_Lunges",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e1-7802-a5d4-6a877e43490c",
+      "key": "barbell_walking_lunge",
+      "rev": 1,
+      "name": "Wykroki chodzone ze sztangą",
+      "aliases": [
+        "Wypady chodzone",
+        "Walking lunges"
+      ],
+      "primaryMuscles": [
+        "quadriceps"
+      ],
+      "secondaryMuscles": [
+        "glutes",
+        "hamstrings"
+      ],
+      "equipment": "barbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Sztanga na plecach jak w przysiadzie.\nKrok w przód, tylne kolano prawie do podłogi.\nZachowaj równowagę i stałe tempo kroków.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Barbell_Walking_Lunge",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e1-7465-b198-0da3d43354ef",
+      "key": "dumbbell_step_ups",
+      "rev": 1,
+      "name": "Wchodzenie na podwyższenie z hantlami",
+      "aliases": [
+        "Step-up",
+        "Wejścia na skrzynię",
+        "Dumbbell step-ups"
+      ],
+      "primaryMuscles": [
+        "quadriceps"
+      ],
+      "secondaryMuscles": [
+        "glutes",
+        "hamstrings"
+      ],
+      "equipment": "dumbbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Cała stopa na podwyższeniu, kolano nad stopą.\nWchodź siłą nogi na podwyższeniu, bez odbicia z dolnej nogi.\nKontrolowane zejście.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "per_hand",
+      "isUnilateral": true,
+      "originRef": "free-exercise-db:Dumbbell_Step_Ups",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e1-7430-aa91-be69cc5a5576",
+      "key": "deadlift",
+      "rev": 1,
+      "name": "Martwy ciąg klasyczny",
+      "aliases": [
+        "Martwy ciąg",
+        "MC",
+        "Deadlift"
+      ],
+      "primaryMuscles": [
+        "lower_back",
+        "glutes",
+        "hamstrings"
+      ],
+      "secondaryMuscles": [
+        "quadriceps",
+        "traps",
+        "forearms"
+      ],
+      "equipment": "barbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "pull",
+      "instructions": "Sztanga nad środkiem stopy, plecy proste, łopatki nad sztangą.\nNapnij brzuch i „wypchnij podłogę” nogami, sztanga blisko nóg.\nZakończ wyprostem bioder bez odchylania tułowia.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Barbell_Deadlift",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e1-7a59-9eee-0999fae65aed",
+      "key": "sumo_deadlift",
+      "rev": 1,
+      "name": "Martwy ciąg sumo",
+      "aliases": [
+        "Sumo",
+        "Sumo deadlift"
+      ],
+      "primaryMuscles": [
+        "glutes",
+        "hamstrings",
+        "adductors"
+      ],
+      "secondaryMuscles": [
+        "quadriceps",
+        "lower_back"
+      ],
+      "equipment": "barbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "pull",
+      "instructions": "Szeroki rozstaw stóp, palce na zewnątrz, chwyt między nogami.\nKolana wypchnięte na zewnątrz, tułów bardziej pionowo niż w klasyku.\nSztanga blisko ciała przez cały ruch.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Sumo_Deadlift",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e2-75e2-a4ae-dda65d778cca",
+      "key": "romanian_deadlift",
+      "rev": 1,
+      "name": "Martwy ciąg rumuński",
+      "aliases": [
+        "RDL",
+        "Rumuński martwy ciąg",
+        "Romanian deadlift"
+      ],
+      "primaryMuscles": [
+        "hamstrings"
+      ],
+      "secondaryMuscles": [
+        "glutes",
+        "lower_back"
+      ],
+      "equipment": "barbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "pull",
+      "instructions": "Kolana lekko ugięte i stałe, ruch z bioder w tył.\nSztanga sunie po udach do rozciągnięcia tyłu ud.\nPlecy proste, powrót przez wypchnięcie bioder w przód.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Romanian_Deadlift",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e2-7c2d-9db5-2303d63160a3",
+      "key": "stiff_leg_deadlift",
+      "rev": 1,
+      "name": "Martwy ciąg na prostych nogach",
+      "aliases": [
+        "Martwy ciąg prosty",
+        "Stiff-legged deadlift",
+        "SLDL"
+      ],
+      "primaryMuscles": [
+        "hamstrings"
+      ],
+      "secondaryMuscles": [
+        "glutes",
+        "lower_back"
+      ],
+      "equipment": "barbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "pull",
+      "instructions": "Nogi prawie proste, plecy proste.\nOpuszczaj sztangę do maksymalnego rozciągnięcia tyłu ud.\nNie zaokrąglaj odcinka lędźwiowego.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Stiff-Legged_Barbell_Deadlift",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e2-7072-afc8-2778414a265b",
+      "key": "dumbbell_romanian_deadlift",
+      "rev": 1,
+      "name": "Martwy ciąg rumuński z hantlami",
+      "aliases": [
+        "RDL z hantlami",
+        "Dumbbell RDL"
+      ],
+      "primaryMuscles": [
+        "hamstrings"
+      ],
+      "secondaryMuscles": [
+        "glutes",
+        "lower_back"
+      ],
+      "equipment": "dumbbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "pull",
+      "instructions": "Hantle przed udami, kolana lekko ugięte.\nBiodra w tył, hantle blisko nóg.\nPlecy proste, pełne rozciągnięcie tyłu ud.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "per_hand",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Stiff-Legged_Dumbbell_Deadlift",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e2-7a6b-b22b-5e43f01335fb",
+      "key": "trap_bar_deadlift",
+      "rev": 1,
+      "name": "Martwy ciąg z gryfem heksagonalnym",
+      "aliases": [
+        "Trap bar",
+        "Hex bar deadlift",
+        "Martwy ciąg trap bar"
+      ],
+      "primaryMuscles": [
+        "quadriceps",
+        "glutes"
+      ],
+      "secondaryMuscles": [
+        "hamstrings",
+        "lower_back",
+        "traps"
+      ],
+      "equipment": "other",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "pull",
+      "instructions": "Stań w środku gryfu, chwyt neutralny.\nBiodra niżej niż w klasyku, tułów bardziej pionowo.\nWstań, prostując jednocześnie kolana i biodra.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Trap_Bar_Deadlift",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e2-731a-b3d0-f347462704b9",
+      "key": "rack_pull",
+      "rev": 1,
+      "name": "Martwy ciąg z podwyższenia",
+      "aliases": [
+        "Rack pull",
+        "Martwy ciąg z klatki"
+      ],
+      "primaryMuscles": [
+        "lower_back"
+      ],
+      "secondaryMuscles": [
+        "glutes",
+        "hamstrings",
+        "traps"
+      ],
+      "equipment": "barbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "pull",
+      "instructions": "Sztanga na zabezpieczeniach na wysokości kolan lub nieco niżej.\nPlecy proste, łopatki nad sztangą.\nZakończ pełnym wyprostem bioder.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Rack_Pulls",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e2-7d18-bc9c-8b503403d9ff",
+      "key": "good_morning",
+      "rev": 1,
+      "name": "Skłony ze sztangą na karku",
+      "aliases": [
+        "Dzień dobry",
+        "Good morning"
+      ],
+      "primaryMuscles": [
+        "hamstrings"
+      ],
+      "secondaryMuscles": [
+        "glutes",
+        "lower_back"
+      ],
+      "equipment": "barbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Sztanga na plecach, kolana lekko ugięte.\nPochylaj tułów, cofając biodra, plecy proste.\nSchodź tylko do granicy rozciągnięcia tyłu ud.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Good_Morning",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e3-70f9-a30b-1de77ee3a6e3",
+      "key": "hip_thrust",
+      "rev": 1,
+      "name": "Hip thrust ze sztangą",
+      "aliases": [
+        "Wypychanie bioder",
+        "Hip thrust",
+        "Unoszenie bioder z oparciem"
+      ],
+      "primaryMuscles": [
+        "glutes"
+      ],
+      "secondaryMuscles": [
+        "hamstrings"
+      ],
+      "equipment": "barbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Łopatki oparte o ławkę, sztanga na biodrach z podkładką.\nWypychaj biodra w górę do linii z tułowiem, broda lekko przy klatce.\nZatrzymaj ruch na chwilę z napiętymi pośladkami.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Barbell_Hip_Thrust",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e3-703d-924e-95367ea3081f",
+      "key": "glute_bridge",
+      "rev": 1,
+      "name": "Mostek biodrowy ze sztangą",
+      "aliases": [
+        "Glute bridge",
+        "Most biodrowy"
+      ],
+      "primaryMuscles": [
+        "glutes"
+      ],
+      "secondaryMuscles": [
+        "hamstrings"
+      ],
+      "equipment": "barbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Plecy na podłodze, sztanga na biodrach.\nWypychaj biodra w górę przez pięty.\nNie przeprostowuj lędźwi w górnej pozycji.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Barbell_Glute_Bridge",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e3-7e4e-a15f-a3b43c42ada3",
+      "key": "leg_extension",
+      "rev": 1,
+      "name": "Prostowanie nóg na maszynie",
+      "aliases": [
+        "Prostowanie nóg",
+        "Leg extension",
+        "Wyprosty nóg"
+      ],
+      "primaryMuscles": [
+        "quadriceps"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "machine",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "push",
+      "instructions": "Oś maszyny na wysokości stawu kolanowego.\nProstuj nogi do pełnego wyprostu i zatrzymaj na chwilę.\nWolne opuszczanie.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Leg_Extensions",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e3-759c-a22f-e7d0de3291b2",
+      "key": "lying_leg_curl",
+      "rev": 1,
+      "name": "Uginanie nóg na maszynie leżąc",
+      "aliases": [
+        "Uginanie nóg leżąc",
+        "Lying leg curl"
+      ],
+      "primaryMuscles": [
+        "hamstrings"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "machine",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "pull",
+      "instructions": "Biodra przyciśnięte do ławki.\nUginaj nogi do pełnego skurczu tyłu ud.\nKontrolowane prostowanie bez uderzania ciężarem.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Lying_Leg_Curls",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e3-7582-ba6c-cb0279118d63",
+      "key": "seated_leg_curl",
+      "rev": 1,
+      "name": "Uginanie nóg na maszynie siedząc",
+      "aliases": [
+        "Uginanie nóg siedząc",
+        "Seated leg curl"
+      ],
+      "primaryMuscles": [
+        "hamstrings"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "machine",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "pull",
+      "instructions": "Uda zablokowane wałkiem, oś maszyny na wysokości kolan.\nUginaj nogi maksymalnie pod siedzisko.\nWolny powrót do wyprostu.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Seated_Leg_Curl",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e3-758b-a307-030d967d16f6",
+      "key": "glute_ham_raise",
+      "rev": 1,
+      "name": "Glute-ham raise",
+      "aliases": [
+        "GHR",
+        "Uginanie nóg na ławce GHD"
+      ],
+      "primaryMuscles": [
+        "hamstrings"
+      ],
+      "secondaryMuscles": [
+        "glutes",
+        "calves"
+      ],
+      "equipment": "machine",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "pull",
+      "instructions": "Kolana za podpórką, stopy zablokowane.\nOpuszczaj tułów, prostując kolana, biodra wyprostowane.\nWracaj siłą tyłu ud; ciężar wpisuj jako dociążenie.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "weighted_bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Glute_Ham_Raise",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e4-7250-afd8-85342034d58b",
+      "key": "hip_adduction_machine",
+      "rev": 1,
+      "name": "Przywodzenie nóg na maszynie",
+      "aliases": [
+        "Przywodziciele na maszynie",
+        "Hip adduction",
+        "Adductor machine"
+      ],
+      "primaryMuscles": [
+        "adductors"
+      ],
+      "secondaryMuscles": [
+        "glutes",
+        "hamstrings"
+      ],
+      "equipment": "machine",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "pull",
+      "instructions": "Plecy przy oparciu, podkładki po wewnętrznej stronie kolan.\nŚciągaj nogi do środka do pełnego skurczu.\nKontrolowany powrót.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Thigh_Adductor",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e4-7b22-b206-1a1fa9ec0949",
+      "key": "hip_abduction_machine",
+      "rev": 1,
+      "name": "Odwodzenie nóg na maszynie",
+      "aliases": [
+        "Odwodziciele na maszynie",
+        "Hip abduction",
+        "Abductor machine"
+      ],
+      "primaryMuscles": [
+        "abductors"
+      ],
+      "secondaryMuscles": [
+        "glutes"
+      ],
+      "equipment": "machine",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "push",
+      "instructions": "Plecy przy oparciu, podkładki po zewnętrznej stronie kolan.\nRozsuwaj nogi na zewnątrz.\nWolny powrót, bez uderzania ciężarem.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Thigh_Abductor",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e4-7285-afd6-3d663e7145dd",
+      "key": "cable_kickback",
+      "rev": 1,
+      "name": "Wykop nogą w tył na wyciągu",
+      "aliases": [
+        "Kickback na wyciągu",
+        "Cable glute kickback"
+      ],
+      "primaryMuscles": [
+        "glutes"
+      ],
+      "secondaryMuscles": [
+        "hamstrings"
+      ],
+      "equipment": "cable",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "push",
+      "instructions": "Mankiet na kostce, tułów lekko pochylony.\nProwadź nogę w tył siłą pośladka.\nBez przeprostu w odcinku lędźwiowym.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": true,
+      "originRef": "free-exercise-db:One-Legged_Cable_Kickback",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e4-7877-a94e-9e1cd27e4400",
+      "key": "standing_calf_raise",
+      "rev": 1,
+      "name": "Wspięcia na palce stojąc na maszynie",
+      "aliases": [
+        "Łydki stojąc",
+        "Standing calf raise"
+      ],
+      "primaryMuscles": [
+        "calves"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "machine",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "push",
+      "instructions": "Pięty opuszczone poniżej podestu do rozciągnięcia.\nWspinaj się maksymalnie na palce.\nKrótka pauza w dolnej i górnej pozycji.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Standing_Calf_Raises",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e4-7778-8dde-ac8c7bd7ddd1",
+      "key": "seated_calf_raise",
+      "rev": 1,
+      "name": "Wspięcia na palce siedząc na maszynie",
+      "aliases": [
+        "Łydki siedząc",
+        "Seated calf raise"
+      ],
+      "primaryMuscles": [
+        "calves"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "machine",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "push",
+      "instructions": "Podkładki na udach tuż nad kolanami.\nPełne opuszczenie pięt i maksymalne wspięcie.\nWolne tempo, bez odbijania.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Seated_Calf_Raise",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e5-72ba-afef-a38674dc5670",
+      "key": "leg_press_calf_raise",
+      "rev": 1,
+      "name": "Wspięcia na palce na suwnicy",
+      "aliases": [
+        "Łydki na suwnicy",
+        "Calf press",
+        "Leg press calf raise"
+      ],
+      "primaryMuscles": [
+        "calves"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "machine",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "push",
+      "instructions": "Na platformie tylko przednia część stopy.\nKolana proste, ale nie zablokowane.\nPełny zakres ruchu w stawie skokowym.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Calf_Press_On_The_Leg_Press_Machine",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e5-7f15-b2a1-fb5aec4636bf",
+      "key": "overhead_press",
+      "rev": 1,
+      "name": "Wyciskanie żołnierskie",
+      "aliases": [
+        "Wyciskanie sztangi nad głowę stojąc",
+        "OHP",
+        "Military press",
+        "Overhead press"
+      ],
+      "primaryMuscles": [
+        "shoulders"
+      ],
+      "secondaryMuscles": [
+        "triceps"
+      ],
+      "equipment": "barbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Sztanga na przednich aktonach barków, pośladki i brzuch napięte.\nWyciskaj pionowo, przesuwając głowę „pod sztangę”.\nNie odchylaj tułowia do tyłu.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Standing_Military_Press",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e5-7652-8188-9e75816c23e5",
+      "key": "seated_barbell_press",
+      "rev": 1,
+      "name": "Wyciskanie sztangi nad głowę siedząc",
+      "aliases": [
+        "OHP siedząc",
+        "Seated barbell press"
+      ],
+      "primaryMuscles": [
+        "shoulders"
+      ],
+      "secondaryMuscles": [
+        "triceps"
+      ],
+      "equipment": "barbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Oparcie pionowo, plecy przy oparciu.\nOpuszczaj sztangę do górnej części klatki.\nWyciskaj nad głowę bez blokowania łokci na siłę.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Seated_Barbell_Military_Press",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e6-7b24-8596-44cf21b3c2fb",
+      "key": "dumbbell_shoulder_press",
+      "rev": 1,
+      "name": "Wyciskanie hantli nad głowę siedząc",
+      "aliases": [
+        "Wyciskanie hantli siedząc",
+        "Dumbbell shoulder press"
+      ],
+      "primaryMuscles": [
+        "shoulders"
+      ],
+      "secondaryMuscles": [
+        "triceps"
+      ],
+      "equipment": "dumbbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Oparcie pionowo lub lekko odchylone.\nHantle startują na wysokości uszu, łokcie lekko przed tułowiem.\nWyciskaj nad głowę bez stukania hantlami.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "per_hand",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Dumbbell_Shoulder_Press",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e6-7ca9-8c48-7e9649acb631",
+      "key": "arnold_press",
+      "rev": 1,
+      "name": "Arnoldki",
+      "aliases": [
+        "Wyciskanie Arnolda",
+        "Arnold press"
+      ],
+      "primaryMuscles": [
+        "shoulders"
+      ],
+      "secondaryMuscles": [
+        "triceps"
+      ],
+      "equipment": "dumbbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Start z hantlami przed twarzą, dłonie zwrócone do siebie.\nW trakcie wyciskania obracaj dłonie na zewnątrz.\nOdwróć ruch przy opuszczaniu.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "per_hand",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Arnold_Dumbbell_Press",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e6-768d-9935-4b8def57846d",
+      "key": "machine_shoulder_press",
+      "rev": 1,
+      "name": "Wyciskanie nad głowę na maszynie",
+      "aliases": [
+        "Barki na maszynie",
+        "Machine shoulder press"
+      ],
+      "primaryMuscles": [
+        "shoulders"
+      ],
+      "secondaryMuscles": [
+        "triceps"
+      ],
+      "equipment": "machine",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Uchwyty na wysokości barków lub nieco niżej.\nPlecy przy oparciu przez cały ruch.\nKontrolowane opuszczanie.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Machine_Shoulder_Military_Press",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e6-705a-bd00-ad71e5b3158e",
+      "key": "lateral_raise",
+      "rev": 1,
+      "name": "Unoszenie hantli bokiem",
+      "aliases": [
+        "Wznosy bokiem",
+        "Odwodzenie ramion",
+        "Lateral raise"
+      ],
+      "primaryMuscles": [
+        "shoulders"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "dumbbell",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "push",
+      "instructions": "Łokcie lekko ugięte, tułów lekko pochylony.\nUnoś ramiona bokiem do wysokości barków.\nProwadź ruch łokciami, bez podrzucania tułowiem.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "per_hand",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Side_Lateral_Raise",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e6-747b-9fa8-69bfd8a46216",
+      "key": "cable_lateral_raise",
+      "rev": 1,
+      "name": "Unoszenie ramion bokiem na wyciągu",
+      "aliases": [
+        "Wznosy bokiem na wyciągu",
+        "Cable lateral raise"
+      ],
+      "primaryMuscles": [
+        "shoulders"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "cable",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "pull",
+      "instructions": "Linka przebiega przed ciałem, łokcie lekko ugięte.\nUnoś ramiona do wysokości barków.\nStałe napięcie, wolny powrót.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Cable_Seated_Lateral_Raise",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e7-7408-96f9-d97899042142",
+      "key": "front_raise",
+      "rev": 1,
+      "name": "Unoszenie hantli w przód",
+      "aliases": [
+        "Wznosy w przód",
+        "Front raise"
+      ],
+      "primaryMuscles": [
+        "shoulders"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "dumbbell",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "push",
+      "instructions": "Ramiona prawie proste, tułów nieruchomy.\nUnoś hantle do wysokości oczu.\nOpuszczaj powoli.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "per_hand",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Front_Dumbbell_Raise",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e7-7056-95e5-b89d3869a69b",
+      "key": "reverse_fly",
+      "rev": 1,
+      "name": "Odwrotne rozpiętki z hantlami w opadzie",
+      "aliases": [
+        "Wznosy w opadzie",
+        "Reverse fly",
+        "Rear delt fly"
+      ],
+      "primaryMuscles": [
+        "shoulders"
+      ],
+      "secondaryMuscles": [
+        "middle_back"
+      ],
+      "equipment": "dumbbell",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "pull",
+      "instructions": "Tułów pochylony prawie poziomo, plecy proste.\nUnoś ramiona bokiem, łokcie lekko ugięte.\nMyśl o tylnych aktonach barków, nie o ściąganiu łopatek.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "per_hand",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Reverse_Flyes",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e7-774a-bd98-27569a2caf4f",
+      "key": "reverse_pec_deck",
+      "rev": 1,
+      "name": "Odwrotne rozpiętki na maszynie",
+      "aliases": [
+        "Reverse pec deck",
+        "Tylne barki na maszynie"
+      ],
+      "primaryMuscles": [
+        "shoulders"
+      ],
+      "secondaryMuscles": [
+        "middle_back"
+      ],
+      "equipment": "machine",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "pull",
+      "instructions": "Klatka przy oparciu, uchwyty na wysokości barków.\nProwadź ramiona szeroko do tyłu.\nBez szarpania, pełny zakres ruchu.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Reverse_Machine_Flyes",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e7-7668-8837-ce6a0c7bfe31",
+      "key": "face_pull",
+      "rev": 1,
+      "name": "Przyciąganie liny do twarzy",
+      "aliases": [
+        "Face pull",
+        "Facepull"
+      ],
+      "primaryMuscles": [
+        "shoulders"
+      ],
+      "secondaryMuscles": [
+        "middle_back",
+        "traps"
+      ],
+      "equipment": "cable",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "pull",
+      "instructions": "Wyciąg na wysokości twarzy, chwyt liny kciukami do tyłu.\nCiągnij linę do czoła, rozchylając ręce na boki.\nŁokcie wysoko, zakończ z rotacją zewnętrzną barków.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Face_Pull",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e7-74c4-bab6-e0310c68e9e3",
+      "key": "upright_row",
+      "rev": 1,
+      "name": "Podciąganie sztangi wzdłuż tułowia",
+      "aliases": [
+        "Wiosłowanie stojąc",
+        "Upright row"
+      ],
+      "primaryMuscles": [
+        "shoulders"
+      ],
+      "secondaryMuscles": [
+        "traps"
+      ],
+      "equipment": "barbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "pull",
+      "instructions": "Chwyt nieco szerzej niż barki.\nProwadź łokcie w górę, najwyżej do wysokości barków.\nPrzerwij, jeśli pojawia się ból barku.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Upright_Barbell_Row",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e7-72d7-aea2-49443b4a303c",
+      "key": "barbell_curl",
+      "rev": 1,
+      "name": "Uginanie ramion ze sztangą stojąc",
+      "aliases": [
+        "Biceps ze sztangą",
+        "Barbell curl"
+      ],
+      "primaryMuscles": [
+        "biceps"
+      ],
+      "secondaryMuscles": [
+        "forearms"
+      ],
+      "equipment": "barbell",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "pull",
+      "instructions": "Łokcie przy tułowiu i nieruchome.\nUginaj ramiona bez bujania tułowiem.\nPełny wyprost przy opuszczaniu.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Barbell_Curl",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e7-7fd9-b214-1b13b2cbb8d6",
+      "key": "ez_bar_curl",
+      "rev": 1,
+      "name": "Uginanie ramion z gryfem łamanym",
+      "aliases": [
+        "Biceps z łamaną",
+        "EZ-bar curl"
+      ],
+      "primaryMuscles": [
+        "biceps"
+      ],
+      "secondaryMuscles": [
+        "forearms"
+      ],
+      "equipment": "ez_bar",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "pull",
+      "instructions": "Chwyt na zagięciach gryfu, łokcie przy tułowiu.\nUginaj do pełnego skurczu.\nOpuszczaj powoli.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:EZ-Bar_Curl",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e8-76ba-a101-3d0cc677d143",
+      "key": "dumbbell_curl",
+      "rev": 1,
+      "name": "Uginanie ramion z hantlami",
+      "aliases": [
+        "Biceps z hantlami",
+        "Dumbbell curl"
+      ],
+      "primaryMuscles": [
+        "biceps"
+      ],
+      "secondaryMuscles": [
+        "forearms"
+      ],
+      "equipment": "dumbbell",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "pull",
+      "instructions": "Łokcie nieruchomo przy tułowiu.\nW trakcie uginania obracaj dłonie na zewnątrz (supinacja).\nPełny zakres ruchu.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "per_hand",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Dumbbell_Bicep_Curl",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e8-7d0d-87bb-eb041430b12e",
+      "key": "hammer_curl",
+      "rev": 1,
+      "name": "Uginanie ramion z hantlami chwytem młotkowym",
+      "aliases": [
+        "Młotki",
+        "Hammer curl"
+      ],
+      "primaryMuscles": [
+        "biceps"
+      ],
+      "secondaryMuscles": [
+        "forearms"
+      ],
+      "equipment": "dumbbell",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "pull",
+      "instructions": "Chwyt neutralny, kciuki w górę.\nŁokcie przy tułowiu.\nUginaj bez bujania tułowiem.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "per_hand",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Hammer_Curls",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e9-7cb0-8fd2-d660ff3a4c75",
+      "key": "incline_dumbbell_curl",
+      "rev": 1,
+      "name": "Uginanie ramion z hantlami na ławce skośnej",
+      "aliases": [
+        "Biceps na skosie",
+        "Incline dumbbell curl"
+      ],
+      "primaryMuscles": [
+        "biceps"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "dumbbell",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "pull",
+      "instructions": "Oparcie pod kątem ok. 45–60°, ramiona zwisają pionowo.\nUginaj bez przesuwania łokci w przód.\nPełne rozciągnięcie bicepsa w dole.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "per_hand",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Incline_Dumbbell_Curl",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e9-74b2-b1e1-ce37b32a1463",
+      "key": "preacher_curl",
+      "rev": 1,
+      "name": "Uginanie ramion na modlitewniku",
+      "aliases": [
+        "Modlitewnik",
+        "Preacher curl"
+      ],
+      "primaryMuscles": [
+        "biceps"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "ez_bar",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "pull",
+      "instructions": "Tył ramion płasko na podpórce.\nUginaj do pełnego skurczu.\nNie prostuj łokci gwałtownie w dole.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Preacher_Curl",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e9-7d92-ae2a-99c12ee77977",
+      "key": "concentration_curl",
+      "rev": 1,
+      "name": "Uginanie ramienia z hantlem w podporze o udo",
+      "aliases": [
+        "Koncentryczne uginanie",
+        "Concentration curl"
+      ],
+      "primaryMuscles": [
+        "biceps"
+      ],
+      "secondaryMuscles": [
+        "forearms"
+      ],
+      "equipment": "dumbbell",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "pull",
+      "instructions": "Siad, łokieć oparty o wewnętrzną stronę uda.\nUginaj hantel do barku bez ruchu ramienia.\nWolne opuszczanie.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "per_hand",
+      "isUnilateral": true,
+      "originRef": "free-exercise-db:Concentration_Curls",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e9-7fe1-b77c-bcd34936ff7d",
+      "key": "cable_curl",
+      "rev": 1,
+      "name": "Uginanie ramion na wyciągu dolnym",
+      "aliases": [
+        "Biceps na wyciągu",
+        "Cable curl"
+      ],
+      "primaryMuscles": [
+        "biceps"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "cable",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "pull",
+      "instructions": "Łokcie przy tułowiu, tułów nieruchomy.\nUginaj drążek do klatki.\nStałe napięcie przez cały zakres.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Standing_Biceps_Cable_Curl",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e9-7895-be5e-74d67619699e",
+      "key": "reverse_curl",
+      "rev": 1,
+      "name": "Uginanie ramion ze sztangą nachwytem",
+      "aliases": [
+        "Uginanie nachwytem",
+        "Reverse curl"
+      ],
+      "primaryMuscles": [
+        "forearms",
+        "biceps"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "barbell",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "pull",
+      "instructions": "Chwyt nachwytem na szerokość barków.\nŁokcie przy tułowiu, nadgarstki proste.\nRuch kontrolowany, bez bujania.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Reverse_Barbell_Curl",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e9-71cc-b42a-182fd37ed627",
+      "key": "farmers_walk",
+      "rev": 1,
+      "name": "Spacer farmera",
+      "aliases": [
+        "Farmer walk",
+        "Farmer's walk",
+        "Noszenie ciężarów"
+      ],
+      "primaryMuscles": [
+        "forearms"
+      ],
+      "secondaryMuscles": [
+        "traps",
+        "abdominals",
+        "quadriceps"
+      ],
+      "equipment": "other",
+      "category": "strongman",
+      "mechanic": "compound",
+      "force": null,
+      "instructions": "Ciężary po bokach, barki ściągnięte w dół, brzuch napięty.\nKrótkie, szybkie kroki, tułów pionowo.\nWpisuj ciężar w jednej ręce i przebyty dystans.",
+      "measurement": {
+        "weight": true,
+        "reps": false,
+        "duration": false,
+        "distance": true
+      },
+      "loadMode": "external",
+      "weightSemantics": "per_hand",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Farmers_Walk",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e9-78c3-bb77-3e83fc28efb4",
+      "key": "triceps_pushdown",
+      "rev": 1,
+      "name": "Prostowanie ramion na wyciągu górnym drążkiem",
+      "aliases": [
+        "Triceps na wyciągu",
+        "Pushdown",
+        "Triceps pushdown"
+      ],
+      "primaryMuscles": [
+        "triceps"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "cable",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "push",
+      "instructions": "Łokcie przy tułowiu i nieruchome.\nProstuj ramiona do pełnego wyprostu.\nWolny powrót do kąta ok. 90°.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Triceps_Pushdown",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e9-724e-b36d-3d5ba57e2df2",
+      "key": "rope_pushdown",
+      "rev": 1,
+      "name": "Prostowanie ramion na wyciągu górnym liną",
+      "aliases": [
+        "Triceps z liną",
+        "Rope pushdown"
+      ],
+      "primaryMuscles": [
+        "triceps"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "cable",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "push",
+      "instructions": "Łokcie przy tułowiu.\nNa dole rozciągnij końce liny na boki.\nKontrolowany powrót.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Triceps_Pushdown_-_Rope_Attachment",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e9-75da-bee8-88d689c4163b",
+      "key": "overhead_cable_extension",
+      "rev": 1,
+      "name": "Prostowanie ramion nad głową z liną wyciągu",
+      "aliases": [
+        "Francuskie na wyciągu",
+        "Overhead cable extension"
+      ],
+      "primaryMuscles": [
+        "triceps"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "cable",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "push",
+      "instructions": "Tyłem do wyciągu, łokcie przy głowie skierowane w przód.\nProstuj ramiona w przód i w górę.\nPełne rozciągnięcie tricepsa przy powrocie.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Cable_Rope_Overhead_Triceps_Extension",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0e9-7a7d-897b-50a2c8bc64ca",
+      "key": "skullcrusher",
+      "rev": 1,
+      "name": "Wyciskanie francuskie leżąc z gryfem łamanym",
+      "aliases": [
+        "Francuz leżąc",
+        "Skull crusher",
+        "Skullcrusher"
+      ],
+      "primaryMuscles": [
+        "triceps"
+      ],
+      "secondaryMuscles": [
+        "forearms"
+      ],
+      "equipment": "ez_bar",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "push",
+      "instructions": "Ramiona pionowo lub lekko odchylone za głowę.\nUginaj tylko w łokciach, opuszczając gryf do czoła.\nŁokcie nie rozjeżdżają się na boki.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:EZ-Bar_Skullcrusher",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0ea-7ea2-89e2-12780abce35e",
+      "key": "overhead_dumbbell_extension",
+      "rev": 1,
+      "name": "Wyciskanie francuskie hantlem oburącz",
+      "aliases": [
+        "Francuz z hantlem",
+        "Overhead dumbbell extension"
+      ],
+      "primaryMuscles": [
+        "triceps"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "dumbbell",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "push",
+      "instructions": "Hantel trzymany oburącz za głową.\nŁokcie blisko głowy, skierowane w górę.\nProstuj ramiona nad głowę bez wyginania lędźwi.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Standing_Dumbbell_Triceps_Extension",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0ea-727c-88d9-b4bdeec00384",
+      "key": "close_grip_bench_press",
+      "rev": 1,
+      "name": "Wyciskanie sztangi wąskim chwytem",
+      "aliases": [
+        "Wąskie wyciskanie",
+        "Close-grip bench press",
+        "CGBP"
+      ],
+      "primaryMuscles": [
+        "triceps"
+      ],
+      "secondaryMuscles": [
+        "chest",
+        "shoulders"
+      ],
+      "equipment": "barbell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Chwyt na szerokość barków lub nieco węziej.\nŁokcie blisko tułowia.\nOpuszczaj sztangę do dolnej części mostka.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Close-Grip_Barbell_Bench_Press",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0ea-7475-8479-bbd3277c35c4",
+      "key": "dips_triceps",
+      "rev": 1,
+      "name": "Pompki na poręczach z akcentem na triceps",
+      "aliases": [
+        "Dipy",
+        "Poręcze",
+        "Triceps dips"
+      ],
+      "primaryMuscles": [
+        "triceps"
+      ],
+      "secondaryMuscles": [
+        "chest",
+        "shoulders"
+      ],
+      "equipment": "other",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Tułów pionowo, łokcie blisko ciała.\nSchodź do kąta ok. 90° w łokciach.\nCiężar wpisuj jako dociążenie; 0 kg bez dociążenia.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "weighted_bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Dips_-_Triceps_Version",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0ea-755f-a6c5-804417c9df83",
+      "key": "bench_dips",
+      "rev": 1,
+      "name": "Pompki w podporze tyłem na ławce",
+      "aliases": [
+        "Dipy na ławce",
+        "Bench dips"
+      ],
+      "primaryMuscles": [
+        "triceps"
+      ],
+      "secondaryMuscles": [
+        "chest",
+        "shoulders"
+      ],
+      "equipment": "bodyweight",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Dłonie na krawędzi ławki, biodra blisko ławki.\nUginaj łokcie do ok. 90°, łokcie w tył.\nBarki ściągnięte w dół.",
+      "measurement": {
+        "weight": false,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Bench_Dips",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0ea-7eac-8ee0-ce81ee6ca1f8",
+      "key": "triceps_kickback",
+      "rev": 1,
+      "name": "Prostowanie ramienia z hantlem w opadzie",
+      "aliases": [
+        "Kickback",
+        "Triceps kickback"
+      ],
+      "primaryMuscles": [
+        "triceps"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "dumbbell",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "push",
+      "instructions": "Ramię wzdłuż tułowia, równolegle do podłogi.\nProstuj tylko przedramię do pełnego wyprostu.\nBez machania ramieniem.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "per_hand",
+      "isUnilateral": true,
+      "originRef": "free-exercise-db:Tricep_Dumbbell_Kickback",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0ea-7be7-bd38-587cf4e5c229",
+      "key": "close_grip_push_ups",
+      "rev": 1,
+      "name": "Pompki wąskie",
+      "aliases": [
+        "Pompki diamentowe",
+        "Diamond push-ups",
+        "Close-grip push-ups"
+      ],
+      "primaryMuscles": [
+        "triceps"
+      ],
+      "secondaryMuscles": [
+        "chest",
+        "shoulders"
+      ],
+      "equipment": "bodyweight",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Dłonie blisko siebie pod klatką.\nŁokcie prowadzone wzdłuż tułowia.\nCiało w jednej linii.",
+      "measurement": {
+        "weight": false,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Push-Ups_-_Close_Triceps_Position",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0ea-7c6e-b818-9a6716374f88",
+      "key": "plank",
+      "rev": 1,
+      "name": "Deska",
+      "aliases": [
+        "Plank",
+        "Podpór przodem na przedramionach"
+      ],
+      "primaryMuscles": [
+        "abdominals"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "bodyweight",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "static",
+      "instructions": "Łokcie pod barkami, ciało w jednej linii.\nPośladki i brzuch napięte, bez zapadania bioder.\nOddychaj spokojnie przez cały czas trwania.",
+      "measurement": {
+        "weight": false,
+        "reps": false,
+        "duration": true,
+        "distance": false
+      },
+      "loadMode": "bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Plank",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0eb-76ee-be16-4186d5d701e6",
+      "key": "side_plank",
+      "rev": 1,
+      "name": "Deska bokiem",
+      "aliases": [
+        "Side plank",
+        "Podpór bokiem"
+      ],
+      "primaryMuscles": [
+        "abdominals"
+      ],
+      "secondaryMuscles": [
+        "shoulders"
+      ],
+      "equipment": "bodyweight",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "static",
+      "instructions": "Łokieć pod barkiem, ciało w jednej linii.\nBiodra wysoko, nie opadają w stronę podłogi.\nWpisuj czas dla jednej strony.",
+      "measurement": {
+        "weight": false,
+        "reps": false,
+        "duration": true,
+        "distance": false
+      },
+      "loadMode": "bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": true,
+      "originRef": "free-exercise-db:Side_Bridge",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0eb-71ac-95f1-9946665dc595",
+      "key": "hanging_leg_raise",
+      "rev": 1,
+      "name": "Unoszenie nóg w zwisie na drążku",
+      "aliases": [
+        "Wznosy nóg w zwisie",
+        "Hanging leg raise"
+      ],
+      "primaryMuscles": [
+        "abdominals"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "bodyweight",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "pull",
+      "instructions": "Pełny zwis, barki aktywne.\nUnoś nogi, podwijając miednicę, bez bujania.\nWolne opuszczanie.",
+      "measurement": {
+        "weight": false,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Hanging_Leg_Raise",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0eb-7899-98a1-d1fe1c477f93",
+      "key": "captains_chair_knee_raise",
+      "rev": 1,
+      "name": "Unoszenie kolan w podporze na poręczach",
+      "aliases": [
+        "Krzesło kapitańskie",
+        "Captain's chair",
+        "Knee raise"
+      ],
+      "primaryMuscles": [
+        "abdominals"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "other",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "pull",
+      "instructions": "Plecy przy oparciu, ramiona na podpórkach.\nUnoś kolana do klatki, podwijając miednicę.\nBez rozbujania nóg.",
+      "measurement": {
+        "weight": false,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Knee_Hip_Raise_On_Parallel_Bars",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0eb-718b-b279-2a6ba80f5386",
+      "key": "crunches",
+      "rev": 1,
+      "name": "Brzuszki",
+      "aliases": [
+        "Spięcia brzucha",
+        "Crunches",
+        "Crunch"
+      ],
+      "primaryMuscles": [
+        "abdominals"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "bodyweight",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "pull",
+      "instructions": "Lędźwia przy podłodze, dłonie przy skroniach.\nUnoś łopatki, zbliżając żebra do miednicy.\nNie ciągnij głowy rękami.",
+      "measurement": {
+        "weight": false,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Crunches",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0eb-77f2-bd21-4072e9f7253e",
+      "key": "cable_crunch",
+      "rev": 1,
+      "name": "Spięcia brzucha na wyciągu klęcząc",
+      "aliases": [
+        "Allahy",
+        "Cable crunch"
+      ],
+      "primaryMuscles": [
+        "abdominals"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "cable",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "pull",
+      "instructions": "Klęk przed wyciągiem, lina przy głowie.\nZwijaj tułów, zbliżając łokcie do ud.\nBiodra nieruchome, ruch z brzucha.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Cable_Crunch",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0eb-75a6-ae3a-9cb27e5a26e1",
+      "key": "ab_wheel",
+      "rev": 1,
+      "name": "Rolowanie kółkiem do ćwiczeń brzucha",
+      "aliases": [
+        "Kółko",
+        "Ab wheel",
+        "Ab rollout"
+      ],
+      "primaryMuscles": [
+        "abdominals"
+      ],
+      "secondaryMuscles": [
+        "shoulders"
+      ],
+      "equipment": "other",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "pull",
+      "instructions": "Start w klęku, brzuch napięty, miednica podwinięta.\nRozwijaj się tylko tak daleko, jak utrzymasz proste lędźwia.\nWracaj siłą brzucha.",
+      "measurement": {
+        "weight": false,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Ab_Roller",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0eb-7a12-ae5a-1e88302cd86e",
+      "key": "russian_twist",
+      "rev": 1,
+      "name": "Skręty tułowia w siadzie",
+      "aliases": [
+        "Russian twist",
+        "Rosyjskie skręty"
+      ],
+      "primaryMuscles": [
+        "abdominals"
+      ],
+      "secondaryMuscles": [
+        "lower_back"
+      ],
+      "equipment": "bodyweight",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "pull",
+      "instructions": "Siad z odchylonym tułowiem, plecy proste.\nSkręcaj tułów na boki, prowadząc ciężar.\nLiczba powtórzeń obejmuje obie strony.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "weighted_bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Russian_Twist",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0ec-79ac-bdce-64efaadcd92d",
+      "key": "reverse_crunch",
+      "rev": 1,
+      "name": "Odwrotne brzuszki",
+      "aliases": [
+        "Reverse crunch",
+        "Unoszenie bioder leżąc"
+      ],
+      "primaryMuscles": [
+        "abdominals"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "bodyweight",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "pull",
+      "instructions": "Leżenie tyłem, kolana ugięte nad biodrami.\nPodwijaj miednicę, unosząc biodra od podłogi.\nWolne opuszczanie bez rozbujania.",
+      "measurement": {
+        "weight": false,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Reverse_Crunch",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0ec-7816-a870-cc55dff19a40",
+      "key": "dead_bug",
+      "rev": 1,
+      "name": "Martwy robak",
+      "aliases": [
+        "Dead bug"
+      ],
+      "primaryMuscles": [
+        "abdominals"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "bodyweight",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "pull",
+      "instructions": "Lędźwia przyklejone do podłogi przez cały czas.\nProstuj naprzemiennie przeciwną rękę i nogę.\nPowolny, kontrolowany ruch.",
+      "measurement": {
+        "weight": false,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Dead_Bug",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0ec-7077-be4c-b426d6cc92c3",
+      "key": "pallof_press",
+      "rev": 1,
+      "name": "Wypychanie Pallofa",
+      "aliases": [
+        "Pallof press",
+        "Antyrotacja na wyciągu"
+      ],
+      "primaryMuscles": [
+        "abdominals"
+      ],
+      "secondaryMuscles": [
+        "shoulders"
+      ],
+      "equipment": "cable",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "pull",
+      "instructions": "Bokiem do wyciągu, uchwyt przy klatce.\nWypychaj uchwyt przed siebie, nie pozwalając na rotację tułowia.\nWpisuj wynik dla jednej strony.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": true,
+      "originRef": "free-exercise-db:Pallof_Press",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0ec-75a0-84cb-7c0ee5be1a81",
+      "key": "ab_crunch_machine",
+      "rev": 1,
+      "name": "Spięcia brzucha na maszynie",
+      "aliases": [
+        "Maszyna na brzuch",
+        "Ab crunch machine"
+      ],
+      "primaryMuscles": [
+        "abdominals"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "machine",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "pull",
+      "instructions": "Ustaw siedzisko i podkładki według wzrostu.\nZwijaj tułów siłą brzucha.\nWolny powrót bez odbijania ciężaru.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Ab_Crunch_Machine",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0ec-790e-9c2e-4b4bc5f39454",
+      "key": "lying_leg_raise",
+      "rev": 1,
+      "name": "Unoszenie nóg leżąc",
+      "aliases": [
+        "Wznosy nóg leżąc",
+        "Lying leg raise"
+      ],
+      "primaryMuscles": [
+        "abdominals"
+      ],
+      "secondaryMuscles": [],
+      "equipment": "bodyweight",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "pull",
+      "instructions": "Lędźwia przy podłożu, dłonie przytrzymują ławkę.\nUnoś proste nogi do pionu.\nOpuszczaj powoli, nie odrywając lędźwi.",
+      "measurement": {
+        "weight": false,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Flat_Bench_Lying_Leg_Raise",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0ec-7028-b50a-6213508b6caa",
+      "key": "kettlebell_swing",
+      "rev": 1,
+      "name": "Swing z kettlebell oburącz",
+      "aliases": [
+        "Swing",
+        "Kettlebell swing",
+        "Wymachy kettlebell"
+      ],
+      "primaryMuscles": [
+        "glutes",
+        "hamstrings"
+      ],
+      "secondaryMuscles": [
+        "lower_back",
+        "shoulders",
+        "abdominals"
+      ],
+      "equipment": "kettlebell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "pull",
+      "instructions": "Ruch z bioder (zawias), nie z przysiadu.\nDynamiczny wyprost bioder wyrzuca kettlebell do wysokości klatki.\nPlecy proste, kettlebell blisko ciała w dolnej fazie.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "reptrack:kettlebell_swing",
+      "license": null,
+      "licenseAuthor": "RepTrack"
+    },
+    {
+      "id": "01a1552d-d0ec-7678-a41a-99102c7cd46a",
+      "key": "turkish_get_up",
+      "rev": 1,
+      "name": "Tureckie wstawanie z kettlebell",
+      "aliases": [
+        "Turkish get-up",
+        "TGU"
+      ],
+      "primaryMuscles": [
+        "shoulders"
+      ],
+      "secondaryMuscles": [
+        "abdominals",
+        "hamstrings",
+        "quadriceps",
+        "triceps"
+      ],
+      "equipment": "kettlebell",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Ramię z kettlebell wyprostowane i pionowe przez cały ruch.\nWstawaj etapami: łokieć, dłoń, biodra, klęk, wstanie.\nWpisuj wynik dla jednej strony.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": true,
+      "originRef": "free-exercise-db:Kettlebell_Turkish_Get-Up_Lunge_style",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0ec-7535-ab18-1c940c3b7bc3",
+      "key": "power_clean",
+      "rev": 1,
+      "name": "Zarzut siłowy",
+      "aliases": [
+        "Power clean",
+        "Zarzut"
+      ],
+      "primaryMuscles": [
+        "glutes",
+        "hamstrings",
+        "quadriceps"
+      ],
+      "secondaryMuscles": [
+        "traps",
+        "shoulders"
+      ],
+      "equipment": "barbell",
+      "category": "olympic",
+      "mechanic": "compound",
+      "force": "pull",
+      "instructions": "Start jak w martwym ciągu, sztanga blisko nóg.\nDynamiczny wyprost bioder i kolan, potem szybkie podsiad pod sztangę.\nOdbierz sztangę na barkach z łokciami wysoko.",
+      "measurement": {
+        "weight": true,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "external",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Power_Clean",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0ec-70e6-8a0d-878318da1cdf",
+      "key": "treadmill_run",
+      "rev": 1,
+      "name": "Bieg na bieżni",
+      "aliases": [
+        "Bieżnia",
+        "Treadmill run",
+        "Running"
+      ],
+      "primaryMuscles": [
+        "quadriceps"
+      ],
+      "secondaryMuscles": [
+        "hamstrings",
+        "calves",
+        "glutes"
+      ],
+      "equipment": "machine",
+      "category": "cardio",
+      "mechanic": null,
+      "force": null,
+      "instructions": "Lądowanie pod środkiem ciężkości, krótki krok.\nWpisuj czas i dystans.",
+      "measurement": {
+        "weight": false,
+        "reps": false,
+        "duration": true,
+        "distance": true
+      },
+      "loadMode": "bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Running_Treadmill",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0ee-7b0a-8023-da0ee52ff3cd",
+      "key": "treadmill_walk",
+      "rev": 1,
+      "name": "Marsz na bieżni",
+      "aliases": [
+        "Chód na bieżni",
+        "Treadmill walk",
+        "Marsz pod górę"
+      ],
+      "primaryMuscles": [
+        "quadriceps"
+      ],
+      "secondaryMuscles": [
+        "hamstrings",
+        "calves",
+        "glutes"
+      ],
+      "equipment": "machine",
+      "category": "cardio",
+      "mechanic": null,
+      "force": null,
+      "instructions": "Wyprostowana sylwetka, nie trzymaj się poręczy.\nNachylenie bieżni zwiększa intensywność.",
+      "measurement": {
+        "weight": false,
+        "reps": false,
+        "duration": true,
+        "distance": true
+      },
+      "loadMode": "bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Walking_Treadmill",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0ee-716b-a4dd-dfcd51992f43",
+      "key": "stationary_bike",
+      "rev": 1,
+      "name": "Rower stacjonarny",
+      "aliases": [
+        "Rowerek",
+        "Stationary bike",
+        "Cycling"
+      ],
+      "primaryMuscles": [
+        "quadriceps"
+      ],
+      "secondaryMuscles": [
+        "calves",
+        "glutes",
+        "hamstrings"
+      ],
+      "equipment": "machine",
+      "category": "cardio",
+      "mechanic": null,
+      "force": null,
+      "instructions": "Siodełko tak, by kolano było lekko ugięte w dolnym położeniu pedału.\nWpisuj czas i dystans.",
+      "measurement": {
+        "weight": false,
+        "reps": false,
+        "duration": true,
+        "distance": true
+      },
+      "loadMode": "bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Bicycling_Stationary",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0ee-71e4-8b35-629f55b82351",
+      "key": "rowing_machine",
+      "rev": 1,
+      "name": "Ergometr wioślarski",
+      "aliases": [
+        "Wioślarz",
+        "Rowing machine",
+        "Rower ergometer",
+        "Concept2"
+      ],
+      "primaryMuscles": [
+        "quadriceps"
+      ],
+      "secondaryMuscles": [
+        "middle_back",
+        "lats",
+        "hamstrings"
+      ],
+      "equipment": "machine",
+      "category": "cardio",
+      "mechanic": null,
+      "force": null,
+      "instructions": "Kolejność: nogi, tułów, ręce; w powrocie odwrotnie.\nPlecy proste, siła głównie z nóg.",
+      "measurement": {
+        "weight": false,
+        "reps": false,
+        "duration": true,
+        "distance": true
+      },
+      "loadMode": "bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Rowing_Stationary",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0ee-7ac1-8dd7-db6ccf7a5066",
+      "key": "elliptical",
+      "rev": 1,
+      "name": "Orbitrek",
+      "aliases": [
+        "Trenażer eliptyczny",
+        "Elliptical"
+      ],
+      "primaryMuscles": [
+        "quadriceps"
+      ],
+      "secondaryMuscles": [
+        "calves",
+        "glutes",
+        "hamstrings"
+      ],
+      "equipment": "machine",
+      "category": "cardio",
+      "mechanic": null,
+      "force": null,
+      "instructions": "Wyprostowana sylwetka, stopy płasko na pedałach.\nWpisuj czas i dystans.",
+      "measurement": {
+        "weight": false,
+        "reps": false,
+        "duration": true,
+        "distance": true
+      },
+      "loadMode": "bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Elliptical_Trainer",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0ee-70fd-b8f0-9507c93c4266",
+      "key": "stair_climber",
+      "rev": 1,
+      "name": "Schody ruchome",
+      "aliases": [
+        "Stepper",
+        "Stairmaster",
+        "Stair climber"
+      ],
+      "primaryMuscles": [
+        "quadriceps"
+      ],
+      "secondaryMuscles": [
+        "glutes",
+        "calves"
+      ],
+      "equipment": "machine",
+      "category": "cardio",
+      "mechanic": null,
+      "force": null,
+      "instructions": "Nie opieraj ciężaru ciała na poręczach.\nStawiaj całą stopę na stopniu.",
+      "measurement": {
+        "weight": false,
+        "reps": false,
+        "duration": true,
+        "distance": false
+      },
+      "loadMode": "bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Stairmaster",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a1552d-d0ee-766a-ab69-54a3273cf1fa",
+      "key": "jump_rope",
+      "rev": 1,
+      "name": "Skakanka",
+      "aliases": [
+        "Skakanie na skakance",
+        "Jump rope"
+      ],
+      "primaryMuscles": [
+        "calves"
+      ],
+      "secondaryMuscles": [
+        "quadriceps",
+        "shoulders"
+      ],
+      "equipment": "other",
+      "category": "cardio",
+      "mechanic": null,
+      "force": null,
+      "instructions": "Niskie, sprężyste podskoki na przedniej części stopy.\nObracaj skakankę nadgarstkami, łokcie blisko tułowia.",
+      "measurement": {
+        "weight": false,
+        "reps": false,
+        "duration": true,
+        "distance": false
+      },
+      "loadMode": "bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "free-exercise-db:Rope_Jumping",
+      "license": "Unlicense",
+      "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    }
+  ]
+}

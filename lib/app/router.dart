@@ -1,9 +1,13 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../features/exercises/presentation/exercise_detail_screen.dart';
+import '../features/exercises/presentation/exercise_form_screen.dart';
 import '../features/exercises/presentation/exercises_screen.dart';
 import '../features/history/presentation/history_screen.dart';
 import '../features/home/presentation/home_screen.dart';
+import '../features/settings/presentation/licenses_screen.dart';
 import '../features/settings/presentation/settings_screen.dart';
 import '../features/templates/presentation/templates_screen.dart';
 import '../features/workout/presentation/workout_screen.dart';
@@ -11,9 +15,12 @@ import 'app_shell.dart';
 import 'routes.dart';
 
 /// Nawigacja (ADR 0002): cztery zakładki w [StatefulShellRoute], każda
-/// z własnym stosem, oraz ekrany pełnoekranowe poza shellem.
+/// z własnym stosem, oraz ekrany pełnoekranowe poza shellem. Formularze
+/// otwierają się na głównym nawigatorze, bez dolnej nawigacji.
 final routerProvider = Provider<GoRouter>((ref) {
+  final rootKey = GlobalKey<NavigatorState>();
   final router = GoRouter(
+    navigatorKey: rootKey,
     initialLocation: AppRoutes.home,
     routes: [
       StatefulShellRoute.indexedStack(
@@ -48,6 +55,28 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoutes.exercises,
                 builder: (context, state) => const ExercisesScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'new',
+                    parentNavigatorKey: rootKey,
+                    builder: (context, state) => const ExerciseFormScreen(),
+                  ),
+                  GoRoute(
+                    path: ':id',
+                    builder: (context, state) => ExerciseDetailScreen(
+                      exerciseId: state.pathParameters['id']!,
+                    ),
+                    routes: [
+                      GoRoute(
+                        path: 'edit',
+                        parentNavigatorKey: rootKey,
+                        builder: (context, state) => ExerciseFormScreen(
+                          exerciseId: state.pathParameters['id'],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ],
           ),
@@ -56,6 +85,12 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.settings,
         builder: (context, state) => const SettingsScreen(),
+        routes: [
+          GoRoute(
+            path: 'licenses',
+            builder: (context, state) => const LicensesScreen(),
+          ),
+        ],
       ),
       GoRoute(
         path: AppRoutes.workout,

@@ -32,6 +32,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   freezed: ^4.0.3
+  yaml: ^3.1.4
 
 flutter:
   uses-material-design: true
@@ -39,6 +40,8 @@ flutter:
 
   assets:
     - assets/fonts/Inter-OFL.txt
+    - assets/seed/exercises.json
+    - assets/seed/free-exercise-db-LICENSE.txt
 
   fonts:
     - family: Inter

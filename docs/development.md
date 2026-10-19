@@ -38,7 +38,31 @@ Kod generowany (`*.g.dart`, `*.freezed.dart`, `lib/core/l10n/generated/`) nie je
 3. `dart run drift_dev schema generate drift_schemas/app_database/ test/drift/app_database/generated/`.
 4. Dopisz migrację w `onUpgrade` (stepByStep) i test vN → vN+1 z danymi w `test/drift/app_database/migration_test.dart`.
 
+## Biblioteka ćwiczeń (seed)
+
+Źródłem prawdy jest `tool/seed/catalog_pl.yaml` ([ADR 0005](decisions/0005-katalog-cwiczen.md)). Wygenerowany `assets/seed/exercises.json` i mapa identyfikatorów `tool/seed/ids.json` są w repozytorium. Zmiana katalogu:
+
+1. Edytuj `tool/seed/catalog_pl.yaml`. Przy zmianie treści istniejącej pozycji podbij `seed_version`. Klucza (`key`) nie zmieniaj, bo z niego wynika stałe id.
+2. Pobierz dane źródła z przypiętego commita (`sourceCommit` w `tool/seed/build_seed.dart`) do katalogu poza repozytorium, np.:
+
+```bash
+curl -sSfL -o ../free-exercise-db.json https://raw.githubusercontent.com/yuhonas/free-exercise-db/f00c92c7dcf1216a928a52c3706c7ce8e2f71ed5/dist/exercises.json
+```
+
+3. Zbuduj seed:
+
+```bash
+dart run tool/seed/build_seed.dart --source ../free-exercise-db.json
+```
+
+4. Uruchom `tool/check.sh`; `test/features/exercises/data/seed_catalog_test.dart` sprawdza wynik.
+
+Aplikacja przy starcie stosuje nowszy seed: dodaje nowe pozycje, aktualizuje zmienione i pomija ćwiczenia zmodyfikowane przez użytkownika.
+
 ## Testy z bazą
 
 - Testy repozytoriów używają prawdziwej bazy SQLite w pamięci (`memoryDatabase()`) albo w pliku (`fileDatabase()`, symulacja ubicia procesu).
 - Testy widżetów używają `widgetTestDatabase()`: połączenie z `closeStreamsSynchronously: true` i zamknięcie przez `tester.runAsync(db.close)`. Bez tego `db.close()` zawiesza test, bo Drift odracza zamykanie strumieni timerem, którego fałszywy zegar `testWidgets` nie uruchamia.
+- Testy całej aplikacji uruchamia `pumpRepTrack()` z `test/support/app_harness.dart` (polski język, baza testowa, opcjonalnie seed).
+- `test/flutter_test_config.dart` sprawia, że stuknięcie w zasłonięty element kończy test błędem, a nie tylko ostrzeżeniem.
+- Zapis do bazy w teście widżetu wykonuj przez `tester.runAsync(...)`.

@@ -1,22 +1,13 @@
 import 'dart:convert';
 
 import '../../../core/database/app_database.dart';
+import '../../../core/database/setting_keys.dart';
 import '../../../core/domain/clock.dart';
 import '../../../core/domain/coded_enum.dart';
 import '../../../core/domain/training.dart';
 import '../../../core/domain/units.dart';
 import '../domain/app_settings.dart';
 import '../domain/settings_repository.dart';
-
-/// Klucze ustawień w tabeli `settings`. Stabilne: trafiają do backupu.
-abstract final class SettingKeys {
-  static const themeMode = 'theme_mode';
-  static const weightUnit = 'weight_unit';
-  static const weightStep = 'weight_step';
-  static const effortScale = 'effort_scale';
-  static const defaultRestSeconds = 'default_rest_seconds';
-  static const keepScreenOn = 'keep_screen_on';
-}
 
 final class DriftSettingsRepository implements SettingsRepository {
   DriftSettingsRepository(this._db, this._clock);

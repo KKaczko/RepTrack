@@ -1,68 +1,53 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:reptrack/app/app.dart';
-import 'package:reptrack/core/database/app_database.dart';
-import 'package:reptrack/core/database/database_providers.dart';
 
-import '../support/test_database.dart';
-
-Future<AppDatabase> _pumpApp(WidgetTester tester) async {
-  tester.platformDispatcher.localeTestValue = const Locale('pl', 'PL');
-  tester.platformDispatcher.localesTestValue = const [Locale('pl', 'PL')];
-  addTearDown(tester.platformDispatcher.clearAllTestValues);
-  final db = widgetTestDatabase();
-  await tester.pumpWidget(
-    ProviderScope(
-      overrides: [appDatabaseProvider.overrideWithValue(db)],
-      child: const RepTrackApp(),
-    ),
-  );
-  await tester.pumpAndSettle();
-  return db;
-}
-
-Future<void> _closeDb(WidgetTester tester, AppDatabase db) async {
-  // Zamknięcie drzewa przed bazą, żeby strumienie Drift się zakończyły.
-  await tester.pumpWidget(const SizedBox.shrink());
-  await tester.runAsync(db.close);
-}
+import '../support/app_harness.dart';
 
 void main() {
   testWidgets('dolna nawigacja przełącza cztery zakładki po polsku', (
     tester,
   ) async {
-    final db = await _pumpApp(tester);
+    final db = await pumpRepTrack(tester, seed: false);
 
     expect(find.text('RepTrack'), findsOneWidget);
     for (final label in ['Start', 'Szablony', 'Historia', 'Ćwiczenia']) {
-      expect(find.text(label), findsOneWidget);
+      expect(navTab(label), findsOneWidget);
     }
 
-    await tester.tap(find.text('Ćwiczenia'));
+    await tester.tap(navTab('Ćwiczenia'));
     await tester.pumpAndSettle();
-    expect(find.textContaining('bibliotekę ćwiczeń'), findsOneWidget);
+    expect(find.text('Szukaj ćwiczenia'), findsOneWidget);
 
-    await tester.tap(find.text('Szablony'));
+    await tester.tap(navTab('Szablony'));
     await tester.pumpAndSettle();
     expect(find.textContaining('szablony treningów'), findsOneWidget);
 
-    await _closeDb(tester, db);
+    await closeRepTrack(tester, db);
   });
 
-  testWidgets('ustawienia otwierają się ze Startu i wracają', (tester) async {
-    final db = await _pumpApp(tester);
+  testWidgets('ustawienia i licencje otwierają się ze Startu i wracają', (
+    tester,
+  ) async {
+    final db = await pumpRepTrack(tester, seed: false);
 
     await tester.tap(find.byTooltip('Otwórz ustawienia'));
     await tester.pumpAndSettle();
     expect(find.text('Ustawienia'), findsOneWidget);
     expect(find.byType(NavigationBar), findsNothing);
 
+    await tester.tap(find.text('Licencje i źródła'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('free-exercise-db'), findsOneWidget);
+    expect(find.textContaining('Unlicense'), findsOneWidget);
+    expect(find.text('Licencje bibliotek open source'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Wstecz'));
+    await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Wstecz'));
     await tester.pumpAndSettle();
     expect(find.byType(NavigationBar), findsOneWidget);
 
-    await _closeDb(tester, db);
+    await closeRepTrack(tester, db);
   });
 
   testWidgets('układ bez przepełnień przy 360 dp i czcionce 2×', (
@@ -73,25 +58,37 @@ void main() {
     tester.platformDispatcher.textScaleFactorTestValue = 2;
     addTearDown(tester.view.reset);
 
-    final db = await _pumpApp(tester);
+    final db = await pumpRepTrack(tester);
     for (final label in ['Szablony', 'Historia', 'Ćwiczenia', 'Start']) {
-      await tester.tap(find.text(label));
+      await tester.tap(navTab(label));
       await tester.pumpAndSettle();
     }
+    await tester.tap(navTab('Ćwiczenia'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField), 'sztangi lawce plaskiej');
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Wyciskanie sztangi na ławce płaskiej'));
+    await tester.pumpAndSettle();
 
     expect(tester.takeException(), isNull);
-    await _closeDb(tester, db);
+    await closeRepTrack(tester, db);
   });
 
-  testWidgets('cele dotyku dolnej nawigacji mają co najmniej 48 dp', (
+  testWidgets('cele dotyku, etykiety i kontrast na Starcie i w katalogu', (
     tester,
   ) async {
-    final db = await _pumpApp(tester);
+    final db = await pumpRepTrack(tester);
 
     await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
     await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
     await expectLater(tester, meetsGuideline(textContrastGuideline));
 
-    await _closeDb(tester, db);
+    await tester.tap(navTab('Ćwiczenia'));
+    await tester.pumpAndSettle();
+    await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(textContrastGuideline));
+
+    await closeRepTrack(tester, db);
   });
 }

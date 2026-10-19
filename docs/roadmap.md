@@ -1,6 +1,6 @@
 # Plan etapów, testy i ryzyka
 
-Status: Etap 0 zatwierdzony 2026-10-19. Etap 1 zakończony (czeka na akceptację), szczegóły w sekcji „Odstępstwa od planu”.
+Status: Etapy 0–1 zaakceptowane (2026-10-19). Etap 2 zakończony, czeka na akceptację. Szczegóły w sekcji „Odstępstwa od planu”.
 
 ## Ustalenia
 
@@ -129,3 +129,11 @@ Testy integracyjne na urządzeniu (`integration_test`) dochodzą w Etapie 7. `ch
 - **Kody enumów:** pierwsza implementacja zapisywała nazwy z Dart (camelCase). Na decyzję właściciela zmienione na jawne kody snake_case ([ADR 0013](decisions/0013-kody-enumow.md)); zrzut schematu v1 wygenerowany ponownie, bo nie było jeszcze żadnych danych.
 - **`build_runner`** w wersji 2.16 ignoruje flagę `--delete-conflicting-outputs`, więc `check.sh` jej nie używa.
 - **Testy widżetów z bazą** wymagają połączenia z `closeStreamsSynchronously: true` (opis w [development.md](development.md)).
+
+### Etap 2
+
+- **Katalog:** 118 ćwiczeń (115 z free-exercise-db, 3 opracowania własne: przysiad bułgarski, swing oburącz, podciąganie z asystą), w zakresie 100–150 z planu.
+- **Klucze ustawień** przeniesione do `lib/core/database/setting_keys.dart`, żeby seeder nie importował warstwy danych funkcji „ustawienia”.
+- **Formularz ćwiczenia** używa `SingleChildScrollView` zamiast `ListView`. `ListView` niszczył pola poza ekranem, więc walidacja pomijała pustą nazwę po przewinięciu do „Zapisz”. Błąd wychwycił test widżetu.
+- **Arkusz filtrów** otwiera się na głównym nawigatorze, bo snackbar zasłaniał przycisk „Pokaż wyniki”. Również wychwycone testem.
+- **Ekran ustawień** zawiera na razie tylko „Licencje i źródła”. Motyw, jednostki, krok ciężaru, skala wysiłku i przerwa dojdą w Etapie 4 razem z funkcjami, które z nich korzystają.
