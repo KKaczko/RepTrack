@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:reptrack/core/database/app_database.dart';
+import 'package:reptrack/core/domain/local_date.dart';
 import 'package:reptrack/features/exercises/data/drift_exercise_repository.dart';
+import 'package:reptrack/features/plan/data/drift_plan_repository.dart';
+import 'package:reptrack/features/plan/domain/plan.dart';
 import 'package:reptrack/features/settings/data/drift_settings_repository.dart';
 import 'package:reptrack/features/settings/domain/app_settings.dart';
 import 'package:reptrack/features/templates/data/drift_template_repository.dart';
@@ -40,6 +43,18 @@ Future<AppDatabase> _launch(
     );
     await DriftSettingsRepository(db, testClock()).save(
       AppSettings(themeMode: theme, assistantUrl: 'http://10.0.2.2:11434'),
+    );
+    // Plan: poniedziałki „Push A” od 5.10 (12.10 zrobiony, 19.10 dziś).
+    await DriftPlanRepository(db, testClock()).saveWeekly(
+      save: const [
+        WeeklyPlan(
+          id: 'wp',
+          startsOn: LocalDate(2026, 10, 5),
+          days: [
+            WeeklyPlanDay(id: 'd', weekday: 1, templateId: 'tpl', position: 0),
+          ],
+        ),
+      ],
     );
   });
   return pumpRepTrack(tester, db: db, clock: testClock());
@@ -135,6 +150,27 @@ void main() {
     await closeRepTrack(tester, db);
   });
 
+  testWidgets('czcionka 2× na 360 dp: plan, widok tygodnia, edytor', (
+    tester,
+  ) async {
+    final db = await _launch(tester, textScale: 2);
+
+    await _tap(tester, navTab('Plan'));
+    expect(tester.takeException(), isNull);
+    await tester.scrollUntilVisible(find.text('Rozpocznij'), 300);
+    expect(tester.takeException(), isNull);
+    await tester.scrollUntilVisible(find.text('Tydzień'), -300);
+    await _tap(tester, find.text('Tydzień'));
+    expect(tester.takeException(), isNull);
+    await tester.scrollUntilVisible(find.text('Ten tydzień'), -300);
+    await _tap(tester, find.byTooltip('Edytuj plan tygodnia'));
+    expect(tester.takeException(), isNull);
+    await tester.scrollUntilVisible(find.text('Niedziela'), 300);
+    expect(tester.takeException(), isNull);
+
+    await closeRepTrack(tester, db);
+  });
+
   for (final theme in [AppThemeMode.dark, AppThemeMode.light]) {
     testWidgets('cele dotyku, etykiety i kontrast: ${theme.code}', (
       tester,
@@ -170,6 +206,14 @@ void main() {
       );
       await _meetsGuidelines(tester);
       await _tap(tester, find.text('Wszystkie pojęcia'));
+      await _meetsGuidelines(tester);
+      await _tap(tester, find.byTooltip('Wstecz'));
+
+      await _tap(tester, navTab('Plan'));
+      await _meetsGuidelines(tester);
+      await _tap(tester, find.text('Tydzień'));
+      await _meetsGuidelines(tester);
+      await _tap(tester, find.byTooltip('Edytuj plan tygodnia'));
       await _meetsGuidelines(tester);
       await _tap(tester, find.byTooltip('Wstecz'));
 

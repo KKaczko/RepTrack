@@ -4,15 +4,25 @@ import 'package:flutter_test/flutter_test.dart';
 import '../support/app_harness.dart';
 
 void main() {
-  testWidgets('dolna nawigacja przełącza cztery zakładki po polsku', (
+  testWidgets('dolna nawigacja przełącza pięć zakładek po polsku', (
     tester,
   ) async {
     final db = await pumpRepTrack(tester, seed: false);
 
     expect(find.text('RepTrack'), findsOneWidget);
-    for (final label in ['Start', 'Szablony', 'Historia', 'Ćwiczenia']) {
+    for (final label in [
+      'Start',
+      'Plan',
+      'Szablony',
+      'Historia',
+      'Ćwiczenia',
+    ]) {
       expect(navTab(label), findsOneWidget);
     }
+
+    await tester.tap(navTab('Plan'));
+    await tester.pumpAndSettle();
+    expect(find.text('Zaplanuj swój tydzień'), findsOneWidget);
 
     await tester.tap(navTab('Ćwiczenia'));
     await tester.pumpAndSettle();
@@ -61,7 +71,13 @@ void main() {
     addTearDown(tester.view.reset);
 
     final db = await pumpRepTrack(tester);
-    for (final label in ['Szablony', 'Historia', 'Ćwiczenia', 'Start']) {
+    for (final label in [
+      'Plan',
+      'Szablony',
+      'Historia',
+      'Ćwiczenia',
+      'Start',
+    ]) {
       await tester.tap(navTab(label));
       await tester.pumpAndSettle();
     }

@@ -25,7 +25,7 @@ Widget branchContainer(
   ],
 );
 
-/// Rama z dolną nawigacją dla czterech zakładek. Nad nawigacją wisi pasek
+/// Rama z dolną nawigacją dla pięciu zakładek. Nad nawigacją wisi pasek
 /// trwającego treningu.
 class AppShell extends StatelessWidget {
   const AppShell({required this.shell, super.key});
@@ -53,6 +53,11 @@ class AppShell extends StatelessWidget {
                 icon: const Icon(Icons.home_outlined),
                 selectedIcon: const Icon(Icons.home_rounded),
                 label: l10n.navStart,
+              ),
+              NavigationDestination(
+                icon: const Icon(Icons.calendar_month_outlined),
+                selectedIcon: const Icon(Icons.calendar_month_rounded),
+                label: l10n.navPlan,
               ),
               NavigationDestination(
                 icon: const Icon(Icons.list_alt_outlined),

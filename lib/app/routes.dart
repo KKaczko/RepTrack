@@ -6,6 +6,10 @@ abstract final class AppRoutes {
   static const templates = '/templates';
   static const templateNew = '/templates/new';
   static const history = '/history';
+
+  /// Plan treningów (zakładka) i edytor planu tygodnia (pełny ekran).
+  static const plan = '/plan';
+  static const planWeek = '/plan/week';
   static const exercises = '/exercises';
   static const exerciseNew = '/exercises/new';
 

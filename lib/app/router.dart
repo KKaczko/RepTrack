@@ -13,6 +13,8 @@ import '../features/history/presentation/history_screen.dart';
 import '../features/history/presentation/session_compare_screen.dart';
 import '../features/history/presentation/session_detail_screen.dart';
 import '../features/home/presentation/home_screen.dart';
+import '../features/plan/presentation/plan_screen.dart';
+import '../features/plan/presentation/weekly_plan_screen.dart';
 import '../features/settings/presentation/glossary_screen.dart';
 import '../features/settings/presentation/licenses_screen.dart';
 import '../features/settings/presentation/settings_screen.dart';
@@ -41,6 +43,21 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: AppRoutes.home,
                 builder: (context, state) => const HomeScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.plan,
+                builder: (context, state) => const PlanScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'week',
+                    parentNavigatorKey: rootKey,
+                    builder: (context, state) => const WeeklyPlanScreen(),
+                  ),
+                ],
               ),
             ],
           ),
