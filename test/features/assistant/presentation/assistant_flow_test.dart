@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:reptrack/core/database/app_database.dart';
 import 'package:reptrack/features/assistant/domain/assistant.dart';
+import 'package:reptrack/core/domain/local_date.dart';
 import 'package:reptrack/features/exercises/data/drift_exercise_repository.dart';
+import 'package:reptrack/features/plan/data/drift_plan_repository.dart';
+import 'package:reptrack/features/plan/domain/plan.dart';
 import 'package:reptrack/features/settings/data/drift_settings_repository.dart';
 import 'package:reptrack/features/settings/domain/app_settings.dart';
 import 'package:reptrack/features/templates/data/drift_template_repository.dart';
@@ -21,6 +24,7 @@ Future<AppDatabase> _launch(
   WidgetTester tester,
   FakeAssistantClient assistant, {
   bool configured = true,
+  bool withPlan = false,
 }) async {
   tester.view.physicalSize = const Size(1080, 2400);
   tester.view.devicePixelRatio = 3;
@@ -44,6 +48,24 @@ Future<AppDatabase> _launch(
         (85000, 7),
       ]),
     );
+    if (withPlan) {
+      await DriftPlanRepository(db, testClock()).saveWeekly(
+        save: const [
+          WeeklyPlan(
+            id: 'wp',
+            startsOn: LocalDate(2026, 10, 5),
+            days: [
+              WeeklyPlanDay(
+                id: 'd',
+                weekday: 1,
+                templateId: 'tpl',
+                position: 0,
+              ),
+            ],
+          ),
+        ],
+      );
+    }
     if (configured) {
       await DriftSettingsRepository(
         db,
@@ -231,6 +253,22 @@ void main() {
       assistant.chats.single.messages.last.content,
       contains('# Szablon: Push A'),
     );
+
+    await closeRepTrack(tester, db);
+  });
+
+  testWidgets('z planem: podpowiedź o plan i sekcja planu w kontekście', (
+    tester,
+  ) async {
+    final assistant = FakeAssistantClient();
+    final db = await _launch(tester, assistant, withPlan: true);
+
+    await _openAssistant(tester);
+    await _tap(tester, find.text('Jak realizuję plan?'));
+
+    final system = assistant.chats.single.messages.first.content;
+    expect(system, contains('## Plan treningów'));
+    expect(system, contains('Poniedziałek 2026-10-19: Push A (Zrobiony)'));
 
     await closeRepTrack(tester, db);
   });

@@ -7,6 +7,8 @@ import '../../../core/l10n/formatters.dart';
 import '../../backup/domain/workout_export.dart';
 import '../../exercises/domain/exercise.dart';
 import '../../history/domain/history_queries.dart';
+import '../../plan/domain/plan.dart';
+import '../../plan/domain/plan_schedule.dart';
 import '../../progress/domain/metrics.dart';
 import '../../progress/domain/progress_period.dart';
 import '../../templates/domain/set_plan.dart';
@@ -57,6 +59,15 @@ final class AssistantContextLabels {
     required this.rest,
     required this.history,
     required this.noHistory,
+    required this.planSection,
+    required this.planWeek,
+    required this.planStreak,
+    required this.planUpcoming,
+    required this.planWeekly,
+    required this.planRest,
+    required this.planExtra,
+    required this.planStatus,
+    required this.weekday,
   });
 
   /// Teksty tabel treningów (eksport Markdown).
@@ -95,6 +106,19 @@ final class AssistantContextLabels {
   final String Function(String time) rest;
   final String history;
   final String noHistory;
+
+  // Plan treningów (ADR 0015).
+  final String planSection;
+  final String Function(String from, int done, int planned) planWeek;
+  final String Function(int weeks) planStreak;
+  final String planUpcoming;
+  final String planWeekly;
+  final String planRest;
+  final String planExtra;
+  final String Function(PlanStatus status) planStatus;
+
+  /// Nazwa dnia tygodnia (1 = poniedziałek).
+  final String Function(int weekday) weekday;
 }
 
 /// Ustawienia formatowania kontekstu.
@@ -110,13 +134,15 @@ const assistantRecentWorkouts = 3;
 const assistantPerformancesPerExercise = 3;
 
 /// Ogólny przegląd do rozmowy: podsumowanie 4 tygodni z porównaniem, serie
-/// na partię, postęp ćwiczeń z 3 miesięcy i ostatnie treningi.
-/// [history] od najnowszego, jak w historii.
+/// na partię, postęp ćwiczeń z 3 miesięcy, plan treningów (gdy jest)
+/// i ostatnie treningi. [history] od najnowszego, jak w historii.
 String coachContext({
   required List<WorkoutSession> history,
   required Map<String, Exercise> catalog,
   required LocalDate today,
   required AssistantFormat format,
+  PlanState plan = emptyPlan,
+  Map<String, String> templateNames = const {},
 }) {
   final (:labels, :unit, :locale) = format;
   final buffer = StringBuffer()
@@ -223,6 +249,18 @@ String coachContext({
     }
   }
 
+  if (plan.weekly.isNotEmpty || plan.days.isNotEmpty) {
+    buffer.write(
+      planContext(
+        plan: plan,
+        history: history,
+        templateNames: templateNames,
+        today: today,
+        labels: labels,
+      ),
+    );
+  }
+
   // Ostatnie treningi w tabelach.
   final recent = history.take(assistantRecentWorkouts).toList().reversed;
   final rows = exportRows(recent.toList(), const ExportFilter());
@@ -239,6 +277,71 @@ String coachContext({
           ),
         ),
       );
+  }
+  return buffer.toString();
+}
+
+/// Sekcja planu: realizacja i seria, bieżący tydzień ze stanami, najbliższe
+/// 7 dni i obowiązujący plan tygodniowy.
+String planContext({
+  required PlanState plan,
+  required List<WorkoutSession> history,
+  required Map<String, String> templateNames,
+  required LocalDate today,
+  required AssistantContextLabels labels,
+}) {
+  final byDate = sessionsByDate(history);
+  final week = weekAdherence(plan, byDate, today, today);
+  final start = today.startOfWeek;
+  String name(String id) => templateNames[id] ?? id;
+  String day(LocalDate date) =>
+      '${labels.weekday(date.weekday)} ${date.toIso()}';
+  String describe(DayOverview overview) {
+    final parts = [
+      for (final entry in overview.entries)
+        '${name(entry.item.templateId)} (${labels.planStatus(entry.status)})',
+      for (final session in overview.extra)
+        '${session.title ?? session.templateNameSnapshot ?? '—'} '
+            '(${labels.planExtra})',
+    ];
+    return parts.isEmpty ? labels.planRest : parts.join(', ');
+  }
+
+  final buffer = StringBuffer()
+    ..writeln()
+    ..writeln('## ${labels.planSection}')
+    ..writeln()
+    ..writeln(labels.planWeek(start.toIso(), week.done, week.planned))
+    ..writeln(labels.planStreak(planStreak(plan, byDate, today)));
+  buffer.writeln();
+  for (var i = 0; i < 7; i++) {
+    final date = start.addDays(i);
+    buffer.writeln(
+      '- ${day(date)}: ${describe(dayOverview(plan, byDate, date, today))}',
+    );
+  }
+  buffer
+    ..writeln()
+    ..writeln('${labels.planUpcoming}:');
+  for (var i = 1; i <= 7; i++) {
+    final date = today.addDays(i);
+    final items = dayPlan(plan, date).items;
+    if (items.isEmpty) continue;
+    buffer.writeln(
+      '- ${day(date)}: ${[for (final item in items) name(item.templateId)].join(', ')}',
+    );
+  }
+  final weekly = weeklyTemplates(currentWeeklyPlan(plan.weekly, today));
+  final weeklyLine = [
+    for (var weekday = 1; weekday <= 7; weekday++)
+      if (weekly[weekday]!.isNotEmpty)
+        '${labels.weekday(weekday)}: '
+            '${[for (final id in weekly[weekday]!) name(id)].join(', ')}',
+  ];
+  if (weeklyLine.isNotEmpty) {
+    buffer
+      ..writeln()
+      ..writeln('${labels.planWeekly}: ${weeklyLine.join('; ')}');
   }
   return buffer.toString();
 }

@@ -1291,5 +1291,21 @@
   "notifPlanTitle": "Czas na trening",
   "@notifPlanTitle": {"description": "Tytuł przypomnienia"},
   "notifPlanBody": "Dziś wg planu: {workouts}",
-  "@notifPlanBody": {"description": "Treść przypomnienia", "placeholders": {"workouts": {"type": "String"}}}
+  "@notifPlanBody": {"description": "Treść przypomnienia", "placeholders": {"workouts": {"type": "String"}}},
+  "assistantCtxPlanWeek": "Ten tydzień (od {from}): zrobione {done} z {planned} zaplanowanych",
+  "@assistantCtxPlanWeek": {"description": "Realizacja tygodnia", "placeholders": {"from": {"type": "String"}, "done": {"type": "int"}, "planned": {"type": "int"}}},
+  "assistantCtxPlanStreak": "Pełne tygodnie planu z rzędu: {weeks}",
+  "@assistantCtxPlanStreak": {"description": "Seria tygodni", "placeholders": {"weeks": {"type": "int"}}},
+  "assistantCtxPlanUpcoming": "Najbliższe 7 dni",
+  "@assistantCtxPlanUpcoming": {"description": "Nagłówek najbliższych dni"},
+  "assistantCtxPlanWeekly": "Plan tygodniowy",
+  "@assistantCtxPlanWeekly": {"description": "Nagłówek planu tygodniowego"},
+  "assistantCtxPlanRest": "wolne",
+  "@assistantCtxPlanRest": {"description": "Dzień bez treningu"},
+  "assistantCtxPlanExtra": "spoza planu",
+  "@assistantCtxPlanExtra": {"description": "Trening dodatkowy"},
+  "assistantPromptPlan": "Jak realizuję plan?",
+  "@assistantPromptPlan": {"description": "Gotowe pytanie o plan"},
+  "assistantCtxPlanSection": "Plan treningów",
+  "@assistantCtxPlanSection": {"description": "Nagłówek sekcji planu"}
 }

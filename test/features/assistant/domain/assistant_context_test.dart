@@ -1,10 +1,12 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:reptrack/core/domain/local_date.dart';
 import 'package:reptrack/core/domain/units.dart';
 import 'package:reptrack/core/l10n/generated/app_localizations.dart';
 import 'package:reptrack/features/assistant/domain/assistant_context.dart';
 import 'package:reptrack/features/assistant/presentation/assistant_context_labels.dart';
+import 'package:reptrack/features/plan/domain/plan.dart';
 
 import '../../../support/workout_fixtures.dart';
 
@@ -27,6 +29,12 @@ AssistantFormat _format(String code, {WeightUnit unit = WeightUnit.kg}) => (
 );
 
 void main() {
+  // Nazwy dni tygodnia z intl; w aplikacji robią to delegaty lokalizacji.
+  setUpAll(() async {
+    await initializeDateFormatting('pl');
+    await initializeDateFormatting('en');
+  });
+
   group('przegląd do rozmowy', () {
     final text = coachContext(
       history: _history,
@@ -152,5 +160,53 @@ void main() {
     expect(text, contains('## Podciąganie'));
     expect(text, contains('Pełny zwis'));
     expect(text, contains('Brak wcześniejszych wykonań.'));
+  });
+
+  test('przegląd z planem: tydzień ze stanami, najbliższe dni, plan', () {
+    const PlanState plan = (
+      weekly: [
+        WeeklyPlan(
+          id: 'wp',
+          startsOn: LocalDate(2026, 10, 5),
+          days: [
+            WeeklyPlanDay(id: 'a', weekday: 1, templateId: 'tpl', position: 0),
+            WeeklyPlanDay(id: 'b', weekday: 3, templateId: 'tpl2', position: 0),
+          ],
+        ),
+      ],
+      days: [],
+    );
+    final text = coachContext(
+      history: _history,
+      catalog: catalog,
+      today: const LocalDate(2026, 10, 19),
+      format: _format('pl'),
+      plan: plan,
+      templateNames: const {'tpl': 'Push A', 'tpl2': 'Pull B'},
+    );
+
+    expect(text, contains('## Plan treningów'));
+    expect(
+      text,
+      contains('Ten tydzień (od 2026-10-19): zrobione 1 z 2 zaplanowanych'),
+    );
+    expect(text, contains('Pełne tygodnie planu z rzędu: 0'));
+    expect(text, contains('- Poniedziałek 2026-10-19: Push A (Zrobiony)'));
+    expect(text, contains('- Wtorek 2026-10-20: wolne'));
+    expect(text, contains('- Środa 2026-10-21: Pull B (Zaplanowany)'));
+    expect(
+      text,
+      contains('Plan tygodniowy: Poniedziałek: Push A; Środa: Pull B'),
+    );
+    // Bez planu sekcji nie ma.
+    expect(
+      coachContext(
+        history: _history,
+        catalog: catalog,
+        today: const LocalDate(2026, 10, 19),
+        format: _format('pl'),
+      ),
+      isNot(contains('## Plan treningów')),
+    );
   });
 }

@@ -654,5 +654,13 @@
   "planRemindersDenied": "Reminders need notification permission. You can change this in your phone settings.",
   "notifChannelPlan": "Workout reminders",
   "notifPlanTitle": "Time to train",
-  "notifPlanBody": "Today's plan: {workouts}"
+  "notifPlanBody": "Today's plan: {workouts}",
+  "assistantCtxPlanWeek": "This week (from {from}): {done} of {planned} planned done",
+  "assistantCtxPlanStreak": "Fully completed plan weeks in a row: {weeks}",
+  "assistantCtxPlanUpcoming": "Next 7 days",
+  "assistantCtxPlanWeekly": "Weekly plan",
+  "assistantCtxPlanRest": "rest",
+  "assistantCtxPlanExtra": "not planned",
+  "assistantPromptPlan": "How am I doing with my plan?",
+  "assistantCtxPlanSection": "Training plan"
 }

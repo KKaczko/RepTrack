@@ -15,6 +15,8 @@ import '../../../core/widgets/empty_state.dart';
 import '../../exercises/data/exercise_providers.dart';
 import '../../exercises/domain/exercise.dart';
 import '../../history/presentation/history_labels.dart';
+import '../../plan/data/plan_providers.dart';
+import '../../plan/domain/plan.dart';
 import '../../settings/data/settings_providers.dart';
 import '../../templates/data/template_providers.dart';
 import '../../templates/domain/template.dart';
@@ -242,6 +244,9 @@ class _AssistantScreenState extends ConsumerState<AssistantScreen> {
         l10n.assistantPromptMonth,
         l10n.assistantPromptMuscles,
         l10n.assistantPromptStrength,
+        if (ref.read(planProvider).value case final plan?
+            when plan.weekly.isNotEmpty || plan.days.isNotEmpty)
+          l10n.assistantPromptPlan,
       ])
         chip(prompt, () => _send(shown: prompt, sent: prompt)),
       chip(l10n.assistantPromptNext, () => _pickTemplate(templates)),
@@ -364,10 +369,11 @@ class _AssistantScreenState extends ConsumerState<AssistantScreen> {
     final l10n = AppLocalizations.of(context);
     final unit =
         ref.read(appSettingsProvider).value?.weightUnit ?? WeightUnit.kg;
+    final locale = Localizations.localeOf(context).toString();
     return (
-      labels: assistantContextLabels(l10n, unit),
+      labels: assistantContextLabels(l10n, unit, locale: locale),
       unit: unit,
-      locale: Localizations.localeOf(context).toString(),
+      locale: locale,
     );
   }
 
@@ -380,6 +386,11 @@ class _AssistantScreenState extends ConsumerState<AssistantScreen> {
       catalog: ref.read(exercisesByIdProvider).value ?? const {},
       today: LocalDate(now.year, now.month, now.day),
       format: _format(),
+      plan: ref.read(planProvider).value ?? emptyPlan,
+      templateNames: {
+        for (final t in ref.read(templatesProvider).value ?? const <Template>[])
+          t.id: t.name,
+      },
     );
   }
 
