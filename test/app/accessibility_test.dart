@@ -87,7 +87,7 @@ void main() {
   ) async {
     final db = await _launch(tester, textScale: 2);
 
-    await _tap(tester, find.textContaining('Rozpocznij'));
+    await _tap(tester, find.text('Dziś wg planu: Push A'));
     expect(tester.takeException(), isNull);
     await _tap(tester, find.byTooltip('Zwiększ: Ciężar'));
     await _tap(tester, find.byKey(const ValueKey('workout-value-reps')));
@@ -178,7 +178,7 @@ void main() {
       final db = await _launch(tester, theme: theme);
 
       await _meetsGuidelines(tester);
-      await _tap(tester, find.textContaining('Rozpocznij'));
+      await _tap(tester, find.text('Dziś wg planu: Push A'));
       await _meetsGuidelines(tester);
       await _tap(tester, find.text('Zatwierdź serię 1'));
       await tester.pump(const Duration(milliseconds: 400));

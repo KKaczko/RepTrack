@@ -1261,5 +1261,19 @@
   "planWeekdaysShort": "Pn,Wt,Śr,Cz,Pt,So,Nd",
   "@planWeekdaysShort": {"description": "Skróty dni tygodnia w nagłówku kalendarza, od poniedziałku, rozdzielone przecinkami"},
   "planUndo": "Cofnij",
-  "@planUndo": {"description": "Akcja snackbara: cofnięcie zmiany planu"}
+  "@planUndo": {"description": "Akcja snackbara: cofnięcie zmiany planu"},
+  "homePlanToday": "Dziś wg planu: {template}",
+  "@homePlanToday": {"description": "Główny przycisk Startu z planu", "placeholders": {"template": {"type": "String"}}},
+  "homePlanDone": "Plan na dziś wykonany",
+  "@homePlanDone": {"description": "Start: plan zrobiony"},
+  "homePlanRest": "Dziś dzień wolny",
+  "@homePlanRest": {"description": "Start: dzień wolny w planie"},
+  "homePlanNext": "Następny: {when} · {template}",
+  "@homePlanNext": {"description": "Start: następny trening z planu", "placeholders": {"when": {"type": "String"}, "template": {"type": "String"}}},
+  "homePlanTomorrow": "jutro",
+  "@homePlanTomorrow": {"description": "Następny trening jutro"},
+  "homePlanWeek": "treningów z planu",
+  "@homePlanWeek": {"description": "Podpis realizacji tygodnia na Starcie"},
+  "homePlanOpen": "Zobacz plan",
+  "@homePlanOpen": {"description": "Przejście do zakładki Plan"}
 }

@@ -639,5 +639,12 @@
   "planRemoveFromDay": "Remove {template} from the day",
   "planAddTo": "Add workout: {day}",
   "planWeekdaysShort": "Mo,Tu,We,Th,Fr,Sa,Su",
-  "planUndo": "Undo"
+  "planUndo": "Undo",
+  "homePlanToday": "Today's plan: {template}",
+  "homePlanDone": "Today's plan is done",
+  "homePlanRest": "Rest day today",
+  "homePlanNext": "Next: {when} · {template}",
+  "homePlanTomorrow": "tomorrow",
+  "homePlanWeek": "planned workouts done",
+  "homePlanOpen": "See plan"
 }

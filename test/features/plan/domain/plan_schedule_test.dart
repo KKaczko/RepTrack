@@ -271,4 +271,14 @@ void main() {
     expect(preview.minutes, 20);
     expect(preview.exerciseIds, ['bench', 'pullup']);
   });
+
+  test('następny zaplanowany trening po dniu', () {
+    final PlanState plan = (weekly: [_weekly], days: []);
+
+    // Po środzie 14.10 (pull) następny jest piątek 16.10 (legs).
+    final next = nextPlanned(plan, _today);
+    expect(next!.date, const LocalDate(2026, 10, 16));
+    expect(next.item.templateId, 'legs');
+    expect(nextPlanned(emptyPlan, _today), isNull);
+  });
 }

@@ -221,6 +221,21 @@ int planStreak(
   return streak;
 }
 
+/// Pierwszy zaplanowany trening po dniu [after], najdalej [days] dni dalej.
+({LocalDate date, PlanItem item})? nextPlanned(
+  PlanState plan,
+  LocalDate after, {
+  int days = 14,
+}) {
+  for (var i = 1; i <= days; i++) {
+    final date = after.addDays(i);
+    if (dayPlan(plan, date).items.firstOrNull case final item?) {
+      return (date: date, item: item);
+    }
+  }
+  return null;
+}
+
 // ------------------------------------------------------------ wpisy na daty
 
 /// Wpisy dla daty z listy treningów; pusta lista to dzień wolny.

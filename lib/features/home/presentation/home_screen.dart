@@ -14,6 +14,9 @@ import '../../../core/theme/app_theme.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/widgets/active_workout_dialog.dart';
 import '../../history/domain/history_queries.dart';
+import '../../plan/data/plan_providers.dart';
+import '../../plan/domain/plan.dart';
+import '../../plan/domain/plan_schedule.dart';
 import '../../settings/data/settings_providers.dart';
 import '../../templates/data/template_providers.dart';
 import '../../templates/domain/template.dart';
@@ -22,8 +25,9 @@ import '../../workout/domain/session_summary.dart';
 import '../../workout/domain/workout_session.dart';
 
 /// Ekran Start (spec. 7): wznowienie trwającego treningu, szybki start
-/// ostatniego szablonu, inne szablony, pusty trening, ostatni trening
-/// i liczba treningów w tym tygodniu.
+/// (dzisiejszy trening z planu albo ostatni szablon, ADR 0015), inne
+/// szablony, pusty trening, stan planu, realizacja tygodnia i ostatni
+/// trening.
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
@@ -39,6 +43,26 @@ class HomeScreen extends ConsumerWidget {
     final thisWeek = history
         .where((s) => s.localDate.startOfWeek == today.startOfWeek)
         .length;
+    final plan = ref.watch(planProvider).value ?? emptyPlan;
+    final byDate = sessionsByDate(history);
+    final todayPlan = dayOverview(plan, byDate, today, today);
+    final byId = {for (final t in templates) t.id: t};
+    // Dzisiejsze treningi z planu, których jeszcze nie zrobiono.
+    final pending = [
+      for (final entry in todayPlan.entries)
+        if (entry.status == PlanStatus.today)
+          if (byId[entry.item.templateId] case final t?
+              when !t.isArchived && t.exercises.isNotEmpty)
+            t,
+    ];
+    final hasPlan =
+        currentWeeklyPlan(plan.weekly, today) != null || plan.days.isNotEmpty;
+    final week = weekAdherence(plan, byDate, today, today);
+    final primary = pending.firstOrNull ?? ordered.firstOrNull;
+    final others = [
+      for (final t in ordered)
+        if (t.id != primary?.id) t,
+    ];
 
     return Scaffold(
       appBar: AppBar(
@@ -62,14 +86,16 @@ class HomeScreen extends ConsumerWidget {
           if (active != null)
             _ResumeCard(session: active)
           else ...[
-            if (ordered.firstOrNull case final quick?)
+            if (primary case final quick?)
               SizedBox(
                 height: AppSizes.primaryAction,
                 child: FilledButton.icon(
                   onPressed: () => _start(context, ref, quick),
                   icon: const Icon(Icons.play_arrow_rounded),
                   label: Text(
-                    l10n.homeQuickStart(quick.name),
+                    pending.isNotEmpty
+                        ? l10n.homePlanToday(quick.name)
+                        : l10n.homeQuickStart(quick.name),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -94,9 +120,16 @@ class HomeScreen extends ConsumerWidget {
                 label: Text(l10n.startEmptyWorkout),
               ),
             ),
-            if (ordered.length > 1) ...[
+            if (hasPlan && pending.isEmpty)
+              _PlanStatus(
+                done: todayPlan.entries.isNotEmpty,
+                next: nextPlanned(plan, today),
+                templates: byId,
+                today: today,
+              ),
+            if (others.isNotEmpty) ...[
               _SectionTitle(l10n.homeOtherTemplates),
-              for (final template in ordered.skip(1).take(3))
+              for (final template in others.take(3))
                 ListTile(
                   contentPadding: const EdgeInsets.only(left: AppSpacing.xs),
                   title: Text(template.name),
@@ -113,11 +146,14 @@ class HomeScreen extends ConsumerWidget {
             ],
           ],
           _SectionTitle(l10n.homeThisWeek),
-          Text(
-            l10n.workoutsCount(thisWeek),
-            style: Theme.of(context).textTheme.headlineSmall
-                ?.copyWith(fontWeight: FontWeight.w700),
-          ),
+          if (week.planned > 0)
+            _WeekPlan(adherence: week)
+          else
+            Text(
+              l10n.workoutsCount(thisWeek),
+              style: Theme.of(context).textTheme.headlineSmall
+                  ?.copyWith(fontWeight: FontWeight.w700),
+            ),
           if (history.firstOrNull case final last?) ...[
             _SectionTitle(l10n.homeLastSession),
             _LastSessionCard(session: last),
@@ -156,6 +192,127 @@ class HomeScreen extends ConsumerWidget {
     if (started || await showActiveWorkoutDialog(context)) {
       if (context.mounted) await context.push(AppRoutes.workout);
     }
+  }
+}
+
+/// Stan planu, gdy na dziś nic nie zostało: zrobione albo dzień wolny,
+/// następny trening i przejście do zakładki Plan.
+class _PlanStatus extends StatelessWidget {
+  const _PlanStatus({
+    required this.done,
+    required this.next,
+    required this.templates,
+    required this.today,
+  });
+
+  /// Dziś był trening z planu i jest zrobiony (inaczej dzień wolny).
+  final bool done;
+  final ({LocalDate date, PlanItem item})? next;
+  final Map<String, Template> templates;
+  final LocalDate today;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final locale = Localizations.localeOf(context).toString();
+    final next = this.next;
+    final String? when;
+    if (next == null) {
+      when = null;
+    } else if (next.date == today.addDays(1)) {
+      when = l10n.homePlanTomorrow;
+    } else {
+      when = DateFormat.EEEE(locale)
+          .format(DateTime(next.date.year, next.date.month, next.date.day));
+    }
+    return Padding(
+      padding: const EdgeInsets.only(top: AppSpacing.m),
+      child: Row(
+        children: [
+          Icon(
+            done ? Icons.check_circle_rounded : Icons.self_improvement_rounded,
+            color: theme.colorScheme.primary,
+          ),
+          const SizedBox(width: AppSpacing.m),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  done ? l10n.homePlanDone : l10n.homePlanRest,
+                  style: theme.textTheme.bodyLarge,
+                ),
+                if (next != null && when != null)
+                  Text(
+                    l10n.homePlanNext(
+                      when,
+                      templates[next.item.templateId]?.name ??
+                          l10n.planDeletedTemplate,
+                    ),
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          TextButton(
+            onPressed: () => context.go(AppRoutes.plan),
+            child: Text(l10n.homePlanOpen),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Realizacja planu w tym tygodniu, np. „1 z 3 treningów z planu”.
+class _WeekPlan extends StatelessWidget {
+  const _WeekPlan({required this.adherence});
+
+  final Adherence adherence;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final (:done, :planned, remaining: _) = adherence;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text.rich(
+          TextSpan(
+            children: [
+              TextSpan(
+                text: l10n.planAdherence(done, planned),
+                style: theme.textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              TextSpan(
+                text: ' ${l10n.homePlanWeek}',
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: AppSpacing.s),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(4),
+          child: LinearProgressIndicator(
+            value: planned == 0 ? 0 : done / planned,
+            minHeight: 8,
+            color: theme.brightness == Brightness.dark
+                ? context.appColors.accentFill
+                : theme.colorScheme.primary,
+            backgroundColor: theme.colorScheme.surfaceContainerHighest,
+          ),
+        ),
+      ],
+    );
   }
 }
 
