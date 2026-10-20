@@ -49,6 +49,17 @@ class AppDatabase extends _$AppDatabase {
       ..execute('PRAGMA foreign_keys = ON;');
   }
 
+  /// Przenosi zmiany z pliku WAL do bazy i opróżnia WAL. Wywoływane przy
+  /// przejściu aplikacji w tło, żeby Android Auto Backup skopiował spójny
+  /// plik bazy (ADR 0008).
+  Future<void> checkpoint() async {
+    try {
+      await customStatement('PRAGMA wal_checkpoint(TRUNCATE)');
+    } on Object {
+      // Zajęta baza: checkpoint wykona się przy następnej okazji.
+    }
+  }
+
   @override
   int get schemaVersion => 1;
 

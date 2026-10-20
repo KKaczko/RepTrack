@@ -98,3 +98,19 @@ Aplikacja przy starcie stosuje nowszy seed: dodaje nowe pozycje, aktualizuje zmi
 - **Obserwacja agregatu z kilku tabel:** używaj `watchTables(db, 'klucz', {tabele})` z `lib/core/database/watch_tables.dart`. Drift współdzieli obserwowane zapytania o tym samym SQL bez względu na `readsFrom`, więc dwa repozytoria z `customSelect('SELECT 1')` dzieliły jeden strumień i zmiany szablonów nie docierały do listy, gdy jednocześnie obserwowano trening.
 - **Odczyt providera bez słuchaczy:** Riverpod 3 wstrzymuje provider, którego nikt nie obserwuje, więc `ref.read(provider.future)` może nigdy się nie zakończyć. Przykład: „Rozpocznij” na Starcie czekało na katalog ćwiczeń, którego nikt nie obserwował. Jednorazowe odczyty idą przez repozytorium (`findAll()`), a nie przez `.future`.
 - **Zapis pól null:** `insertOnConflictUpdate` pomija kolumny null w części UPDATE. `upsertIfChanged` zapisuje więc wszystkie kolumny jawnie; bez tego „przywróć dziedziczenie”, cofnięcie zatwierdzenia serii czy „Pomiń przerwę” nie trafiały do bazy.
+
+- **Operacje na plikach w testach widżetów:** asynchroniczne `dart:io` nie kończą się pod fałszywym zegarem `testWidgets`. Zapis plików jest za interfejsem (`FileExchange`, zapis kopii bezpieczeństwa jako funkcja w providerze) i w testach podmieniony na atrapy; prawdziwe pliki testuje zwykły `test`.
+
+## Android Auto Backup
+
+Ręczne sprawdzenie, że reinstalacja odtwarza dane (na emulatorze albo telefonie). Polecenia zmieniają ustawienia kopii zapasowej urządzenia, więc uruchamia je właściciel:
+
+```bash
+D:/Dev/tools/android-sdk/platform-tools/adb.exe shell bmgr enable true
+D:/Dev/tools/android-sdk/platform-tools/adb.exe shell bmgr transport com.android.localtransport/.LocalTransport
+D:/Dev/tools/android-sdk/platform-tools/adb.exe shell bmgr backupnow io.github.kkaczko.reptrack
+D:/Dev/tools/android-sdk/platform-tools/adb.exe uninstall io.github.kkaczko.reptrack
+D:/Dev/tools/android-sdk/platform-tools/adb.exe install build/app/outputs/flutter-apk/app-release.apk
+```
+
+Po instalacji aplikacja powinna pokazać treningi sprzed odinstalowania. `uninstall` usuwa dane aplikacji, więc przed testem warto zapisać kopię JSON z ekranu „Kopia i eksport”. Na Samsungu bez zmiany transportu działa kopia w chmurze Google (Ustawienia → Konta i kopia zapasowa); w regułach kopii jest wyłącznie baza danych.

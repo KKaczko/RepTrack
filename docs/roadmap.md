@@ -1,6 +1,6 @@
 # Plan etapów, testy i ryzyka
 
-Status: Etapy 0–3 zaakceptowane (2026-10-19). Etapy 4 i 5 zakończone (2026-10-20); od Etapu 4 kolejne etapy idą bez czekania na akceptację (decyzja właściciela). Szczegóły w sekcji „Odstępstwa od planu”.
+Status: Etapy 0–3 zaakceptowane (2026-10-19). Etapy 4–6 zakończone (2026-10-20); od Etapu 4 kolejne etapy idą bez czekania na akceptację (decyzja właściciela). Szczegóły w sekcji „Odstępstwa od planu”.
 
 ## Ustalenia
 
@@ -188,3 +188,15 @@ Testy integracyjne na urządzeniu (`integration_test`) dochodzą w Etapie 7. `ch
 - **Rekordy „najcięższa seria”** pokazują tylko N, dla których ciężar różni się od rekordu dla N + 1 (np. „≥ 8 powt.: 85 kg” zamiast ośmiu wierszy z tym samym ciężarem).
 - **Wykresy ćwiczenia** mają jeden punkt na dzień (najlepszy e1RM, suma objętości), żeby dwa treningi jednego dnia nie dawały pionowej kreski.
 - **Sprawdzone na emulatorze:** szybki start ze Startu, lista historii, szczegóły, porównanie, progres (wykres tygodni, e1RM, objętość) i zakładki ćwiczenia.
+
+### Etap 6
+
+- **Format backupu** zgodny z ADR 0008 i planem. Pole `format: "reptrack-backup"` rozpoznaje plik, a `units` opisuje jednostki ([backup-format.md](backup-format.md)).
+- **Migracje formatu:** wersja 1 jest pierwsza, więc nie ma jeszcze starszego pliku do migracji. Kryterium „plik starszej wersji jest migrowany” sprawdza mechanizm migracji z przykładową migracją w teście; pierwsza prawdziwa migracja dojdzie z wersją 2.
+- **Nowe zależności:** `file_picker` 13.1.0 (MIT) i `share_plus` 13.3.1 (BSD-3), wersje sprawdzone 2026-10-20 przez `flutter pub add`.
+- **Eksport Markdown** udostępnia się jako tekst (gotowy do wklejenia), a CSV jako plik.
+- **Test Android Auto Backup** (`bmgr`) wymaga włączenia usługi kopii na urządzeniu, czyli zmiany ustawień systemowych. Kroki dla właściciela są w [development.md](development.md#android-auto-backup).
+- **Sprawdzone na emulatorze:**
+  - zapis kopii przez systemowy wybór pliku (174 kB z całą biblioteką) i przywrócenie z tego pliku z potwierdzeniem;
+  - zapis CSV (BOM, średniki, przecinek dziesiętny);
+  - udostępnienie Markdown jako tekstu przez arkusz systemowy.

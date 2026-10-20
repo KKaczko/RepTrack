@@ -6,7 +6,7 @@ Stos: Flutter + Dart, Drift (SQLite), Riverpod, go_router.
 
 ## Stan
 
-Etapy 0–3 zaakceptowane. Etapy 4 (aktywny trening) i 5 (historia i progres) zakończone.
+Etapy 0–3 zaakceptowane. Etapy 4 (aktywny trening), 5 (historia i progres) i 6 (eksport i backup) zakończone.
 
 ## Dokumentacja
 
@@ -15,6 +15,7 @@ Etapy 0–3 zaakceptowane. Etapy 4 (aktywny trening) i 5 (historia i progres) za
 - [Plan etapów, testy i ryzyka](docs/roadmap.md)
 - [Architektura](docs/architecture.md)
 - [Model danych](docs/data-model.md)
+- [Format kopii zapasowej i eksportu](docs/backup-format.md)
 - [UX: mapa ekranów i aktywny trening](docs/ux.md)
 - [Decyzje (ADR)](docs/decisions/README.md)
 - [Backlog poza MVP](docs/backlog.md)

@@ -14,6 +14,7 @@ abstract final class AppRoutes {
   static const exercisePickerSingle = '/pick-exercises?single=true';
   static const settings = '/settings';
   static const licenses = '/settings/licenses';
+  static const backup = '/settings/backup';
   static const workout = '/workout';
   static const workoutFinish = '/workout/finish';
 

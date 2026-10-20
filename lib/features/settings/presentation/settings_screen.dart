@@ -166,6 +166,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             },
             onChanged: (mode) => _save(settings.copyWith(themeMode: mode)),
           ),
+          _Section(l10n.settingsData),
+          ListTile(
+            leading: const Icon(Icons.backup_outlined),
+            title: Text(l10n.backupTitle),
+            subtitle: Text(l10n.settingsBackupSubtitle),
+            trailing: const Icon(Icons.chevron_right_rounded),
+            onTap: () => context.push(AppRoutes.backup),
+          ),
           _Section(l10n.settingsAbout),
           ListTile(
             leading: const Icon(Icons.gavel_rounded),

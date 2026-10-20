@@ -6,10 +6,14 @@
     <!-- Dokładny alarm tylko za zgodą użytkownika; USE_EXACT_ALARM jest
          zastrzeżony dla aplikacji typu budzik, więc go nie używamy. -->
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <!-- Android Auto Backup obejmuje tylko bazę danych (ADR 0008). -->
     <application
         android:label="RepTrack"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_rules"
+        android:dataExtractionRules="@xml/data_extraction_rules">
         <receiver
             android:exported="false"
             android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />

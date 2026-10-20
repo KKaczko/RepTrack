@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Android Auto Backup do Androida 11 (ADR 0008): tylko baza danych.
+     Plik WAL jest pusty po checkpoincie przy przejściu w tło. Kopie
+     bezpieczeństwa sprzed przywrócenia (files/kopie) zostają lokalnie. -->
+<full-backup-content>
+    <include domain="file" path="reptrack.sqlite" />
+    <include domain="file" path="reptrack.sqlite-wal" />
+</full-backup-content>
