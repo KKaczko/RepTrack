@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ikona RepTrack: sztanga w kolorze akcentu „volt” (ADR 0012). Rysunek
+     mieści się w strefie bezpiecznej ikony adaptacyjnej (66 dp z 108 dp). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#FFC8F25A"
+        android:pathData="M27,43h2a2,2 0 0,1 2,2v18a2,2 0 0,1 -2,2h-2a2,2 0 0,1 -2,-2v-18a2,2 0 0,1 2,-2zM34.5,36h2.0a2.5,2.5 0 0,1 2.5,2.5v31.0a2.5,2.5 0 0,1 -2.5,2.5h-2.0a2.5,2.5 0 0,1 -2.5,-2.5v-31.0a2.5,2.5 0 0,1 2.5,-2.5zM40.5,51.5h27.0a1.5,1.5 0 0,1 1.5,1.5v2.0a1.5,1.5 0 0,1 -1.5,1.5h-27.0a1.5,1.5 0 0,1 -1.5,-1.5v-2.0a1.5,1.5 0 0,1 1.5,-1.5zM71.5,36h2.0a2.5,2.5 0 0,1 2.5,2.5v31.0a2.5,2.5 0 0,1 -2.5,2.5h-2.0a2.5,2.5 0 0,1 -2.5,-2.5v-31.0a2.5,2.5 0 0,1 2.5,-2.5zM79,43h2a2,2 0 0,1 2,2v18a2,2 0 0,1 -2,2h-2a2,2 0 0,1 -2,-2v-18a2,2 0 0,1 2,-2z" />
+</vector>

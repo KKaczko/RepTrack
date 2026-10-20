@@ -1,18 +1,20 @@
 #!/usr/bin/env bash
 # Weryfikacja etapu jedną komendą (ADR 0011).
 #
-#   bash tool/check.sh               formatowanie, analiza, testy i build release APK
-#   bash tool/check.sh --skip-build  bez buildu APK (szybka pętla)
-#   bash tool/check.sh --bundle      dodatkowo build AAB (od Etapu 7)
+#   bash tool/check.sh               formatowanie, analiza, testy, build APK i AAB
+#   bash tool/check.sh --skip-build  bez buildów (szybka pętla)
+#
+# Test na urządzeniu (poza check.sh, wymaga telefonu albo emulatora):
+#   flutter test integration_test -d <urządzenie>
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
 skip_build=false
-bundle=false
 for arg in "$@"; do
   case "$arg" in
     --skip-build) skip_build=true ;;
-    --bundle) bundle=true ;;
+    # Zgodność wstecz: AAB jest budowany zawsze od Etapu 7.
+    --bundle) ;;
     *) echo "Nieznana opcja: $arg" >&2; exit 2 ;;
   esac
 done
@@ -42,10 +44,8 @@ flutter test
 if [[ "$skip_build" == false ]]; then
   step "Build release APK"
   flutter build apk --release
-  if [[ "$bundle" == true ]]; then
-    step "Build release AAB"
-    flutter build appbundle --release
-  fi
+  step "Build release AAB"
+  flutter build appbundle --release
 fi
 
 printf '\n✔ check.sh: wszystko zielone\n'

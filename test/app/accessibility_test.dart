@@ -1,0 +1,126 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:reptrack/core/database/app_database.dart';
+import 'package:reptrack/features/exercises/data/drift_exercise_repository.dart';
+import 'package:reptrack/features/settings/data/drift_settings_repository.dart';
+import 'package:reptrack/features/settings/domain/app_settings.dart';
+import 'package:reptrack/features/templates/data/drift_template_repository.dart';
+import 'package:reptrack/features/workout/data/drift_workout_repository.dart';
+
+import '../support/app_harness.dart';
+import '../support/test_database.dart';
+import '../support/workout_fixtures.dart';
+
+/// Przegląd dostępności (Etap 7): układ przy 360 dp i czcionce 2×, cele
+/// dotyku, etykiety i kontrast na ekranach treningu, historii, ustawień
+/// i kopii, w ciemnym i jasnym motywie.
+
+/// Aplikacja z szablonem i zakończonym treningiem.
+Future<AppDatabase> _launch(
+  WidgetTester tester, {
+  double textScale = 1,
+  AppThemeMode theme = AppThemeMode.dark,
+}) async {
+  tester.view.physicalSize = const Size(360 * 3, 740 * 3);
+  tester.view.devicePixelRatio = 3;
+  tester.platformDispatcher.textScaleFactorTestValue = textScale;
+  addTearDown(tester.view.reset);
+  addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+  final db = widgetTestDatabase();
+  await tester.runAsync(() async {
+    for (final e in catalog.values) {
+      await DriftExerciseRepository(db, testClock()).save(e);
+    }
+    await DriftTemplateRepository(db, testClock()).save(pushTemplate());
+    await DriftWorkoutRepository(db, testClock()).save(
+      finishedPush('a', DateTime.utc(2026, 10, 12, 16), [
+        (80000, 10),
+        (80000, 9),
+      ]),
+    );
+    await DriftSettingsRepository(
+      db,
+      testClock(),
+    ).save(AppSettings(themeMode: theme));
+  });
+  return pumpRepTrack(tester, db: db, clock: testClock());
+}
+
+Future<void> _tap(WidgetTester tester, Finder finder) async {
+  await tester.ensureVisible(finder);
+  await tester.pumpAndSettle();
+  await tester.tap(finder);
+  await tester.pumpAndSettle();
+}
+
+Future<void> _meetsGuidelines(WidgetTester tester) async {
+  await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+  await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
+  await expectLater(tester, meetsGuideline(textContrastGuideline));
+}
+
+void main() {
+  testWidgets('czcionka 2× na 360 dp: trening, zakończenie, historia', (
+    tester,
+  ) async {
+    final db = await _launch(tester, textScale: 2);
+
+    await _tap(tester, find.textContaining('Rozpocznij'));
+    expect(tester.takeException(), isNull);
+    await _tap(tester, find.byTooltip('Zwiększ: Ciężar'));
+    await _tap(tester, find.byKey(const ValueKey('workout-value-reps')));
+    expect(tester.takeException(), isNull);
+    await _tap(tester, find.text('8'));
+    await _tap(tester, find.byTooltip('Opcje treningu'));
+    await _tap(tester, find.text('Zakończ trening'));
+    expect(tester.takeException(), isNull);
+    await _tap(tester, find.byTooltip('Wstecz'));
+    await _tap(tester, find.byTooltip('Zminimalizuj trening'));
+
+    await _tap(tester, find.text('Historia'));
+    await _tap(tester, find.text('Push A').first);
+    expect(tester.takeException(), isNull);
+    await _tap(tester, find.byTooltip('Porównaj z poprzednim'));
+    expect(tester.takeException(), isNull);
+
+    await closeRepTrack(tester, db);
+  });
+
+  testWidgets('czcionka 2× na 360 dp: ustawienia i kopia', (tester) async {
+    final db = await _launch(tester, textScale: 2);
+
+    await _tap(tester, find.byTooltip('Otwórz ustawienia'));
+    expect(tester.takeException(), isNull);
+    await tester.scrollUntilVisible(find.text('Kopia i eksport'), 300);
+    await _tap(tester, find.text('Kopia i eksport'));
+    expect(tester.takeException(), isNull);
+    await tester.scrollUntilVisible(find.text('Markdown'), 300);
+    await _tap(tester, find.text('Markdown'));
+    expect(tester.takeException(), isNull);
+
+    await closeRepTrack(tester, db);
+  });
+
+  for (final theme in [AppThemeMode.dark, AppThemeMode.light]) {
+    testWidgets('cele dotyku, etykiety i kontrast: ${theme.code}', (
+      tester,
+    ) async {
+      final db = await _launch(tester, theme: theme);
+
+      await _meetsGuidelines(tester);
+      await _tap(tester, find.textContaining('Rozpocznij'));
+      await _meetsGuidelines(tester);
+      await _tap(tester, find.text('Zatwierdź serię 1'));
+      await tester.pump(const Duration(milliseconds: 400));
+      await _meetsGuidelines(tester);
+      await _tap(tester, find.byTooltip('Zminimalizuj trening'));
+
+      await _tap(tester, find.text('Historia'));
+      await _meetsGuidelines(tester);
+      await _tap(tester, find.text('Push A').first);
+      await _meetsGuidelines(tester);
+
+      await closeRepTrack(tester, db);
+    });
+  }
+}

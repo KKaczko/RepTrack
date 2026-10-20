@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tło ciemnego motywu (AppPalette.ink): ikona i ekran startowy. -->
+    <color name="reptrack_ink">#FF0E0F11</color>
+</resources>

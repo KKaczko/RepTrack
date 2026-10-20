@@ -1,6 +1,6 @@
 # Plan etapów, testy i ryzyka
 
-Status: Etapy 0–3 zaakceptowane (2026-10-19). Etapy 4–6 zakończone (2026-10-20); od Etapu 4 kolejne etapy idą bez czekania na akceptację (decyzja właściciela). Szczegóły w sekcji „Odstępstwa od planu”.
+Status: Etapy 0–3 zaakceptowane (2026-10-19). Etapy 4–7 zakończone (2026-10-20) i czekają na przegląd właściciela; od Etapu 4 kolejne etapy szły bez czekania na akceptację (decyzja właściciela). Do wydania zostają kontrole ręczne na telefonie ([publishing.md](publishing.md#lista-kontroli-ręcznych-spec-9)). Szczegóły w sekcji „Odstępstwa od planu”.
 
 ## Ustalenia
 
@@ -200,3 +200,17 @@ Testy integracyjne na urządzeniu (`integration_test`) dochodzą w Etapie 7. `ch
   - zapis kopii przez systemowy wybór pliku (174 kB z całą biblioteką) i przywrócenie z tego pliku z potwierdzeniem;
   - zapis CSV (BOM, średniki, przecinek dziesiętny);
   - udostępnienie Markdown jako tekstu przez arkusz systemowy.
+
+### Etap 7
+
+- **Przegląd dostępności** jako testy: czcionka 2× na 360 dp na wszystkich głównych ekranach, cele dotyku, etykiety i kontrast w obu motywach. Poprawione przepełnienie wiersza serii w szczegółach treningu.
+- **Jasny motyw** sprawdzony na emulatorze (Start, ustawienia, kopia, aktywny trening).
+- **Ikona i ekran startowy:** własna ikona adaptacyjna i ciemne tło startu ([ADR 0012](decisions/0012-wyglad.md)).
+- **Test na urządzeniu** (`integration_test`) przechodzi na emulatorze; `flutter test integration_test` po teście odinstalowuje aplikację z danymi (ostrzeżenie w [development.md](development.md#komendy)).
+- **check.sh** buduje zawsze APK i AAB. Bez `key.properties` podpis debug; klucz wydania tworzy właściciel ([publishing.md](publishing.md)).
+- **Publikacja:** wymagania Google sprawdzone 2026-10-20:
+  - target API 36 od 31.08.2026;
+  - weryfikacja deweloperów: od 30.09.2026 w czterech krajach, globalnie w 2027, instalacja przez adb bez zmian;
+  - test zamknięty 12 osób przez 14 dni dla nowych kont prywatnych (z opisów zewnętrznych, do potwierdzenia).
+- **Dokumenty:** README z instrukcją budowania, [publishing.md](publishing.md) z polityką prywatności i Data safety, [future/sync-and-mcp.md](future/sync-and-mcp.md).
+- **Wydajność:** historia przeładowuje się tylko po zmianach zakończonych treningów; dalsze pomiary (np. setki treningów na telefonie) zostają na kontrolę na telefonie.

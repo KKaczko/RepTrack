@@ -19,3 +19,9 @@ Minimalistyczny wygląd komercyjnej aplikacji fitness: ciemny motyw domyślny, j
 
 - Inter wymaga atrybucji na ekranie „Licencje i źródła”.
 - Zmiana akcentu to zmiana jednego tokenu.
+
+## Implementacja (Etap 7)
+
+- Ikona adaptacyjna: sztanga w kolorze volt na tle #0E0F11 (`res/drawable/ic_launcher_foreground.xml`, `res/mipmap-anydpi-v26/ic_launcher.xml`), z warstwą monochromatyczną dla ikon tematycznych Androida 13+. Przy minSdk 26 mapy bitowe ikony nie są potrzebne.
+- Ekran startowy i tło okna przed pierwszą klatką Fluttera mają kolor #0E0F11 zamiast domyślnej bieli.
+- Przegląd dostępności w testach (`test/app/accessibility_test.dart`): czcionka 2× na 360 dp bez przepełnień na ekranach treningu, podsumowania, historii, porównania, ustawień i kopii; cele dotyku 48 dp, etykiety i kontrast tekstu (WCAG AA) w ciemnym i jasnym motywie.

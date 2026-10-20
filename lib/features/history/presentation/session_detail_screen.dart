@@ -431,16 +431,28 @@ class _ExerciseCard extends ConsumerWidget {
                             style: set.isCompleted ? strong : muted,
                           ),
                         ),
-                        if (set.effortTenths case final tenths?)
-                          Text(
-                            '${set.effortScale == EffortScale.rpe ? l10n.effortRpe : l10n.effortRir} '
-                            '${formatDecimal(tenths / 10, locale)}',
-                            style: muted,
-                          ),
-                        if (!set.isCompleted)
-                          Padding(
-                            padding: const EdgeInsets.only(left: AppSpacing.s),
-                            child: Text(l10n.sessionSetOpenTag, style: muted),
+                        // Wysiłek i „niezatwierdzona” ustępują miejsca
+                        // wartościom przy dużej czcionce.
+                        if ([
+                              if (set.effortTenths case final tenths?)
+                                '${set.effortScale == EffortScale.rpe ? l10n.effortRpe : l10n.effortRir} '
+                                    '${formatDecimal(tenths / 10, locale)}',
+                              if (!set.isCompleted) l10n.sessionSetOpenTag,
+                            ].join(' · ')
+                            case final tags when tags.isNotEmpty)
+                          Flexible(
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                left: AppSpacing.s,
+                              ),
+                              child: Text(
+                                tags,
+                                style: muted,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.end,
+                              ),
+                            ),
                           ),
                         if (editing)
                           const Padding(

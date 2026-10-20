@@ -1,6 +1,6 @@
 # Środowisko i komendy
 
-Pełna instrukcja budowania i wydania powstanie w Etapie 7. Ten dokument opisuje środowisko używane od Etapu 1.
+Środowisko, budowanie i testy. Podpisywanie wydań i publikacja: [publishing.md](publishing.md).
 
 ## Wersje
 
@@ -52,7 +52,15 @@ D:/Dev/tools/android-sdk/platform-tools/adb.exe -d install -r --user 0 build/app
 bash tool/check.sh
 ```
 
-Pełna weryfikacja etapu: zależności, generowanie kodu (Drift, freezed), lokalizacja, format, analiza, testy i build release APK. `--skip-build` pomija build, `--bundle` dodaje AAB.
+Pełna weryfikacja: zależności, generowanie kodu (Drift, freezed), lokalizacja, format, analiza, testy oraz build release APK i AAB. `--skip-build` pomija buildy.
+
+Test na urządzeniu (biblioteka z zasobów aplikacji, natywny SQLite Androida, pełny przebieg treningu, baza w pamięci).
+
+**Uwaga:** `flutter test integration_test` po teście **odinstalowuje aplikację razem z danymi**. Uruchamiaj go tylko na emulatorze albo telefonie bez prawdziwych treningów, a wcześniej zapisz kopię JSON.
+
+```bash
+flutter test integration_test -d emulator-5554
+```
 
 Kod generowany (`*.g.dart`, `*.freezed.dart`, `lib/core/l10n/generated/`) nie jest w repozytorium. Po świeżym checkoucie uruchom `tool/check.sh` albo `dart run build_runner build` i `flutter gen-l10n`.
 
