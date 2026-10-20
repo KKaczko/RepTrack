@@ -37,9 +37,10 @@ void main() {
           await _json(request, {'version': '0.40.6'});
         case '/api/tags':
           await _json(request, {
+            // Ollama nie sortuje po rozmiarze.
             'models': [
-              {'name': 'qwen3.5:4b'},
-              {'name': 'qwen3.8:27b'},
+              {'name': 'qwen3.8:27b', 'size': 17000000000},
+              {'name': 'qwen3.5:4b', 'size': 3400000000},
             ],
           });
       }

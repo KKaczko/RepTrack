@@ -1082,7 +1082,7 @@
   "@assistantPromptMonth": {"description": "Gotowe pytanie"},
   "assistantPromptMuscles": "Które partie mięśniowe zaniedbuję?",
   "@assistantPromptMuscles": {"description": "Gotowe pytanie"},
-  "assistantPromptStrength": "Jak rośnie moja siła w głównych ćwiczeniach?",
+  "assistantPromptStrength": "Jak rośnie moja siła?",
   "@assistantPromptStrength": {"description": "Gotowe pytanie"},
   "assistantPromptNext": "Zaproponuj następny trening",
   "@assistantPromptNext": {"description": "Gotowe pytanie: propozycja treningu"},

@@ -61,7 +61,7 @@ Uri? normalizeServerUrl(String input) {
 }
 
 /// Model do użycia: zapisany w ustawieniach, jeśli serwer go ma, a inaczej
-/// pierwszy z listy. Null, gdy serwer nie ma żadnego modelu.
+/// pierwszy z listy (najmniejszy). Null, gdy serwer nie ma żadnego modelu.
 String? pickModel(List<String> available, String? configured) {
   if (configured != null && available.contains(configured)) return configured;
   return available.isEmpty ? null : available.first;

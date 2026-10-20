@@ -24,6 +24,7 @@ Poza shellem (pełny ekran):
   /sessions/:id/compare       porównanie z poprzednim wykonaniem każdego ćwiczenia
   /settings → /settings/backup (backup, przywracanie, CSV, MD) · /settings/licenses
   /glossary                   słowniczek pojęć (z ustawień, z zakładki Progres i z arkusza ⓘ)
+  /assistant                  asystent AI (Start, Progres); ?session=<id> komentarz, ?template=<id> propozycja
   /pick-exercises             wspólny wybór ćwiczeń (szablony, trening, filtr eksportu); zwraca listę id
                               ?single=true: jedno ćwiczenie jednym tapnięciem (zamiana w treningu)
 ```
@@ -117,4 +118,17 @@ Przy pierwszym w ogóle treningu dochodzą jednorazowe okna zgód: systemowa zgo
   - „Mięśnie główne” i na końcu wiersza „Obciążenie” na ekranie ćwiczenia.
 - Ikonka ma pełny cel dotyku 48 dp i podpowiedź „Co to jest: <pojęcie>?”, którą czyta czytnik ekranu.
 - Ikonki nie ma na ekranie aktywnego treningu: tam liczy się miejsce, a RIR/RPE opisuje ustawienie skali wysiłku.
+
+## Asystent AI (Ollama, ADR 0014)
+
+- Ekran `/assistant` to czat. Odpowiedź pojawia się na bieżąco; przycisk wysyłania zamienia się wtedy w „Zatrzymaj”. Zanim przyjdzie pierwsze słowo, widać „Asystent analizuje dane…”, bo na słabym komputerze model może długo czytać dane.
+- Pusta rozmowa pokazuje gotowe pytania: miesiąc, zaniedbywane partie, siła, „Zaproponuj następny trening” (wybór szablonu). Bez wybranego modelu asystent bierze najmniejszy z serwera, bo odpowiada najszybciej.
+- Wejścia:
+  - ikona ✨ na pasku Startu;
+  - „Zapytaj asystenta AI” na końcu Progresu;
+  - „Podsumuj z AI” w menu ⋮ zakończonego treningu (od razu wysyła prośbę o komentarz);
+  - „Propozycja AI” w menu szablonu.
+- Bez adresu serwera ekran zachęca do konfiguracji i prowadzi do ustawień. Błąd połączenia jest pod ostatnim pytaniem z „Spróbuj ponownie”.
+- Ustawienia → Asystent AI: serwer (adres z walidacją, „Wyłącz”), model (lista z serwera), „Sprawdź połączenie”, „Jak podłączyć komputer?”.
+- Pod czatem stała notka „AI może się mylić. Odpowiedzi nie są poradą medyczną.”. Odpowiedź da się zaznaczyć i skopiować. Rozmowa znika po wyjściu z ekranu.
 

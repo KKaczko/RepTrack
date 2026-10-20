@@ -6,7 +6,7 @@ abstract interface class AssistantClient {
   /// Wersja serwera; test połączenia.
   Future<String> version(Uri server);
 
-  /// Modele dostępne na serwerze.
+  /// Modele dostępne na serwerze, od najmniejszego (najszybszego).
   Future<List<String>> models(Uri server);
 
   /// Odpowiedź modelu strumieniowana fragmentami. Anulowanie subskrypcji

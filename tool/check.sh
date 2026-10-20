@@ -32,8 +32,10 @@ flutter gen-l10n
 
 step "Formatowanie"
 # Kod generowany jest w .gitignore, więc git ls-files go pomija.
-mapfile -t dart_files < <(git ls-files --cached --others --exclude-standard -- '*.dart')
-dart format --output=none --set-exit-if-changed "${dart_files[@]}"
+# Paczkami: na Windows dart.bat przechodzi przez cmd z limitem ~8 tys. znaków
+# wiersza poleceń. xargs kończy się błędem, gdy zawiedzie którakolwiek paczka.
+git ls-files -z --cached --others --exclude-standard -- '*.dart' |
+  xargs -0 -n 80 dart format --output=none --set-exit-if-changed
 
 step "Analiza statyczna"
 flutter analyze --fatal-infos --fatal-warnings

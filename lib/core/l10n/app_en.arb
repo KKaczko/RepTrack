@@ -550,7 +550,7 @@
   "assistantNoData": "You have no finished workouts yet, so there is nothing to analyse.",
   "assistantPromptMonth": "How am I doing this month?",
   "assistantPromptMuscles": "Which muscle groups am I neglecting?",
-  "assistantPromptStrength": "How is my strength developing in the main lifts?",
+  "assistantPromptStrength": "How is my strength developing?",
   "assistantPromptNext": "Suggest my next workout",
   "assistantPickTemplate": "Choose a template",
   "assistantNoTemplates": "You have no templates. Create one to get a workout suggestion.",

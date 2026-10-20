@@ -2,7 +2,11 @@
 
 Status: projekt, **nie do implementacji w MVP** (spec. 10). Ten dokument opisuje docelową ścieżkę i sprawdza, że model danych z MVP jej nie blokuje.
 
-Docelowo: aplikacja → synchronizacja → backend z PostgreSQL → autoryzowany zdalny serwer MCP → ChatGPT albo inny klient MCP. Do tego czasu pomostem jest eksport Markdown ([backup-format.md](../backup-format.md#eksport-markdown)).
+Docelowo: aplikacja → synchronizacja → backend z PostgreSQL → autoryzowany zdalny serwer MCP → ChatGPT albo inny klient MCP. Do tego czasu są dwa pomosty:
+- eksport Markdown ([backup-format.md](../backup-format.md#eksport-markdown));
+- darmowy asystent AI z Ollamą na komputerze właściciela, działający bez backendu ([ADR 0014](../decisions/0014-asystent-ai-ollama.md)).
+
+ChatGPT wymaga do własnych serwerów MCP planu Pro albo Business (pomoc OpenAI, sprawdzone 2026-10-20).
 
 ## Założenia do weryfikacji w chwili realizacji
 

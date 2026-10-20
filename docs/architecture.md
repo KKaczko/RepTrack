@@ -50,6 +50,7 @@ lib/
     backup/      domain (format, migracje formatu, CSV, MD) | data | presentation
     settings/    domain | data | presentation
     home/        presentation
+    assistant/   domain (kontekst z danych) | data (klient Ollamy) | presentation (czat), ADR 0014
 assets/          seed/exercises.json, fonts/ (Inter, OFL)
 drift_schemas/   zrzuty schematu per wersja (commitowane)
 test/            lustro lib/ + test/architecture/ + test/migrations/

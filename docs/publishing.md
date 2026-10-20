@@ -47,20 +47,30 @@ Wersja aplikacji: `version` w `pubspec.yaml` (`1.0.0+1` = versionName + versionC
 
 ### Data safety (formularz w Play Console)
 
-- Aplikacja **nie zbiera i nie udostępnia** danych w rozumieniu Google Play. Wszystko zostaje na urządzeniu; nie ma kont, serwera, analityki ani reklam.
+- Aplikacja **nie zbiera i nie udostępnia** danych w rozumieniu Google Play. Wszystko zostaje na urządzeniu; nie ma kont, serwera dewelopera, analityki ani reklam.
+- **Asystent AI** ([ADR 0014](decisions/0014-asystent-ai-ollama.md)), domyślnie wyłączony:
+  - po akcji użytkownika wysyła dane treningowe (także notatki i samopoczucie) na serwer Ollama pod adresem, który użytkownik sam wpisał, zwykle jego własny komputer w sieci domowej;
+  - deweloper ich nie dostaje;
+  - przed wypełnieniem formularza sprawdź, jak Google traktuje przesyłanie danych na serwer wskazany przez użytkownika (np. czy to „udostępnianie”). Najbezpieczniej opisać je w formularzu i w polityce.
 - Dane trafiają poza aplikację tylko na polecenie użytkownika (zapis pliku, udostępnienie, schowek) albo przez systemową kopię Androida (Auto Backup do konta Google użytkownika). Według zasad Google Play to nie jest „zbieranie” przez dewelopera; przed wypełnieniem sprawdź aktualne objaśnienia formularza.
 - Notatki i samopoczucie mogą być danymi o zdrowiu. Przy przyszłej synchronizacji z serwerem formularz i polityka prywatności muszą to uwzględnić ([future/sync-and-mcp.md](future/sync-and-mcp.md)).
 - Uprawnienia:
   - powiadomienia: timer przerwy;
   - dokładne alarmy (za zgodą): koniec przerwy na czas;
   - wibracja;
-  - uruchomienie po restarcie: przywrócenie zaplanowanego powiadomienia.
-  
-  Aplikacja nie prosi o dostęp do pamięci, lokalizacji, kontaktów ani internetu.
+  - uruchomienie po restarcie: przywrócenie zaplanowanego powiadomienia;
+  - internet: tylko asystent AI i tylko z adresem z ustawień.
+
+  Aplikacja nie prosi o dostęp do pamięci, lokalizacji ani kontaktów.
 
 ### Polityka prywatności (szkic)
 
-> RepTrack przechowuje wszystkie dane (ćwiczenia, szablony, treningi, ustawienia) wyłącznie na Twoim urządzeniu. Aplikacja nie ma kont, nie łączy się z internetem i nie wysyła danych do autora ani nikomu innemu. Dane opuszczają urządzenie tylko wtedy, gdy sam je wyeksportujesz albo udostępnisz, oraz w ramach systemowej kopii zapasowej Androida na Twoim koncie Google, którą możesz wyłączyć w ustawieniach telefonu. Odinstalowanie aplikacji usuwa dane z urządzenia.
+> RepTrack przechowuje wszystkie dane (ćwiczenia, szablony, treningi, ustawienia) wyłącznie na Twoim urządzeniu. Aplikacja nie ma kont i nie wysyła danych do autora ani nikomu innemu. Dane opuszczają urządzenie tylko wtedy, gdy:
+> - sam je wyeksportujesz albo udostępnisz;
+> - korzystasz z opcjonalnego asystenta AI;
+> - działa systemowa kopia zapasowa Androida na Twoim koncie Google (możesz ją wyłączyć w ustawieniach telefonu).
+>
+> Asystent AI jest domyślnie wyłączony. Gdy wpiszesz adres swojego serwera Ollama, aplikacja przy każdym pytaniu wysyła na ten adres, i tylko na niego, potrzebne dane treningowe, w tym notatki i samopoczucie z treningów. Rozmowy z asystentem nie są zapisywane w aplikacji. Odinstalowanie aplikacji usuwa dane z urządzenia.
 
 ## Lista kontroli ręcznych (spec. 9)
 
@@ -77,6 +87,7 @@ Do przejścia na telefonie przed wydaniem:
 - [ ] Porównuję bieżący trening z poprzednim.
 - [ ] Eksportuję backup, czyszczę dane aplikacji i przywracam wszystko z pliku.
 - [ ] Android Auto Backup: odinstalowanie i ponowna instalacja odtwarzają dane ([development.md](development.md#android-auto-backup)).
+- [ ] Asystent AI z Ollamą na komputerze w tej samej sieci Wi‑Fi: test połączenia, pytanie, „Podsumuj z AI”, „Propozycja AI” ([ADR 0014](decisions/0014-asystent-ai-ollama.md)).
 
 ## Źródła (sprawdzone 2026-10-20)
 

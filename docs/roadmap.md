@@ -231,3 +231,26 @@ Testy integracyjne na urządzeniu (`integration_test`) dochodzą w Etapie 7. `ch
 - **Prośba właściciela:** sekcja z podstawowymi informacjami (co to jest 1RM itp.) i okienka z ikonką ⓘ przy pojęciach.
 - **Zakres:** 16 pojęć w czterech grupach, ekran słowniczka i ikonki ⓘ w ustawieniach, Progresie, rekordach i na ekranie ćwiczenia ([ux.md](ux.md#słowniczek-i-ikonki-ⓘ)).
 - **Treść:** opisy wyjaśniają, jak liczy RepTrack (np. wzór Epleya, wagi 1 i 0,5 serii na mięsień). Jedyna wskazówka treningowa, zakres 10–20 serii tygodniowo na partię, jest podana jako orientacja, nie reguła.
+
+### Po wydaniu: asystent AI z Ollamą (2026-10-20)
+
+- **Decyzja właściciela:** zamiast płatnego ChatGPT (własne MCP wymaga planu Pro/Business) darmowa Ollama na komputerze, czat w aplikacji na telefonie ([ADR 0014](decisions/0014-asystent-ai-ollama.md)). Zakres v1: czat o danych, komentarz do treningu, propozycja następnego treningu; AI tylko czyta.
+- **Kontekst, nie narzędzia:** aplikacja liczy liczby własną domeną i wysyła Markdown; małe modele (4B) radzą sobie z tym pewniej niż z wywoływaniem narzędzi.
+- **Bez nowych zależności:** HTTP przez `dart:io`, prosty Markdown odpowiedzi.
+- **Przy okazji:**
+  - „Treningi z ćwiczeniem” liczą tylko wykonania z serią roboczą;
+  - podpowiedzi pól w jasnym motywie mają kontrast 4,75:1 zamiast 4,28:1 (test dostępności z polem czatu).
+- **Kroki po stronie PC** (zmiany ustawień systemu) robi właściciel: `OLLAMA_HOST=0.0.0.0`, reguła zapory dla TCP 11434 w sieci prywatnej, adres IPv4 w aplikacji. Instrukcja jest też w aplikacji (Ustawienia → Asystent AI → „Jak podłączyć komputer?”).
+- **Sprawdzone na emulatorze z prawdziwą Ollamą** (`http://10.0.2.2:11434`, `qwen3.5:4b`, 2026-10-20):
+  - test połączenia;
+  - wybór modelu;
+  - czat z danymi aplikacji: odpowiedź po polsku z listą i pogrubieniem;
+  - zimny start modelu ok. 50 s, kolejne pytania kilka sekund.
+
+  Pomiar przy grze obciążającej GPU (model szedł głównie na CPU), więc bez gry będzie szybciej.
+- **Poprawione po teście:**
+  - domyślny model to najmniejszy na serwerze (wcześniej pierwszy z listy Ollamy, czyli 27b);
+  - krótsza podpowiedź „Jak rośnie moja siła?” (ucinała się przy 360 dp);
+  - `tool/check.sh` formatuje pliki paczkami, bo lista plików przekroczyła limit wiersza poleceń `cmd`.
+- **Nie odtworzone:** pierwsze pytanie przy ładowaniu modelu, gdy GPU było zajęte przez grę (Ollama zgłosiła timeout wykrywania GPU), skończyło się „Brak połączenia” mimo odpowiedzi 200 w logu Ollamy. „Spróbuj ponownie” i kolejne zimne starty działały. Do obserwacji na telefonie.
+

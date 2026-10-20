@@ -39,10 +39,12 @@ final class OllamaClient implements AssistantClient {
     if (models is! List) {
       throw const AssistantException(AssistantFailureKind.server);
     }
-    return [
+    // Od najmniejszego: domyślny (pierwszy) model odpowiada najszybciej.
+    final named = [
       for (final m in models)
-        if (m is Map && m['name'] is String) m['name'] as String,
-    ];
+        if (m case {'name': final String name}) (name: name, size: m['size']),
+    ]..sort((a, b) => _size(a.size).compareTo(_size(b.size)));
+    return [for (final m in named) m.name];
   }
 
   @override
@@ -130,6 +132,8 @@ final class OllamaClient implements AssistantClient {
     );
     return controller.stream;
   }
+
+  static num _size(Object? size) => size is num ? size : double.infinity;
 
   HttpClient _client() => HttpClient()..connectionTimeout = connectTimeout;
 
