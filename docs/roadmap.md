@@ -254,3 +254,22 @@ Testy integracyjne na urządzeniu (`integration_test`) dochodzą w Etapie 7. `ch
   - `tool/check.sh` formatuje pliki paczkami, bo lista plików przekroczyła limit wiersza poleceń `cmd`.
 - **Nie odtworzone:** pierwsze pytanie przy ładowaniu modelu, gdy GPU było zajęte przez grę (Ollama zgłosiła timeout wykrywania GPU), skończyło się „Brak połączenia” mimo odpowiedzi 200 w logu Ollamy. „Spróbuj ponownie” i kolejne zimne starty działały. Do obserwacji na telefonie.
 
+### Po wydaniu: plan treningów i kalendarz (2026-10-20/21)
+
+- **Decyzje właściciela:** zakładka „Plan”, plan tygodniowy i pojedyncze daty, dodatki (Start, realizacja, przypomnienia, asystent zna plan) ([ADR 0015](decisions/0015-plan-treningow.md)).
+- **⚠ Baza v2 i backup v2** zgodnie z planem; migracje z testami (baza na danych, backup z pliku v1). Na emulatorze aktualizacja z danymi v1 przeszła bez strat.
+- **Wychwycone w testach i na emulatorze, poprawione:**
+  - snackbar „Przesunięto…” zasłaniał przycisk pod kartą dnia; „Cofnij” z `persist: false`, bo z akcją snackbar zostawał na stałe;
+  - przy czcionce 2× nagłówek karty realizacji przepełniał wiersz (seria przeniesiona pod pasek);
+  - godzina zrobionego treningu w karcie dnia była w strefie telefonu, a nie w strefie zapisanej przy treningu (jak w historii);
+  - skróty dni tygodnia z `intl` („Po”, „Ni”) zamienione na „Pn … Nd”;
+  - przybliżone alarmy przypomnień miały na emulatorze okno do godziny; przy zgodzie na dokładne alarmy (z timera przerwy) przypomnienia są dokładne.
+- **Sprawdzone na emulatorze:**
+  - aktualizacja z danymi v1 (migracja bez strat);
+  - plan tygodnia;
+  - kalendarz, karta dnia i widok tygodnia;
+  - Start z planem;
+  - przypomnienia: w `dumpsys alarm` 6 alarmów o ustawionej godzinie w dni z planem na 14 dni.
+
+  Samo wyświetlenie powiadomienia nie było sprawdzone, bo okno przybliżonego alarmu jest za długie.
+- **`check.sh`:** analiza z `--fatal-infos` łapie też kolejność importów; raz przeszło to do commita przez `tail` w łańcuchu poleceń (poprawione osobnym commitem).

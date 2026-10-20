@@ -18,6 +18,7 @@ Decyzje łatwo odwracalne agent podejmuje sam i zapisuje tutaj. Decyzje trudno o
 | [0012](0012-wyglad.md) | Wygląd | D22 |
 | [0013](0013-kody-enumow.md) | Kody enumów w snake_case ⚠ | po Etapie 1 |
 | [0014](0014-asystent-ai-ollama.md) | Asystent AI przez lokalną Ollamę | po wydaniu 1.0.0 |
+| [0015](0015-plan-treningow.md) | Plan treningów i kalendarz ⚠ | po wydaniu 1.0.0 |
 
 ## Szablon
 

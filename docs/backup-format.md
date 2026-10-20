@@ -1,6 +1,6 @@
 # Format kopii zapasowej i eksportu
 
-Status: wersja formatu 1, zaimplementowana w Etapie 6. Decyzja: [ADR 0008](decisions/0008-backup-i-eksport.md). Pełny opis pól: [backup-format.schema.json](backup-format.schema.json) (JSON Schema 2020-12, generowana z `lib/features/backup/domain/backup_format.dart`).
+Status: wersja formatu 2 (plan treningów, [ADR 0015](decisions/0015-plan-treningow.md)); wersja 1 z Etapu 6 jest migrowana przy wczytaniu. Decyzja: [ADR 0008](decisions/0008-backup-i-eksport.md). Pełny opis pól: [backup-format.schema.json](backup-format.schema.json) (JSON Schema 2020-12, generowana z `lib/features/backup/domain/backup_format.dart`).
 
 ## Kopia zapasowa (JSON)
 
@@ -9,7 +9,7 @@ Jeden plik UTF-8 z obiektem JSON. Kopia obejmuje wszystko: także zarchiwizowane
 ```json
 {
   "format": "reptrack-backup",
-  "formatVersion": 1,
+  "formatVersion": 2,
   "appVersion": "1.0.0+1",
   "exportedAt": "2026-10-19T18:05:00.000Z",
   "units": { "weight": "g", "distance": "m", "duration": "s", "effort": "tenths", "time": "ISO 8601 UTC" },
@@ -20,6 +20,9 @@ Jeden plik UTF-8 z obiektem JSON. Kopia obejmuje wszystko: także zarchiwizowane
   "workoutSessions": [ … ],
   "sessionExercises": [ … ],
   "sessionSets": [ … ],
+  "weeklyPlans": [ … ],
+  "weeklyPlanDays": [ … ],
+  "plannedDays": [ … ],
   "settings": [ { "key": "weight_unit", "value": "kg", "updatedAt": "…" } ]
 }
 ```
@@ -44,7 +47,7 @@ Jeden plik UTF-8 z obiektem JSON. Kopia obejmuje wszystko: także zarchiwizowane
    - co najmniej jedno pole pomiaru w każdym ćwiczeniu;
    - najwyżej jeden aktywny trening.
 2. Plik z wyższą `formatVersion` niż obsługiwana jest odrzucany z komunikatem o aktualizacji aplikacji.
-3. Starsze wersje przechodzą przez migracje formatu (`backupMigrations`, każda z wersji `n` do `n + 1`). Wersja 1 jest pierwsza, więc lista migracji jest pusta. Sam mechanizm testuje migracja przykładowa w testach.
+3. Starsze wersje przechodzą przez migracje formatu (`backupMigrations`, każda z wersji `n` do `n + 1`). Migracja 1 → 2 dodaje puste tablice `weeklyPlans`, `weeklyPlanDays` i `plannedDays` (kopia sprzed planu treningów).
 4. Przed zastąpieniem aplikacja zapisuje kopię bieżących danych w pamięci telefonu (`files/kopie`, 5 najnowszych, poza Android Auto Backup).
 5. Zastąpienie odbywa się w jednej transakcji: usunięcie wszystkich wierszy i wstawienie danych z pliku. Przy jakimkolwiek błędzie baza zostaje bez zmian.
 

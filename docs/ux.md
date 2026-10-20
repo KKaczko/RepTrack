@@ -5,9 +5,10 @@ Status: plan z Etapu 0 (zatwierdzony 2026-10-19), aktywny trening zaimplementowa
 ## Mapa ekranów
 
 ```
-Shell z dolną nawigacją (StatefulShellRoute, 4 zakładki):
+Shell z dolną nawigacją (StatefulShellRoute, 5 zakładek):
 ├─ Start /                    baner wznowienia · „Rozpocznij: <ostatni szablon>” · ostatnie szablony
 │                             · pusty trening · ostatnia sesja · treningi w tym tygodniu · ⚙ → Ustawienia
+├─ Plan /plan                 realizacja tygodnia · Miesiąc | Tydzień · karta dnia → /plan/week edytor planu
 ├─ Szablony /templates        lista (przełącznik archiwum) → /templates/new, /templates/:id edytor
 │                             → arkusz konfiguracji serii ćwiczenia (nadpisania, „przywróć dziedziczenie”)
 ├─ Historia /history          [Sesje | Progres]
@@ -132,3 +133,30 @@ Przy pierwszym w ogóle treningu dochodzą jednorazowe okna zgód: systemowa zgo
 - Ustawienia → Asystent AI: serwer (adres z walidacją, „Wyłącz”), model (lista z serwera), „Sprawdź połączenie”, „Jak podłączyć komputer?”.
 - Pod czatem stała notka „AI może się mylić. Odpowiedzi nie są poradą medyczną.”. Odpowiedź da się zaznaczyć i skopiować. Rozmowa znika po wyjściu z ekranu.
 
+## Plan treningów (ADR 0015)
+
+- **Zakładka „Plan”** (druga w nawigacji):
+  - u góry karta „Ten tydzień”: „2 z 3”, pasek, „1 trening przed Tobą” albo „Plan tygodnia wykonany”, seria tygodni;
+  - bez planu zamiast niej zachęta „Zaplanuj swój tydzień” z przyciskiem do edytora;
+  - w pasku akcje „Dziś” i „Edytuj plan tygodnia”.
+- **Miesiąc:**
+  - siatka od poniedziałku;
+  - znaczniki ● zrobiony, ○ zaplanowany, ✕ pominięty, z legendą pod siatką;
+  - dziś w obwódce, wybrany dzień z tłem;
+  - strzałki i gest w bok zmieniają miesiąc;
+  - czytnik ekranu dostaje opis dnia („Środa, 21 października: Push A: zaplanowany”).
+- **Karta dnia pod siatką** (dotknięcie dnia ją zmienia, bez przechodzenia dalej):
+  - zaplanowany trening: nazwa, stan, „2 ćwiczenia · 6 serii · ok. 15 min”, pierwsze ćwiczenia, „Rozpocznij” na dziś, menu ⋮ (przesuń na jutro / na dzień, zamień szablon, pomiń); dotknięcie otwiera podgląd szablonu z planem serii;
+  - zrobiony trening: godzina i podsumowanie; dotknięcie otwiera szczegóły;
+  - pusty dzień: „Dzień wolny”;
+  - pod spodem „Zaplanuj trening” / „Dodaj trening”, a przy zmienionym dniu „Przywróć plan tygodnia”.
+  - „Pomiń” i „przesuń” pokazują snackbar z „Cofnij”, który znika sam po 6 s (z akcją Flutter domyślnie by go zostawił).
+- **Tydzień:** siedem dni pod sobą z tymi samymi kartami; strzałki zmieniają tydzień.
+- **Edytor planu tygodnia** (`/plan/week`):
+  - siedem dni z szablonami, ✕ (pełny cel dotyku) i „Dodaj trening”;
+  - „Zapisz” obowiązuje od dziś; wyjście ze zmianami pyta o odrzucenie;
+  - na dole „Przypomnienie o treningu” (zgoda na powiadomienia, godzina), zapisywane od razu.
+- **Start:**
+  - gdy coś zostało na dziś, główny przycisk to „Dziś wg planu: Push A”;
+  - po zrobionym planie albo w dzień wolny: „Plan na dziś wykonany” / „Dziś dzień wolny”, „Następny: jutro · Pull B” i „Zobacz plan”;
+  - „W tym tygodniu” pokazuje „1 z 3 treningów z planu” z paskiem.

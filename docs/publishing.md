@@ -55,10 +55,10 @@ Wersja aplikacji: `version` w `pubspec.yaml` (`1.0.0+1` = versionName + versionC
 - Dane trafiają poza aplikację tylko na polecenie użytkownika (zapis pliku, udostępnienie, schowek) albo przez systemową kopię Androida (Auto Backup do konta Google użytkownika). Według zasad Google Play to nie jest „zbieranie” przez dewelopera; przed wypełnieniem sprawdź aktualne objaśnienia formularza.
 - Notatki i samopoczucie mogą być danymi o zdrowiu. Przy przyszłej synchronizacji z serwerem formularz i polityka prywatności muszą to uwzględnić ([future/sync-and-mcp.md](future/sync-and-mcp.md)).
 - Uprawnienia:
-  - powiadomienia: timer przerwy;
+  - powiadomienia: timer przerwy i przypomnienia o treningach z planu (domyślnie wyłączone);
   - dokładne alarmy (za zgodą): koniec przerwy na czas;
   - wibracja;
-  - uruchomienie po restarcie: przywrócenie zaplanowanego powiadomienia;
+  - uruchomienie po restarcie: przywrócenie zaplanowanych powiadomień (przerwa, przypomnienia);
   - internet: tylko asystent AI i tylko z adresem z ustawień.
 
   Aplikacja nie prosi o dostęp do pamięci, lokalizacji ani kontaktów.
@@ -87,6 +87,7 @@ Do przejścia na telefonie przed wydaniem:
 - [ ] Porównuję bieżący trening z poprzednim.
 - [ ] Eksportuję backup, czyszczę dane aplikacji i przywracam wszystko z pliku.
 - [ ] Android Auto Backup: odinstalowanie i ponowna instalacja odtwarzają dane ([development.md](development.md#android-auto-backup)).
+- [ ] Plan treningów: plan tygodnia, przesunięcie dnia, „Rozpocznij” z karty dnia i ze Startu, przypomnienie o ustawionej godzinie ([ADR 0015](decisions/0015-plan-treningow.md)).
 - [ ] Asystent AI z Ollamą na komputerze w tej samej sieci Wi‑Fi: test połączenia, pytanie, „Podsumuj z AI”, „Propozycja AI” ([ADR 0014](decisions/0014-asystent-ai-ollama.md)).
 
 ## Źródła (sprawdzone 2026-10-20)

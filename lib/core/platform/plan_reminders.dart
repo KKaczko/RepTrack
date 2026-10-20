@@ -9,8 +9,10 @@ import '../l10n/generated/app_localizations.dart';
 /// Przypomnienie o treningu z planu (ADR 0015): chwila i treningi.
 typedef PlanReminder = ({DateTime at, List<String> workouts});
 
-/// Przypomnienia o treningach z planu. Przybliżone alarmy systemu
-/// (bez prośby o dokładne), na najbliższe dni.
+/// Przypomnienia o treningach z planu na najbliższe dni. Dokładne alarmy,
+/// gdy użytkownik już na nie zezwolił (np. dla timera przerwy); inaczej
+/// przybliżone, które system może opóźnić nawet o godzinę. Aplikacja nie
+/// prosi o dokładne alarmy dla przypomnień.
 abstract interface class PlanReminders {
   /// Zastępuje wszystkie przypomnienia podanymi (najwyżej [maxReminders]).
   Future<void> schedule(List<PlanReminder> reminders);
@@ -71,13 +73,16 @@ final class LocalPlanReminders implements PlanReminders {
     for (var i = 0; i < maxReminders; i++) {
       await _plugin.cancel(id: _firstId + i);
     }
+    final exact = await _android?.canScheduleExactNotifications() ?? false;
     for (final (i, reminder) in reminders.take(maxReminders).indexed) {
       await _plugin.zonedSchedule(
         id: _firstId + i,
         title: l10n.notifPlanTitle,
         body: l10n.notifPlanBody(reminder.workouts.join(', ')),
         scheduledDate: tz.TZDateTime.from(reminder.at.toUtc(), tz.UTC),
-        androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+        androidScheduleMode: exact
+            ? AndroidScheduleMode.exactAllowWhileIdle
+            : AndroidScheduleMode.inexactAllowWhileIdle,
         notificationDetails: NotificationDetails(
           android: AndroidNotificationDetails(
             _channel,

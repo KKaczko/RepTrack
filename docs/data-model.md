@@ -1,4 +1,4 @@
-# Model danych (Drift, schemat v1)
+# Model danych (Drift, schemat v2)
 
 Status: zaimplementowany w Etapie 1 jako schemat v1 (`lib/core/database/tables.dart`, zrzut `drift_schemas/app_database/drift_schema_v1.json`). Decyzje: [ADR 0003](decisions/0003-identyfikatory-i-usuwanie.md), [ADR 0004](decisions/0004-dziedziczenie-serii.md), [ADR 0005](decisions/0005-katalog-cwiczen.md).
 
@@ -32,8 +32,9 @@ Model rozdziela trzy warstwy: definicję ćwiczenia, plan (szablon) i wykonanie 
 | Side | both, left, right |
 | AppThemeMode (ustawienia) | dark, light, system |
 | WeightUnit (ustawienia) | kg, lb |
+| PlannedKind (v2) | workout, rest |
 
-Klucze `settings`: `theme_mode`, `weight_unit`, `weight_step`, `effort_scale` (`off` / `rir` / `rpe`), `default_rest_seconds`, `keep_screen_on`, `exact_alarm_prompted` (czy pokazano prośbę o dokładne alarmy), `assistant_url` i `assistant_model` (serwer Ollama i model asystenta AI, [ADR 0014](decisions/0014-asystent-ai-ollama.md); `null` wyłącza asystenta).
+Klucze `settings`: `theme_mode`, `weight_unit`, `weight_step`, `effort_scale` (`off` / `rir` / `rpe`), `default_rest_seconds`, `keep_screen_on`, `exact_alarm_prompted` (czy pokazano prośbę o dokładne alarmy), `assistant_url` i `assistant_model` (serwer Ollama i model asystenta AI, [ADR 0014](decisions/0014-asystent-ai-ollama.md); `null` wyłącza asystenta), `plan_reminders` i `plan_reminder_minutes` (przypomnienia o treningach z planu i ich godzina w minutach od północy, [ADR 0015](decisions/0015-plan-treningow.md)).
 
 ## `exercises`
 
@@ -100,6 +101,18 @@ Klucze `settings`: `theme_mode`, `weight_unit`, `weight_step`, `effort_scale` (`
 
 Pary `key TEXT PK`, `value TEXT (JSON)`, `updated_at`. Klucze: motyw, jednostka (kg/lb), krok ciężaru, skala wysiłku (off / rir / rpe), domyślna przerwa, „nie wygaszaj ekranu”, wersja seeda. Ustawienia są w bazie, więc backup obejmuje je automatycznie.
 
+## `weekly_plans` (v2)
+
+Wersje planu tygodniowego: `starts_on` i `ends_on` (daty lokalne `YYYY-MM-DD`, `ends_on` NULL = obowiązuje). Edycja działającego planu zamyka wersję na wczoraj i zaczyna nową od dziś ([ADR 0015](decisions/0015-plan-treningow.md)).
+
+## `weekly_plan_days` (v2)
+
+`plan_id → weekly_plans`, `weekday` (1 = poniedziałek … 7, CHECK), `template_id → templates`, `position` (kilka treningów w dniu).
+
+## `planned_days` (v2)
+
+Wpisy na pojedyncze daty: `date`, `kind` (`workout` | `rest`), `template_id` (NULL dla `rest`; CHECK: `workout` wymaga szablonu), `position`, `note`. Wpisy daty zastępują plan tygodniowy tego dnia.
+
 ## Relacje i indeksy
 
 ```
@@ -108,6 +121,8 @@ template_exercises 1─N template_sets
 workout_sessions N─1 templates (nullable)
 workout_sessions 1─N session_exercises N─1 exercises
 session_exercises 1─N session_sets
+weekly_plans 1─N weekly_plan_days N─1 templates
+planned_days N─1 templates (nullable)
 ```
 
 | Indeks | Cel |
@@ -118,6 +133,8 @@ session_exercises 1─N session_sets
 | `template_sets(template_exercise_id, position)` | |
 | `session_exercises(session_id, position)`, `(exercise_id)` | poprzednie wykonanie, historia ćwiczenia |
 | `session_sets(session_exercise_id, position)` | |
+| `weekly_plan_days(plan_id, weekday, position)` | dni wersji planu |
+| `planned_days(date, position)` | wpisy dnia w kalendarzu |
 
 `exercises` to mała tabela (poniżej ~1000 wierszy). Wyszukiwanie i filtry działają w pamięci na wczytanym katalogu, więc wystarczą proste indeksy.
 
@@ -136,7 +153,10 @@ session_exercises 1─N session_sets
 - **`normalizeForSearch`**: małe litery i usunięte polskie znaki, więc „lawka” znajduje „ławka”.
 - **Metryki:** e1RM, objętość, rekordy, treningi w tygodniu (tydzień od poniedziałku) ([ADR 0007](decisions/0007-metryki.md)).
 - **`templateDiff(session, template)`** dla opcji „zaktualizuj szablon na podstawie treningu”.
+- **Plan** (`lib/features/plan/domain/plan_schedule.dart`): `dayPlan`, `dayOverview` (stany), `weekAdherence`, `planStreak`, operacje na dniach i `editWeeklyPlan` (wersjonowanie).
 
 ## Migracje
+
+- **v1 → v2** (plan treningów): nowe tabele `weekly_plans`, `weekly_plan_days`, `planned_days` z indeksami; istniejące tabele bez zmian.
 
 Każda zmiana schematu to migracja Drift (`stepByStep`) z testem na zapisanych wersjach schematu (`drift_schemas/`, `drift_dev make-migrations`). Wersja schematu bazy jest niezależna od wersji formatu backupu ([ADR 0008](decisions/0008-backup-i-eksport.md)).
