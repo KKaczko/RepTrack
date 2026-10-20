@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/routes.dart';
+import '../../../core/database/database_providers.dart';
+import '../../../core/domain/local_date.dart';
 import '../../../core/domain/units.dart';
 import '../../../core/l10n/formatters.dart';
 import '../../../core/l10n/generated/app_localizations.dart';
@@ -10,11 +12,12 @@ import '../../../core/theme/app_theme.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/widgets/empty_state.dart';
 import '../../progress/domain/metrics.dart';
+import '../../progress/domain/progress_period.dart';
 import '../../settings/data/settings_providers.dart';
 import '../../workout/data/workout_providers.dart';
 import '../domain/history_queries.dart';
+import 'exercise_progress_section.dart';
 import 'history_labels.dart';
-import 'progress_tab.dart';
 
 /// Zakładki historii, rekordów i wykresów na ekranie ćwiczenia. Router
 /// przekazuje je do ekranu ćwiczenia (granice funkcji, docs/architecture.md).
@@ -195,10 +198,15 @@ class ExerciseChartsTab extends ConsumerWidget {
         message: l10n.exerciseHistoryEmpty,
       );
     }
+    final now = ref.watch(clockProvider).nowUtc().toLocal();
     return ListView(
       padding: const EdgeInsets.all(AppSpacing.gutter),
       children: [
-        ExerciseCharts(
+        ExerciseProgressSection(
+          range: periodRange(
+            ProgressPeriod.all,
+            LocalDate(now.year, now.month, now.day),
+          ),
           performances: [
             for (final p in performances)
               (date: p.session.localDate, exercise: p.exercise),

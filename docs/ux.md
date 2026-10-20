@@ -12,7 +12,8 @@ Shell z dolną nawigacją (StatefulShellRoute, 4 zakładki):
 │                             → arkusz konfiguracji serii ćwiczenia (nadpisania, „przywróć dziedziczenie”)
 ├─ Historia /history          [Sesje | Progres]
 │    Sesje → /sessions/:id szczegóły + tryb edycji → /sessions/:id/compare
-│    Progres → treningi/tydzień, wybór ćwiczenia → wykresy e1RM i objętości
+│    Progres → okres (4 tyg. · 3 mies. · rok · całość) · podsumowanie z porównaniem
+│              · treningi/tydzień · serie na partię mięśniową · wybór ćwiczenia → kafelki i wykresy
 └─ Ćwiczenia /exercises       szukaj + filtry → /exercises/:id [Info | Historia | Rekordy | Wykresy]
                               → /exercises/:id/edit, /exercises/new
 
@@ -94,3 +95,12 @@ Przy pierwszym w ogóle treningu dochodzą jednorazowe okna zgód: systemowa zgo
 - Ekran ćwiczenia ma zakładki Info, Historia, Rekordy i Wykresy. Zakładki historii dostarcza funkcja „historia”, a łączy je router (`exerciseProgressTabs()`), bo ekran ćwiczeń nie może importować ekranów innej funkcji.
 - Wykresy mają jedną serię i nie mają legendy; tytuł nad wykresem mówi, co pokazuje. Linia ma 2 dp, kropki 8 dp z obwódką w kolorze tła, a słupki najwyżej 24 dp z zaokrąglonym końcem. Kolor serii to akcent volt w ciemnym motywie i ciemniejszy akcent w jasnym (kontrast ≥ 3:1). Dotknięcie pokazuje wartość w dymku, a czytnik ekranu dostaje opis z liczbą punktów i ostatnią wartością. Tabelę wartości zastępuje zakładka Historia.
 - Start: „Rozpocznij: <ostatni szablon>” (ostatnio użyty, a gdy żadnego nie użyto, pierwszy alfabetycznie), do trzech innych szablonów, pusty trening, liczba treningów w tym tygodniu i ostatni trening.
+
+## Analiza progresu (po wydaniu 1.0.0)
+
+- Zakładka Progres zaczyna się od przełącznika okresu: 4 tygodnie, 3 miesiące, rok, całość. Okres obejmuje dziś i liczy się wstecz; wybór dotyczy całej zakładki.
+- „Podsumowanie”: cztery kafelki (treningi, serie, objętość, czas). Pod wartością jest zmiana względem poprzedniego okresu tej samej długości, ze strzałką i znakiem, więc nie zależy tylko od koloru. Liczby (treningi, serie) mają różnicę, a objętość i czas procent; bez danych w poprzednim okresie procentu nie ma. Dla całej historii zmian nie ma, bo nie ma z czym porównać.
+- „Serie na partię mięśniową”: średnia tygodniowa zatwierdzonych serii roboczych w okresie, jako poziome paski od największej. Opis nad listą mówi, jak liczymy (1 dla mięśni głównych, 0,5 dla pomocniczych). Czytnik ekranu dostaje jeden opis na wiersz.
+- „Ćwiczenie”: wybór z ćwiczeń z historii (od ostatnio wykonanego), potem kafelki (najlepszy wynik, zmiana w okresie, najlepsza seria, liczba treningów) i wykres miary. Miara zależy od ćwiczenia: szacowany 1RM dla ciężaru, najwięcej powtórzeń dla masy ciała i wspomagania, najdłuższy czas dla ćwiczeń na czas. Wykres objętości jest tylko przy 1RM.
+- Zakładka „Wykresy” ekranu ćwiczenia pokazuje tę samą sekcję dla całej historii.
+- Kafelki w rzędzie mają równą wysokość, także gdy etykieta zawija się na dwie linie albo jeden kafelek ma zmianę, a drugi nie.

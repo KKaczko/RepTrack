@@ -4,7 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart' as p;
 
 /// Granice między funkcjami (docs/architecture.md): funkcja może używać
-/// cudzej domeny i publicznych providerów (`data/*_providers.dart`), ale nie
+/// cudzej domeny, publicznych providerów (`data/*_providers.dart`)
+/// i etykiet (`presentation/*_labels.dart`), ale nie
 /// implementacji repozytoriów ani ekranów innej funkcji. Ekrany innych funkcji
 /// otwiera się przez trasy routera (`lib/app/`).
 void main() {
@@ -49,7 +50,9 @@ void main() {
         final layer = p.posix.split(target)[3];
         final allowed =
             layer == 'domain' ||
-            (layer == 'data' && target.endsWith('_providers.dart'));
+            (layer == 'data' && target.endsWith('_providers.dart')) ||
+            // Etykiety (mapowanie wartości na teksty), bez ekranów.
+            (layer == 'presentation' && target.endsWith('_labels.dart'));
         expect(allowed, isTrue, reason: '$path importuje $target');
       }
     });

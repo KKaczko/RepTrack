@@ -214,3 +214,14 @@ Testy integracyjne na urządzeniu (`integration_test`) dochodzą w Etapie 7. `ch
   - test zamknięty 12 osób przez 14 dni dla nowych kont prywatnych (z opisów zewnętrznych, do potwierdzenia).
 - **Dokumenty:** README z instrukcją budowania, [publishing.md](publishing.md) z polityką prywatności i Data safety, [future/sync-and-mcp.md](future/sync-and-mcp.md).
 - **Wydajność:** historia przeładowuje się tylko po zmianach zakończonych treningów; dalsze pomiary (np. setki treningów na telefonie) zostają na kontrolę na telefonie.
+
+### Po wydaniu: analiza progresu (2026-10-20)
+
+- **Zakres** wybrany przez właściciela: podsumowanie okresu z porównaniem, serie na partię mięśniową i lepsza karta ćwiczenia. „Rekordy w okresie” nie weszły.
+- **Zasady liczenia** w [ADR 0007](decisions/0007-metryki.md#analiza-okresu-2026-10-20-po-wydaniu-100), układ w [ux.md](ux.md#analiza-progresu-po-wydaniu-100).
+- **Granice funkcji:** prezentacja może importować etykiety innej funkcji (`presentation/*_labels.dart`), np. nazwy partii mięśniowych ([architecture.md](architecture.md)).
+- **Wychwycone na emulatorze i poprawione:**
+  - „Wszystko” łamało się w przełączniku okresu przy 360 dp, teraz jest „Całość”;
+  - kafelki w rzędzie miały różne wysokości;
+  - dwa treningi jednego dnia liczyły się jako jeden trening z ćwiczeniem.
+  - dolna nawigacja zasłaniała dół arkusza wyboru ćwiczenia (arkusz otwiera się teraz nad shellem).

@@ -12,6 +12,8 @@ const bench = Exercise(
   id: 'bench',
   name: 'Wyciskanie',
   equipment: Equipment.barbell,
+  primaryMuscles: [MuscleGroup.chest],
+  secondaryMuscles: [MuscleGroup.triceps, MuscleGroup.shoulders],
 );
 const pullUp = Exercise(
   id: 'pullup',

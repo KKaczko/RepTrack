@@ -165,21 +165,6 @@ double? bestEstimatedOneRepMax(SessionExercise exercise) => computeRecords([
 /// Punkt wykresu: dzień treningu i wartość.
 typedef ChartPoint = ({LocalDate date, double value});
 
-/// Najlepszy szacowany 1RM na dzień treningu, od najstarszego. Dni bez
-/// szacunku (np. tylko ponad 10 powtórzeń) są pomijane.
-List<ChartPoint> e1rmTrend(
-  Iterable<({LocalDate date, SessionExercise exercise})> performances,
-) {
-  final best = <LocalDate, double>{};
-  for (final p in performances) {
-    final e1rm = bestEstimatedOneRepMax(p.exercise);
-    if (e1rm == null) continue;
-    final old = best[p.date];
-    if (old == null || e1rm > old) best[p.date] = e1rm;
-  }
-  return _byDate(best);
-}
-
 /// Objętość ćwiczenia na dzień treningu (gramy, suma treningów z tego dnia),
 /// od najstarszego. Dni bez objętości (masa ciała, wspomaganie) są pomijane.
 List<ChartPoint> volumeTrend(

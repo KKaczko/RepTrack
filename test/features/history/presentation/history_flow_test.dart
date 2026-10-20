@@ -190,22 +190,74 @@ void main() {
     await closeRepTrack(tester, db);
   });
 
-  testWidgets('progres: treningi w tygodniu i wykresy ćwiczenia', (
+  testWidgets('progres: podsumowanie okresu, mięśnie i ćwiczenie', (
     tester,
   ) async {
     final db = await _launch(tester);
     await _tap(tester, navTab('Historia'));
     await _tap(tester, find.text('Progres'));
+    final progress = _scrollableIn(const PageStorageKey('progress'));
 
-    expect(find.text('Treningi w tygodniu'), findsOneWidget);
-    expect(find.byType(BarChart), findsWidgets);
-    expect(find.text('Wyciskanie'), findsOneWidget);
+    // Ostatnie 4 tygodnie: 12 i 19 października; poprzednie 4 tygodnie puste.
+    expect(find.text('Podsumowanie'), findsOneWidget);
+    expect(
+      find.bySemanticsLabel(RegExp(r'^Treningi, 2, Wzrost o \+2$')),
+      findsOneWidget,
+    );
+    expect(
+      find.text('W porównaniu z poprzednimi 4 tygodniami.'),
+      findsOneWidget,
+    );
+
+    await tester.scrollUntilVisible(
+      find.text('Klatka piersiowa'),
+      200,
+      scrollable: progress,
+    );
+    // 4 serie robocze ławki w 4 tygodnie: 1 na tydzień; triceps 0,5.
+    expect(
+      find.bySemanticsLabel('Klatka piersiowa: serie na tydzień: 1'),
+      findsOneWidget,
+    );
+    expect(
+      find.bySemanticsLabel('Triceps: serie na tydzień: 0,5'),
+      findsOneWidget,
+    );
+
     await tester.scrollUntilVisible(
       find.byType(LineChart),
       200,
-      scrollable: _scrollableIn(const PageStorageKey('progress')),
+      scrollable: progress,
     );
+    expect(find.text('Wyciskanie'), findsOneWidget);
     expect(find.byType(LineChart), findsOneWidget);
+    // 80 kg × 10 → 85 kg × 8: szacowany 1RM 106,7 → 107,7 kg.
+    expect(
+      find.bySemanticsLabel(RegExp(r'^Zmiana w okresie, \+0,9%')),
+      findsOneWidget,
+    );
+    expect(
+      find.bySemanticsLabel(RegExp(r'^Najlepsza seria, 85 kg × 8')),
+      findsOneWidget,
+    );
+
+    // Cała historia: bez porównania z poprzednim okresem.
+    await tester.scrollUntilVisible(
+      find.text('Całość'),
+      -300,
+      scrollable: progress,
+    );
+    await _tap(tester, find.text('Całość'));
+    expect(find.text('W porównaniu z poprzednimi 4 tygodniami.'), findsNothing);
+
+    // Wybór ćwiczenia nad shellem: dolna nawigacja nie zasłania listy.
+    final picker = find.byIcon(Icons.fitness_center_rounded);
+    await tester.scrollUntilVisible(picker, 200, scrollable: progress);
+    await _tap(tester, picker);
+    expect(find.text('Wybierz ćwiczenie'), findsOneWidget);
+    expect(find.byType(NavigationBar).hitTestable(), findsNothing);
+    await _tap(tester, find.text('Wyciskanie').last);
+    expect(find.text('Wybierz ćwiczenie'), findsNothing);
 
     await closeRepTrack(tester, db);
   });

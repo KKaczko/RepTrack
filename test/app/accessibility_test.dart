@@ -12,8 +12,8 @@ import '../support/test_database.dart';
 import '../support/workout_fixtures.dart';
 
 /// Przegląd dostępności (Etap 7): układ przy 360 dp i czcionce 2×, cele
-/// dotyku, etykiety i kontrast na ekranach treningu, historii, ustawień
-/// i kopii, w ciemnym i jasnym motywie.
+/// dotyku, etykiety i kontrast na ekranach treningu, historii, progresu,
+/// ustawień i kopii, w ciemnym i jasnym motywie.
 
 /// Aplikacja z szablonem i zakończonym treningiem.
 Future<AppDatabase> _launch(
@@ -53,6 +53,14 @@ Future<void> _tap(WidgetTester tester, Finder finder) async {
   await tester.pumpAndSettle();
 }
 
+/// Lista zakładki Progres (zakładki historii mają kilka list naraz).
+final _progressList = find
+    .descendant(
+      of: find.byKey(const PageStorageKey('progress')),
+      matching: find.byType(Scrollable),
+    )
+    .first;
+
 Future<void> _meetsGuidelines(WidgetTester tester) async {
   await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
   await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
@@ -60,7 +68,7 @@ Future<void> _meetsGuidelines(WidgetTester tester) async {
 }
 
 void main() {
-  testWidgets('czcionka 2× na 360 dp: trening, zakończenie, historia', (
+  testWidgets('czcionka 2× na 360 dp: trening, historia, progres', (
     tester,
   ) async {
     final db = await _launch(tester, textScale: 2);
@@ -81,6 +89,17 @@ void main() {
     await _tap(tester, find.text('Push A').first);
     expect(tester.takeException(), isNull);
     await _tap(tester, find.byTooltip('Porównaj z poprzednim'));
+    expect(tester.takeException(), isNull);
+    await _tap(tester, find.byTooltip('Wstecz'));
+    await _tap(tester, find.byTooltip('Wstecz'));
+
+    await _tap(tester, find.text('Progres'));
+    expect(tester.takeException(), isNull);
+    await tester.scrollUntilVisible(
+      find.text('Treningi z ćwiczeniem'),
+      300,
+      scrollable: _progressList,
+    );
     expect(tester.takeException(), isNull);
 
     await closeRepTrack(tester, db);
@@ -118,6 +137,16 @@ void main() {
       await _tap(tester, find.text('Historia'));
       await _meetsGuidelines(tester);
       await _tap(tester, find.text('Push A').first);
+      await _meetsGuidelines(tester);
+      await _tap(tester, find.byTooltip('Wstecz'));
+
+      await _tap(tester, find.text('Progres'));
+      await _meetsGuidelines(tester);
+      await tester.scrollUntilVisible(
+        find.text('Treningi z ćwiczeniem'),
+        300,
+        scrollable: _progressList,
+      );
       await _meetsGuidelines(tester);
 
       await closeRepTrack(tester, db);

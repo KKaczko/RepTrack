@@ -3,6 +3,7 @@ import 'package:reptrack/core/domain/local_date.dart';
 import 'package:reptrack/core/domain/training.dart';
 import 'package:reptrack/features/exercises/domain/exercise.dart';
 import 'package:reptrack/features/progress/domain/metrics.dart';
+import 'package:reptrack/features/progress/domain/progress_period.dart';
 import 'package:reptrack/features/workout/domain/workout_session.dart';
 
 final _at = DateTime.utc(2026, 10, 19);
@@ -148,7 +149,7 @@ void main() {
         (date: d2, exercise: exercise([(80000, 10)])),
       ];
 
-      final e1rm = e1rmTrend(performances);
+      final e1rm = metricTrend(performances, ExerciseMetric.e1rm);
       expect([for (final p in e1rm) p.date], [d1, d2]);
       expect(e1rm.first.value, closeTo(70000 * (1 + 10 / 30), 0.01));
 
