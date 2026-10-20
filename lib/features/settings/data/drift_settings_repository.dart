@@ -49,6 +49,8 @@ final class DriftSettingsRepository implements SettingsRepository {
     SettingKeys.defaultRestSeconds: s.defaultRestSeconds,
     SettingKeys.keepScreenOn: s.keepScreenOn,
     SettingKeys.exactAlarmPrompted: s.exactAlarmPrompted,
+    SettingKeys.assistantUrl: s.assistantUrl,
+    SettingKeys.assistantModel: s.assistantModel,
   };
 
   /// Brakujące albo nieczytelne wartości przyjmują wartości domyślne.
@@ -108,6 +110,11 @@ final class DriftSettingsRepository implements SettingsRepository {
         defaults.exactAlarmPrompted,
         (raw) => raw is bool ? raw : null,
       ),
+      assistantUrl: pick(SettingKeys.assistantUrl, null, _nonEmptyText),
+      assistantModel: pick(SettingKeys.assistantModel, null, _nonEmptyText),
     );
   }
+
+  static String? _nonEmptyText(Object? raw) =>
+      raw is String && raw.isNotEmpty ? raw : null;
 }

@@ -10,6 +10,10 @@ abstract final class SettingKeys {
   /// Czy pokazano już prośbę o dokładne alarmy końca przerwy (ADR 0009).
   static const exactAlarmPrompted = 'exact_alarm_prompted';
 
+  /// Adres serwera Ollama i model asystenta AI (ADR 0014).
+  static const assistantUrl = 'assistant_url';
+  static const assistantModel = 'assistant_model';
+
   /// Wersja ostatnio zastosowanego seeda biblioteki ćwiczeń (wewnętrzne).
   static const seedVersion = 'seed_version';
 }

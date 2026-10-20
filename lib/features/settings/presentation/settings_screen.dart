@@ -15,6 +15,7 @@ import '../../../core/theme/tokens.dart';
 import '../../../core/widgets/term_info.dart';
 import '../data/settings_providers.dart';
 import '../domain/app_settings.dart';
+import 'assistant_settings_section.dart';
 
 /// Ustawienia (ADR 0010): trening, wygląd i informacje o aplikacji. Każda
 /// zmiana zapisuje się od razu.
@@ -169,6 +170,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             },
             onChanged: (mode) => _save(settings.copyWith(themeMode: mode)),
           ),
+          _Section(l10n.settingsAssistant),
+          AssistantSettingsSection(settings: settings),
           _Section(l10n.settingsData),
           ListTile(
             leading: const Icon(Icons.backup_outlined),

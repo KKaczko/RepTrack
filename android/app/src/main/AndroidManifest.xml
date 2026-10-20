@@ -6,6 +6,9 @@
     <!-- Dokładny alarm tylko za zgodą użytkownika; USE_EXACT_ALARM jest
          zastrzeżony dla aplikacji typu budzik, więc go nie używamy. -->
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <!-- Asystent AI (ADR 0014): połączenie wyłącznie z serwerem Ollama pod
+         adresem wpisanym przez użytkownika. -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <!-- Android Auto Backup obejmuje tylko bazę danych (ADR 0008). -->
     <application
         android:label="RepTrack"
@@ -13,7 +16,8 @@
         android:icon="@mipmap/ic_launcher"
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_rules"
-        android:dataExtractionRules="@xml/data_extraction_rules">
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:networkSecurityConfig="@xml/network_security_config">
         <receiver
             android:exported="false"
             android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />

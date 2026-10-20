@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Asystent AI (ADR 0014): Ollama w sieci domowej mówi po HTTP, a adres
+     (np. 192.168.1.10) wpisuje użytkownik, więc ruch bez TLS jest dozwolony.
+     Aplikacja łączy się tylko z tym adresem. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>

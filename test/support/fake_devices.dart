@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:reptrack/core/platform/device_services.dart';
 import 'package:reptrack/core/platform/file_exchange.dart';
 import 'package:reptrack/core/platform/rest_notifications.dart';
+import 'package:reptrack/features/assistant/data/assistant_client.dart';
+import 'package:reptrack/features/assistant/domain/assistant.dart';
 
 /// Strefa czasowa telefonu w testach.
 final class FixedTimeZone implements DeviceTimeZone {
@@ -99,4 +103,43 @@ final class FakeFileExchange implements FileExchange {
   @override
   Future<void> shareText(String text, {String? subject}) async =>
       sharedTexts.add(text);
+}
+
+/// Serwer modelu w testach: stała lista modeli i odpowiedź z fragmentów
+/// albo ze sterowanego przez test [live] strumienia.
+final class FakeAssistantClient implements AssistantClient {
+  String serverVersion = '0.40.6';
+  List<String> available = ['qwen3.5:4b', 'qwen3.8:27b'];
+
+  /// Błąd zwracany przez każde wywołanie.
+  AssistantException? failure;
+  List<String> reply = ['Dobra ', 'robota!'];
+
+  /// Gdy ustawiony, odpowiedź płynie z tego kontrolera (zamyka go test).
+  // ignore: close_sinks
+  StreamController<String>? live;
+  final chats = <({Uri server, String model, List<ChatMessage> messages})>[];
+
+  @override
+  Future<String> version(Uri server) async {
+    if (failure case final error?) throw error;
+    return serverVersion;
+  }
+
+  @override
+  Future<List<String>> models(Uri server) async {
+    if (failure case final error?) throw error;
+    return available;
+  }
+
+  @override
+  Stream<String> chat(
+    Uri server, {
+    required String model,
+    required List<ChatMessage> messages,
+  }) {
+    chats.add((server: server, model: model, messages: messages));
+    if (failure case final error?) return Stream.error(error);
+    return live?.stream ?? Stream.fromIterable(reply);
+  }
 }

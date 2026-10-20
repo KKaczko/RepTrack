@@ -28,6 +28,8 @@ void main() {
       effortScale: null,
       defaultRestSeconds: 90,
       keepScreenOn: false,
+      assistantUrl: 'http://192.168.1.10:11434',
+      assistantModel: 'qwen3.5:4b',
     );
 
     await repo.save(settings);

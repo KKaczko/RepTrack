@@ -11,6 +11,7 @@ import 'package:reptrack/core/domain/clock.dart';
 import 'package:reptrack/core/platform/device_services.dart';
 import 'package:reptrack/core/platform/file_exchange.dart';
 import 'package:reptrack/core/platform/rest_notifications.dart';
+import 'package:reptrack/features/assistant/data/assistant_providers.dart';
 import 'package:reptrack/features/exercises/data/exercise_seeder.dart';
 import 'package:reptrack/features/exercises/data/seed_catalog.dart';
 
@@ -29,6 +30,7 @@ Future<AppDatabase> pumpRepTrack(
   FakeRestNotifications? notifications,
   FakeScreenAwake? awake,
   FakeFileExchange? files,
+  FakeAssistantClient? assistant,
   List<Override> overrides = const [],
 }) async {
   tester.platformDispatcher.localeTestValue = const Locale('pl', 'PL');
@@ -56,6 +58,9 @@ Future<AppDatabase> pumpRepTrack(
           notifications ?? FakeRestNotifications(),
         ),
         fileExchangeProvider.overrideWithValue(files ?? FakeFileExchange()),
+        assistantClientProvider.overrideWithValue(
+          assistant ?? FakeAssistantClient(),
+        ),
         ...overrides,
       ],
       child: const RepTrackApp(),

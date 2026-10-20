@@ -33,7 +33,7 @@ Model rozdziela trzy warstwy: definicję ćwiczenia, plan (szablon) i wykonanie 
 | AppThemeMode (ustawienia) | dark, light, system |
 | WeightUnit (ustawienia) | kg, lb |
 
-Klucze `settings`: `theme_mode`, `weight_unit`, `weight_step`, `effort_scale` (`off` / `rir` / `rpe`), `default_rest_seconds`, `keep_screen_on`, `exact_alarm_prompted` (czy pokazano prośbę o dokładne alarmy).
+Klucze `settings`: `theme_mode`, `weight_unit`, `weight_step`, `effort_scale` (`off` / `rir` / `rpe`), `default_rest_seconds`, `keep_screen_on`, `exact_alarm_prompted` (czy pokazano prośbę o dokładne alarmy), `assistant_url` i `assistant_model` (serwer Ollama i model asystenta AI, [ADR 0014](decisions/0014-asystent-ai-ollama.md); `null` wyłącza asystenta).
 
 ## `exercises`
 

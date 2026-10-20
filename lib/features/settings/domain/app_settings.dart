@@ -35,6 +35,12 @@ abstract class AppSettings with _$AppSettings {
 
     /// Prośba o dokładne alarmy końca przerwy była już pokazana.
     @Default(false) bool exactAlarmPrompted,
+
+    /// Adres serwera Ollama asystenta AI (ADR 0014); null wyłącza asystenta.
+    String? assistantUrl,
+
+    /// Model asystenta; null oznacza pierwszy model z serwera.
+    String? assistantModel,
   }) = _AppSettings;
 }
 
