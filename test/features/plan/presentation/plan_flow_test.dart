@@ -9,6 +9,7 @@ import 'package:reptrack/features/templates/data/drift_template_repository.dart'
 import 'package:reptrack/features/workout/data/drift_workout_repository.dart';
 
 import '../../../support/app_harness.dart';
+import '../../../support/fake_devices.dart';
 import '../../../support/test_database.dart';
 import '../../../support/workout_fixtures.dart';
 
@@ -23,7 +24,11 @@ const _week = WeeklyPlan(
 );
 
 /// Plan: pon „Push A”, śr „Pull B” od 5.10; zrobiony tylko pon 12.10.
-Future<AppDatabase> _launch(WidgetTester tester, {bool withPlan = true}) async {
+Future<AppDatabase> _launch(
+  WidgetTester tester, {
+  bool withPlan = true,
+  FakePlanReminders? reminders,
+}) async {
   tester.view.physicalSize = const Size(1080, 2400);
   tester.view.devicePixelRatio = 3;
   addTearDown(tester.view.reset);
@@ -52,6 +57,7 @@ Future<AppDatabase> _launch(WidgetTester tester, {bool withPlan = true}) async {
     seed: false,
     db: db,
     clock: testClock(),
+    reminders: reminders,
   );
   await _tap(tester, navTab('Plan'));
   return app;
@@ -250,6 +256,42 @@ void main() {
       find.widgetWithText(FilledButton, 'Edytuj plan tygodnia'),
     );
     expect(find.text('Plan tygodnia'), findsOneWidget);
+
+    await closeRepTrack(tester, db);
+  });
+
+  testWidgets('przypomnienia: zgoda, zapis i zaplanowane dni', (tester) async {
+    final reminders = FakePlanReminders();
+    final db = await _launch(tester, reminders: reminders);
+    expect(reminders.scheduled, isEmpty);
+
+    await _tap(tester, find.byTooltip('Edytuj plan tygodnia'));
+    await tester.scrollUntilVisible(find.text('Przypomnienie o treningu'), 300);
+    expect(find.text('Wyłączone'), findsOneWidget);
+    await _tap(tester, find.text('Przypomnienie o treningu'));
+
+    expect(reminders.permissionRequests, 1);
+    expect(find.text('W dni z planem o 17:00'), findsOneWidget);
+    // Dziś 20:00 po 17:00: pierwsze przypomnienie w środę o „Pull B”.
+    expect(reminders.scheduled.first.workouts, ['Pull B']);
+    expect(reminders.scheduled.first.at.toLocal(), DateTime(2026, 10, 21, 17));
+
+    await closeRepTrack(tester, db);
+  });
+
+  testWidgets('przypomnienia bez zgody na powiadomienia zostają wyłączone', (
+    tester,
+  ) async {
+    final reminders = FakePlanReminders()..allowed = false;
+    final db = await _launch(tester, reminders: reminders);
+
+    await _tap(tester, find.byTooltip('Edytuj plan tygodnia'));
+    await tester.scrollUntilVisible(find.text('Przypomnienie o treningu'), 300);
+    await _tap(tester, find.text('Przypomnienie o treningu'));
+
+    expect(find.textContaining('Bez zgody na powiadomienia'), findsOneWidget);
+    expect(find.text('Wyłączone'), findsOneWidget);
+    expect(reminders.scheduled, isEmpty);
 
     await closeRepTrack(tester, db);
   });

@@ -6,6 +6,7 @@ import '../core/database/app_database.dart';
 import '../core/database/database_providers.dart';
 import '../core/domain/clock.dart';
 import '../core/domain/local_date.dart';
+import '../core/platform/plan_reminders.dart';
 import '../core/platform/rest_notifications.dart';
 import '../features/exercises/data/exercise_seeder.dart';
 import '../features/exercises/data/seed_catalog.dart';
@@ -25,6 +26,12 @@ Future<ProviderContainer> bootstrap() async {
     overrides: [
       appDatabaseProvider.overrideWithValue(db),
       restNotificationsProvider.overrideWithValue(notifications),
+      // Ta sama wtyczka powiadomień; bez niej przypomnienia są wyłączone.
+      planRemindersProvider.overrideWithValue(
+        notifications is LocalRestNotifications
+            ? LocalPlanReminders()
+            : const NoopPlanReminders(),
+      ),
     ],
   );
 }

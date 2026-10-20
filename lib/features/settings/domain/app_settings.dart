@@ -41,6 +41,12 @@ abstract class AppSettings with _$AppSettings {
 
     /// Model asystenta; null oznacza pierwszy model z serwera.
     String? assistantModel,
+
+    /// Przypomnienia o treningach z planu (ADR 0015).
+    @Default(false) bool planReminders,
+
+    /// Godzina przypomnienia w minutach od północy (17:00).
+    @Default(1020) int planReminderMinutes,
   }) = _AppSettings;
 }
 

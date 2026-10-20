@@ -30,6 +30,8 @@ void main() {
       keepScreenOn: false,
       assistantUrl: 'http://192.168.1.10:11434',
       assistantModel: 'qwen3.5:4b',
+      planReminders: true,
+      planReminderMinutes: 18 * 60 + 30,
     );
 
     await repo.save(settings);

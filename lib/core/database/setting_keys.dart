@@ -14,6 +14,10 @@ abstract final class SettingKeys {
   static const assistantUrl = 'assistant_url';
   static const assistantModel = 'assistant_model';
 
+  /// Przypomnienia o treningach z planu i ich godzina (ADR 0015).
+  static const planReminders = 'plan_reminders';
+  static const planReminderMinutes = 'plan_reminder_minutes';
+
   /// Wersja ostatnio zastosowanego seeda biblioteki ćwiczeń (wewnętrzne).
   static const seedVersion = 'seed_version';
 }

@@ -51,6 +51,8 @@ final class DriftSettingsRepository implements SettingsRepository {
     SettingKeys.exactAlarmPrompted: s.exactAlarmPrompted,
     SettingKeys.assistantUrl: s.assistantUrl,
     SettingKeys.assistantModel: s.assistantModel,
+    SettingKeys.planReminders: s.planReminders,
+    SettingKeys.planReminderMinutes: s.planReminderMinutes,
   };
 
   /// Brakujące albo nieczytelne wartości przyjmują wartości domyślne.
@@ -112,6 +114,16 @@ final class DriftSettingsRepository implements SettingsRepository {
       ),
       assistantUrl: pick(SettingKeys.assistantUrl, null, _nonEmptyText),
       assistantModel: pick(SettingKeys.assistantModel, null, _nonEmptyText),
+      planReminders: pick(
+        SettingKeys.planReminders,
+        defaults.planReminders,
+        (raw) => raw is bool ? raw : null,
+      ),
+      planReminderMinutes: pick(
+        SettingKeys.planReminderMinutes,
+        defaults.planReminderMinutes,
+        (raw) => raw is int && raw >= 0 && raw < 24 * 60 ? raw : null,
+      ),
     );
   }
 

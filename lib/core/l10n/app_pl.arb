@@ -1275,5 +1275,21 @@
   "homePlanWeek": "treningów z planu",
   "@homePlanWeek": {"description": "Podpis realizacji tygodnia na Starcie"},
   "homePlanOpen": "Zobacz plan",
-  "@homePlanOpen": {"description": "Przejście do zakładki Plan"}
+  "@homePlanOpen": {"description": "Przejście do zakładki Plan"},
+  "planReminders": "Przypomnienie o treningu",
+  "@planReminders": {"description": "Przełącznik przypomnień"},
+  "planRemindersOn": "W dni z planem o {time}",
+  "@planRemindersOn": {"description": "Opis włączonych przypomnień", "placeholders": {"time": {"type": "String"}}},
+  "planRemindersOff": "Wyłączone",
+  "@planRemindersOff": {"description": "Opis wyłączonych przypomnień"},
+  "planReminderTime": "Godzina przypomnienia",
+  "@planReminderTime": {"description": "Ustawienie godziny"},
+  "planRemindersDenied": "Bez zgody na powiadomienia przypomnienia nie zadziałają. Zmienisz to w ustawieniach telefonu.",
+  "@planRemindersDenied": {"description": "Brak zgody"},
+  "notifChannelPlan": "Przypomnienia o treningu",
+  "@notifChannelPlan": {"description": "Kanał powiadomień"},
+  "notifPlanTitle": "Czas na trening",
+  "@notifPlanTitle": {"description": "Tytuł przypomnienia"},
+  "notifPlanBody": "Dziś wg planu: {workouts}",
+  "@notifPlanBody": {"description": "Treść przypomnienia", "placeholders": {"workouts": {"type": "String"}}}
 }

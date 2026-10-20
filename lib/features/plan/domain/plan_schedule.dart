@@ -236,6 +236,32 @@ int planStreak(
   return null;
 }
 
+/// Dzień do przypomnienia: treningi z planu, których jeszcze nie zrobiono.
+typedef ReminderDay = ({LocalDate date, List<String> templateIds});
+
+/// Dni z zaplanowanymi, niezrobionymi treningami od [today] przez [days] dni.
+List<ReminderDay> reminderDays(
+  PlanState plan,
+  Map<LocalDate, List<WorkoutSession>> byDate,
+  LocalDate today, {
+  int days = 14,
+}) => [
+  for (var i = 0; i < days; i++)
+    if ([
+          for (final entry in dayOverview(
+            plan,
+            byDate,
+            today.addDays(i),
+            today,
+          ).entries)
+            if (entry.status == PlanStatus.today ||
+                entry.status == PlanStatus.upcoming)
+              entry.item.templateId,
+        ]
+        case final ids when ids.isNotEmpty)
+      (date: today.addDays(i), templateIds: ids),
+];
+
 // ------------------------------------------------------------ wpisy na daty
 
 /// Wpisy dla daty z listy treningów; pusta lista to dzień wolny.

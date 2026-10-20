@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/database/database_providers.dart';
 import '../../../core/domain/local_date.dart';
 import '../../../core/l10n/generated/app_localizations.dart';
+import '../../../core/platform/plan_reminders.dart';
 import '../../../core/theme/tokens.dart';
 import '../../settings/data/settings_providers.dart';
 import '../../settings/domain/app_settings.dart';
@@ -167,6 +168,8 @@ class _WeeklyPlanScreenState extends ConsumerState<WeeklyPlanScreen> {
                   ),
                 ),
               ),
+            const SizedBox(height: AppSpacing.l),
+            _RemindersCard(settings: settings),
           ],
         ),
       ),
@@ -216,5 +219,76 @@ class _WeeklyPlanScreenState extends ConsumerState<WeeklyPlanScreen> {
       setState(() => _dirty = false);
       Navigator.of(context).pop();
     }
+  }
+}
+
+/// Przypomnienia o treningach z planu: zapisywane od razu, jak inne
+/// ustawienia.
+class _RemindersCard extends ConsumerWidget {
+  const _RemindersCard({required this.settings});
+
+  final AppSettings settings;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final minutes = settings.planReminderMinutes;
+    final time = TimeOfDay(hour: minutes ~/ 60, minute: minutes % 60);
+    final formatted = MaterialLocalizations.of(context)
+        .formatTimeOfDay(time, alwaysUse24HourFormat: true);
+    Future<void> save(AppSettings next) =>
+        ref.read(settingsRepositoryProvider).save(next);
+    return Card(
+      child: Column(
+        children: [
+          SwitchListTile(
+            title: Text(l10n.planReminders),
+            subtitle: Text(
+              settings.planReminders
+                  ? l10n.planRemindersOn(formatted)
+                  : l10n.planRemindersOff,
+            ),
+            value: settings.planReminders,
+            onChanged: (on) async {
+              final messenger = ScaffoldMessenger.of(context);
+              if (on &&
+                  !await ref.read(planRemindersProvider).requestPermission()) {
+                messenger.showSnackBar(
+                  SnackBar(content: Text(l10n.planRemindersDenied)),
+                );
+                return;
+              }
+              await save(settings.copyWith(planReminders: on));
+            },
+          ),
+          ListTile(
+            enabled: settings.planReminders,
+            title: Text(l10n.planReminderTime),
+            trailing: Text(
+              formatted,
+              style: theme.textTheme.bodyLarge?.copyWith(
+                color: settings.planReminders
+                    ? theme.colorScheme.primary
+                    : theme.colorScheme.onSurfaceVariant,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            onTap: () async {
+              final picked = await showTimePicker(
+                context: context,
+                initialTime: time,
+              );
+              if (picked == null) return;
+              await save(
+                settings.copyWith(
+                  planReminderMinutes: picked.hour * 60 + picked.minute,
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
   }
 }

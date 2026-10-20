@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:reptrack/core/platform/device_services.dart';
 import 'package:reptrack/core/platform/file_exchange.dart';
+import 'package:reptrack/core/platform/plan_reminders.dart';
 import 'package:reptrack/core/platform/rest_notifications.dart';
 import 'package:reptrack/features/assistant/data/assistant_client.dart';
 import 'package:reptrack/features/assistant/domain/assistant.dart';
@@ -141,5 +142,25 @@ final class FakeAssistantClient implements AssistantClient {
     chats.add((server: server, model: model, messages: messages));
     if (failure case final error?) return Stream.error(error);
     return live?.stream ?? Stream.fromIterable(reply);
+  }
+}
+
+/// Zapamiętuje ostatnio zaplanowane przypomnienia o treningach.
+final class FakePlanReminders implements PlanReminders {
+  List<PlanReminder> scheduled = const [];
+  int scheduleCalls = 0;
+  bool allowed = true;
+  int permissionRequests = 0;
+
+  @override
+  Future<void> schedule(List<PlanReminder> reminders) async {
+    scheduled = reminders;
+    scheduleCalls++;
+  }
+
+  @override
+  Future<bool> requestPermission() async {
+    permissionRequests++;
+    return allowed;
   }
 }

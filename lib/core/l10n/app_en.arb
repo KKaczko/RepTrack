@@ -646,5 +646,13 @@
   "homePlanNext": "Next: {when} · {template}",
   "homePlanTomorrow": "tomorrow",
   "homePlanWeek": "planned workouts done",
-  "homePlanOpen": "See plan"
+  "homePlanOpen": "See plan",
+  "planReminders": "Workout reminder",
+  "planRemindersOn": "On planned days at {time}",
+  "planRemindersOff": "Off",
+  "planReminderTime": "Reminder time",
+  "planRemindersDenied": "Reminders need notification permission. You can change this in your phone settings.",
+  "notifChannelPlan": "Workout reminders",
+  "notifPlanTitle": "Time to train",
+  "notifPlanBody": "Today's plan: {workouts}"
 }
