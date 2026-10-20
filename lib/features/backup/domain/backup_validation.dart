@@ -35,9 +35,16 @@ typedef BackupMigration = Map<String, Object?> Function(
   Map<String, Object?> backup,
 );
 
-/// Migracje formatu: klucz to wersja źródłowa. Wersja 1 jest pierwsza, więc
-/// lista jest pusta; kolejna wersja formatu dopisuje tu migrację z 1 do 2.
-const Map<int, BackupMigration> backupMigrations = {};
+/// Migracje formatu: klucz to wersja źródłowa.
+const Map<int, BackupMigration> backupMigrations = {1: migrateBackupV1ToV2};
+
+/// Wersja 2 dodaje plan treningów (ADR 0015); kopia z wersji 1 dostaje
+/// puste tablice planu.
+Map<String, Object?> migrateBackupV1ToV2(Map<String, Object?> backup) => {
+  ...backup,
+  for (final table in const ['weeklyPlans', 'weeklyPlanDays', 'plannedDays'])
+    table: backup[table] ?? const <Object?>[],
+};
 
 /// Odczyt kopii: JSON, rozpoznanie formatu, migracja do bieżącej wersji
 /// i pełna walidacja. Zwraca dane w bieżącej wersji formatu.

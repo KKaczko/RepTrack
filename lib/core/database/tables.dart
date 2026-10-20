@@ -4,6 +4,7 @@
 import 'package:drift/drift.dart';
 
 import '../../features/exercises/domain/exercise.dart';
+import '../../features/plan/domain/plan.dart';
 import '../../features/workout/domain/workout_session.dart';
 import '../domain/training.dart';
 import 'converters.dart';
@@ -213,6 +214,43 @@ class SessionSets extends Table with SyncColumns {
       text().map(const CodedEnumConverter<Side>(Side.values)).nullable()();
   IntColumn get completedAt =>
       integer().map(const UtcMillisConverter()).nullable()();
+}
+
+/// Wersje planu tygodniowego (ADR 0015).
+@DataClassName('WeeklyPlanRow')
+class WeeklyPlans extends Table with SyncColumns {
+  TextColumn get startsOn => text().map(const LocalDateConverter())();
+  TextColumn get endsOn => text().map(const LocalDateConverter()).nullable()();
+}
+
+/// Treningi w dniach tygodnia wersji planu.
+@DataClassName('WeeklyPlanDayRow')
+@TableIndex(
+  name: 'idx_weekly_plan_days_plan',
+  columns: {#planId, #weekday, #position},
+)
+class WeeklyPlanDays extends Table with SyncColumns {
+  TextColumn get planId => text().references(WeeklyPlans, #id)();
+  IntColumn get weekday => integer().check(weekday.isBetweenValues(1, 7))();
+  TextColumn get templateId => text().references(Templates, #id)();
+  IntColumn get position => integer()();
+}
+
+/// Wpisy na pojedyncze daty; zastępują plan tygodniowy danego dnia.
+@DataClassName('PlannedDayRow')
+@TableIndex(name: 'idx_planned_days_date', columns: {#date, #position})
+class PlannedDays extends Table with SyncColumns {
+  TextColumn get date => text().map(const LocalDateConverter())();
+  TextColumn get kind =>
+      text().map(const CodedEnumConverter<PlannedKind>(PlannedKind.values))();
+  TextColumn get templateId => text().nullable().references(Templates, #id)();
+  IntColumn get position => integer()();
+  TextColumn get note => text().nullable()();
+
+  @override
+  List<String> get customConstraints => [
+    "CHECK (kind <> 'workout' OR template_id IS NOT NULL)",
+  ];
 }
 
 /// Ustawienia jako pary klucz → wartość JSON (ADR 0010).

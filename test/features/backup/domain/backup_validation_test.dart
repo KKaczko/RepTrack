@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:reptrack/features/backup/domain/backup_format.dart';
 import 'package:reptrack/features/backup/domain/backup_summary.dart';
 import 'package:reptrack/features/backup/domain/backup_validation.dart';
 
@@ -175,13 +176,27 @@ void main() {
   });
 
   test('plik z nowszej wersji aplikacji jest odrzucany', () {
-    final backup = _backup()..['formatVersion'] = 2;
+    final backup = _backup()..['formatVersion'] = backupFormatVersion + 1;
     expect(
       () => readBackup(jsonEncode(backup)),
       throwsA(
-        isA<BackupTooNewException>().having((e) => e.formatVersion, 'v', 2),
+        isA<BackupTooNewException>().having(
+          (e) => e.formatVersion,
+          'v',
+          backupFormatVersion + 1,
+        ),
       ),
     );
+  });
+
+  test('kopia w wersji 1 dostaje pusty plan treningów (1 → 2)', () {
+    final migrated = readBackup(jsonEncode(_backup()));
+
+    expect(migrated['formatVersion'], 2);
+    expect(migrated['weeklyPlans'], isEmpty);
+    expect(migrated['weeklyPlanDays'], isEmpty);
+    expect(migrated['plannedDays'], isEmpty);
+    expect(migrated['templates'], hasLength(1));
   });
 
   test('typy, kody, daty i zakresy pól', () {
@@ -256,7 +271,7 @@ void main() {
 
     final migrated = readBackup(
       jsonEncode(old),
-      migrations: {1: rename},
+      migrations: {1: (b) => migrateBackupV1ToV2(rename(b))},
       currentVersion: 2,
     );
 

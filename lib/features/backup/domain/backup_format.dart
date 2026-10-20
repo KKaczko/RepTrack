@@ -1,6 +1,7 @@
 import '../../../core/domain/coded_enum.dart';
 import '../../../core/domain/training.dart';
 import '../../exercises/domain/exercise.dart';
+import '../../plan/domain/plan.dart';
 import '../../workout/domain/workout_session.dart';
 
 /// Format pliku kopii zapasowej (ADR 0008, docs/backup-format.md).
@@ -14,7 +15,7 @@ import '../../workout/domain/workout_session.dart';
 const backupFormatId = 'reptrack-backup';
 
 /// Bieżąca wersja formatu.
-const backupFormatVersion = 1;
+const backupFormatVersion = 2;
 
 /// Rodzaj wartości pola w pliku.
 enum BackupFieldType {
@@ -491,6 +492,48 @@ final List<BackupTable> backupTables = [
       BackupFieldType.time,
       nullable: true,
     ),
+  ]),
+  // Wersja 2: plan treningów (ADR 0015).
+  const BackupTable('weeklyPlans', 'weekly_plans', [
+    ..._sync,
+    BackupField('startsOn', 'starts_on', BackupFieldType.date),
+    BackupField('endsOn', 'ends_on', BackupFieldType.date, nullable: true),
+  ]),
+  const BackupTable('weeklyPlanDays', 'weekly_plan_days', [
+    ..._sync,
+    BackupField(
+      'planId',
+      'plan_id',
+      BackupFieldType.id,
+      references: 'weeklyPlans',
+    ),
+    BackupField('weekday', 'weekday', BackupFieldType.integer, min: 1, max: 7),
+    BackupField(
+      'templateId',
+      'template_id',
+      BackupFieldType.id,
+      references: 'templates',
+    ),
+    BackupField('position', 'position', BackupFieldType.integer, min: 0),
+  ]),
+  BackupTable('plannedDays', 'planned_days', [
+    ..._sync,
+    const BackupField('date', 'date', BackupFieldType.date),
+    BackupField(
+      'kind',
+      'kind',
+      BackupFieldType.code,
+      codes: _codes(PlannedKind.values),
+    ),
+    const BackupField(
+      'templateId',
+      'template_id',
+      BackupFieldType.id,
+      nullable: true,
+      references: 'templates',
+    ),
+    const BackupField('position', 'position', BackupFieldType.integer, min: 0),
+    const BackupField('note', 'note', BackupFieldType.text, nullable: true),
   ]),
 ];
 

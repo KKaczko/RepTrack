@@ -2,9 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:reptrack/core/database/app_database.dart';
+import 'package:reptrack/core/domain/local_date.dart';
 import 'package:reptrack/features/backup/data/backup_store.dart';
 import 'package:reptrack/features/backup/domain/backup_validation.dart';
 import 'package:reptrack/features/exercises/data/drift_exercise_repository.dart';
+import 'package:reptrack/features/plan/data/drift_plan_repository.dart';
+import 'package:reptrack/features/plan/domain/plan.dart';
 import 'package:reptrack/features/settings/data/drift_settings_repository.dart';
 import 'package:reptrack/features/settings/domain/app_settings.dart';
 import 'package:reptrack/features/templates/data/drift_template_repository.dart';
@@ -47,6 +50,35 @@ Future<void> _fill(AppDatabase db) async {
     db,
     clock,
   ).save(const AppSettings(weightStep: 1.25, defaultRestSeconds: 90));
+  // Plan: zamknięta i bieżąca wersja planu tygodniowego oraz dzień wolny.
+  final plan = DriftPlanRepository(db, clock);
+  await plan.saveWeekly(
+    save: const [
+      WeeklyPlan(
+        id: 'wp1',
+        startsOn: LocalDate(2026, 9, 28),
+        endsOn: LocalDate(2026, 10, 11),
+        days: [
+          WeeklyPlanDay(id: 'wd1', weekday: 1, templateId: 'tpl', position: 0),
+        ],
+      ),
+      WeeklyPlan(
+        id: 'wp2',
+        startsOn: LocalDate(2026, 10, 12),
+        days: [
+          WeeklyPlanDay(id: 'wd2', weekday: 3, templateId: 'tpl', position: 0),
+        ],
+      ),
+    ],
+  );
+  await plan.setDay(const LocalDate(2026, 10, 21), const [
+    PlannedDay(
+      id: 'pd1',
+      date: LocalDate(2026, 10, 21),
+      kind: PlannedKind.rest,
+      position: 0,
+    ),
+  ]);
 }
 
 Map<String, Object?> _withoutExportTime(Map<String, Object?> backup) =>
@@ -81,6 +113,13 @@ void main() {
     );
     final restored = await DriftSettingsRepository(target, testClock()).load();
     expect((restored.weightStep, restored.defaultRestSeconds), (1.25, 90));
+    // Plan treningów (format v2) przechodzi w całości.
+    expect(exported['weeklyPlans'], hasLength(2));
+    expect(exported['weeklyPlanDays'], hasLength(2));
+    expect(exported['plannedDays'], hasLength(1));
+    final plan = await DriftPlanRepository(target, testClock()).load();
+    expect(plan.weekly.last.days.single.weekday, 3);
+    expect(plan.days.single.kind, PlannedKind.rest);
     final active = await DriftWorkoutRepository(
       target,
       testClock(),

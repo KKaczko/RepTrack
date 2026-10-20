@@ -4,7 +4,7 @@
 //
 import 'package:drift/drift.dart';
 
-class Exercises extends Table with TableInfo {
+class Exercises extends Table with TableInfo<Exercises, ExercisesData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -281,8 +281,126 @@ class Exercises extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  ExercisesData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ExercisesData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      aliases: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}aliases'],
+      )!,
+      searchText: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}search_text'],
+      )!,
+      primaryMuscles: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}primary_muscles'],
+      )!,
+      secondaryMuscles: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}secondary_muscles'],
+      )!,
+      equipment: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}equipment'],
+      ),
+      category: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}category'],
+      )!,
+      mechanic: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}mechanic'],
+      ),
+      force: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}force'],
+      ),
+      instructions: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}instructions'],
+      ),
+      measureWeight: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}measure_weight'],
+      )!,
+      measureReps: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}measure_reps'],
+      )!,
+      measureDuration: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}measure_duration'],
+      )!,
+      measureDistance: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}measure_distance'],
+      )!,
+      loadMode: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}load_mode'],
+      )!,
+      weightSemantics: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}weight_semantics'],
+      )!,
+      isUnilateral: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}is_unilateral'],
+      )!,
+      imageRef: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}image_ref'],
+      ),
+      source: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}source'],
+      )!,
+      originRef: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}origin_ref'],
+      ),
+      license: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}license'],
+      ),
+      licenseAuthor: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}license_author'],
+      ),
+      seedVersion: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}seed_version'],
+      ),
+      userModified: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}user_modified'],
+      )!,
+      archivedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}archived_at'],
+      ),
+    );
   }
 
   @override
@@ -299,7 +417,860 @@ class Exercises extends Table with TableInfo {
   bool get dontWriteConstraints => true;
 }
 
-class Templates extends Table with TableInfo {
+class ExercisesData extends DataClass implements Insertable<ExercisesData> {
+  final String id;
+  final int createdAt;
+  final int updatedAt;
+  final int? deletedAt;
+  final String name;
+  final String aliases;
+  final String searchText;
+  final String primaryMuscles;
+  final String secondaryMuscles;
+  final String? equipment;
+  final String category;
+  final String? mechanic;
+  final String? force;
+  final String? instructions;
+  final int measureWeight;
+  final int measureReps;
+  final int measureDuration;
+  final int measureDistance;
+  final String loadMode;
+  final String weightSemantics;
+  final int isUnilateral;
+  final String? imageRef;
+  final String source;
+  final String? originRef;
+  final String? license;
+  final String? licenseAuthor;
+  final int? seedVersion;
+  final int userModified;
+  final int? archivedAt;
+  const ExercisesData({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.name,
+    required this.aliases,
+    required this.searchText,
+    required this.primaryMuscles,
+    required this.secondaryMuscles,
+    this.equipment,
+    required this.category,
+    this.mechanic,
+    this.force,
+    this.instructions,
+    required this.measureWeight,
+    required this.measureReps,
+    required this.measureDuration,
+    required this.measureDistance,
+    required this.loadMode,
+    required this.weightSemantics,
+    required this.isUnilateral,
+    this.imageRef,
+    required this.source,
+    this.originRef,
+    this.license,
+    this.licenseAuthor,
+    this.seedVersion,
+    required this.userModified,
+    this.archivedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<int>(createdAt);
+    map['updated_at'] = Variable<int>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<int>(deletedAt);
+    }
+    map['name'] = Variable<String>(name);
+    map['aliases'] = Variable<String>(aliases);
+    map['search_text'] = Variable<String>(searchText);
+    map['primary_muscles'] = Variable<String>(primaryMuscles);
+    map['secondary_muscles'] = Variable<String>(secondaryMuscles);
+    if (!nullToAbsent || equipment != null) {
+      map['equipment'] = Variable<String>(equipment);
+    }
+    map['category'] = Variable<String>(category);
+    if (!nullToAbsent || mechanic != null) {
+      map['mechanic'] = Variable<String>(mechanic);
+    }
+    if (!nullToAbsent || force != null) {
+      map['force'] = Variable<String>(force);
+    }
+    if (!nullToAbsent || instructions != null) {
+      map['instructions'] = Variable<String>(instructions);
+    }
+    map['measure_weight'] = Variable<int>(measureWeight);
+    map['measure_reps'] = Variable<int>(measureReps);
+    map['measure_duration'] = Variable<int>(measureDuration);
+    map['measure_distance'] = Variable<int>(measureDistance);
+    map['load_mode'] = Variable<String>(loadMode);
+    map['weight_semantics'] = Variable<String>(weightSemantics);
+    map['is_unilateral'] = Variable<int>(isUnilateral);
+    if (!nullToAbsent || imageRef != null) {
+      map['image_ref'] = Variable<String>(imageRef);
+    }
+    map['source'] = Variable<String>(source);
+    if (!nullToAbsent || originRef != null) {
+      map['origin_ref'] = Variable<String>(originRef);
+    }
+    if (!nullToAbsent || license != null) {
+      map['license'] = Variable<String>(license);
+    }
+    if (!nullToAbsent || licenseAuthor != null) {
+      map['license_author'] = Variable<String>(licenseAuthor);
+    }
+    if (!nullToAbsent || seedVersion != null) {
+      map['seed_version'] = Variable<int>(seedVersion);
+    }
+    map['user_modified'] = Variable<int>(userModified);
+    if (!nullToAbsent || archivedAt != null) {
+      map['archived_at'] = Variable<int>(archivedAt);
+    }
+    return map;
+  }
+
+  ExercisesCompanion toCompanion(bool nullToAbsent) {
+    return ExercisesCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      name: Value(name),
+      aliases: Value(aliases),
+      searchText: Value(searchText),
+      primaryMuscles: Value(primaryMuscles),
+      secondaryMuscles: Value(secondaryMuscles),
+      equipment: equipment == null && nullToAbsent
+          ? const Value.absent()
+          : Value(equipment),
+      category: Value(category),
+      mechanic: mechanic == null && nullToAbsent
+          ? const Value.absent()
+          : Value(mechanic),
+      force: force == null && nullToAbsent
+          ? const Value.absent()
+          : Value(force),
+      instructions: instructions == null && nullToAbsent
+          ? const Value.absent()
+          : Value(instructions),
+      measureWeight: Value(measureWeight),
+      measureReps: Value(measureReps),
+      measureDuration: Value(measureDuration),
+      measureDistance: Value(measureDistance),
+      loadMode: Value(loadMode),
+      weightSemantics: Value(weightSemantics),
+      isUnilateral: Value(isUnilateral),
+      imageRef: imageRef == null && nullToAbsent
+          ? const Value.absent()
+          : Value(imageRef),
+      source: Value(source),
+      originRef: originRef == null && nullToAbsent
+          ? const Value.absent()
+          : Value(originRef),
+      license: license == null && nullToAbsent
+          ? const Value.absent()
+          : Value(license),
+      licenseAuthor: licenseAuthor == null && nullToAbsent
+          ? const Value.absent()
+          : Value(licenseAuthor),
+      seedVersion: seedVersion == null && nullToAbsent
+          ? const Value.absent()
+          : Value(seedVersion),
+      userModified: Value(userModified),
+      archivedAt: archivedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(archivedAt),
+    );
+  }
+
+  factory ExercisesData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ExercisesData(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<int>(json['createdAt']),
+      updatedAt: serializer.fromJson<int>(json['updatedAt']),
+      deletedAt: serializer.fromJson<int?>(json['deletedAt']),
+      name: serializer.fromJson<String>(json['name']),
+      aliases: serializer.fromJson<String>(json['aliases']),
+      searchText: serializer.fromJson<String>(json['searchText']),
+      primaryMuscles: serializer.fromJson<String>(json['primaryMuscles']),
+      secondaryMuscles: serializer.fromJson<String>(json['secondaryMuscles']),
+      equipment: serializer.fromJson<String?>(json['equipment']),
+      category: serializer.fromJson<String>(json['category']),
+      mechanic: serializer.fromJson<String?>(json['mechanic']),
+      force: serializer.fromJson<String?>(json['force']),
+      instructions: serializer.fromJson<String?>(json['instructions']),
+      measureWeight: serializer.fromJson<int>(json['measureWeight']),
+      measureReps: serializer.fromJson<int>(json['measureReps']),
+      measureDuration: serializer.fromJson<int>(json['measureDuration']),
+      measureDistance: serializer.fromJson<int>(json['measureDistance']),
+      loadMode: serializer.fromJson<String>(json['loadMode']),
+      weightSemantics: serializer.fromJson<String>(json['weightSemantics']),
+      isUnilateral: serializer.fromJson<int>(json['isUnilateral']),
+      imageRef: serializer.fromJson<String?>(json['imageRef']),
+      source: serializer.fromJson<String>(json['source']),
+      originRef: serializer.fromJson<String?>(json['originRef']),
+      license: serializer.fromJson<String?>(json['license']),
+      licenseAuthor: serializer.fromJson<String?>(json['licenseAuthor']),
+      seedVersion: serializer.fromJson<int?>(json['seedVersion']),
+      userModified: serializer.fromJson<int>(json['userModified']),
+      archivedAt: serializer.fromJson<int?>(json['archivedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<int>(createdAt),
+      'updatedAt': serializer.toJson<int>(updatedAt),
+      'deletedAt': serializer.toJson<int?>(deletedAt),
+      'name': serializer.toJson<String>(name),
+      'aliases': serializer.toJson<String>(aliases),
+      'searchText': serializer.toJson<String>(searchText),
+      'primaryMuscles': serializer.toJson<String>(primaryMuscles),
+      'secondaryMuscles': serializer.toJson<String>(secondaryMuscles),
+      'equipment': serializer.toJson<String?>(equipment),
+      'category': serializer.toJson<String>(category),
+      'mechanic': serializer.toJson<String?>(mechanic),
+      'force': serializer.toJson<String?>(force),
+      'instructions': serializer.toJson<String?>(instructions),
+      'measureWeight': serializer.toJson<int>(measureWeight),
+      'measureReps': serializer.toJson<int>(measureReps),
+      'measureDuration': serializer.toJson<int>(measureDuration),
+      'measureDistance': serializer.toJson<int>(measureDistance),
+      'loadMode': serializer.toJson<String>(loadMode),
+      'weightSemantics': serializer.toJson<String>(weightSemantics),
+      'isUnilateral': serializer.toJson<int>(isUnilateral),
+      'imageRef': serializer.toJson<String?>(imageRef),
+      'source': serializer.toJson<String>(source),
+      'originRef': serializer.toJson<String?>(originRef),
+      'license': serializer.toJson<String?>(license),
+      'licenseAuthor': serializer.toJson<String?>(licenseAuthor),
+      'seedVersion': serializer.toJson<int?>(seedVersion),
+      'userModified': serializer.toJson<int>(userModified),
+      'archivedAt': serializer.toJson<int?>(archivedAt),
+    };
+  }
+
+  ExercisesData copyWith({
+    String? id,
+    int? createdAt,
+    int? updatedAt,
+    Value<int?> deletedAt = const Value.absent(),
+    String? name,
+    String? aliases,
+    String? searchText,
+    String? primaryMuscles,
+    String? secondaryMuscles,
+    Value<String?> equipment = const Value.absent(),
+    String? category,
+    Value<String?> mechanic = const Value.absent(),
+    Value<String?> force = const Value.absent(),
+    Value<String?> instructions = const Value.absent(),
+    int? measureWeight,
+    int? measureReps,
+    int? measureDuration,
+    int? measureDistance,
+    String? loadMode,
+    String? weightSemantics,
+    int? isUnilateral,
+    Value<String?> imageRef = const Value.absent(),
+    String? source,
+    Value<String?> originRef = const Value.absent(),
+    Value<String?> license = const Value.absent(),
+    Value<String?> licenseAuthor = const Value.absent(),
+    Value<int?> seedVersion = const Value.absent(),
+    int? userModified,
+    Value<int?> archivedAt = const Value.absent(),
+  }) => ExercisesData(
+    id: id ?? this.id,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    name: name ?? this.name,
+    aliases: aliases ?? this.aliases,
+    searchText: searchText ?? this.searchText,
+    primaryMuscles: primaryMuscles ?? this.primaryMuscles,
+    secondaryMuscles: secondaryMuscles ?? this.secondaryMuscles,
+    equipment: equipment.present ? equipment.value : this.equipment,
+    category: category ?? this.category,
+    mechanic: mechanic.present ? mechanic.value : this.mechanic,
+    force: force.present ? force.value : this.force,
+    instructions: instructions.present ? instructions.value : this.instructions,
+    measureWeight: measureWeight ?? this.measureWeight,
+    measureReps: measureReps ?? this.measureReps,
+    measureDuration: measureDuration ?? this.measureDuration,
+    measureDistance: measureDistance ?? this.measureDistance,
+    loadMode: loadMode ?? this.loadMode,
+    weightSemantics: weightSemantics ?? this.weightSemantics,
+    isUnilateral: isUnilateral ?? this.isUnilateral,
+    imageRef: imageRef.present ? imageRef.value : this.imageRef,
+    source: source ?? this.source,
+    originRef: originRef.present ? originRef.value : this.originRef,
+    license: license.present ? license.value : this.license,
+    licenseAuthor: licenseAuthor.present
+        ? licenseAuthor.value
+        : this.licenseAuthor,
+    seedVersion: seedVersion.present ? seedVersion.value : this.seedVersion,
+    userModified: userModified ?? this.userModified,
+    archivedAt: archivedAt.present ? archivedAt.value : this.archivedAt,
+  );
+  ExercisesData copyWithCompanion(ExercisesCompanion data) {
+    return ExercisesData(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      name: data.name.present ? data.name.value : this.name,
+      aliases: data.aliases.present ? data.aliases.value : this.aliases,
+      searchText: data.searchText.present
+          ? data.searchText.value
+          : this.searchText,
+      primaryMuscles: data.primaryMuscles.present
+          ? data.primaryMuscles.value
+          : this.primaryMuscles,
+      secondaryMuscles: data.secondaryMuscles.present
+          ? data.secondaryMuscles.value
+          : this.secondaryMuscles,
+      equipment: data.equipment.present ? data.equipment.value : this.equipment,
+      category: data.category.present ? data.category.value : this.category,
+      mechanic: data.mechanic.present ? data.mechanic.value : this.mechanic,
+      force: data.force.present ? data.force.value : this.force,
+      instructions: data.instructions.present
+          ? data.instructions.value
+          : this.instructions,
+      measureWeight: data.measureWeight.present
+          ? data.measureWeight.value
+          : this.measureWeight,
+      measureReps: data.measureReps.present
+          ? data.measureReps.value
+          : this.measureReps,
+      measureDuration: data.measureDuration.present
+          ? data.measureDuration.value
+          : this.measureDuration,
+      measureDistance: data.measureDistance.present
+          ? data.measureDistance.value
+          : this.measureDistance,
+      loadMode: data.loadMode.present ? data.loadMode.value : this.loadMode,
+      weightSemantics: data.weightSemantics.present
+          ? data.weightSemantics.value
+          : this.weightSemantics,
+      isUnilateral: data.isUnilateral.present
+          ? data.isUnilateral.value
+          : this.isUnilateral,
+      imageRef: data.imageRef.present ? data.imageRef.value : this.imageRef,
+      source: data.source.present ? data.source.value : this.source,
+      originRef: data.originRef.present ? data.originRef.value : this.originRef,
+      license: data.license.present ? data.license.value : this.license,
+      licenseAuthor: data.licenseAuthor.present
+          ? data.licenseAuthor.value
+          : this.licenseAuthor,
+      seedVersion: data.seedVersion.present
+          ? data.seedVersion.value
+          : this.seedVersion,
+      userModified: data.userModified.present
+          ? data.userModified.value
+          : this.userModified,
+      archivedAt: data.archivedAt.present
+          ? data.archivedAt.value
+          : this.archivedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExercisesData(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('name: $name, ')
+          ..write('aliases: $aliases, ')
+          ..write('searchText: $searchText, ')
+          ..write('primaryMuscles: $primaryMuscles, ')
+          ..write('secondaryMuscles: $secondaryMuscles, ')
+          ..write('equipment: $equipment, ')
+          ..write('category: $category, ')
+          ..write('mechanic: $mechanic, ')
+          ..write('force: $force, ')
+          ..write('instructions: $instructions, ')
+          ..write('measureWeight: $measureWeight, ')
+          ..write('measureReps: $measureReps, ')
+          ..write('measureDuration: $measureDuration, ')
+          ..write('measureDistance: $measureDistance, ')
+          ..write('loadMode: $loadMode, ')
+          ..write('weightSemantics: $weightSemantics, ')
+          ..write('isUnilateral: $isUnilateral, ')
+          ..write('imageRef: $imageRef, ')
+          ..write('source: $source, ')
+          ..write('originRef: $originRef, ')
+          ..write('license: $license, ')
+          ..write('licenseAuthor: $licenseAuthor, ')
+          ..write('seedVersion: $seedVersion, ')
+          ..write('userModified: $userModified, ')
+          ..write('archivedAt: $archivedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    name,
+    aliases,
+    searchText,
+    primaryMuscles,
+    secondaryMuscles,
+    equipment,
+    category,
+    mechanic,
+    force,
+    instructions,
+    measureWeight,
+    measureReps,
+    measureDuration,
+    measureDistance,
+    loadMode,
+    weightSemantics,
+    isUnilateral,
+    imageRef,
+    source,
+    originRef,
+    license,
+    licenseAuthor,
+    seedVersion,
+    userModified,
+    archivedAt,
+  ]);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ExercisesData &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.name == this.name &&
+          other.aliases == this.aliases &&
+          other.searchText == this.searchText &&
+          other.primaryMuscles == this.primaryMuscles &&
+          other.secondaryMuscles == this.secondaryMuscles &&
+          other.equipment == this.equipment &&
+          other.category == this.category &&
+          other.mechanic == this.mechanic &&
+          other.force == this.force &&
+          other.instructions == this.instructions &&
+          other.measureWeight == this.measureWeight &&
+          other.measureReps == this.measureReps &&
+          other.measureDuration == this.measureDuration &&
+          other.measureDistance == this.measureDistance &&
+          other.loadMode == this.loadMode &&
+          other.weightSemantics == this.weightSemantics &&
+          other.isUnilateral == this.isUnilateral &&
+          other.imageRef == this.imageRef &&
+          other.source == this.source &&
+          other.originRef == this.originRef &&
+          other.license == this.license &&
+          other.licenseAuthor == this.licenseAuthor &&
+          other.seedVersion == this.seedVersion &&
+          other.userModified == this.userModified &&
+          other.archivedAt == this.archivedAt);
+}
+
+class ExercisesCompanion extends UpdateCompanion<ExercisesData> {
+  final Value<String> id;
+  final Value<int> createdAt;
+  final Value<int> updatedAt;
+  final Value<int?> deletedAt;
+  final Value<String> name;
+  final Value<String> aliases;
+  final Value<String> searchText;
+  final Value<String> primaryMuscles;
+  final Value<String> secondaryMuscles;
+  final Value<String?> equipment;
+  final Value<String> category;
+  final Value<String?> mechanic;
+  final Value<String?> force;
+  final Value<String?> instructions;
+  final Value<int> measureWeight;
+  final Value<int> measureReps;
+  final Value<int> measureDuration;
+  final Value<int> measureDistance;
+  final Value<String> loadMode;
+  final Value<String> weightSemantics;
+  final Value<int> isUnilateral;
+  final Value<String?> imageRef;
+  final Value<String> source;
+  final Value<String?> originRef;
+  final Value<String?> license;
+  final Value<String?> licenseAuthor;
+  final Value<int?> seedVersion;
+  final Value<int> userModified;
+  final Value<int?> archivedAt;
+  final Value<int> rowid;
+  const ExercisesCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.name = const Value.absent(),
+    this.aliases = const Value.absent(),
+    this.searchText = const Value.absent(),
+    this.primaryMuscles = const Value.absent(),
+    this.secondaryMuscles = const Value.absent(),
+    this.equipment = const Value.absent(),
+    this.category = const Value.absent(),
+    this.mechanic = const Value.absent(),
+    this.force = const Value.absent(),
+    this.instructions = const Value.absent(),
+    this.measureWeight = const Value.absent(),
+    this.measureReps = const Value.absent(),
+    this.measureDuration = const Value.absent(),
+    this.measureDistance = const Value.absent(),
+    this.loadMode = const Value.absent(),
+    this.weightSemantics = const Value.absent(),
+    this.isUnilateral = const Value.absent(),
+    this.imageRef = const Value.absent(),
+    this.source = const Value.absent(),
+    this.originRef = const Value.absent(),
+    this.license = const Value.absent(),
+    this.licenseAuthor = const Value.absent(),
+    this.seedVersion = const Value.absent(),
+    this.userModified = const Value.absent(),
+    this.archivedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ExercisesCompanion.insert({
+    required String id,
+    required int createdAt,
+    required int updatedAt,
+    this.deletedAt = const Value.absent(),
+    required String name,
+    required String aliases,
+    required String searchText,
+    required String primaryMuscles,
+    required String secondaryMuscles,
+    this.equipment = const Value.absent(),
+    required String category,
+    this.mechanic = const Value.absent(),
+    this.force = const Value.absent(),
+    this.instructions = const Value.absent(),
+    required int measureWeight,
+    required int measureReps,
+    required int measureDuration,
+    required int measureDistance,
+    required String loadMode,
+    required String weightSemantics,
+    required int isUnilateral,
+    this.imageRef = const Value.absent(),
+    required String source,
+    this.originRef = const Value.absent(),
+    this.license = const Value.absent(),
+    this.licenseAuthor = const Value.absent(),
+    this.seedVersion = const Value.absent(),
+    required int userModified,
+    this.archivedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       name = Value(name),
+       aliases = Value(aliases),
+       searchText = Value(searchText),
+       primaryMuscles = Value(primaryMuscles),
+       secondaryMuscles = Value(secondaryMuscles),
+       category = Value(category),
+       measureWeight = Value(measureWeight),
+       measureReps = Value(measureReps),
+       measureDuration = Value(measureDuration),
+       measureDistance = Value(measureDistance),
+       loadMode = Value(loadMode),
+       weightSemantics = Value(weightSemantics),
+       isUnilateral = Value(isUnilateral),
+       source = Value(source),
+       userModified = Value(userModified);
+  static Insertable<ExercisesData> custom({
+    Expression<String>? id,
+    Expression<int>? createdAt,
+    Expression<int>? updatedAt,
+    Expression<int>? deletedAt,
+    Expression<String>? name,
+    Expression<String>? aliases,
+    Expression<String>? searchText,
+    Expression<String>? primaryMuscles,
+    Expression<String>? secondaryMuscles,
+    Expression<String>? equipment,
+    Expression<String>? category,
+    Expression<String>? mechanic,
+    Expression<String>? force,
+    Expression<String>? instructions,
+    Expression<int>? measureWeight,
+    Expression<int>? measureReps,
+    Expression<int>? measureDuration,
+    Expression<int>? measureDistance,
+    Expression<String>? loadMode,
+    Expression<String>? weightSemantics,
+    Expression<int>? isUnilateral,
+    Expression<String>? imageRef,
+    Expression<String>? source,
+    Expression<String>? originRef,
+    Expression<String>? license,
+    Expression<String>? licenseAuthor,
+    Expression<int>? seedVersion,
+    Expression<int>? userModified,
+    Expression<int>? archivedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (name != null) 'name': name,
+      if (aliases != null) 'aliases': aliases,
+      if (searchText != null) 'search_text': searchText,
+      if (primaryMuscles != null) 'primary_muscles': primaryMuscles,
+      if (secondaryMuscles != null) 'secondary_muscles': secondaryMuscles,
+      if (equipment != null) 'equipment': equipment,
+      if (category != null) 'category': category,
+      if (mechanic != null) 'mechanic': mechanic,
+      if (force != null) 'force': force,
+      if (instructions != null) 'instructions': instructions,
+      if (measureWeight != null) 'measure_weight': measureWeight,
+      if (measureReps != null) 'measure_reps': measureReps,
+      if (measureDuration != null) 'measure_duration': measureDuration,
+      if (measureDistance != null) 'measure_distance': measureDistance,
+      if (loadMode != null) 'load_mode': loadMode,
+      if (weightSemantics != null) 'weight_semantics': weightSemantics,
+      if (isUnilateral != null) 'is_unilateral': isUnilateral,
+      if (imageRef != null) 'image_ref': imageRef,
+      if (source != null) 'source': source,
+      if (originRef != null) 'origin_ref': originRef,
+      if (license != null) 'license': license,
+      if (licenseAuthor != null) 'license_author': licenseAuthor,
+      if (seedVersion != null) 'seed_version': seedVersion,
+      if (userModified != null) 'user_modified': userModified,
+      if (archivedAt != null) 'archived_at': archivedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ExercisesCompanion copyWith({
+    Value<String>? id,
+    Value<int>? createdAt,
+    Value<int>? updatedAt,
+    Value<int?>? deletedAt,
+    Value<String>? name,
+    Value<String>? aliases,
+    Value<String>? searchText,
+    Value<String>? primaryMuscles,
+    Value<String>? secondaryMuscles,
+    Value<String?>? equipment,
+    Value<String>? category,
+    Value<String?>? mechanic,
+    Value<String?>? force,
+    Value<String?>? instructions,
+    Value<int>? measureWeight,
+    Value<int>? measureReps,
+    Value<int>? measureDuration,
+    Value<int>? measureDistance,
+    Value<String>? loadMode,
+    Value<String>? weightSemantics,
+    Value<int>? isUnilateral,
+    Value<String?>? imageRef,
+    Value<String>? source,
+    Value<String?>? originRef,
+    Value<String?>? license,
+    Value<String?>? licenseAuthor,
+    Value<int?>? seedVersion,
+    Value<int>? userModified,
+    Value<int?>? archivedAt,
+    Value<int>? rowid,
+  }) {
+    return ExercisesCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      name: name ?? this.name,
+      aliases: aliases ?? this.aliases,
+      searchText: searchText ?? this.searchText,
+      primaryMuscles: primaryMuscles ?? this.primaryMuscles,
+      secondaryMuscles: secondaryMuscles ?? this.secondaryMuscles,
+      equipment: equipment ?? this.equipment,
+      category: category ?? this.category,
+      mechanic: mechanic ?? this.mechanic,
+      force: force ?? this.force,
+      instructions: instructions ?? this.instructions,
+      measureWeight: measureWeight ?? this.measureWeight,
+      measureReps: measureReps ?? this.measureReps,
+      measureDuration: measureDuration ?? this.measureDuration,
+      measureDistance: measureDistance ?? this.measureDistance,
+      loadMode: loadMode ?? this.loadMode,
+      weightSemantics: weightSemantics ?? this.weightSemantics,
+      isUnilateral: isUnilateral ?? this.isUnilateral,
+      imageRef: imageRef ?? this.imageRef,
+      source: source ?? this.source,
+      originRef: originRef ?? this.originRef,
+      license: license ?? this.license,
+      licenseAuthor: licenseAuthor ?? this.licenseAuthor,
+      seedVersion: seedVersion ?? this.seedVersion,
+      userModified: userModified ?? this.userModified,
+      archivedAt: archivedAt ?? this.archivedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<int>(deletedAt.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (aliases.present) {
+      map['aliases'] = Variable<String>(aliases.value);
+    }
+    if (searchText.present) {
+      map['search_text'] = Variable<String>(searchText.value);
+    }
+    if (primaryMuscles.present) {
+      map['primary_muscles'] = Variable<String>(primaryMuscles.value);
+    }
+    if (secondaryMuscles.present) {
+      map['secondary_muscles'] = Variable<String>(secondaryMuscles.value);
+    }
+    if (equipment.present) {
+      map['equipment'] = Variable<String>(equipment.value);
+    }
+    if (category.present) {
+      map['category'] = Variable<String>(category.value);
+    }
+    if (mechanic.present) {
+      map['mechanic'] = Variable<String>(mechanic.value);
+    }
+    if (force.present) {
+      map['force'] = Variable<String>(force.value);
+    }
+    if (instructions.present) {
+      map['instructions'] = Variable<String>(instructions.value);
+    }
+    if (measureWeight.present) {
+      map['measure_weight'] = Variable<int>(measureWeight.value);
+    }
+    if (measureReps.present) {
+      map['measure_reps'] = Variable<int>(measureReps.value);
+    }
+    if (measureDuration.present) {
+      map['measure_duration'] = Variable<int>(measureDuration.value);
+    }
+    if (measureDistance.present) {
+      map['measure_distance'] = Variable<int>(measureDistance.value);
+    }
+    if (loadMode.present) {
+      map['load_mode'] = Variable<String>(loadMode.value);
+    }
+    if (weightSemantics.present) {
+      map['weight_semantics'] = Variable<String>(weightSemantics.value);
+    }
+    if (isUnilateral.present) {
+      map['is_unilateral'] = Variable<int>(isUnilateral.value);
+    }
+    if (imageRef.present) {
+      map['image_ref'] = Variable<String>(imageRef.value);
+    }
+    if (source.present) {
+      map['source'] = Variable<String>(source.value);
+    }
+    if (originRef.present) {
+      map['origin_ref'] = Variable<String>(originRef.value);
+    }
+    if (license.present) {
+      map['license'] = Variable<String>(license.value);
+    }
+    if (licenseAuthor.present) {
+      map['license_author'] = Variable<String>(licenseAuthor.value);
+    }
+    if (seedVersion.present) {
+      map['seed_version'] = Variable<int>(seedVersion.value);
+    }
+    if (userModified.present) {
+      map['user_modified'] = Variable<int>(userModified.value);
+    }
+    if (archivedAt.present) {
+      map['archived_at'] = Variable<int>(archivedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExercisesCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('name: $name, ')
+          ..write('aliases: $aliases, ')
+          ..write('searchText: $searchText, ')
+          ..write('primaryMuscles: $primaryMuscles, ')
+          ..write('secondaryMuscles: $secondaryMuscles, ')
+          ..write('equipment: $equipment, ')
+          ..write('category: $category, ')
+          ..write('mechanic: $mechanic, ')
+          ..write('force: $force, ')
+          ..write('instructions: $instructions, ')
+          ..write('measureWeight: $measureWeight, ')
+          ..write('measureReps: $measureReps, ')
+          ..write('measureDuration: $measureDuration, ')
+          ..write('measureDistance: $measureDistance, ')
+          ..write('loadMode: $loadMode, ')
+          ..write('weightSemantics: $weightSemantics, ')
+          ..write('isUnilateral: $isUnilateral, ')
+          ..write('imageRef: $imageRef, ')
+          ..write('source: $source, ')
+          ..write('originRef: $originRef, ')
+          ..write('license: $license, ')
+          ..write('licenseAuthor: $licenseAuthor, ')
+          ..write('seedVersion: $seedVersion, ')
+          ..write('userModified: $userModified, ')
+          ..write('archivedAt: $archivedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class Templates extends Table with TableInfo<Templates, TemplatesData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -378,8 +1349,38 @@ class Templates extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  TemplatesData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TemplatesData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      ),
+      archivedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}archived_at'],
+      ),
+    );
   }
 
   @override
@@ -393,7 +1394,283 @@ class Templates extends Table with TableInfo {
   bool get dontWriteConstraints => true;
 }
 
-class TemplateExercises extends Table with TableInfo {
+class TemplatesData extends DataClass implements Insertable<TemplatesData> {
+  final String id;
+  final int createdAt;
+  final int updatedAt;
+  final int? deletedAt;
+  final String name;
+  final String? description;
+  final int? archivedAt;
+  const TemplatesData({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.name,
+    this.description,
+    this.archivedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<int>(createdAt);
+    map['updated_at'] = Variable<int>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<int>(deletedAt);
+    }
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
+    }
+    if (!nullToAbsent || archivedAt != null) {
+      map['archived_at'] = Variable<int>(archivedAt);
+    }
+    return map;
+  }
+
+  TemplatesCompanion toCompanion(bool nullToAbsent) {
+    return TemplatesCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      name: Value(name),
+      description: description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(description),
+      archivedAt: archivedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(archivedAt),
+    );
+  }
+
+  factory TemplatesData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TemplatesData(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<int>(json['createdAt']),
+      updatedAt: serializer.fromJson<int>(json['updatedAt']),
+      deletedAt: serializer.fromJson<int?>(json['deletedAt']),
+      name: serializer.fromJson<String>(json['name']),
+      description: serializer.fromJson<String?>(json['description']),
+      archivedAt: serializer.fromJson<int?>(json['archivedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<int>(createdAt),
+      'updatedAt': serializer.toJson<int>(updatedAt),
+      'deletedAt': serializer.toJson<int?>(deletedAt),
+      'name': serializer.toJson<String>(name),
+      'description': serializer.toJson<String?>(description),
+      'archivedAt': serializer.toJson<int?>(archivedAt),
+    };
+  }
+
+  TemplatesData copyWith({
+    String? id,
+    int? createdAt,
+    int? updatedAt,
+    Value<int?> deletedAt = const Value.absent(),
+    String? name,
+    Value<String?> description = const Value.absent(),
+    Value<int?> archivedAt = const Value.absent(),
+  }) => TemplatesData(
+    id: id ?? this.id,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    name: name ?? this.name,
+    description: description.present ? description.value : this.description,
+    archivedAt: archivedAt.present ? archivedAt.value : this.archivedAt,
+  );
+  TemplatesData copyWithCompanion(TemplatesCompanion data) {
+    return TemplatesData(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      name: data.name.present ? data.name.value : this.name,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
+      archivedAt: data.archivedAt.present
+          ? data.archivedAt.value
+          : this.archivedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TemplatesData(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('archivedAt: $archivedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    name,
+    description,
+    archivedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TemplatesData &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.name == this.name &&
+          other.description == this.description &&
+          other.archivedAt == this.archivedAt);
+}
+
+class TemplatesCompanion extends UpdateCompanion<TemplatesData> {
+  final Value<String> id;
+  final Value<int> createdAt;
+  final Value<int> updatedAt;
+  final Value<int?> deletedAt;
+  final Value<String> name;
+  final Value<String?> description;
+  final Value<int?> archivedAt;
+  final Value<int> rowid;
+  const TemplatesCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.name = const Value.absent(),
+    this.description = const Value.absent(),
+    this.archivedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TemplatesCompanion.insert({
+    required String id,
+    required int createdAt,
+    required int updatedAt,
+    this.deletedAt = const Value.absent(),
+    required String name,
+    this.description = const Value.absent(),
+    this.archivedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       name = Value(name);
+  static Insertable<TemplatesData> custom({
+    Expression<String>? id,
+    Expression<int>? createdAt,
+    Expression<int>? updatedAt,
+    Expression<int>? deletedAt,
+    Expression<String>? name,
+    Expression<String>? description,
+    Expression<int>? archivedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (name != null) 'name': name,
+      if (description != null) 'description': description,
+      if (archivedAt != null) 'archived_at': archivedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TemplatesCompanion copyWith({
+    Value<String>? id,
+    Value<int>? createdAt,
+    Value<int>? updatedAt,
+    Value<int?>? deletedAt,
+    Value<String>? name,
+    Value<String?>? description,
+    Value<int?>? archivedAt,
+    Value<int>? rowid,
+  }) {
+    return TemplatesCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      archivedAt: archivedAt ?? this.archivedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<int>(deletedAt.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (archivedAt.present) {
+      map['archived_at'] = Variable<int>(archivedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TemplatesCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('archivedAt: $archivedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class TemplateExercises extends Table
+    with TableInfo<TemplateExercises, TemplateExercisesData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -544,8 +1821,70 @@ class TemplateExercises extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  TemplateExercisesData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TemplateExercisesData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      templateId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}template_id'],
+      )!,
+      exerciseId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}exercise_id'],
+      )!,
+      position: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}position'],
+      )!,
+      targetKind: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}target_kind'],
+      )!,
+      targetMin: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}target_min'],
+      ),
+      targetMax: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}target_max'],
+      ),
+      targetWeightG: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}target_weight_g'],
+      ),
+      restSeconds: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}rest_seconds'],
+      ),
+      defaultSetType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}default_set_type'],
+      )!,
+      note: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}note'],
+      ),
+      groupId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}group_id'],
+      ),
+    );
   }
 
   @override
@@ -559,7 +1898,497 @@ class TemplateExercises extends Table with TableInfo {
   bool get dontWriteConstraints => true;
 }
 
-class TemplateSets extends Table with TableInfo {
+class TemplateExercisesData extends DataClass
+    implements Insertable<TemplateExercisesData> {
+  final String id;
+  final int createdAt;
+  final int updatedAt;
+  final int? deletedAt;
+  final String templateId;
+  final String exerciseId;
+  final int position;
+  final String targetKind;
+  final int? targetMin;
+  final int? targetMax;
+  final int? targetWeightG;
+  final int? restSeconds;
+  final String defaultSetType;
+  final String? note;
+  final String? groupId;
+  const TemplateExercisesData({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.templateId,
+    required this.exerciseId,
+    required this.position,
+    required this.targetKind,
+    this.targetMin,
+    this.targetMax,
+    this.targetWeightG,
+    this.restSeconds,
+    required this.defaultSetType,
+    this.note,
+    this.groupId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<int>(createdAt);
+    map['updated_at'] = Variable<int>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<int>(deletedAt);
+    }
+    map['template_id'] = Variable<String>(templateId);
+    map['exercise_id'] = Variable<String>(exerciseId);
+    map['position'] = Variable<int>(position);
+    map['target_kind'] = Variable<String>(targetKind);
+    if (!nullToAbsent || targetMin != null) {
+      map['target_min'] = Variable<int>(targetMin);
+    }
+    if (!nullToAbsent || targetMax != null) {
+      map['target_max'] = Variable<int>(targetMax);
+    }
+    if (!nullToAbsent || targetWeightG != null) {
+      map['target_weight_g'] = Variable<int>(targetWeightG);
+    }
+    if (!nullToAbsent || restSeconds != null) {
+      map['rest_seconds'] = Variable<int>(restSeconds);
+    }
+    map['default_set_type'] = Variable<String>(defaultSetType);
+    if (!nullToAbsent || note != null) {
+      map['note'] = Variable<String>(note);
+    }
+    if (!nullToAbsent || groupId != null) {
+      map['group_id'] = Variable<String>(groupId);
+    }
+    return map;
+  }
+
+  TemplateExercisesCompanion toCompanion(bool nullToAbsent) {
+    return TemplateExercisesCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      templateId: Value(templateId),
+      exerciseId: Value(exerciseId),
+      position: Value(position),
+      targetKind: Value(targetKind),
+      targetMin: targetMin == null && nullToAbsent
+          ? const Value.absent()
+          : Value(targetMin),
+      targetMax: targetMax == null && nullToAbsent
+          ? const Value.absent()
+          : Value(targetMax),
+      targetWeightG: targetWeightG == null && nullToAbsent
+          ? const Value.absent()
+          : Value(targetWeightG),
+      restSeconds: restSeconds == null && nullToAbsent
+          ? const Value.absent()
+          : Value(restSeconds),
+      defaultSetType: Value(defaultSetType),
+      note: note == null && nullToAbsent ? const Value.absent() : Value(note),
+      groupId: groupId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(groupId),
+    );
+  }
+
+  factory TemplateExercisesData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TemplateExercisesData(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<int>(json['createdAt']),
+      updatedAt: serializer.fromJson<int>(json['updatedAt']),
+      deletedAt: serializer.fromJson<int?>(json['deletedAt']),
+      templateId: serializer.fromJson<String>(json['templateId']),
+      exerciseId: serializer.fromJson<String>(json['exerciseId']),
+      position: serializer.fromJson<int>(json['position']),
+      targetKind: serializer.fromJson<String>(json['targetKind']),
+      targetMin: serializer.fromJson<int?>(json['targetMin']),
+      targetMax: serializer.fromJson<int?>(json['targetMax']),
+      targetWeightG: serializer.fromJson<int?>(json['targetWeightG']),
+      restSeconds: serializer.fromJson<int?>(json['restSeconds']),
+      defaultSetType: serializer.fromJson<String>(json['defaultSetType']),
+      note: serializer.fromJson<String?>(json['note']),
+      groupId: serializer.fromJson<String?>(json['groupId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<int>(createdAt),
+      'updatedAt': serializer.toJson<int>(updatedAt),
+      'deletedAt': serializer.toJson<int?>(deletedAt),
+      'templateId': serializer.toJson<String>(templateId),
+      'exerciseId': serializer.toJson<String>(exerciseId),
+      'position': serializer.toJson<int>(position),
+      'targetKind': serializer.toJson<String>(targetKind),
+      'targetMin': serializer.toJson<int?>(targetMin),
+      'targetMax': serializer.toJson<int?>(targetMax),
+      'targetWeightG': serializer.toJson<int?>(targetWeightG),
+      'restSeconds': serializer.toJson<int?>(restSeconds),
+      'defaultSetType': serializer.toJson<String>(defaultSetType),
+      'note': serializer.toJson<String?>(note),
+      'groupId': serializer.toJson<String?>(groupId),
+    };
+  }
+
+  TemplateExercisesData copyWith({
+    String? id,
+    int? createdAt,
+    int? updatedAt,
+    Value<int?> deletedAt = const Value.absent(),
+    String? templateId,
+    String? exerciseId,
+    int? position,
+    String? targetKind,
+    Value<int?> targetMin = const Value.absent(),
+    Value<int?> targetMax = const Value.absent(),
+    Value<int?> targetWeightG = const Value.absent(),
+    Value<int?> restSeconds = const Value.absent(),
+    String? defaultSetType,
+    Value<String?> note = const Value.absent(),
+    Value<String?> groupId = const Value.absent(),
+  }) => TemplateExercisesData(
+    id: id ?? this.id,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    templateId: templateId ?? this.templateId,
+    exerciseId: exerciseId ?? this.exerciseId,
+    position: position ?? this.position,
+    targetKind: targetKind ?? this.targetKind,
+    targetMin: targetMin.present ? targetMin.value : this.targetMin,
+    targetMax: targetMax.present ? targetMax.value : this.targetMax,
+    targetWeightG: targetWeightG.present
+        ? targetWeightG.value
+        : this.targetWeightG,
+    restSeconds: restSeconds.present ? restSeconds.value : this.restSeconds,
+    defaultSetType: defaultSetType ?? this.defaultSetType,
+    note: note.present ? note.value : this.note,
+    groupId: groupId.present ? groupId.value : this.groupId,
+  );
+  TemplateExercisesData copyWithCompanion(TemplateExercisesCompanion data) {
+    return TemplateExercisesData(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      templateId: data.templateId.present
+          ? data.templateId.value
+          : this.templateId,
+      exerciseId: data.exerciseId.present
+          ? data.exerciseId.value
+          : this.exerciseId,
+      position: data.position.present ? data.position.value : this.position,
+      targetKind: data.targetKind.present
+          ? data.targetKind.value
+          : this.targetKind,
+      targetMin: data.targetMin.present ? data.targetMin.value : this.targetMin,
+      targetMax: data.targetMax.present ? data.targetMax.value : this.targetMax,
+      targetWeightG: data.targetWeightG.present
+          ? data.targetWeightG.value
+          : this.targetWeightG,
+      restSeconds: data.restSeconds.present
+          ? data.restSeconds.value
+          : this.restSeconds,
+      defaultSetType: data.defaultSetType.present
+          ? data.defaultSetType.value
+          : this.defaultSetType,
+      note: data.note.present ? data.note.value : this.note,
+      groupId: data.groupId.present ? data.groupId.value : this.groupId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TemplateExercisesData(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('templateId: $templateId, ')
+          ..write('exerciseId: $exerciseId, ')
+          ..write('position: $position, ')
+          ..write('targetKind: $targetKind, ')
+          ..write('targetMin: $targetMin, ')
+          ..write('targetMax: $targetMax, ')
+          ..write('targetWeightG: $targetWeightG, ')
+          ..write('restSeconds: $restSeconds, ')
+          ..write('defaultSetType: $defaultSetType, ')
+          ..write('note: $note, ')
+          ..write('groupId: $groupId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    templateId,
+    exerciseId,
+    position,
+    targetKind,
+    targetMin,
+    targetMax,
+    targetWeightG,
+    restSeconds,
+    defaultSetType,
+    note,
+    groupId,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TemplateExercisesData &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.templateId == this.templateId &&
+          other.exerciseId == this.exerciseId &&
+          other.position == this.position &&
+          other.targetKind == this.targetKind &&
+          other.targetMin == this.targetMin &&
+          other.targetMax == this.targetMax &&
+          other.targetWeightG == this.targetWeightG &&
+          other.restSeconds == this.restSeconds &&
+          other.defaultSetType == this.defaultSetType &&
+          other.note == this.note &&
+          other.groupId == this.groupId);
+}
+
+class TemplateExercisesCompanion
+    extends UpdateCompanion<TemplateExercisesData> {
+  final Value<String> id;
+  final Value<int> createdAt;
+  final Value<int> updatedAt;
+  final Value<int?> deletedAt;
+  final Value<String> templateId;
+  final Value<String> exerciseId;
+  final Value<int> position;
+  final Value<String> targetKind;
+  final Value<int?> targetMin;
+  final Value<int?> targetMax;
+  final Value<int?> targetWeightG;
+  final Value<int?> restSeconds;
+  final Value<String> defaultSetType;
+  final Value<String?> note;
+  final Value<String?> groupId;
+  final Value<int> rowid;
+  const TemplateExercisesCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.templateId = const Value.absent(),
+    this.exerciseId = const Value.absent(),
+    this.position = const Value.absent(),
+    this.targetKind = const Value.absent(),
+    this.targetMin = const Value.absent(),
+    this.targetMax = const Value.absent(),
+    this.targetWeightG = const Value.absent(),
+    this.restSeconds = const Value.absent(),
+    this.defaultSetType = const Value.absent(),
+    this.note = const Value.absent(),
+    this.groupId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TemplateExercisesCompanion.insert({
+    required String id,
+    required int createdAt,
+    required int updatedAt,
+    this.deletedAt = const Value.absent(),
+    required String templateId,
+    required String exerciseId,
+    required int position,
+    required String targetKind,
+    this.targetMin = const Value.absent(),
+    this.targetMax = const Value.absent(),
+    this.targetWeightG = const Value.absent(),
+    this.restSeconds = const Value.absent(),
+    required String defaultSetType,
+    this.note = const Value.absent(),
+    this.groupId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       templateId = Value(templateId),
+       exerciseId = Value(exerciseId),
+       position = Value(position),
+       targetKind = Value(targetKind),
+       defaultSetType = Value(defaultSetType);
+  static Insertable<TemplateExercisesData> custom({
+    Expression<String>? id,
+    Expression<int>? createdAt,
+    Expression<int>? updatedAt,
+    Expression<int>? deletedAt,
+    Expression<String>? templateId,
+    Expression<String>? exerciseId,
+    Expression<int>? position,
+    Expression<String>? targetKind,
+    Expression<int>? targetMin,
+    Expression<int>? targetMax,
+    Expression<int>? targetWeightG,
+    Expression<int>? restSeconds,
+    Expression<String>? defaultSetType,
+    Expression<String>? note,
+    Expression<String>? groupId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (templateId != null) 'template_id': templateId,
+      if (exerciseId != null) 'exercise_id': exerciseId,
+      if (position != null) 'position': position,
+      if (targetKind != null) 'target_kind': targetKind,
+      if (targetMin != null) 'target_min': targetMin,
+      if (targetMax != null) 'target_max': targetMax,
+      if (targetWeightG != null) 'target_weight_g': targetWeightG,
+      if (restSeconds != null) 'rest_seconds': restSeconds,
+      if (defaultSetType != null) 'default_set_type': defaultSetType,
+      if (note != null) 'note': note,
+      if (groupId != null) 'group_id': groupId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TemplateExercisesCompanion copyWith({
+    Value<String>? id,
+    Value<int>? createdAt,
+    Value<int>? updatedAt,
+    Value<int?>? deletedAt,
+    Value<String>? templateId,
+    Value<String>? exerciseId,
+    Value<int>? position,
+    Value<String>? targetKind,
+    Value<int?>? targetMin,
+    Value<int?>? targetMax,
+    Value<int?>? targetWeightG,
+    Value<int?>? restSeconds,
+    Value<String>? defaultSetType,
+    Value<String?>? note,
+    Value<String?>? groupId,
+    Value<int>? rowid,
+  }) {
+    return TemplateExercisesCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      templateId: templateId ?? this.templateId,
+      exerciseId: exerciseId ?? this.exerciseId,
+      position: position ?? this.position,
+      targetKind: targetKind ?? this.targetKind,
+      targetMin: targetMin ?? this.targetMin,
+      targetMax: targetMax ?? this.targetMax,
+      targetWeightG: targetWeightG ?? this.targetWeightG,
+      restSeconds: restSeconds ?? this.restSeconds,
+      defaultSetType: defaultSetType ?? this.defaultSetType,
+      note: note ?? this.note,
+      groupId: groupId ?? this.groupId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<int>(deletedAt.value);
+    }
+    if (templateId.present) {
+      map['template_id'] = Variable<String>(templateId.value);
+    }
+    if (exerciseId.present) {
+      map['exercise_id'] = Variable<String>(exerciseId.value);
+    }
+    if (position.present) {
+      map['position'] = Variable<int>(position.value);
+    }
+    if (targetKind.present) {
+      map['target_kind'] = Variable<String>(targetKind.value);
+    }
+    if (targetMin.present) {
+      map['target_min'] = Variable<int>(targetMin.value);
+    }
+    if (targetMax.present) {
+      map['target_max'] = Variable<int>(targetMax.value);
+    }
+    if (targetWeightG.present) {
+      map['target_weight_g'] = Variable<int>(targetWeightG.value);
+    }
+    if (restSeconds.present) {
+      map['rest_seconds'] = Variable<int>(restSeconds.value);
+    }
+    if (defaultSetType.present) {
+      map['default_set_type'] = Variable<String>(defaultSetType.value);
+    }
+    if (note.present) {
+      map['note'] = Variable<String>(note.value);
+    }
+    if (groupId.present) {
+      map['group_id'] = Variable<String>(groupId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TemplateExercisesCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('templateId: $templateId, ')
+          ..write('exerciseId: $exerciseId, ')
+          ..write('position: $position, ')
+          ..write('targetKind: $targetKind, ')
+          ..write('targetMin: $targetMin, ')
+          ..write('targetMax: $targetMax, ')
+          ..write('targetWeightG: $targetWeightG, ')
+          ..write('restSeconds: $restSeconds, ')
+          ..write('defaultSetType: $defaultSetType, ')
+          ..write('note: $note, ')
+          ..write('groupId: $groupId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class TemplateSets extends Table
+    with TableInfo<TemplateSets, TemplateSetsData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -675,8 +2504,54 @@ class TemplateSets extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  TemplateSetsData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TemplateSetsData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      templateExerciseId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}template_exercise_id'],
+      )!,
+      position: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}position'],
+      )!,
+      setType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}set_type'],
+      ),
+      targetMin: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}target_min'],
+      ),
+      targetMax: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}target_max'],
+      ),
+      targetWeightG: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}target_weight_g'],
+      ),
+      restSeconds: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}rest_seconds'],
+      ),
+    );
   }
 
   @override
@@ -690,7 +2565,396 @@ class TemplateSets extends Table with TableInfo {
   bool get dontWriteConstraints => true;
 }
 
-class WorkoutSessions extends Table with TableInfo {
+class TemplateSetsData extends DataClass
+    implements Insertable<TemplateSetsData> {
+  final String id;
+  final int createdAt;
+  final int updatedAt;
+  final int? deletedAt;
+  final String templateExerciseId;
+  final int position;
+  final String? setType;
+  final int? targetMin;
+  final int? targetMax;
+  final int? targetWeightG;
+  final int? restSeconds;
+  const TemplateSetsData({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.templateExerciseId,
+    required this.position,
+    this.setType,
+    this.targetMin,
+    this.targetMax,
+    this.targetWeightG,
+    this.restSeconds,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<int>(createdAt);
+    map['updated_at'] = Variable<int>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<int>(deletedAt);
+    }
+    map['template_exercise_id'] = Variable<String>(templateExerciseId);
+    map['position'] = Variable<int>(position);
+    if (!nullToAbsent || setType != null) {
+      map['set_type'] = Variable<String>(setType);
+    }
+    if (!nullToAbsent || targetMin != null) {
+      map['target_min'] = Variable<int>(targetMin);
+    }
+    if (!nullToAbsent || targetMax != null) {
+      map['target_max'] = Variable<int>(targetMax);
+    }
+    if (!nullToAbsent || targetWeightG != null) {
+      map['target_weight_g'] = Variable<int>(targetWeightG);
+    }
+    if (!nullToAbsent || restSeconds != null) {
+      map['rest_seconds'] = Variable<int>(restSeconds);
+    }
+    return map;
+  }
+
+  TemplateSetsCompanion toCompanion(bool nullToAbsent) {
+    return TemplateSetsCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      templateExerciseId: Value(templateExerciseId),
+      position: Value(position),
+      setType: setType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(setType),
+      targetMin: targetMin == null && nullToAbsent
+          ? const Value.absent()
+          : Value(targetMin),
+      targetMax: targetMax == null && nullToAbsent
+          ? const Value.absent()
+          : Value(targetMax),
+      targetWeightG: targetWeightG == null && nullToAbsent
+          ? const Value.absent()
+          : Value(targetWeightG),
+      restSeconds: restSeconds == null && nullToAbsent
+          ? const Value.absent()
+          : Value(restSeconds),
+    );
+  }
+
+  factory TemplateSetsData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TemplateSetsData(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<int>(json['createdAt']),
+      updatedAt: serializer.fromJson<int>(json['updatedAt']),
+      deletedAt: serializer.fromJson<int?>(json['deletedAt']),
+      templateExerciseId: serializer.fromJson<String>(
+        json['templateExerciseId'],
+      ),
+      position: serializer.fromJson<int>(json['position']),
+      setType: serializer.fromJson<String?>(json['setType']),
+      targetMin: serializer.fromJson<int?>(json['targetMin']),
+      targetMax: serializer.fromJson<int?>(json['targetMax']),
+      targetWeightG: serializer.fromJson<int?>(json['targetWeightG']),
+      restSeconds: serializer.fromJson<int?>(json['restSeconds']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<int>(createdAt),
+      'updatedAt': serializer.toJson<int>(updatedAt),
+      'deletedAt': serializer.toJson<int?>(deletedAt),
+      'templateExerciseId': serializer.toJson<String>(templateExerciseId),
+      'position': serializer.toJson<int>(position),
+      'setType': serializer.toJson<String?>(setType),
+      'targetMin': serializer.toJson<int?>(targetMin),
+      'targetMax': serializer.toJson<int?>(targetMax),
+      'targetWeightG': serializer.toJson<int?>(targetWeightG),
+      'restSeconds': serializer.toJson<int?>(restSeconds),
+    };
+  }
+
+  TemplateSetsData copyWith({
+    String? id,
+    int? createdAt,
+    int? updatedAt,
+    Value<int?> deletedAt = const Value.absent(),
+    String? templateExerciseId,
+    int? position,
+    Value<String?> setType = const Value.absent(),
+    Value<int?> targetMin = const Value.absent(),
+    Value<int?> targetMax = const Value.absent(),
+    Value<int?> targetWeightG = const Value.absent(),
+    Value<int?> restSeconds = const Value.absent(),
+  }) => TemplateSetsData(
+    id: id ?? this.id,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    templateExerciseId: templateExerciseId ?? this.templateExerciseId,
+    position: position ?? this.position,
+    setType: setType.present ? setType.value : this.setType,
+    targetMin: targetMin.present ? targetMin.value : this.targetMin,
+    targetMax: targetMax.present ? targetMax.value : this.targetMax,
+    targetWeightG: targetWeightG.present
+        ? targetWeightG.value
+        : this.targetWeightG,
+    restSeconds: restSeconds.present ? restSeconds.value : this.restSeconds,
+  );
+  TemplateSetsData copyWithCompanion(TemplateSetsCompanion data) {
+    return TemplateSetsData(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      templateExerciseId: data.templateExerciseId.present
+          ? data.templateExerciseId.value
+          : this.templateExerciseId,
+      position: data.position.present ? data.position.value : this.position,
+      setType: data.setType.present ? data.setType.value : this.setType,
+      targetMin: data.targetMin.present ? data.targetMin.value : this.targetMin,
+      targetMax: data.targetMax.present ? data.targetMax.value : this.targetMax,
+      targetWeightG: data.targetWeightG.present
+          ? data.targetWeightG.value
+          : this.targetWeightG,
+      restSeconds: data.restSeconds.present
+          ? data.restSeconds.value
+          : this.restSeconds,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TemplateSetsData(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('templateExerciseId: $templateExerciseId, ')
+          ..write('position: $position, ')
+          ..write('setType: $setType, ')
+          ..write('targetMin: $targetMin, ')
+          ..write('targetMax: $targetMax, ')
+          ..write('targetWeightG: $targetWeightG, ')
+          ..write('restSeconds: $restSeconds')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    templateExerciseId,
+    position,
+    setType,
+    targetMin,
+    targetMax,
+    targetWeightG,
+    restSeconds,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TemplateSetsData &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.templateExerciseId == this.templateExerciseId &&
+          other.position == this.position &&
+          other.setType == this.setType &&
+          other.targetMin == this.targetMin &&
+          other.targetMax == this.targetMax &&
+          other.targetWeightG == this.targetWeightG &&
+          other.restSeconds == this.restSeconds);
+}
+
+class TemplateSetsCompanion extends UpdateCompanion<TemplateSetsData> {
+  final Value<String> id;
+  final Value<int> createdAt;
+  final Value<int> updatedAt;
+  final Value<int?> deletedAt;
+  final Value<String> templateExerciseId;
+  final Value<int> position;
+  final Value<String?> setType;
+  final Value<int?> targetMin;
+  final Value<int?> targetMax;
+  final Value<int?> targetWeightG;
+  final Value<int?> restSeconds;
+  final Value<int> rowid;
+  const TemplateSetsCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.templateExerciseId = const Value.absent(),
+    this.position = const Value.absent(),
+    this.setType = const Value.absent(),
+    this.targetMin = const Value.absent(),
+    this.targetMax = const Value.absent(),
+    this.targetWeightG = const Value.absent(),
+    this.restSeconds = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TemplateSetsCompanion.insert({
+    required String id,
+    required int createdAt,
+    required int updatedAt,
+    this.deletedAt = const Value.absent(),
+    required String templateExerciseId,
+    required int position,
+    this.setType = const Value.absent(),
+    this.targetMin = const Value.absent(),
+    this.targetMax = const Value.absent(),
+    this.targetWeightG = const Value.absent(),
+    this.restSeconds = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       templateExerciseId = Value(templateExerciseId),
+       position = Value(position);
+  static Insertable<TemplateSetsData> custom({
+    Expression<String>? id,
+    Expression<int>? createdAt,
+    Expression<int>? updatedAt,
+    Expression<int>? deletedAt,
+    Expression<String>? templateExerciseId,
+    Expression<int>? position,
+    Expression<String>? setType,
+    Expression<int>? targetMin,
+    Expression<int>? targetMax,
+    Expression<int>? targetWeightG,
+    Expression<int>? restSeconds,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (templateExerciseId != null)
+        'template_exercise_id': templateExerciseId,
+      if (position != null) 'position': position,
+      if (setType != null) 'set_type': setType,
+      if (targetMin != null) 'target_min': targetMin,
+      if (targetMax != null) 'target_max': targetMax,
+      if (targetWeightG != null) 'target_weight_g': targetWeightG,
+      if (restSeconds != null) 'rest_seconds': restSeconds,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TemplateSetsCompanion copyWith({
+    Value<String>? id,
+    Value<int>? createdAt,
+    Value<int>? updatedAt,
+    Value<int?>? deletedAt,
+    Value<String>? templateExerciseId,
+    Value<int>? position,
+    Value<String?>? setType,
+    Value<int?>? targetMin,
+    Value<int?>? targetMax,
+    Value<int?>? targetWeightG,
+    Value<int?>? restSeconds,
+    Value<int>? rowid,
+  }) {
+    return TemplateSetsCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      templateExerciseId: templateExerciseId ?? this.templateExerciseId,
+      position: position ?? this.position,
+      setType: setType ?? this.setType,
+      targetMin: targetMin ?? this.targetMin,
+      targetMax: targetMax ?? this.targetMax,
+      targetWeightG: targetWeightG ?? this.targetWeightG,
+      restSeconds: restSeconds ?? this.restSeconds,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<int>(deletedAt.value);
+    }
+    if (templateExerciseId.present) {
+      map['template_exercise_id'] = Variable<String>(templateExerciseId.value);
+    }
+    if (position.present) {
+      map['position'] = Variable<int>(position.value);
+    }
+    if (setType.present) {
+      map['set_type'] = Variable<String>(setType.value);
+    }
+    if (targetMin.present) {
+      map['target_min'] = Variable<int>(targetMin.value);
+    }
+    if (targetMax.present) {
+      map['target_max'] = Variable<int>(targetMax.value);
+    }
+    if (targetWeightG.present) {
+      map['target_weight_g'] = Variable<int>(targetWeightG.value);
+    }
+    if (restSeconds.present) {
+      map['rest_seconds'] = Variable<int>(restSeconds.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TemplateSetsCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('templateExerciseId: $templateExerciseId, ')
+          ..write('position: $position, ')
+          ..write('setType: $setType, ')
+          ..write('targetMin: $targetMin, ')
+          ..write('targetMax: $targetMax, ')
+          ..write('targetWeightG: $targetWeightG, ')
+          ..write('restSeconds: $restSeconds, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class WorkoutSessions extends Table
+    with TableInfo<WorkoutSessions, WorkoutSessionsData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -842,8 +3106,70 @@ class WorkoutSessions extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  WorkoutSessionsData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return WorkoutSessionsData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      status: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}status'],
+      )!,
+      startedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}started_at'],
+      )!,
+      endedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}ended_at'],
+      ),
+      timeZone: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}time_zone'],
+      )!,
+      localDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}local_date'],
+      )!,
+      templateId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}template_id'],
+      ),
+      templateNameSnapshot: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}template_name_snapshot'],
+      ),
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      ),
+      notes: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}notes'],
+      ),
+      wellbeing: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}wellbeing'],
+      ),
+      restEndsAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}rest_ends_at'],
+      ),
+    );
   }
 
   @override
@@ -857,7 +3183,500 @@ class WorkoutSessions extends Table with TableInfo {
   bool get dontWriteConstraints => true;
 }
 
-class SessionExercises extends Table with TableInfo {
+class WorkoutSessionsData extends DataClass
+    implements Insertable<WorkoutSessionsData> {
+  final String id;
+  final int createdAt;
+  final int updatedAt;
+  final int? deletedAt;
+  final String status;
+  final int startedAt;
+  final int? endedAt;
+  final String timeZone;
+  final String localDate;
+  final String? templateId;
+  final String? templateNameSnapshot;
+  final String? title;
+  final String? notes;
+  final int? wellbeing;
+  final int? restEndsAt;
+  const WorkoutSessionsData({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.status,
+    required this.startedAt,
+    this.endedAt,
+    required this.timeZone,
+    required this.localDate,
+    this.templateId,
+    this.templateNameSnapshot,
+    this.title,
+    this.notes,
+    this.wellbeing,
+    this.restEndsAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<int>(createdAt);
+    map['updated_at'] = Variable<int>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<int>(deletedAt);
+    }
+    map['status'] = Variable<String>(status);
+    map['started_at'] = Variable<int>(startedAt);
+    if (!nullToAbsent || endedAt != null) {
+      map['ended_at'] = Variable<int>(endedAt);
+    }
+    map['time_zone'] = Variable<String>(timeZone);
+    map['local_date'] = Variable<String>(localDate);
+    if (!nullToAbsent || templateId != null) {
+      map['template_id'] = Variable<String>(templateId);
+    }
+    if (!nullToAbsent || templateNameSnapshot != null) {
+      map['template_name_snapshot'] = Variable<String>(templateNameSnapshot);
+    }
+    if (!nullToAbsent || title != null) {
+      map['title'] = Variable<String>(title);
+    }
+    if (!nullToAbsent || notes != null) {
+      map['notes'] = Variable<String>(notes);
+    }
+    if (!nullToAbsent || wellbeing != null) {
+      map['wellbeing'] = Variable<int>(wellbeing);
+    }
+    if (!nullToAbsent || restEndsAt != null) {
+      map['rest_ends_at'] = Variable<int>(restEndsAt);
+    }
+    return map;
+  }
+
+  WorkoutSessionsCompanion toCompanion(bool nullToAbsent) {
+    return WorkoutSessionsCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      status: Value(status),
+      startedAt: Value(startedAt),
+      endedAt: endedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(endedAt),
+      timeZone: Value(timeZone),
+      localDate: Value(localDate),
+      templateId: templateId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(templateId),
+      templateNameSnapshot: templateNameSnapshot == null && nullToAbsent
+          ? const Value.absent()
+          : Value(templateNameSnapshot),
+      title: title == null && nullToAbsent
+          ? const Value.absent()
+          : Value(title),
+      notes: notes == null && nullToAbsent
+          ? const Value.absent()
+          : Value(notes),
+      wellbeing: wellbeing == null && nullToAbsent
+          ? const Value.absent()
+          : Value(wellbeing),
+      restEndsAt: restEndsAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(restEndsAt),
+    );
+  }
+
+  factory WorkoutSessionsData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return WorkoutSessionsData(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<int>(json['createdAt']),
+      updatedAt: serializer.fromJson<int>(json['updatedAt']),
+      deletedAt: serializer.fromJson<int?>(json['deletedAt']),
+      status: serializer.fromJson<String>(json['status']),
+      startedAt: serializer.fromJson<int>(json['startedAt']),
+      endedAt: serializer.fromJson<int?>(json['endedAt']),
+      timeZone: serializer.fromJson<String>(json['timeZone']),
+      localDate: serializer.fromJson<String>(json['localDate']),
+      templateId: serializer.fromJson<String?>(json['templateId']),
+      templateNameSnapshot: serializer.fromJson<String?>(
+        json['templateNameSnapshot'],
+      ),
+      title: serializer.fromJson<String?>(json['title']),
+      notes: serializer.fromJson<String?>(json['notes']),
+      wellbeing: serializer.fromJson<int?>(json['wellbeing']),
+      restEndsAt: serializer.fromJson<int?>(json['restEndsAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<int>(createdAt),
+      'updatedAt': serializer.toJson<int>(updatedAt),
+      'deletedAt': serializer.toJson<int?>(deletedAt),
+      'status': serializer.toJson<String>(status),
+      'startedAt': serializer.toJson<int>(startedAt),
+      'endedAt': serializer.toJson<int?>(endedAt),
+      'timeZone': serializer.toJson<String>(timeZone),
+      'localDate': serializer.toJson<String>(localDate),
+      'templateId': serializer.toJson<String?>(templateId),
+      'templateNameSnapshot': serializer.toJson<String?>(templateNameSnapshot),
+      'title': serializer.toJson<String?>(title),
+      'notes': serializer.toJson<String?>(notes),
+      'wellbeing': serializer.toJson<int?>(wellbeing),
+      'restEndsAt': serializer.toJson<int?>(restEndsAt),
+    };
+  }
+
+  WorkoutSessionsData copyWith({
+    String? id,
+    int? createdAt,
+    int? updatedAt,
+    Value<int?> deletedAt = const Value.absent(),
+    String? status,
+    int? startedAt,
+    Value<int?> endedAt = const Value.absent(),
+    String? timeZone,
+    String? localDate,
+    Value<String?> templateId = const Value.absent(),
+    Value<String?> templateNameSnapshot = const Value.absent(),
+    Value<String?> title = const Value.absent(),
+    Value<String?> notes = const Value.absent(),
+    Value<int?> wellbeing = const Value.absent(),
+    Value<int?> restEndsAt = const Value.absent(),
+  }) => WorkoutSessionsData(
+    id: id ?? this.id,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    status: status ?? this.status,
+    startedAt: startedAt ?? this.startedAt,
+    endedAt: endedAt.present ? endedAt.value : this.endedAt,
+    timeZone: timeZone ?? this.timeZone,
+    localDate: localDate ?? this.localDate,
+    templateId: templateId.present ? templateId.value : this.templateId,
+    templateNameSnapshot: templateNameSnapshot.present
+        ? templateNameSnapshot.value
+        : this.templateNameSnapshot,
+    title: title.present ? title.value : this.title,
+    notes: notes.present ? notes.value : this.notes,
+    wellbeing: wellbeing.present ? wellbeing.value : this.wellbeing,
+    restEndsAt: restEndsAt.present ? restEndsAt.value : this.restEndsAt,
+  );
+  WorkoutSessionsData copyWithCompanion(WorkoutSessionsCompanion data) {
+    return WorkoutSessionsData(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      status: data.status.present ? data.status.value : this.status,
+      startedAt: data.startedAt.present ? data.startedAt.value : this.startedAt,
+      endedAt: data.endedAt.present ? data.endedAt.value : this.endedAt,
+      timeZone: data.timeZone.present ? data.timeZone.value : this.timeZone,
+      localDate: data.localDate.present ? data.localDate.value : this.localDate,
+      templateId: data.templateId.present
+          ? data.templateId.value
+          : this.templateId,
+      templateNameSnapshot: data.templateNameSnapshot.present
+          ? data.templateNameSnapshot.value
+          : this.templateNameSnapshot,
+      title: data.title.present ? data.title.value : this.title,
+      notes: data.notes.present ? data.notes.value : this.notes,
+      wellbeing: data.wellbeing.present ? data.wellbeing.value : this.wellbeing,
+      restEndsAt: data.restEndsAt.present
+          ? data.restEndsAt.value
+          : this.restEndsAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('WorkoutSessionsData(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('status: $status, ')
+          ..write('startedAt: $startedAt, ')
+          ..write('endedAt: $endedAt, ')
+          ..write('timeZone: $timeZone, ')
+          ..write('localDate: $localDate, ')
+          ..write('templateId: $templateId, ')
+          ..write('templateNameSnapshot: $templateNameSnapshot, ')
+          ..write('title: $title, ')
+          ..write('notes: $notes, ')
+          ..write('wellbeing: $wellbeing, ')
+          ..write('restEndsAt: $restEndsAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    status,
+    startedAt,
+    endedAt,
+    timeZone,
+    localDate,
+    templateId,
+    templateNameSnapshot,
+    title,
+    notes,
+    wellbeing,
+    restEndsAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is WorkoutSessionsData &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.status == this.status &&
+          other.startedAt == this.startedAt &&
+          other.endedAt == this.endedAt &&
+          other.timeZone == this.timeZone &&
+          other.localDate == this.localDate &&
+          other.templateId == this.templateId &&
+          other.templateNameSnapshot == this.templateNameSnapshot &&
+          other.title == this.title &&
+          other.notes == this.notes &&
+          other.wellbeing == this.wellbeing &&
+          other.restEndsAt == this.restEndsAt);
+}
+
+class WorkoutSessionsCompanion extends UpdateCompanion<WorkoutSessionsData> {
+  final Value<String> id;
+  final Value<int> createdAt;
+  final Value<int> updatedAt;
+  final Value<int?> deletedAt;
+  final Value<String> status;
+  final Value<int> startedAt;
+  final Value<int?> endedAt;
+  final Value<String> timeZone;
+  final Value<String> localDate;
+  final Value<String?> templateId;
+  final Value<String?> templateNameSnapshot;
+  final Value<String?> title;
+  final Value<String?> notes;
+  final Value<int?> wellbeing;
+  final Value<int?> restEndsAt;
+  final Value<int> rowid;
+  const WorkoutSessionsCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.status = const Value.absent(),
+    this.startedAt = const Value.absent(),
+    this.endedAt = const Value.absent(),
+    this.timeZone = const Value.absent(),
+    this.localDate = const Value.absent(),
+    this.templateId = const Value.absent(),
+    this.templateNameSnapshot = const Value.absent(),
+    this.title = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.wellbeing = const Value.absent(),
+    this.restEndsAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  WorkoutSessionsCompanion.insert({
+    required String id,
+    required int createdAt,
+    required int updatedAt,
+    this.deletedAt = const Value.absent(),
+    required String status,
+    required int startedAt,
+    this.endedAt = const Value.absent(),
+    required String timeZone,
+    required String localDate,
+    this.templateId = const Value.absent(),
+    this.templateNameSnapshot = const Value.absent(),
+    this.title = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.wellbeing = const Value.absent(),
+    this.restEndsAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       status = Value(status),
+       startedAt = Value(startedAt),
+       timeZone = Value(timeZone),
+       localDate = Value(localDate);
+  static Insertable<WorkoutSessionsData> custom({
+    Expression<String>? id,
+    Expression<int>? createdAt,
+    Expression<int>? updatedAt,
+    Expression<int>? deletedAt,
+    Expression<String>? status,
+    Expression<int>? startedAt,
+    Expression<int>? endedAt,
+    Expression<String>? timeZone,
+    Expression<String>? localDate,
+    Expression<String>? templateId,
+    Expression<String>? templateNameSnapshot,
+    Expression<String>? title,
+    Expression<String>? notes,
+    Expression<int>? wellbeing,
+    Expression<int>? restEndsAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (status != null) 'status': status,
+      if (startedAt != null) 'started_at': startedAt,
+      if (endedAt != null) 'ended_at': endedAt,
+      if (timeZone != null) 'time_zone': timeZone,
+      if (localDate != null) 'local_date': localDate,
+      if (templateId != null) 'template_id': templateId,
+      if (templateNameSnapshot != null)
+        'template_name_snapshot': templateNameSnapshot,
+      if (title != null) 'title': title,
+      if (notes != null) 'notes': notes,
+      if (wellbeing != null) 'wellbeing': wellbeing,
+      if (restEndsAt != null) 'rest_ends_at': restEndsAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  WorkoutSessionsCompanion copyWith({
+    Value<String>? id,
+    Value<int>? createdAt,
+    Value<int>? updatedAt,
+    Value<int?>? deletedAt,
+    Value<String>? status,
+    Value<int>? startedAt,
+    Value<int?>? endedAt,
+    Value<String>? timeZone,
+    Value<String>? localDate,
+    Value<String?>? templateId,
+    Value<String?>? templateNameSnapshot,
+    Value<String?>? title,
+    Value<String?>? notes,
+    Value<int?>? wellbeing,
+    Value<int?>? restEndsAt,
+    Value<int>? rowid,
+  }) {
+    return WorkoutSessionsCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      status: status ?? this.status,
+      startedAt: startedAt ?? this.startedAt,
+      endedAt: endedAt ?? this.endedAt,
+      timeZone: timeZone ?? this.timeZone,
+      localDate: localDate ?? this.localDate,
+      templateId: templateId ?? this.templateId,
+      templateNameSnapshot: templateNameSnapshot ?? this.templateNameSnapshot,
+      title: title ?? this.title,
+      notes: notes ?? this.notes,
+      wellbeing: wellbeing ?? this.wellbeing,
+      restEndsAt: restEndsAt ?? this.restEndsAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<int>(deletedAt.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(status.value);
+    }
+    if (startedAt.present) {
+      map['started_at'] = Variable<int>(startedAt.value);
+    }
+    if (endedAt.present) {
+      map['ended_at'] = Variable<int>(endedAt.value);
+    }
+    if (timeZone.present) {
+      map['time_zone'] = Variable<String>(timeZone.value);
+    }
+    if (localDate.present) {
+      map['local_date'] = Variable<String>(localDate.value);
+    }
+    if (templateId.present) {
+      map['template_id'] = Variable<String>(templateId.value);
+    }
+    if (templateNameSnapshot.present) {
+      map['template_name_snapshot'] = Variable<String>(
+        templateNameSnapshot.value,
+      );
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (notes.present) {
+      map['notes'] = Variable<String>(notes.value);
+    }
+    if (wellbeing.present) {
+      map['wellbeing'] = Variable<int>(wellbeing.value);
+    }
+    if (restEndsAt.present) {
+      map['rest_ends_at'] = Variable<int>(restEndsAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('WorkoutSessionsCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('status: $status, ')
+          ..write('startedAt: $startedAt, ')
+          ..write('endedAt: $endedAt, ')
+          ..write('timeZone: $timeZone, ')
+          ..write('localDate: $localDate, ')
+          ..write('templateId: $templateId, ')
+          ..write('templateNameSnapshot: $templateNameSnapshot, ')
+          ..write('title: $title, ')
+          ..write('notes: $notes, ')
+          ..write('wellbeing: $wellbeing, ')
+          ..write('restEndsAt: $restEndsAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class SessionExercises extends Table
+    with TableInfo<SessionExercises, SessionExercisesData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -1042,8 +3861,82 @@ class SessionExercises extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  SessionExercisesData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SessionExercisesData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      sessionId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}session_id'],
+      )!,
+      exerciseId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}exercise_id'],
+      )!,
+      position: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}position'],
+      )!,
+      templateExerciseId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}template_exercise_id'],
+      ),
+      exerciseNameSnapshot: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}exercise_name_snapshot'],
+      )!,
+      measureWeightSnapshot: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}measure_weight_snapshot'],
+      )!,
+      measureRepsSnapshot: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}measure_reps_snapshot'],
+      )!,
+      measureDurationSnapshot: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}measure_duration_snapshot'],
+      )!,
+      measureDistanceSnapshot: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}measure_distance_snapshot'],
+      )!,
+      loadModeSnapshot: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}load_mode_snapshot'],
+      )!,
+      weightSemanticsSnapshot: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}weight_semantics_snapshot'],
+      )!,
+      isUnilateralSnapshot: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}is_unilateral_snapshot'],
+      )!,
+      note: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}note'],
+      ),
+      groupId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}group_id'],
+      ),
+    );
   }
 
   @override
@@ -1057,7 +3950,615 @@ class SessionExercises extends Table with TableInfo {
   bool get dontWriteConstraints => true;
 }
 
-class SessionSets extends Table with TableInfo {
+class SessionExercisesData extends DataClass
+    implements Insertable<SessionExercisesData> {
+  final String id;
+  final int createdAt;
+  final int updatedAt;
+  final int? deletedAt;
+  final String sessionId;
+  final String exerciseId;
+  final int position;
+  final String? templateExerciseId;
+  final String exerciseNameSnapshot;
+  final int measureWeightSnapshot;
+  final int measureRepsSnapshot;
+  final int measureDurationSnapshot;
+  final int measureDistanceSnapshot;
+  final String loadModeSnapshot;
+  final String weightSemanticsSnapshot;
+  final int isUnilateralSnapshot;
+  final String? note;
+  final String? groupId;
+  const SessionExercisesData({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.sessionId,
+    required this.exerciseId,
+    required this.position,
+    this.templateExerciseId,
+    required this.exerciseNameSnapshot,
+    required this.measureWeightSnapshot,
+    required this.measureRepsSnapshot,
+    required this.measureDurationSnapshot,
+    required this.measureDistanceSnapshot,
+    required this.loadModeSnapshot,
+    required this.weightSemanticsSnapshot,
+    required this.isUnilateralSnapshot,
+    this.note,
+    this.groupId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<int>(createdAt);
+    map['updated_at'] = Variable<int>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<int>(deletedAt);
+    }
+    map['session_id'] = Variable<String>(sessionId);
+    map['exercise_id'] = Variable<String>(exerciseId);
+    map['position'] = Variable<int>(position);
+    if (!nullToAbsent || templateExerciseId != null) {
+      map['template_exercise_id'] = Variable<String>(templateExerciseId);
+    }
+    map['exercise_name_snapshot'] = Variable<String>(exerciseNameSnapshot);
+    map['measure_weight_snapshot'] = Variable<int>(measureWeightSnapshot);
+    map['measure_reps_snapshot'] = Variable<int>(measureRepsSnapshot);
+    map['measure_duration_snapshot'] = Variable<int>(measureDurationSnapshot);
+    map['measure_distance_snapshot'] = Variable<int>(measureDistanceSnapshot);
+    map['load_mode_snapshot'] = Variable<String>(loadModeSnapshot);
+    map['weight_semantics_snapshot'] = Variable<String>(
+      weightSemanticsSnapshot,
+    );
+    map['is_unilateral_snapshot'] = Variable<int>(isUnilateralSnapshot);
+    if (!nullToAbsent || note != null) {
+      map['note'] = Variable<String>(note);
+    }
+    if (!nullToAbsent || groupId != null) {
+      map['group_id'] = Variable<String>(groupId);
+    }
+    return map;
+  }
+
+  SessionExercisesCompanion toCompanion(bool nullToAbsent) {
+    return SessionExercisesCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      sessionId: Value(sessionId),
+      exerciseId: Value(exerciseId),
+      position: Value(position),
+      templateExerciseId: templateExerciseId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(templateExerciseId),
+      exerciseNameSnapshot: Value(exerciseNameSnapshot),
+      measureWeightSnapshot: Value(measureWeightSnapshot),
+      measureRepsSnapshot: Value(measureRepsSnapshot),
+      measureDurationSnapshot: Value(measureDurationSnapshot),
+      measureDistanceSnapshot: Value(measureDistanceSnapshot),
+      loadModeSnapshot: Value(loadModeSnapshot),
+      weightSemanticsSnapshot: Value(weightSemanticsSnapshot),
+      isUnilateralSnapshot: Value(isUnilateralSnapshot),
+      note: note == null && nullToAbsent ? const Value.absent() : Value(note),
+      groupId: groupId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(groupId),
+    );
+  }
+
+  factory SessionExercisesData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SessionExercisesData(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<int>(json['createdAt']),
+      updatedAt: serializer.fromJson<int>(json['updatedAt']),
+      deletedAt: serializer.fromJson<int?>(json['deletedAt']),
+      sessionId: serializer.fromJson<String>(json['sessionId']),
+      exerciseId: serializer.fromJson<String>(json['exerciseId']),
+      position: serializer.fromJson<int>(json['position']),
+      templateExerciseId: serializer.fromJson<String?>(
+        json['templateExerciseId'],
+      ),
+      exerciseNameSnapshot: serializer.fromJson<String>(
+        json['exerciseNameSnapshot'],
+      ),
+      measureWeightSnapshot: serializer.fromJson<int>(
+        json['measureWeightSnapshot'],
+      ),
+      measureRepsSnapshot: serializer.fromJson<int>(
+        json['measureRepsSnapshot'],
+      ),
+      measureDurationSnapshot: serializer.fromJson<int>(
+        json['measureDurationSnapshot'],
+      ),
+      measureDistanceSnapshot: serializer.fromJson<int>(
+        json['measureDistanceSnapshot'],
+      ),
+      loadModeSnapshot: serializer.fromJson<String>(json['loadModeSnapshot']),
+      weightSemanticsSnapshot: serializer.fromJson<String>(
+        json['weightSemanticsSnapshot'],
+      ),
+      isUnilateralSnapshot: serializer.fromJson<int>(
+        json['isUnilateralSnapshot'],
+      ),
+      note: serializer.fromJson<String?>(json['note']),
+      groupId: serializer.fromJson<String?>(json['groupId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<int>(createdAt),
+      'updatedAt': serializer.toJson<int>(updatedAt),
+      'deletedAt': serializer.toJson<int?>(deletedAt),
+      'sessionId': serializer.toJson<String>(sessionId),
+      'exerciseId': serializer.toJson<String>(exerciseId),
+      'position': serializer.toJson<int>(position),
+      'templateExerciseId': serializer.toJson<String?>(templateExerciseId),
+      'exerciseNameSnapshot': serializer.toJson<String>(exerciseNameSnapshot),
+      'measureWeightSnapshot': serializer.toJson<int>(measureWeightSnapshot),
+      'measureRepsSnapshot': serializer.toJson<int>(measureRepsSnapshot),
+      'measureDurationSnapshot': serializer.toJson<int>(
+        measureDurationSnapshot,
+      ),
+      'measureDistanceSnapshot': serializer.toJson<int>(
+        measureDistanceSnapshot,
+      ),
+      'loadModeSnapshot': serializer.toJson<String>(loadModeSnapshot),
+      'weightSemanticsSnapshot': serializer.toJson<String>(
+        weightSemanticsSnapshot,
+      ),
+      'isUnilateralSnapshot': serializer.toJson<int>(isUnilateralSnapshot),
+      'note': serializer.toJson<String?>(note),
+      'groupId': serializer.toJson<String?>(groupId),
+    };
+  }
+
+  SessionExercisesData copyWith({
+    String? id,
+    int? createdAt,
+    int? updatedAt,
+    Value<int?> deletedAt = const Value.absent(),
+    String? sessionId,
+    String? exerciseId,
+    int? position,
+    Value<String?> templateExerciseId = const Value.absent(),
+    String? exerciseNameSnapshot,
+    int? measureWeightSnapshot,
+    int? measureRepsSnapshot,
+    int? measureDurationSnapshot,
+    int? measureDistanceSnapshot,
+    String? loadModeSnapshot,
+    String? weightSemanticsSnapshot,
+    int? isUnilateralSnapshot,
+    Value<String?> note = const Value.absent(),
+    Value<String?> groupId = const Value.absent(),
+  }) => SessionExercisesData(
+    id: id ?? this.id,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    sessionId: sessionId ?? this.sessionId,
+    exerciseId: exerciseId ?? this.exerciseId,
+    position: position ?? this.position,
+    templateExerciseId: templateExerciseId.present
+        ? templateExerciseId.value
+        : this.templateExerciseId,
+    exerciseNameSnapshot: exerciseNameSnapshot ?? this.exerciseNameSnapshot,
+    measureWeightSnapshot: measureWeightSnapshot ?? this.measureWeightSnapshot,
+    measureRepsSnapshot: measureRepsSnapshot ?? this.measureRepsSnapshot,
+    measureDurationSnapshot:
+        measureDurationSnapshot ?? this.measureDurationSnapshot,
+    measureDistanceSnapshot:
+        measureDistanceSnapshot ?? this.measureDistanceSnapshot,
+    loadModeSnapshot: loadModeSnapshot ?? this.loadModeSnapshot,
+    weightSemanticsSnapshot:
+        weightSemanticsSnapshot ?? this.weightSemanticsSnapshot,
+    isUnilateralSnapshot: isUnilateralSnapshot ?? this.isUnilateralSnapshot,
+    note: note.present ? note.value : this.note,
+    groupId: groupId.present ? groupId.value : this.groupId,
+  );
+  SessionExercisesData copyWithCompanion(SessionExercisesCompanion data) {
+    return SessionExercisesData(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      sessionId: data.sessionId.present ? data.sessionId.value : this.sessionId,
+      exerciseId: data.exerciseId.present
+          ? data.exerciseId.value
+          : this.exerciseId,
+      position: data.position.present ? data.position.value : this.position,
+      templateExerciseId: data.templateExerciseId.present
+          ? data.templateExerciseId.value
+          : this.templateExerciseId,
+      exerciseNameSnapshot: data.exerciseNameSnapshot.present
+          ? data.exerciseNameSnapshot.value
+          : this.exerciseNameSnapshot,
+      measureWeightSnapshot: data.measureWeightSnapshot.present
+          ? data.measureWeightSnapshot.value
+          : this.measureWeightSnapshot,
+      measureRepsSnapshot: data.measureRepsSnapshot.present
+          ? data.measureRepsSnapshot.value
+          : this.measureRepsSnapshot,
+      measureDurationSnapshot: data.measureDurationSnapshot.present
+          ? data.measureDurationSnapshot.value
+          : this.measureDurationSnapshot,
+      measureDistanceSnapshot: data.measureDistanceSnapshot.present
+          ? data.measureDistanceSnapshot.value
+          : this.measureDistanceSnapshot,
+      loadModeSnapshot: data.loadModeSnapshot.present
+          ? data.loadModeSnapshot.value
+          : this.loadModeSnapshot,
+      weightSemanticsSnapshot: data.weightSemanticsSnapshot.present
+          ? data.weightSemanticsSnapshot.value
+          : this.weightSemanticsSnapshot,
+      isUnilateralSnapshot: data.isUnilateralSnapshot.present
+          ? data.isUnilateralSnapshot.value
+          : this.isUnilateralSnapshot,
+      note: data.note.present ? data.note.value : this.note,
+      groupId: data.groupId.present ? data.groupId.value : this.groupId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SessionExercisesData(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('sessionId: $sessionId, ')
+          ..write('exerciseId: $exerciseId, ')
+          ..write('position: $position, ')
+          ..write('templateExerciseId: $templateExerciseId, ')
+          ..write('exerciseNameSnapshot: $exerciseNameSnapshot, ')
+          ..write('measureWeightSnapshot: $measureWeightSnapshot, ')
+          ..write('measureRepsSnapshot: $measureRepsSnapshot, ')
+          ..write('measureDurationSnapshot: $measureDurationSnapshot, ')
+          ..write('measureDistanceSnapshot: $measureDistanceSnapshot, ')
+          ..write('loadModeSnapshot: $loadModeSnapshot, ')
+          ..write('weightSemanticsSnapshot: $weightSemanticsSnapshot, ')
+          ..write('isUnilateralSnapshot: $isUnilateralSnapshot, ')
+          ..write('note: $note, ')
+          ..write('groupId: $groupId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    sessionId,
+    exerciseId,
+    position,
+    templateExerciseId,
+    exerciseNameSnapshot,
+    measureWeightSnapshot,
+    measureRepsSnapshot,
+    measureDurationSnapshot,
+    measureDistanceSnapshot,
+    loadModeSnapshot,
+    weightSemanticsSnapshot,
+    isUnilateralSnapshot,
+    note,
+    groupId,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SessionExercisesData &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.sessionId == this.sessionId &&
+          other.exerciseId == this.exerciseId &&
+          other.position == this.position &&
+          other.templateExerciseId == this.templateExerciseId &&
+          other.exerciseNameSnapshot == this.exerciseNameSnapshot &&
+          other.measureWeightSnapshot == this.measureWeightSnapshot &&
+          other.measureRepsSnapshot == this.measureRepsSnapshot &&
+          other.measureDurationSnapshot == this.measureDurationSnapshot &&
+          other.measureDistanceSnapshot == this.measureDistanceSnapshot &&
+          other.loadModeSnapshot == this.loadModeSnapshot &&
+          other.weightSemanticsSnapshot == this.weightSemanticsSnapshot &&
+          other.isUnilateralSnapshot == this.isUnilateralSnapshot &&
+          other.note == this.note &&
+          other.groupId == this.groupId);
+}
+
+class SessionExercisesCompanion extends UpdateCompanion<SessionExercisesData> {
+  final Value<String> id;
+  final Value<int> createdAt;
+  final Value<int> updatedAt;
+  final Value<int?> deletedAt;
+  final Value<String> sessionId;
+  final Value<String> exerciseId;
+  final Value<int> position;
+  final Value<String?> templateExerciseId;
+  final Value<String> exerciseNameSnapshot;
+  final Value<int> measureWeightSnapshot;
+  final Value<int> measureRepsSnapshot;
+  final Value<int> measureDurationSnapshot;
+  final Value<int> measureDistanceSnapshot;
+  final Value<String> loadModeSnapshot;
+  final Value<String> weightSemanticsSnapshot;
+  final Value<int> isUnilateralSnapshot;
+  final Value<String?> note;
+  final Value<String?> groupId;
+  final Value<int> rowid;
+  const SessionExercisesCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.sessionId = const Value.absent(),
+    this.exerciseId = const Value.absent(),
+    this.position = const Value.absent(),
+    this.templateExerciseId = const Value.absent(),
+    this.exerciseNameSnapshot = const Value.absent(),
+    this.measureWeightSnapshot = const Value.absent(),
+    this.measureRepsSnapshot = const Value.absent(),
+    this.measureDurationSnapshot = const Value.absent(),
+    this.measureDistanceSnapshot = const Value.absent(),
+    this.loadModeSnapshot = const Value.absent(),
+    this.weightSemanticsSnapshot = const Value.absent(),
+    this.isUnilateralSnapshot = const Value.absent(),
+    this.note = const Value.absent(),
+    this.groupId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SessionExercisesCompanion.insert({
+    required String id,
+    required int createdAt,
+    required int updatedAt,
+    this.deletedAt = const Value.absent(),
+    required String sessionId,
+    required String exerciseId,
+    required int position,
+    this.templateExerciseId = const Value.absent(),
+    required String exerciseNameSnapshot,
+    required int measureWeightSnapshot,
+    required int measureRepsSnapshot,
+    required int measureDurationSnapshot,
+    required int measureDistanceSnapshot,
+    required String loadModeSnapshot,
+    required String weightSemanticsSnapshot,
+    required int isUnilateralSnapshot,
+    this.note = const Value.absent(),
+    this.groupId = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       sessionId = Value(sessionId),
+       exerciseId = Value(exerciseId),
+       position = Value(position),
+       exerciseNameSnapshot = Value(exerciseNameSnapshot),
+       measureWeightSnapshot = Value(measureWeightSnapshot),
+       measureRepsSnapshot = Value(measureRepsSnapshot),
+       measureDurationSnapshot = Value(measureDurationSnapshot),
+       measureDistanceSnapshot = Value(measureDistanceSnapshot),
+       loadModeSnapshot = Value(loadModeSnapshot),
+       weightSemanticsSnapshot = Value(weightSemanticsSnapshot),
+       isUnilateralSnapshot = Value(isUnilateralSnapshot);
+  static Insertable<SessionExercisesData> custom({
+    Expression<String>? id,
+    Expression<int>? createdAt,
+    Expression<int>? updatedAt,
+    Expression<int>? deletedAt,
+    Expression<String>? sessionId,
+    Expression<String>? exerciseId,
+    Expression<int>? position,
+    Expression<String>? templateExerciseId,
+    Expression<String>? exerciseNameSnapshot,
+    Expression<int>? measureWeightSnapshot,
+    Expression<int>? measureRepsSnapshot,
+    Expression<int>? measureDurationSnapshot,
+    Expression<int>? measureDistanceSnapshot,
+    Expression<String>? loadModeSnapshot,
+    Expression<String>? weightSemanticsSnapshot,
+    Expression<int>? isUnilateralSnapshot,
+    Expression<String>? note,
+    Expression<String>? groupId,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (sessionId != null) 'session_id': sessionId,
+      if (exerciseId != null) 'exercise_id': exerciseId,
+      if (position != null) 'position': position,
+      if (templateExerciseId != null)
+        'template_exercise_id': templateExerciseId,
+      if (exerciseNameSnapshot != null)
+        'exercise_name_snapshot': exerciseNameSnapshot,
+      if (measureWeightSnapshot != null)
+        'measure_weight_snapshot': measureWeightSnapshot,
+      if (measureRepsSnapshot != null)
+        'measure_reps_snapshot': measureRepsSnapshot,
+      if (measureDurationSnapshot != null)
+        'measure_duration_snapshot': measureDurationSnapshot,
+      if (measureDistanceSnapshot != null)
+        'measure_distance_snapshot': measureDistanceSnapshot,
+      if (loadModeSnapshot != null) 'load_mode_snapshot': loadModeSnapshot,
+      if (weightSemanticsSnapshot != null)
+        'weight_semantics_snapshot': weightSemanticsSnapshot,
+      if (isUnilateralSnapshot != null)
+        'is_unilateral_snapshot': isUnilateralSnapshot,
+      if (note != null) 'note': note,
+      if (groupId != null) 'group_id': groupId,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SessionExercisesCompanion copyWith({
+    Value<String>? id,
+    Value<int>? createdAt,
+    Value<int>? updatedAt,
+    Value<int?>? deletedAt,
+    Value<String>? sessionId,
+    Value<String>? exerciseId,
+    Value<int>? position,
+    Value<String?>? templateExerciseId,
+    Value<String>? exerciseNameSnapshot,
+    Value<int>? measureWeightSnapshot,
+    Value<int>? measureRepsSnapshot,
+    Value<int>? measureDurationSnapshot,
+    Value<int>? measureDistanceSnapshot,
+    Value<String>? loadModeSnapshot,
+    Value<String>? weightSemanticsSnapshot,
+    Value<int>? isUnilateralSnapshot,
+    Value<String?>? note,
+    Value<String?>? groupId,
+    Value<int>? rowid,
+  }) {
+    return SessionExercisesCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      sessionId: sessionId ?? this.sessionId,
+      exerciseId: exerciseId ?? this.exerciseId,
+      position: position ?? this.position,
+      templateExerciseId: templateExerciseId ?? this.templateExerciseId,
+      exerciseNameSnapshot: exerciseNameSnapshot ?? this.exerciseNameSnapshot,
+      measureWeightSnapshot:
+          measureWeightSnapshot ?? this.measureWeightSnapshot,
+      measureRepsSnapshot: measureRepsSnapshot ?? this.measureRepsSnapshot,
+      measureDurationSnapshot:
+          measureDurationSnapshot ?? this.measureDurationSnapshot,
+      measureDistanceSnapshot:
+          measureDistanceSnapshot ?? this.measureDistanceSnapshot,
+      loadModeSnapshot: loadModeSnapshot ?? this.loadModeSnapshot,
+      weightSemanticsSnapshot:
+          weightSemanticsSnapshot ?? this.weightSemanticsSnapshot,
+      isUnilateralSnapshot: isUnilateralSnapshot ?? this.isUnilateralSnapshot,
+      note: note ?? this.note,
+      groupId: groupId ?? this.groupId,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<int>(deletedAt.value);
+    }
+    if (sessionId.present) {
+      map['session_id'] = Variable<String>(sessionId.value);
+    }
+    if (exerciseId.present) {
+      map['exercise_id'] = Variable<String>(exerciseId.value);
+    }
+    if (position.present) {
+      map['position'] = Variable<int>(position.value);
+    }
+    if (templateExerciseId.present) {
+      map['template_exercise_id'] = Variable<String>(templateExerciseId.value);
+    }
+    if (exerciseNameSnapshot.present) {
+      map['exercise_name_snapshot'] = Variable<String>(
+        exerciseNameSnapshot.value,
+      );
+    }
+    if (measureWeightSnapshot.present) {
+      map['measure_weight_snapshot'] = Variable<int>(
+        measureWeightSnapshot.value,
+      );
+    }
+    if (measureRepsSnapshot.present) {
+      map['measure_reps_snapshot'] = Variable<int>(measureRepsSnapshot.value);
+    }
+    if (measureDurationSnapshot.present) {
+      map['measure_duration_snapshot'] = Variable<int>(
+        measureDurationSnapshot.value,
+      );
+    }
+    if (measureDistanceSnapshot.present) {
+      map['measure_distance_snapshot'] = Variable<int>(
+        measureDistanceSnapshot.value,
+      );
+    }
+    if (loadModeSnapshot.present) {
+      map['load_mode_snapshot'] = Variable<String>(loadModeSnapshot.value);
+    }
+    if (weightSemanticsSnapshot.present) {
+      map['weight_semantics_snapshot'] = Variable<String>(
+        weightSemanticsSnapshot.value,
+      );
+    }
+    if (isUnilateralSnapshot.present) {
+      map['is_unilateral_snapshot'] = Variable<int>(isUnilateralSnapshot.value);
+    }
+    if (note.present) {
+      map['note'] = Variable<String>(note.value);
+    }
+    if (groupId.present) {
+      map['group_id'] = Variable<String>(groupId.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SessionExercisesCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('sessionId: $sessionId, ')
+          ..write('exerciseId: $exerciseId, ')
+          ..write('position: $position, ')
+          ..write('templateExerciseId: $templateExerciseId, ')
+          ..write('exerciseNameSnapshot: $exerciseNameSnapshot, ')
+          ..write('measureWeightSnapshot: $measureWeightSnapshot, ')
+          ..write('measureRepsSnapshot: $measureRepsSnapshot, ')
+          ..write('measureDurationSnapshot: $measureDurationSnapshot, ')
+          ..write('measureDistanceSnapshot: $measureDistanceSnapshot, ')
+          ..write('loadModeSnapshot: $loadModeSnapshot, ')
+          ..write('weightSemanticsSnapshot: $weightSemanticsSnapshot, ')
+          ..write('isUnilateralSnapshot: $isUnilateralSnapshot, ')
+          ..write('note: $note, ')
+          ..write('groupId: $groupId, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class SessionSets extends Table with TableInfo<SessionSets, SessionSetsData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -1254,8 +4755,90 @@ class SessionSets extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  SessionSetsData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SessionSetsData(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      sessionExerciseId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}session_exercise_id'],
+      )!,
+      position: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}position'],
+      )!,
+      setType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}set_type'],
+      )!,
+      targetKind: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}target_kind'],
+      ),
+      targetMin: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}target_min'],
+      ),
+      targetMax: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}target_max'],
+      ),
+      targetWeightG: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}target_weight_g'],
+      ),
+      restSeconds: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}rest_seconds'],
+      ),
+      weightG: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}weight_g'],
+      ),
+      reps: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}reps'],
+      ),
+      durationS: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}duration_s'],
+      ),
+      distanceM: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}distance_m'],
+      ),
+      effortScale: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}effort_scale'],
+      ),
+      effortTenths: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}effort_tenths'],
+      ),
+      side: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}side'],
+      ),
+      completedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}completed_at'],
+      ),
+    );
   }
 
   @override
@@ -1269,7 +4852,635 @@ class SessionSets extends Table with TableInfo {
   bool get dontWriteConstraints => true;
 }
 
-class Settings extends Table with TableInfo {
+class SessionSetsData extends DataClass implements Insertable<SessionSetsData> {
+  final String id;
+  final int createdAt;
+  final int updatedAt;
+  final int? deletedAt;
+  final String sessionExerciseId;
+  final int position;
+  final String setType;
+  final String? targetKind;
+  final int? targetMin;
+  final int? targetMax;
+  final int? targetWeightG;
+  final int? restSeconds;
+  final int? weightG;
+  final int? reps;
+  final int? durationS;
+  final int? distanceM;
+  final String? effortScale;
+  final int? effortTenths;
+  final String? side;
+  final int? completedAt;
+  const SessionSetsData({
+    required this.id,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    required this.sessionExerciseId,
+    required this.position,
+    required this.setType,
+    this.targetKind,
+    this.targetMin,
+    this.targetMax,
+    this.targetWeightG,
+    this.restSeconds,
+    this.weightG,
+    this.reps,
+    this.durationS,
+    this.distanceM,
+    this.effortScale,
+    this.effortTenths,
+    this.side,
+    this.completedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<int>(createdAt);
+    map['updated_at'] = Variable<int>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<int>(deletedAt);
+    }
+    map['session_exercise_id'] = Variable<String>(sessionExerciseId);
+    map['position'] = Variable<int>(position);
+    map['set_type'] = Variable<String>(setType);
+    if (!nullToAbsent || targetKind != null) {
+      map['target_kind'] = Variable<String>(targetKind);
+    }
+    if (!nullToAbsent || targetMin != null) {
+      map['target_min'] = Variable<int>(targetMin);
+    }
+    if (!nullToAbsent || targetMax != null) {
+      map['target_max'] = Variable<int>(targetMax);
+    }
+    if (!nullToAbsent || targetWeightG != null) {
+      map['target_weight_g'] = Variable<int>(targetWeightG);
+    }
+    if (!nullToAbsent || restSeconds != null) {
+      map['rest_seconds'] = Variable<int>(restSeconds);
+    }
+    if (!nullToAbsent || weightG != null) {
+      map['weight_g'] = Variable<int>(weightG);
+    }
+    if (!nullToAbsent || reps != null) {
+      map['reps'] = Variable<int>(reps);
+    }
+    if (!nullToAbsent || durationS != null) {
+      map['duration_s'] = Variable<int>(durationS);
+    }
+    if (!nullToAbsent || distanceM != null) {
+      map['distance_m'] = Variable<int>(distanceM);
+    }
+    if (!nullToAbsent || effortScale != null) {
+      map['effort_scale'] = Variable<String>(effortScale);
+    }
+    if (!nullToAbsent || effortTenths != null) {
+      map['effort_tenths'] = Variable<int>(effortTenths);
+    }
+    if (!nullToAbsent || side != null) {
+      map['side'] = Variable<String>(side);
+    }
+    if (!nullToAbsent || completedAt != null) {
+      map['completed_at'] = Variable<int>(completedAt);
+    }
+    return map;
+  }
+
+  SessionSetsCompanion toCompanion(bool nullToAbsent) {
+    return SessionSetsCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      sessionExerciseId: Value(sessionExerciseId),
+      position: Value(position),
+      setType: Value(setType),
+      targetKind: targetKind == null && nullToAbsent
+          ? const Value.absent()
+          : Value(targetKind),
+      targetMin: targetMin == null && nullToAbsent
+          ? const Value.absent()
+          : Value(targetMin),
+      targetMax: targetMax == null && nullToAbsent
+          ? const Value.absent()
+          : Value(targetMax),
+      targetWeightG: targetWeightG == null && nullToAbsent
+          ? const Value.absent()
+          : Value(targetWeightG),
+      restSeconds: restSeconds == null && nullToAbsent
+          ? const Value.absent()
+          : Value(restSeconds),
+      weightG: weightG == null && nullToAbsent
+          ? const Value.absent()
+          : Value(weightG),
+      reps: reps == null && nullToAbsent ? const Value.absent() : Value(reps),
+      durationS: durationS == null && nullToAbsent
+          ? const Value.absent()
+          : Value(durationS),
+      distanceM: distanceM == null && nullToAbsent
+          ? const Value.absent()
+          : Value(distanceM),
+      effortScale: effortScale == null && nullToAbsent
+          ? const Value.absent()
+          : Value(effortScale),
+      effortTenths: effortTenths == null && nullToAbsent
+          ? const Value.absent()
+          : Value(effortTenths),
+      side: side == null && nullToAbsent ? const Value.absent() : Value(side),
+      completedAt: completedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(completedAt),
+    );
+  }
+
+  factory SessionSetsData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SessionSetsData(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<int>(json['createdAt']),
+      updatedAt: serializer.fromJson<int>(json['updatedAt']),
+      deletedAt: serializer.fromJson<int?>(json['deletedAt']),
+      sessionExerciseId: serializer.fromJson<String>(json['sessionExerciseId']),
+      position: serializer.fromJson<int>(json['position']),
+      setType: serializer.fromJson<String>(json['setType']),
+      targetKind: serializer.fromJson<String?>(json['targetKind']),
+      targetMin: serializer.fromJson<int?>(json['targetMin']),
+      targetMax: serializer.fromJson<int?>(json['targetMax']),
+      targetWeightG: serializer.fromJson<int?>(json['targetWeightG']),
+      restSeconds: serializer.fromJson<int?>(json['restSeconds']),
+      weightG: serializer.fromJson<int?>(json['weightG']),
+      reps: serializer.fromJson<int?>(json['reps']),
+      durationS: serializer.fromJson<int?>(json['durationS']),
+      distanceM: serializer.fromJson<int?>(json['distanceM']),
+      effortScale: serializer.fromJson<String?>(json['effortScale']),
+      effortTenths: serializer.fromJson<int?>(json['effortTenths']),
+      side: serializer.fromJson<String?>(json['side']),
+      completedAt: serializer.fromJson<int?>(json['completedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<int>(createdAt),
+      'updatedAt': serializer.toJson<int>(updatedAt),
+      'deletedAt': serializer.toJson<int?>(deletedAt),
+      'sessionExerciseId': serializer.toJson<String>(sessionExerciseId),
+      'position': serializer.toJson<int>(position),
+      'setType': serializer.toJson<String>(setType),
+      'targetKind': serializer.toJson<String?>(targetKind),
+      'targetMin': serializer.toJson<int?>(targetMin),
+      'targetMax': serializer.toJson<int?>(targetMax),
+      'targetWeightG': serializer.toJson<int?>(targetWeightG),
+      'restSeconds': serializer.toJson<int?>(restSeconds),
+      'weightG': serializer.toJson<int?>(weightG),
+      'reps': serializer.toJson<int?>(reps),
+      'durationS': serializer.toJson<int?>(durationS),
+      'distanceM': serializer.toJson<int?>(distanceM),
+      'effortScale': serializer.toJson<String?>(effortScale),
+      'effortTenths': serializer.toJson<int?>(effortTenths),
+      'side': serializer.toJson<String?>(side),
+      'completedAt': serializer.toJson<int?>(completedAt),
+    };
+  }
+
+  SessionSetsData copyWith({
+    String? id,
+    int? createdAt,
+    int? updatedAt,
+    Value<int?> deletedAt = const Value.absent(),
+    String? sessionExerciseId,
+    int? position,
+    String? setType,
+    Value<String?> targetKind = const Value.absent(),
+    Value<int?> targetMin = const Value.absent(),
+    Value<int?> targetMax = const Value.absent(),
+    Value<int?> targetWeightG = const Value.absent(),
+    Value<int?> restSeconds = const Value.absent(),
+    Value<int?> weightG = const Value.absent(),
+    Value<int?> reps = const Value.absent(),
+    Value<int?> durationS = const Value.absent(),
+    Value<int?> distanceM = const Value.absent(),
+    Value<String?> effortScale = const Value.absent(),
+    Value<int?> effortTenths = const Value.absent(),
+    Value<String?> side = const Value.absent(),
+    Value<int?> completedAt = const Value.absent(),
+  }) => SessionSetsData(
+    id: id ?? this.id,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    sessionExerciseId: sessionExerciseId ?? this.sessionExerciseId,
+    position: position ?? this.position,
+    setType: setType ?? this.setType,
+    targetKind: targetKind.present ? targetKind.value : this.targetKind,
+    targetMin: targetMin.present ? targetMin.value : this.targetMin,
+    targetMax: targetMax.present ? targetMax.value : this.targetMax,
+    targetWeightG: targetWeightG.present
+        ? targetWeightG.value
+        : this.targetWeightG,
+    restSeconds: restSeconds.present ? restSeconds.value : this.restSeconds,
+    weightG: weightG.present ? weightG.value : this.weightG,
+    reps: reps.present ? reps.value : this.reps,
+    durationS: durationS.present ? durationS.value : this.durationS,
+    distanceM: distanceM.present ? distanceM.value : this.distanceM,
+    effortScale: effortScale.present ? effortScale.value : this.effortScale,
+    effortTenths: effortTenths.present ? effortTenths.value : this.effortTenths,
+    side: side.present ? side.value : this.side,
+    completedAt: completedAt.present ? completedAt.value : this.completedAt,
+  );
+  SessionSetsData copyWithCompanion(SessionSetsCompanion data) {
+    return SessionSetsData(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      sessionExerciseId: data.sessionExerciseId.present
+          ? data.sessionExerciseId.value
+          : this.sessionExerciseId,
+      position: data.position.present ? data.position.value : this.position,
+      setType: data.setType.present ? data.setType.value : this.setType,
+      targetKind: data.targetKind.present
+          ? data.targetKind.value
+          : this.targetKind,
+      targetMin: data.targetMin.present ? data.targetMin.value : this.targetMin,
+      targetMax: data.targetMax.present ? data.targetMax.value : this.targetMax,
+      targetWeightG: data.targetWeightG.present
+          ? data.targetWeightG.value
+          : this.targetWeightG,
+      restSeconds: data.restSeconds.present
+          ? data.restSeconds.value
+          : this.restSeconds,
+      weightG: data.weightG.present ? data.weightG.value : this.weightG,
+      reps: data.reps.present ? data.reps.value : this.reps,
+      durationS: data.durationS.present ? data.durationS.value : this.durationS,
+      distanceM: data.distanceM.present ? data.distanceM.value : this.distanceM,
+      effortScale: data.effortScale.present
+          ? data.effortScale.value
+          : this.effortScale,
+      effortTenths: data.effortTenths.present
+          ? data.effortTenths.value
+          : this.effortTenths,
+      side: data.side.present ? data.side.value : this.side,
+      completedAt: data.completedAt.present
+          ? data.completedAt.value
+          : this.completedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SessionSetsData(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('sessionExerciseId: $sessionExerciseId, ')
+          ..write('position: $position, ')
+          ..write('setType: $setType, ')
+          ..write('targetKind: $targetKind, ')
+          ..write('targetMin: $targetMin, ')
+          ..write('targetMax: $targetMax, ')
+          ..write('targetWeightG: $targetWeightG, ')
+          ..write('restSeconds: $restSeconds, ')
+          ..write('weightG: $weightG, ')
+          ..write('reps: $reps, ')
+          ..write('durationS: $durationS, ')
+          ..write('distanceM: $distanceM, ')
+          ..write('effortScale: $effortScale, ')
+          ..write('effortTenths: $effortTenths, ')
+          ..write('side: $side, ')
+          ..write('completedAt: $completedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    sessionExerciseId,
+    position,
+    setType,
+    targetKind,
+    targetMin,
+    targetMax,
+    targetWeightG,
+    restSeconds,
+    weightG,
+    reps,
+    durationS,
+    distanceM,
+    effortScale,
+    effortTenths,
+    side,
+    completedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SessionSetsData &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.sessionExerciseId == this.sessionExerciseId &&
+          other.position == this.position &&
+          other.setType == this.setType &&
+          other.targetKind == this.targetKind &&
+          other.targetMin == this.targetMin &&
+          other.targetMax == this.targetMax &&
+          other.targetWeightG == this.targetWeightG &&
+          other.restSeconds == this.restSeconds &&
+          other.weightG == this.weightG &&
+          other.reps == this.reps &&
+          other.durationS == this.durationS &&
+          other.distanceM == this.distanceM &&
+          other.effortScale == this.effortScale &&
+          other.effortTenths == this.effortTenths &&
+          other.side == this.side &&
+          other.completedAt == this.completedAt);
+}
+
+class SessionSetsCompanion extends UpdateCompanion<SessionSetsData> {
+  final Value<String> id;
+  final Value<int> createdAt;
+  final Value<int> updatedAt;
+  final Value<int?> deletedAt;
+  final Value<String> sessionExerciseId;
+  final Value<int> position;
+  final Value<String> setType;
+  final Value<String?> targetKind;
+  final Value<int?> targetMin;
+  final Value<int?> targetMax;
+  final Value<int?> targetWeightG;
+  final Value<int?> restSeconds;
+  final Value<int?> weightG;
+  final Value<int?> reps;
+  final Value<int?> durationS;
+  final Value<int?> distanceM;
+  final Value<String?> effortScale;
+  final Value<int?> effortTenths;
+  final Value<String?> side;
+  final Value<int?> completedAt;
+  final Value<int> rowid;
+  const SessionSetsCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.sessionExerciseId = const Value.absent(),
+    this.position = const Value.absent(),
+    this.setType = const Value.absent(),
+    this.targetKind = const Value.absent(),
+    this.targetMin = const Value.absent(),
+    this.targetMax = const Value.absent(),
+    this.targetWeightG = const Value.absent(),
+    this.restSeconds = const Value.absent(),
+    this.weightG = const Value.absent(),
+    this.reps = const Value.absent(),
+    this.durationS = const Value.absent(),
+    this.distanceM = const Value.absent(),
+    this.effortScale = const Value.absent(),
+    this.effortTenths = const Value.absent(),
+    this.side = const Value.absent(),
+    this.completedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SessionSetsCompanion.insert({
+    required String id,
+    required int createdAt,
+    required int updatedAt,
+    this.deletedAt = const Value.absent(),
+    required String sessionExerciseId,
+    required int position,
+    required String setType,
+    this.targetKind = const Value.absent(),
+    this.targetMin = const Value.absent(),
+    this.targetMax = const Value.absent(),
+    this.targetWeightG = const Value.absent(),
+    this.restSeconds = const Value.absent(),
+    this.weightG = const Value.absent(),
+    this.reps = const Value.absent(),
+    this.durationS = const Value.absent(),
+    this.distanceM = const Value.absent(),
+    this.effortScale = const Value.absent(),
+    this.effortTenths = const Value.absent(),
+    this.side = const Value.absent(),
+    this.completedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt),
+       sessionExerciseId = Value(sessionExerciseId),
+       position = Value(position),
+       setType = Value(setType);
+  static Insertable<SessionSetsData> custom({
+    Expression<String>? id,
+    Expression<int>? createdAt,
+    Expression<int>? updatedAt,
+    Expression<int>? deletedAt,
+    Expression<String>? sessionExerciseId,
+    Expression<int>? position,
+    Expression<String>? setType,
+    Expression<String>? targetKind,
+    Expression<int>? targetMin,
+    Expression<int>? targetMax,
+    Expression<int>? targetWeightG,
+    Expression<int>? restSeconds,
+    Expression<int>? weightG,
+    Expression<int>? reps,
+    Expression<int>? durationS,
+    Expression<int>? distanceM,
+    Expression<String>? effortScale,
+    Expression<int>? effortTenths,
+    Expression<String>? side,
+    Expression<int>? completedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (sessionExerciseId != null) 'session_exercise_id': sessionExerciseId,
+      if (position != null) 'position': position,
+      if (setType != null) 'set_type': setType,
+      if (targetKind != null) 'target_kind': targetKind,
+      if (targetMin != null) 'target_min': targetMin,
+      if (targetMax != null) 'target_max': targetMax,
+      if (targetWeightG != null) 'target_weight_g': targetWeightG,
+      if (restSeconds != null) 'rest_seconds': restSeconds,
+      if (weightG != null) 'weight_g': weightG,
+      if (reps != null) 'reps': reps,
+      if (durationS != null) 'duration_s': durationS,
+      if (distanceM != null) 'distance_m': distanceM,
+      if (effortScale != null) 'effort_scale': effortScale,
+      if (effortTenths != null) 'effort_tenths': effortTenths,
+      if (side != null) 'side': side,
+      if (completedAt != null) 'completed_at': completedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SessionSetsCompanion copyWith({
+    Value<String>? id,
+    Value<int>? createdAt,
+    Value<int>? updatedAt,
+    Value<int?>? deletedAt,
+    Value<String>? sessionExerciseId,
+    Value<int>? position,
+    Value<String>? setType,
+    Value<String?>? targetKind,
+    Value<int?>? targetMin,
+    Value<int?>? targetMax,
+    Value<int?>? targetWeightG,
+    Value<int?>? restSeconds,
+    Value<int?>? weightG,
+    Value<int?>? reps,
+    Value<int?>? durationS,
+    Value<int?>? distanceM,
+    Value<String?>? effortScale,
+    Value<int?>? effortTenths,
+    Value<String?>? side,
+    Value<int?>? completedAt,
+    Value<int>? rowid,
+  }) {
+    return SessionSetsCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      sessionExerciseId: sessionExerciseId ?? this.sessionExerciseId,
+      position: position ?? this.position,
+      setType: setType ?? this.setType,
+      targetKind: targetKind ?? this.targetKind,
+      targetMin: targetMin ?? this.targetMin,
+      targetMax: targetMax ?? this.targetMax,
+      targetWeightG: targetWeightG ?? this.targetWeightG,
+      restSeconds: restSeconds ?? this.restSeconds,
+      weightG: weightG ?? this.weightG,
+      reps: reps ?? this.reps,
+      durationS: durationS ?? this.durationS,
+      distanceM: distanceM ?? this.distanceM,
+      effortScale: effortScale ?? this.effortScale,
+      effortTenths: effortTenths ?? this.effortTenths,
+      side: side ?? this.side,
+      completedAt: completedAt ?? this.completedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<int>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<int>(deletedAt.value);
+    }
+    if (sessionExerciseId.present) {
+      map['session_exercise_id'] = Variable<String>(sessionExerciseId.value);
+    }
+    if (position.present) {
+      map['position'] = Variable<int>(position.value);
+    }
+    if (setType.present) {
+      map['set_type'] = Variable<String>(setType.value);
+    }
+    if (targetKind.present) {
+      map['target_kind'] = Variable<String>(targetKind.value);
+    }
+    if (targetMin.present) {
+      map['target_min'] = Variable<int>(targetMin.value);
+    }
+    if (targetMax.present) {
+      map['target_max'] = Variable<int>(targetMax.value);
+    }
+    if (targetWeightG.present) {
+      map['target_weight_g'] = Variable<int>(targetWeightG.value);
+    }
+    if (restSeconds.present) {
+      map['rest_seconds'] = Variable<int>(restSeconds.value);
+    }
+    if (weightG.present) {
+      map['weight_g'] = Variable<int>(weightG.value);
+    }
+    if (reps.present) {
+      map['reps'] = Variable<int>(reps.value);
+    }
+    if (durationS.present) {
+      map['duration_s'] = Variable<int>(durationS.value);
+    }
+    if (distanceM.present) {
+      map['distance_m'] = Variable<int>(distanceM.value);
+    }
+    if (effortScale.present) {
+      map['effort_scale'] = Variable<String>(effortScale.value);
+    }
+    if (effortTenths.present) {
+      map['effort_tenths'] = Variable<int>(effortTenths.value);
+    }
+    if (side.present) {
+      map['side'] = Variable<String>(side.value);
+    }
+    if (completedAt.present) {
+      map['completed_at'] = Variable<int>(completedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SessionSetsCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('sessionExerciseId: $sessionExerciseId, ')
+          ..write('position: $position, ')
+          ..write('setType: $setType, ')
+          ..write('targetKind: $targetKind, ')
+          ..write('targetMin: $targetMin, ')
+          ..write('targetMax: $targetMax, ')
+          ..write('targetWeightG: $targetWeightG, ')
+          ..write('restSeconds: $restSeconds, ')
+          ..write('weightG: $weightG, ')
+          ..write('reps: $reps, ')
+          ..write('durationS: $durationS, ')
+          ..write('distanceM: $distanceM, ')
+          ..write('effortScale: $effortScale, ')
+          ..write('effortTenths: $effortTenths, ')
+          ..write('side: $side, ')
+          ..write('completedAt: $completedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class Settings extends Table with TableInfo<Settings, SettingsData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -1308,8 +5519,22 @@ class Settings extends Table with TableInfo {
   @override
   Set<GeneratedColumn> get $primaryKey => {key};
   @override
-  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
-    throw UnsupportedError('TableInfo.map in schema verification code');
+  SettingsData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SettingsData(
+      key: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}key'],
+      )!,
+      value: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}value'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
   }
 
   @override
@@ -1321,6 +5546,165 @@ class Settings extends Table with TableInfo {
   List<String> get customConstraints => const ['PRIMARY KEY("key")'];
   @override
   bool get dontWriteConstraints => true;
+}
+
+class SettingsData extends DataClass implements Insertable<SettingsData> {
+  final String key;
+  final String value;
+  final int updatedAt;
+  const SettingsData({
+    required this.key,
+    required this.value,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['key'] = Variable<String>(key);
+    map['value'] = Variable<String>(value);
+    map['updated_at'] = Variable<int>(updatedAt);
+    return map;
+  }
+
+  SettingsCompanion toCompanion(bool nullToAbsent) {
+    return SettingsCompanion(
+      key: Value(key),
+      value: Value(value),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory SettingsData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SettingsData(
+      key: serializer.fromJson<String>(json['key']),
+      value: serializer.fromJson<String>(json['value']),
+      updatedAt: serializer.fromJson<int>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'key': serializer.toJson<String>(key),
+      'value': serializer.toJson<String>(value),
+      'updatedAt': serializer.toJson<int>(updatedAt),
+    };
+  }
+
+  SettingsData copyWith({String? key, String? value, int? updatedAt}) =>
+      SettingsData(
+        key: key ?? this.key,
+        value: value ?? this.value,
+        updatedAt: updatedAt ?? this.updatedAt,
+      );
+  SettingsData copyWithCompanion(SettingsCompanion data) {
+    return SettingsData(
+      key: data.key.present ? data.key.value : this.key,
+      value: data.value.present ? data.value.value : this.value,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SettingsData(')
+          ..write('key: $key, ')
+          ..write('value: $value, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(key, value, updatedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SettingsData &&
+          other.key == this.key &&
+          other.value == this.value &&
+          other.updatedAt == this.updatedAt);
+}
+
+class SettingsCompanion extends UpdateCompanion<SettingsData> {
+  final Value<String> key;
+  final Value<String> value;
+  final Value<int> updatedAt;
+  final Value<int> rowid;
+  const SettingsCompanion({
+    this.key = const Value.absent(),
+    this.value = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SettingsCompanion.insert({
+    required String key,
+    required String value,
+    required int updatedAt,
+    this.rowid = const Value.absent(),
+  }) : key = Value(key),
+       value = Value(value),
+       updatedAt = Value(updatedAt);
+  static Insertable<SettingsData> custom({
+    Expression<String>? key,
+    Expression<String>? value,
+    Expression<int>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (key != null) 'key': key,
+      if (value != null) 'value': value,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SettingsCompanion copyWith({
+    Value<String>? key,
+    Value<String>? value,
+    Value<int>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return SettingsCompanion(
+      key: key ?? this.key,
+      value: value ?? this.value,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (key.present) {
+      map['key'] = Variable<String>(key.value);
+    }
+    if (value.present) {
+      map['value'] = Variable<String>(value.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<int>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SettingsCompanion(')
+          ..write('key: $key, ')
+          ..write('value: $value, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
 }
 
 class DatabaseAtV1 extends GeneratedDatabase {

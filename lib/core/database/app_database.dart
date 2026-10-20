@@ -4,9 +4,11 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqlite3/common.dart' show CommonDatabase;
 
 import '../../features/exercises/domain/exercise.dart';
+import '../../features/plan/domain/plan.dart';
 import '../../features/workout/domain/workout_session.dart';
 import '../domain/local_date.dart';
 import '../domain/training.dart';
+import 'app_database.steps.dart';
 import 'converters.dart';
 import 'tables.dart';
 
@@ -25,6 +27,9 @@ part 'app_database.g.dart';
     SessionExercises,
     SessionSets,
     Settings,
+    WeeklyPlans,
+    WeeklyPlanDays,
+    PlannedDays,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -61,16 +66,22 @@ class AppDatabase extends _$AppDatabase {
   }
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
     onCreate: (m) => m.createAll(),
-    onUpgrade: (m, from, to) async {
-      // Kolejne wersje: stepByStep z app_database.steps.dart
-      // (`dart run drift_dev make-migrations`).
-      throw UnsupportedError('Brak migracji z wersji $from do $to');
-    },
+    // Kroki z app_database.steps.dart (`dart run drift_dev make-migrations`).
+    onUpgrade: stepByStep(
+      // v2: plan treningów (ADR 0015). Istniejące tabele bez zmian.
+      from1To2: (m, schema) async {
+        await m.createTable(schema.weeklyPlans);
+        await m.createTable(schema.weeklyPlanDays);
+        await m.createTable(schema.plannedDays);
+        await m.createIndex(schema.idxWeeklyPlanDaysPlan);
+        await m.createIndex(schema.idxPlannedDaysDate);
+      },
+    ),
     beforeOpen: (details) async {
       await customStatement('PRAGMA foreign_keys = ON');
     },
