@@ -106,7 +106,7 @@ final class AppPalette {
     outline: Color(0xFFD9DCE2),
     textPrimary: Color(0xFF111318),
     textSecondary: Color(0xFF4A505C),
-    textHint: Color(0xFF6B7280),
+    textHint: Color(0xFF646B78),
     accentFill: volt,
     onAccentFill: ink,
     accentText: Color(0xFF3F5A00),

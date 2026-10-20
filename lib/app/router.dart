@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../features/assistant/presentation/assistant_screen.dart';
 import '../features/backup/presentation/backup_screen.dart';
 import '../features/exercises/presentation/exercise_detail_screen.dart';
 import '../features/exercises/presentation/exercise_form_screen.dart';
@@ -119,6 +120,13 @@ final routerProvider = Provider<GoRouter>((ref) {
             builder: (context, state) => const BackupScreen(),
           ),
         ],
+      ),
+      GoRoute(
+        path: AppRoutes.assistant,
+        builder: (context, state) => AssistantScreen(
+          sessionId: state.uri.queryParameters['session'],
+          templateId: state.uri.queryParameters['template'],
+        ),
       ),
       GoRoute(
         path: AppRoutes.glossary,

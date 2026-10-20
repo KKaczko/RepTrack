@@ -9,9 +9,7 @@ import 'package:intl/intl.dart';
 import '../../../app/routes.dart';
 import '../../../core/database/database_providers.dart';
 import '../../../core/domain/local_date.dart';
-import '../../../core/domain/training.dart';
 import '../../../core/domain/units.dart';
-import '../../../core/l10n/formatters.dart';
 import '../../../core/l10n/generated/app_localizations.dart';
 import '../../../core/platform/file_exchange.dart';
 import '../../../core/platform/rest_notifications.dart';
@@ -23,6 +21,7 @@ import '../data/backup_providers.dart';
 import '../data/backup_service.dart';
 import '../domain/backup_validation.dart';
 import '../domain/workout_export.dart';
+import 'export_labels.dart';
 
 enum _Period { all, days30, days90, year, custom }
 
@@ -285,40 +284,6 @@ class _BackupScreenState extends ConsumerState<BackupScreen> {
     setState(() => _exerciseIds = ids.toSet());
   }
 
-  ExportLabels _labels(AppLocalizations l10n, WeightUnit unit) {
-    final unitLabel = weightUnitLabel(unit);
-    return ExportLabels(
-      title: l10n.exportDocTitle,
-      unitsLine: l10n.exportDocUnits(unitLabel),
-      date: l10n.exportColDate,
-      time: l10n.exportColTime,
-      workout: l10n.exportColWorkout,
-      template: l10n.exportColTemplate,
-      exercise: l10n.exportColExercise,
-      set: l10n.exportColSet,
-      setTypeHeader: l10n.exportColSetType,
-      weight: l10n.exportColWeight(unitLabel),
-      reps: l10n.exportColReps,
-      duration: l10n.exportColDuration,
-      distance: l10n.exportColDistance,
-      rir: l10n.effortRir,
-      rpe: l10n.effortRpe,
-      notes: l10n.exportColNotes,
-      sets: l10n.exportColSets,
-      start: l10n.exportDocStart,
-      workoutDuration: l10n.exportDocDuration,
-      wellbeing: l10n.exportDocWellbeing,
-      setTypes: {
-        SetType.warmup: l10n.setTypeWarmup,
-        SetType.working: l10n.setTypeWorking,
-        SetType.drop: l10n.setTypeDrop,
-        SetType.amrap: l10n.setTypeAmrap,
-      },
-      untitledWorkout: l10n.workoutTitle,
-      decimalSeparator: formatDecimal(1.5, l10n.localeName).substring(1, 2),
-    );
-  }
-
   /// Treść eksportu w wybranym formacie z nazwą pliku i typem MIME.
   ({String content, String fileName, String mimeType}) _export(
     List<ExportRow> rows,
@@ -330,7 +295,7 @@ class _BackupScreenState extends ConsumerState<BackupScreen> {
       for (final e in (ref.read(exercisesByIdProvider).value ?? {}).values)
         e.id: e.name,
     };
-    final labels = _labels(l10n, unit);
+    final labels = exportLabels(l10n, unit);
     final stamp = _today().toIso();
     return switch (_format) {
       _Format.csv => (

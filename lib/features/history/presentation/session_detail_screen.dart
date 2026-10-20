@@ -120,6 +120,12 @@ class _SessionDetailScreenState extends ConsumerState<SessionDetailScreen> {
             tooltip: l10n.sessionMore,
             itemBuilder: (context) => [
               PopupMenuItem(
+                onTap: () => unawaited(
+                  context.push(AppRoutes.assistantReview(session.id)),
+                ),
+                child: Text(l10n.assistantReviewSession),
+              ),
+              PopupMenuItem(
                 onTap: () => unawaited(_delete(session)),
                 child: Text(l10n.sessionDelete),
               ),

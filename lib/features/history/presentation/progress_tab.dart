@@ -194,6 +194,14 @@ class _ProgressTabState extends ConsumerState<ProgressTab> {
         Align(
           alignment: Alignment.centerLeft,
           child: TextButton.icon(
+            icon: const Icon(Icons.auto_awesome_outlined),
+            label: Text(l10n.assistantAsk),
+            onPressed: () => context.push(AppRoutes.assistant),
+          ),
+        ),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: TextButton.icon(
             icon: const Icon(Icons.menu_book_rounded),
             label: Text(l10n.glossaryProgressLink),
             onPressed: () => context.push(AppRoutes.glossary),

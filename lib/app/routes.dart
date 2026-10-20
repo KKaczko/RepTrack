@@ -18,6 +18,17 @@ abstract final class AppRoutes {
   static const licenses = '/settings/licenses';
   static const backup = '/settings/backup';
 
+  /// Asystent AI (ADR 0014).
+  static const assistant = '/assistant';
+
+  /// Asystent z komentarzem do zakończonego treningu.
+  static String assistantReview(String sessionId) =>
+      '/assistant?session=$sessionId';
+
+  /// Asystent z propozycją następnego treningu z szablonu.
+  static String assistantSuggest(String templateId) =>
+      '/assistant?template=$templateId';
+
   /// Słowniczek pojęć (z ustawień i z ikonek ⓘ przy pojęciach).
   static const glossary = glossaryPath;
   static const workout = '/workout';

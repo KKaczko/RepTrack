@@ -13,7 +13,7 @@ import '../support/workout_fixtures.dart';
 
 /// Przegląd dostępności (Etap 7): układ przy 360 dp i czcionce 2×, cele
 /// dotyku, etykiety i kontrast na ekranach treningu, historii, progresu,
-/// ustawień, kopii i słowniczka, w ciemnym i jasnym motywie.
+/// ustawień, kopii, słowniczka i asystenta, w ciemnym i jasnym motywie.
 
 /// Aplikacja z szablonem i zakończonym treningiem.
 Future<AppDatabase> _launch(
@@ -38,10 +38,9 @@ Future<AppDatabase> _launch(
         (80000, 9),
       ]),
     );
-    await DriftSettingsRepository(
-      db,
-      testClock(),
-    ).save(AppSettings(themeMode: theme));
+    await DriftSettingsRepository(db, testClock()).save(
+      AppSettings(themeMode: theme, assistantUrl: 'http://10.0.2.2:11434'),
+    );
   });
   return pumpRepTrack(tester, db: db, clock: testClock());
 }
@@ -125,6 +124,13 @@ void main() {
     expect(tester.takeException(), isNull);
     await tester.scrollUntilVisible(find.text('Progresja'), 300);
     expect(tester.takeException(), isNull);
+    await _tap(tester, find.byTooltip('Wstecz'));
+    await _tap(tester, find.byTooltip('Wstecz'));
+
+    await _tap(tester, find.byTooltip('Asystent AI'));
+    expect(tester.takeException(), isNull);
+    await _tap(tester, find.text('Jak mi idzie w ostatnim miesiącu?'));
+    expect(tester.takeException(), isNull);
 
     await closeRepTrack(tester, db);
   });
@@ -164,6 +170,13 @@ void main() {
       );
       await _meetsGuidelines(tester);
       await _tap(tester, find.text('Wszystkie pojęcia'));
+      await _meetsGuidelines(tester);
+      await _tap(tester, find.byTooltip('Wstecz'));
+
+      await _tap(tester, navTab('Start'));
+      await _tap(tester, find.byTooltip('Asystent AI'));
+      await _meetsGuidelines(tester);
+      await _tap(tester, find.text('Jak mi idzie w ostatnim miesiącu?'));
       await _meetsGuidelines(tester);
 
       await closeRepTrack(tester, db);

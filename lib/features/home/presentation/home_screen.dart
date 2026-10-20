@@ -45,6 +45,11 @@ class HomeScreen extends ConsumerWidget {
         title: Text(l10n.appTitle),
         actions: [
           IconButton(
+            tooltip: l10n.assistantOpen,
+            icon: const Icon(Icons.auto_awesome_outlined),
+            onPressed: () => context.push(AppRoutes.assistant),
+          ),
+          IconButton(
             tooltip: l10n.openSettings,
             icon: const Icon(Icons.settings_outlined),
             onPressed: () => context.push(AppRoutes.settings),

@@ -15,7 +15,7 @@ import '../data/template_providers.dart';
 import '../domain/template.dart';
 import '../domain/template_editing.dart';
 
-enum _TemplateAction { duplicate, archive, unarchive, delete }
+enum _TemplateAction { suggest, duplicate, archive, unarchive, delete }
 
 /// Lista szablonów z archiwum, duplikowaniem i usuwaniem.
 class TemplatesScreen extends ConsumerStatefulWidget {
@@ -123,6 +123,8 @@ class _TemplatesScreenState extends ConsumerState<TemplatesScreen> {
         messenger.showSnackBar(SnackBar(content: Text(text)));
 
     switch (action) {
+      case _TemplateAction.suggest:
+        await context.push(AppRoutes.assistantSuggest(template.id));
       case _TemplateAction.duplicate:
         await repo.save(
           duplicateTemplate(
@@ -237,6 +239,11 @@ class _TemplateTile extends ConsumerWidget {
     tooltip: l10n.templateActions,
     onSelected: onAction,
     itemBuilder: (context) => [
+      if (!template.isArchived)
+        PopupMenuItem(
+          value: _TemplateAction.suggest,
+          child: Text(l10n.assistantSuggestTemplate),
+        ),
       if (!template.isArchived)
         PopupMenuItem(
           value: _TemplateAction.duplicate,

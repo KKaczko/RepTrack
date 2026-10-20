@@ -288,7 +288,7 @@ String exportMarkdown(
           final session = sessionRows.first.session;
           final m = sessionRows.first.exercise.measurementSnapshot;
           final sets = sessionRows
-              .map((r) => _setSummary(r.set, m, unit, sep))
+              .map((r) => exportSetSummary(r.set, m, unit, sep))
               .join(', ');
           buffer.writeln(
             '| ${session.localDate.toIso()} | '
@@ -302,7 +302,12 @@ String exportMarkdown(
 
 /// Seria w jednym polu, np. „80×10”, „45 s”, „400 m”, z wysiłkiem
 /// „@RIR 2”.
-String _setSummary(SessionSet s, Measurement m, WeightUnit unit, String sep) {
+String exportSetSummary(
+  SessionSet s,
+  Measurement m,
+  WeightUnit unit,
+  String sep,
+) {
   final load = [
     if (m.weight && s.weightG != null) _weight(s.weightG, unit, sep),
     if (m.reps && s.reps != null) '${s.reps}',

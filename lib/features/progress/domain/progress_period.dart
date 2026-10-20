@@ -238,8 +238,8 @@ final class ExerciseProgress {
   final double? best;
   final SessionSet? bestSet;
 
-  /// Wykonania ćwiczenia w okresie (jedno na trening; dwa treningi
-  /// jednego dnia to dwa wykonania).
+  /// Wykonania ćwiczenia z co najmniej jedną serią roboczą w okresie (jedno
+  /// na trening; dwa treningi jednego dnia to dwa wykonania).
   final int workouts;
   final int volumeG;
 
@@ -273,7 +273,9 @@ ExerciseProgress exerciseProgress(
     bestSet: metric == null
         ? null
         : bestSet(inPeriod.map((p) => p.exercise), metric),
-    workouts: inPeriod.length,
+    workouts: inPeriod
+        .where((p) => p.exercise.sets.any(countsForMetrics))
+        .length,
     volumeG: inPeriod.fold(0, (sum, p) => sum + exerciseVolumeG(p.exercise)),
   );
 }
