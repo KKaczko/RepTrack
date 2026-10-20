@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../app/routes.dart';
 import '../../../core/database/database_providers.dart';
+import '../../../core/domain/glossary.dart';
 import '../../../core/domain/local_date.dart';
 import '../../../core/domain/units.dart';
 import '../../../core/l10n/formatters.dart';
@@ -11,6 +14,7 @@ import '../../../core/theme/tokens.dart';
 import '../../../core/widgets/charts.dart';
 import '../../../core/widgets/empty_state.dart';
 import '../../../core/widgets/stat_tile.dart';
+import '../../../core/widgets/term_info.dart';
 import '../../exercises/data/exercise_providers.dart';
 import '../../exercises/domain/exercise.dart';
 import '../../exercises/presentation/exercise_labels.dart';
@@ -165,7 +169,7 @@ class _ProgressTabState extends ConsumerState<ProgressTab> {
             l10n.workoutsCount(weeks.last.count),
           ),
         ),
-        _Title(l10n.progressMuscles),
+        _Title(l10n.progressMuscles, terms: const [GlossaryTerm.setsPerMuscle]),
         Text(l10n.progressMusclesHint, style: muted),
         const SizedBox(height: AppSpacing.m),
         if (muscles.isEmpty)
@@ -185,6 +189,15 @@ class _ProgressTabState extends ConsumerState<ProgressTab> {
             for (final p in exercisePerformances(history, selected))
               (date: p.session.localDate, exercise: p.exercise),
           ],
+        ),
+        const SizedBox(height: AppSpacing.l),
+        Align(
+          alignment: Alignment.centerLeft,
+          child: TextButton.icon(
+            icon: const Icon(Icons.menu_book_rounded),
+            label: Text(l10n.glossaryProgressLink),
+            onPressed: () => context.push(AppRoutes.glossary),
+          ),
         ),
       ],
     );
@@ -258,15 +271,27 @@ class _ProgressTabState extends ConsumerState<ProgressTab> {
 }
 
 class _Title extends StatelessWidget {
-  const _Title(this.text);
+  const _Title(this.text, {this.terms});
 
   final String text;
 
+  /// Pojęcia z ikonką ⓘ przy tytule.
+  final List<GlossaryTerm>? terms;
+
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(top: AppSpacing.xl, bottom: AppSpacing.m),
-    child: Text(text, style: Theme.of(context).textTheme.titleMedium),
-  );
+  Widget build(BuildContext context) {
+    final style = Theme.of(context).textTheme.titleMedium;
+    final terms = this.terms;
+    // Ikonka ma 48 dp wysokości, więc odstępy są mniejsze.
+    return Padding(
+      padding: terms == null
+          ? const EdgeInsets.only(top: AppSpacing.xl, bottom: AppSpacing.m)
+          : const EdgeInsets.only(top: AppSpacing.l, bottom: AppSpacing.xs),
+      child: terms == null
+          ? Text(text, style: style)
+          : TermTitle(text, terms: terms, style: style),
+    );
+  }
 }
 
 /// Serie na partię mięśniową jako poziome paski: jedna seria danych w kolorze

@@ -12,6 +12,7 @@ import '../features/history/presentation/history_screen.dart';
 import '../features/history/presentation/session_compare_screen.dart';
 import '../features/history/presentation/session_detail_screen.dart';
 import '../features/home/presentation/home_screen.dart';
+import '../features/settings/presentation/glossary_screen.dart';
 import '../features/settings/presentation/licenses_screen.dart';
 import '../features/settings/presentation/settings_screen.dart';
 import '../features/templates/presentation/template_editor_screen.dart';
@@ -118,6 +119,10 @@ final routerProvider = Provider<GoRouter>((ref) {
             builder: (context, state) => const BackupScreen(),
           ),
         ],
+      ),
+      GoRoute(
+        path: AppRoutes.glossary,
+        builder: (context, state) => const GlossaryScreen(),
       ),
       GoRoute(
         path: '/sessions/:id',

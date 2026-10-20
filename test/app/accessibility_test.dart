@@ -13,7 +13,7 @@ import '../support/workout_fixtures.dart';
 
 /// Przegląd dostępności (Etap 7): układ przy 360 dp i czcionce 2×, cele
 /// dotyku, etykiety i kontrast na ekranach treningu, historii, progresu,
-/// ustawień i kopii, w ciemnym i jasnym motywie.
+/// ustawień, kopii i słowniczka, w ciemnym i jasnym motywie.
 
 /// Aplikacja z szablonem i zakończonym treningiem.
 Future<AppDatabase> _launch(
@@ -105,7 +105,9 @@ void main() {
     await closeRepTrack(tester, db);
   });
 
-  testWidgets('czcionka 2× na 360 dp: ustawienia i kopia', (tester) async {
+  testWidgets('czcionka 2× na 360 dp: ustawienia, kopia, słowniczek', (
+    tester,
+  ) async {
     final db = await _launch(tester, textScale: 2);
 
     await _tap(tester, find.byTooltip('Otwórz ustawienia'));
@@ -115,6 +117,13 @@ void main() {
     expect(tester.takeException(), isNull);
     await tester.scrollUntilVisible(find.text('Markdown'), 300);
     await _tap(tester, find.text('Markdown'));
+    expect(tester.takeException(), isNull);
+    await _tap(tester, find.byTooltip('Wstecz'));
+
+    await tester.scrollUntilVisible(find.text('Słowniczek pojęć'), 300);
+    await _tap(tester, find.text('Słowniczek pojęć'));
+    expect(tester.takeException(), isNull);
+    await tester.scrollUntilVisible(find.text('Progresja'), 300);
     expect(tester.takeException(), isNull);
 
     await closeRepTrack(tester, db);
@@ -147,6 +156,14 @@ void main() {
         300,
         scrollable: _progressList,
       );
+      await _meetsGuidelines(tester);
+
+      await _tap(
+        tester,
+        find.byIcon(Icons.info_outline_rounded).hitTestable().first,
+      );
+      await _meetsGuidelines(tester);
+      await _tap(tester, find.text('Wszystkie pojęcia'));
       await _meetsGuidelines(tester);
 
       await closeRepTrack(tester, db);

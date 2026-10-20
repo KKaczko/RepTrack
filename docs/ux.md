@@ -23,6 +23,7 @@ Poza shellem (pełny ekran):
   /sessions/:id               zakończony trening: szczegóły, edycja, usunięcie (z Historii, Startu, ekranu ćwiczenia)
   /sessions/:id/compare       porównanie z poprzednim wykonaniem każdego ćwiczenia
   /settings → /settings/backup (backup, przywracanie, CSV, MD) · /settings/licenses
+  /glossary                   słowniczek pojęć (z ustawień, z zakładki Progres i z arkusza ⓘ)
   /pick-exercises             wspólny wybór ćwiczeń (szablony, trening, filtr eksportu); zwraca listę id
                               ?single=true: jedno ćwiczenie jednym tapnięciem (zamiana w treningu)
 ```
@@ -104,3 +105,16 @@ Przy pierwszym w ogóle treningu dochodzą jednorazowe okna zgód: systemowa zgo
 - „Ćwiczenie”: wybór z ćwiczeń z historii (od ostatnio wykonanego), potem kafelki (najlepszy wynik, zmiana w okresie, najlepsza seria, liczba treningów) i wykres miary. Miara zależy od ćwiczenia: szacowany 1RM dla ciężaru, najwięcej powtórzeń dla masy ciała i wspomagania, najdłuższy czas dla ćwiczeń na czas. Wykres objętości jest tylko przy 1RM.
 - Zakładka „Wykresy” ekranu ćwiczenia pokazuje tę samą sekcję dla całej historii.
 - Kafelki w rzędzie mają równą wysokość, także gdy etykieta zawija się na dwie linie albo jeden kafelek ma zmianę, a drugi nie.
+
+## Słowniczek i ikonki ⓘ
+
+- Słowniczek (`/glossary`) zbiera podstawowe pojęcia w czterech grupach: podstawy (powtórzenie, seria, rozgrzewka, seria robocza, mięśnie główne i pomocnicze, tryb obciążenia), wysiłek (RIR, RPE), wyniki i rekordy (1RM, szacowany 1RM, objętość, rekord, najlepsza seria), progres (serie na partię, zmiana w okresie, progresja). Wszystkie opisy są widoczne od razu, bez rozwijania, żeby dało się je przeczytać jak krótki poradnik.
+- Wejścia: Ustawienia → Pomoc → „Słowniczek pojęć”, link „Co znaczą te liczby?” na końcu zakładki Progres i przycisk „Wszystkie pojęcia” w arkuszu ⓘ.
+- Ikonka ⓘ stoi tuż za nazwą pojęcia i otwiera arkusz z opisem (nad dolną nawigacją). Jest przy:
+  - skali wysiłku w ustawieniach (RIR i RPE);
+  - „Serie na partię mięśniową”, wykresach szacowanego 1RM (z 1RM) i objętości w Progresie i na ekranie ćwiczenia;
+  - „Najcięższa seria dla N powt.” w rekordach;
+  - „Mięśnie główne” i na końcu wiersza „Obciążenie” na ekranie ćwiczenia.
+- Ikonka ma pełny cel dotyku 48 dp i podpowiedź „Co to jest: <pojęcie>?”, którą czyta czytnik ekranu.
+- Ikonki nie ma na ekranie aktywnego treningu: tam liczy się miejsce, a RIR/RPE opisuje ustawienie skali wysiłku.
+

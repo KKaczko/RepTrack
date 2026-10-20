@@ -3,10 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/routes.dart';
+import '../../../core/domain/glossary.dart';
 import '../../../core/l10n/generated/app_localizations.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/widgets/empty_state.dart';
+import '../../../core/widgets/term_info.dart';
 import '../data/exercise_providers.dart';
 import '../domain/exercise.dart';
 import '../domain/exercise_repository.dart';
@@ -266,6 +268,7 @@ class _ExerciseDetails extends StatelessWidget {
               label: l10n.exercisePrimaryMuscles,
               muscles: exercise.primaryMuscles,
               primary: true,
+              info: true,
             ),
             if (exercise.secondaryMuscles.isNotEmpty) ...[
               const SizedBox(height: AppSpacing.m),
@@ -297,7 +300,11 @@ class _ExerciseDetails extends StatelessWidget {
               l10n.exerciseMeasurement,
               l10n.measurement(exercise.measurement),
             ),
-            _InfoRow(l10n.exerciseLoadMode, l10n.loadMode(exercise.loadMode)),
+            _InfoRow(
+              l10n.exerciseLoadMode,
+              l10n.loadMode(exercise.loadMode),
+              info: const [GlossaryTerm.loadMode],
+            ),
             if (exercise.measurement.weight)
               _InfoRow(
                 l10n.exerciseWeightSemantics,
@@ -407,27 +414,37 @@ class _MuscleRow extends StatelessWidget {
     required this.label,
     required this.muscles,
     required this.primary,
+    this.info = false,
   });
 
   final String label;
   final List<MuscleGroup> muscles;
   final bool primary;
 
+  /// Ikonka ⓘ z opisem mięśni głównych i pomocniczych.
+  final bool info;
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final colors = context.appColors;
+    final labelStyle = theme.textTheme.labelLarge?.copyWith(
+      color: theme.colorScheme.onSurfaceVariant,
+    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: theme.textTheme.labelLarge?.copyWith(
-            color: theme.colorScheme.onSurfaceVariant,
-          ),
-        ),
-        const SizedBox(height: AppSpacing.s),
+        if (info)
+          TermTitle(
+            label,
+            terms: const [GlossaryTerm.muscleRoles],
+            style: labelStyle,
+          )
+        else ...[
+          Text(label, style: labelStyle),
+          const SizedBox(height: AppSpacing.s),
+        ],
         Wrap(
           spacing: AppSpacing.s,
           runSpacing: AppSpacing.s,
@@ -453,10 +470,13 @@ class _MuscleRow extends StatelessWidget {
 }
 
 class _InfoRow extends StatelessWidget {
-  const _InfoRow(this.label, this.value);
+  const _InfoRow(this.label, this.value, {this.info});
 
   final String label;
   final String value;
+
+  /// Pojęcia z ikonką ⓘ na końcu wiersza.
+  final List<GlossaryTerm>? info;
 
   @override
   Widget build(BuildContext context) {
@@ -464,7 +484,9 @@ class _InfoRow extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSpacing.s),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: info == null
+            ? CrossAxisAlignment.start
+            : CrossAxisAlignment.center,
         children: [
           Expanded(
             flex: 2,
@@ -478,7 +500,18 @@ class _InfoRow extends StatelessWidget {
           const SizedBox(width: AppSpacing.m),
           Expanded(
             flex: 3,
-            child: Text(value, style: theme.textTheme.bodyMedium),
+            // Ikonka w kolumnie wartości, żeby kolumny wierszy się zgadzały.
+            child: switch (info) {
+              final terms? => Row(
+                children: [
+                  Flexible(
+                    child: Text(value, style: theme.textTheme.bodyMedium),
+                  ),
+                  TermInfoButton(terms),
+                ],
+              ),
+              null => Text(value, style: theme.textTheme.bodyMedium),
+            },
           ),
         ],
       ),

@@ -1,3 +1,5 @@
+import '../core/widgets/term_info.dart';
+
 /// Ścieżki nawigacji (docs/ux.md, mapa ekranów).
 abstract final class AppRoutes {
   static const home = '/';
@@ -15,6 +17,9 @@ abstract final class AppRoutes {
   static const settings = '/settings';
   static const licenses = '/settings/licenses';
   static const backup = '/settings/backup';
+
+  /// Słowniczek pojęć (z ustawień i z ikonek ⓘ przy pojęciach).
+  static const glossary = glossaryPath;
   static const workout = '/workout';
   static const workoutFinish = '/workout/finish';
 

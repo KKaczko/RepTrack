@@ -21,7 +21,8 @@ Flutter + Dart, Drift (SQLite), Riverpod 3, go_router, freezed (encje domeny), `
   - nie wolno importować implementacji repozytoriów ani `presentation/` innej funkcji;
   - ekrany innych funkcji (np. wybór ćwiczeń) otwiera się przez trasy routera w `lib/app/`, który jako jedyny łączy wszystkie funkcje;
   - gdy ekran jednej funkcji ma pokazać część innej (np. zakładki historii i wykresów na ekranie ćwiczenia), ekran przyjmuje zakładki jako parametr, a router je przekazuje;
-  - wspólne, niezależne od funkcji widżety (wykresy, okno „trwa inny trening”, tykający zegar) są w `lib/core/widgets/`.
+  - wspólne, niezależne od funkcji widżety (wykresy, okno „trwa inny trening”, tykający zegar, kafelki liczb, ikonka ⓘ pojęcia) są w `lib/core/widgets/`;
+  - pojęcia słowniczka (`lib/core/domain/glossary.dart`) i ich teksty (`lib/core/l10n/glossary_labels.dart`) są w `core`, bo ikonki ⓘ pokazuje kilka funkcji. Ekran słowniczka należy do ustawień.
 - `history` i `progress` korzystają z `workout/domain`.
 
 ## Wstrzykiwanie zależności

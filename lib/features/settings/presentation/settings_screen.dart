@@ -5,12 +5,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/routes.dart';
+import '../../../core/domain/glossary.dart';
 import '../../../core/domain/training.dart';
 import '../../../core/domain/units.dart';
 import '../../../core/l10n/formatters.dart';
 import '../../../core/l10n/generated/app_localizations.dart';
 import '../../../core/platform/rest_notifications.dart';
 import '../../../core/theme/tokens.dart';
+import '../../../core/widgets/term_info.dart';
 import '../data/settings_providers.dart';
 import '../domain/app_settings.dart';
 
@@ -96,6 +98,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ),
           _SegmentedTile<EffortScale?>(
             title: l10n.settingsEffortScale,
+            info: const [GlossaryTerm.rir, GlossaryTerm.rpe],
             value: settings.effortScale,
             options: {
               null: l10n.effortOff,
@@ -173,6 +176,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             subtitle: Text(l10n.settingsBackupSubtitle),
             trailing: const Icon(Icons.chevron_right_rounded),
             onTap: () => context.push(AppRoutes.backup),
+          ),
+          _Section(l10n.settingsHelp),
+          ListTile(
+            leading: const Icon(Icons.menu_book_rounded),
+            title: Text(l10n.glossaryOpen),
+            subtitle: Text(l10n.glossaryOpenSubtitle),
+            trailing: const Icon(Icons.chevron_right_rounded),
+            onTap: () => context.push(AppRoutes.glossary),
           ),
           _Section(l10n.settingsAbout),
           ListTile(
@@ -265,12 +276,16 @@ class _SegmentedTile<T> extends StatelessWidget {
     required this.value,
     required this.options,
     required this.onChanged,
+    this.info,
   });
 
   final String title;
   final T value;
   final Map<T, String> options;
   final ValueChanged<T> onChanged;
+
+  /// Pojęcia z ikonką ⓘ przy tytule.
+  final List<GlossaryTerm>? info;
 
   @override
   Widget build(BuildContext context) => Padding(
@@ -283,7 +298,14 @@ class _SegmentedTile<T> extends StatelessWidget {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(title, style: Theme.of(context).textTheme.bodyLarge),
+        if (info case final terms?)
+          TermTitle(
+            title,
+            terms: terms,
+            style: Theme.of(context).textTheme.bodyLarge,
+          )
+        else
+          Text(title, style: Theme.of(context).textTheme.bodyLarge),
         const SizedBox(height: AppSpacing.s),
         SegmentedButton<T>(
           showSelectedIcon: false,

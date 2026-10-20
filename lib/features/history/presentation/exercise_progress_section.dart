@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/domain/glossary.dart';
 import '../../../core/domain/local_date.dart';
 import '../../../core/domain/units.dart';
 import '../../../core/l10n/formatters.dart';
@@ -8,6 +9,7 @@ import '../../../core/l10n/generated/app_localizations.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/widgets/charts.dart';
 import '../../../core/widgets/stat_tile.dart';
+import '../../../core/widgets/term_info.dart';
 import '../../progress/domain/metrics.dart';
 import '../../progress/domain/progress_period.dart';
 import '../../settings/data/settings_providers.dart';
@@ -152,9 +154,19 @@ class ExerciseProgressSection extends ConsumerWidget {
             ),
           ],
         ),
-        const SizedBox(height: AppSpacing.l),
-        Text(metricLabel, style: theme.textTheme.titleMedium),
         const SizedBox(height: AppSpacing.m),
+        if (metric == ExerciseMetric.e1rm)
+          TermTitle(
+            metricLabel,
+            terms: const [
+              GlossaryTerm.oneRepMax,
+              GlossaryTerm.estimatedOneRepMax,
+            ],
+            style: theme.textTheme.titleMedium,
+          )
+        else
+          Text(metricLabel, style: theme.textTheme.titleMedium),
+        const SizedBox(height: AppSpacing.s),
         if (trend.length < 2)
           noData()
         else
@@ -171,9 +183,13 @@ class ExerciseProgressSection extends ConsumerWidget {
             ),
           ),
         if (metric == ExerciseMetric.e1rm) ...[
-          const SizedBox(height: AppSpacing.xl),
-          Text(l10n.progressVolume, style: theme.textTheme.titleMedium),
-          const SizedBox(height: AppSpacing.m),
+          const SizedBox(height: AppSpacing.l),
+          TermTitle(
+            l10n.progressVolume,
+            terms: const [GlossaryTerm.volume],
+            style: theme.textTheme.titleMedium,
+          ),
+          const SizedBox(height: AppSpacing.s),
           if (recentVolume.isEmpty)
             noData()
           else

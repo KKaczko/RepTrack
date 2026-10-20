@@ -225,3 +225,9 @@ Testy integracyjne na urządzeniu (`integration_test`) dochodzą w Etapie 7. `ch
   - kafelki w rzędzie miały różne wysokości;
   - dwa treningi jednego dnia liczyły się jako jeden trening z ćwiczeniem.
   - dolna nawigacja zasłaniała dół arkusza wyboru ćwiczenia (arkusz otwiera się teraz nad shellem).
+
+### Po wydaniu: słowniczek pojęć (2026-10-20)
+
+- **Prośba właściciela:** sekcja z podstawowymi informacjami (co to jest 1RM itp.) i okienka z ikonką ⓘ przy pojęciach.
+- **Zakres:** 16 pojęć w czterech grupach, ekran słowniczka i ikonki ⓘ w ustawieniach, Progresie, rekordach i na ekranie ćwiczenia ([ux.md](ux.md#słowniczek-i-ikonki-ⓘ)).
+- **Treść:** opisy wyjaśniają, jak liczy RepTrack (np. wzór Epleya, wagi 1 i 0,5 serii na mięsień). Jedyna wskazówka treningowa, zakres 10–20 serii tygodniowo na partię, jest podana jako orientacja, nie reguła.

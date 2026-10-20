@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/routes.dart';
 import '../../../core/database/database_providers.dart';
+import '../../../core/domain/glossary.dart';
 import '../../../core/domain/local_date.dart';
 import '../../../core/domain/units.dart';
 import '../../../core/l10n/formatters.dart';
@@ -11,6 +12,7 @@ import '../../../core/l10n/generated/app_localizations.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/widgets/empty_state.dart';
+import '../../../core/widgets/term_info.dart';
 import '../../progress/domain/metrics.dart';
 import '../../progress/domain/progress_period.dart';
 import '../../settings/data/settings_providers.dart';
@@ -157,12 +159,13 @@ class ExerciseRecordsTab extends ConsumerWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(
               AppSpacing.gutter,
-              AppSpacing.l,
+              AppSpacing.s,
               AppSpacing.gutter,
-              AppSpacing.xs,
+              0,
             ),
-            child: Text(
+            child: TermTitle(
               l10n.recordsWeightForReps,
+              terms: const [GlossaryTerm.record],
               style: theme.textTheme.titleSmall?.copyWith(
                 color: theme.colorScheme.primary,
               ),
