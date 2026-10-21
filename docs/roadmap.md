@@ -273,3 +273,14 @@ Testy integracyjne na urządzeniu (`integration_test`) dochodzą w Etapie 7. `ch
 
   Samo wyświetlenie powiadomienia nie było sprawdzone, bo okno przybliżonego alarmu jest za długie.
 - **`check.sh`:** analiza z `--fatal-infos` łapie też kolejność importów; raz przeszło to do commita przez `tail` w łańcuchu poleceń (poprawione osobnym commitem).
+
+### Po wydaniu: ćwiczenia zastępcze i kroki (2026-10-21)
+
+- **Decyzje właściciela:** zamienniki automatyczne i przypięte; przycisk w treningu i sekcja na ekranie ćwiczenia; kroki czasu i dystansu w ustawieniach ([ADR 0016](decisions/0016-zamienniki-cwiczen.md)).
+- **⚠ Baza v3 i backup v3** zgodnie z planem; migracje z testami (baza v1 → v3 i v2 → v3 na danych, backup z plików v1 i v2).
+- **Propozycje sprawdzone na prawdziwym katalogu:** dla „Wyciskanie na maszynie siedząc” na górze są wyciskania sztangą, hantlami i na suwnicy Smitha oraz pompki na poręczach; nie ma cardio ani ćwiczeń bez wspólnego mięśnia głównego.
+- **Wychwycone w testach, poprawione:** po przypięciu ★ wiersz przeskakiwał na górę listy, poza zasięg palca; kolejność w otwartym arkuszu jest teraz stała.
+- **Sprawdzone na emulatorze:**
+  - aktualizacja z danymi v2 (plan i historia bez strat);
+  - „Zamiennik” w treningu: lista, przypięcie ★ i podmiana; para widoczna w obie strony, z powodem „robione wcześniej”;
+  - krok dystansu 250 m w Ustawieniach i stepper biegu (2 × + = 500 m).

@@ -42,7 +42,7 @@ lib/
     widgets/     wspólne komponenty (NumberStepper, AppCard, EmptyState…)
     l10n/        app_pl.arb, app_en.arb (+ wygenerowane)
   features/
-    exercises/   domain | data | presentation
+    exercises/   domain | data | presentation   (katalog, zamienniki: ADR 0016)
     templates/   domain | data | presentation
     workout/     domain | data | presentation   (aktywna sesja, timer przerwy)
     history/     presentation (+ domain: porównanie sesji)

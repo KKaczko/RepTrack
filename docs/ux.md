@@ -15,11 +15,11 @@ Shell z dolną nawigacją (StatefulShellRoute, 5 zakładek):
 │    Sesje → /sessions/:id szczegóły + tryb edycji → /sessions/:id/compare
 │    Progres → okres (4 tyg. · 3 mies. · rok · całość) · podsumowanie z porównaniem
 │              · treningi/tydzień · serie na partię mięśniową · wybór ćwiczenia → kafelki i wykresy
-└─ Ćwiczenia /exercises       szukaj + filtry → /exercises/:id [Info | Historia | Rekordy | Wykresy]
+└─ Ćwiczenia /exercises       szukaj + filtry → /exercises/:id [Info (z zamiennikami) | Historia | Rekordy | Wykresy]
                               → /exercises/:id/edit, /exercises/new
 
 Poza shellem (pełny ekran):
-  /workout                    aktywny trening (arkusze: wybór ćwiczenia, kolejność, zamiana)
+  /workout                    aktywny trening (arkusze: wybór ćwiczenia, kolejność, zamiana, zamienniki)
   /workout/finish             podsumowanie, notatka, samopoczucie, diff „zaktualizuj szablon”
   /sessions/:id               zakończony trening: szczegóły, edycja, usunięcie (z Historii, Startu, ekranu ćwiczenia)
   /sessions/:id/compare       porównanie z poprzednim wykonaniem każdego ćwiczenia
@@ -160,3 +160,14 @@ Przy pierwszym w ogóle treningu dochodzą jednorazowe okna zgód: systemowa zgo
   - gdy coś zostało na dziś, główny przycisk to „Dziś wg planu: Push A”;
   - po zrobionym planie albo w dzień wolny: „Plan na dziś wykonany” / „Dziś dzień wolny”, „Następny: jutro · Pull B” i „Zobacz plan”;
   - „W tym tygodniu” pokazuje „1 z 3 treningów z planu” z paskiem.
+
+## Ćwiczenia zastępcze i kroki (ADR 0016)
+
+- **W treningu** pod nagłówkiem ćwiczenia jest „⇄ Zamiennik”, przycisk z pełnym celem dotyku, na wypadek zajętej maszyny.
+  - Otwiera arkusz nad dolną nawigacją, z tytułem „Zamienniki: <ćwiczenie>” i krótkim opisem.
+  - Wiersz pokazuje nazwę, „mięśnie · sprzęt” i powody („te same mięśnie · inny sprzęt · robione wcześniej”, przy przypiętych „przypięty”).
+  - ★/☆ przypina albo odpina od razu, a tooltip mówi, co się stanie („Przypnij zamiennik: …”). Wiersz zostaje na miejscu do zamknięcia arkusza.
+  - Dotknięcie wiersza podmienia ćwiczenie. Przy zatwierdzonych seriach najpierw pyta „Zamienić ćwiczenie?”.
+  - Na dole „Wybierz z całej biblioteki” (dotychczasowy wybór). Menu ⋮ „Zamień ćwiczenie” zostaje.
+- **Ekran ćwiczenia, zakładka Info:** karta „Zamienniki” z przypiętymi i do 5 propozycjami, z tymi samymi ★ i powodami. Dotknięcie otwiera ekran zamiennika, gdzie para też jest widoczna jako przypięta.
+- **Ustawienia → Trening:** „Krok czasu” (1–60 s) i „Krok dystansu” (10–1000 m) obok „Kroku ciężaru”, tym samym oknem wyboru. Steppery czasu i dystansu w treningu używają tych kroków.
