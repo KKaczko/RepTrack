@@ -171,3 +171,10 @@ Przy pierwszym w ogóle treningu dochodzą jednorazowe okna zgód: systemowa zgo
   - Na dole „Wybierz z całej biblioteki” (dotychczasowy wybór). Menu ⋮ „Zamień ćwiczenie” zostaje.
 - **Ekran ćwiczenia, zakładka Info:** karta „Zamienniki” z przypiętymi i do 5 propozycjami, z tymi samymi ★ i powodami. Dotknięcie otwiera ekran zamiennika, gdzie para też jest widoczna jako przypięta.
 - **Ustawienia → Trening:** „Krok czasu” (1–60 s) i „Krok dystansu” (10–1000 m) obok „Kroku ciężaru”, tym samym oknem wyboru. Steppery czasu i dystansu w treningu używają tych kroków.
+
+## Progresja podwójna (ADR 0017)
+
+- Pod planem ćwiczenia w treningu pojawia się etykieta ze strzałką, np. „+2,5 kg · ostatnio 3 × 12 przy 80 kg”, z ⓘ do hasła „Progresja podwójna”. Pojawia się tylko wtedy, gdy podpowiedź podnosi ciężar.
+- Podpowiedź serii roboczych ma już nowy ciężar i dolną granicę powtórzeń, więc zatwierdzenie to dalej jedno tapnięcie. Zmienić wartość można stepperem jak zawsze.
+- Czytnik ekranu odróżnia wartość z progresji („podpowiedź z progresji”).
+- Ustawienia → Trening: przełącznik „Automatyczna progresja” z opisem.

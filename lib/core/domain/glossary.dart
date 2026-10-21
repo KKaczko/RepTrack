@@ -18,7 +18,8 @@ enum GlossaryTerm {
   bestSet(GlossaryGroup.metrics),
   setsPerMuscle(GlossaryGroup.progress),
   periodChange(GlossaryGroup.progress),
-  progressiveOverload(GlossaryGroup.progress);
+  progressiveOverload(GlossaryGroup.progress),
+  doubleProgression(GlossaryGroup.progress);
 
   const GlossaryTerm(this.group);
 

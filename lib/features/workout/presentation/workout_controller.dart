@@ -10,6 +10,7 @@ import '../../settings/data/settings_providers.dart';
 import '../../templates/data/template_providers.dart';
 import '../../templates/domain/template.dart';
 import '../data/workout_providers.dart';
+import '../domain/progression.dart';
 import '../domain/rest_timer.dart';
 import '../domain/session_editing.dart';
 import '../domain/session_editing.dart' as editing;
@@ -105,7 +106,19 @@ final class WorkoutController {
           excludeSessionId: session.id,
         );
         final measurement = exercise.measurementSnapshot;
-        final hint = hintsForExercise(exercise, previous)[set.id]!;
+        final settings = await _ref.read(settingsRepositoryProvider).load();
+        final hint = hintsForExercise(
+          exercise,
+          previous,
+          progressionWeightG: settings.autoProgression
+              ? progressionFor(
+                  exercise,
+                  previous,
+                  step: settings.weightStep,
+                  unit: settings.weightUnit,
+                )?.weightG
+              : null,
+        )[set.id]!;
         final missing = missingFields(hint, measurement);
         if (missing.isNotEmpty) return missing;
 
@@ -116,7 +129,6 @@ final class WorkoutController {
           setId,
           (s) => confirmSet(s, hint, measurement, now),
         );
-        final settings = await _ref.read(settingsRepositoryProvider).load();
         final rest = restAfter(set, settings.defaultRestSeconds);
         final anyLeft = nextExerciseToDo(next, exerciseId) != null;
         next = next.copyWith(

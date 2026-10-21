@@ -170,7 +170,8 @@ class _FieldStepper extends StatelessWidget {
     final colors = context.appColors;
     final locale = Localizations.localeOf(context).toString();
     final entered = setValue(set, field);
-    final value = entered ?? hintValue(hint, field)?.value;
+    final hinted = hintValue(hint, field);
+    final value = entered ?? hinted?.value;
     final isHint = entered == null;
     final name = l10n.fieldLabel(field);
     final label = field == SetField.weight
@@ -178,6 +179,11 @@ class _FieldStepper extends StatelessWidget {
         : name;
     final spoken = value == null
         ? name
+        : isHint && hinted?.source == HintSource.progression
+        ? l10n.workoutProgressionHintSemantics(
+            name,
+            l10n.fieldValueWithUnit(field, value, unit, locale),
+          )
         : isHint
         ? l10n.workoutHintSemantics(
             name,

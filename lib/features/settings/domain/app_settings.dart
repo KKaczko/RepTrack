@@ -37,6 +37,9 @@ abstract class AppSettings with _$AppSettings {
     @Default(120) int defaultRestSeconds,
     @Default(true) bool keepScreenOn,
 
+    /// Progresja podwójna w podpowiedziach treningu (ADR 0017).
+    @Default(true) bool autoProgression,
+
     /// Prośba o dokładne alarmy końca przerwy była już pokazana.
     @Default(false) bool exactAlarmPrompted,
 

@@ -20,6 +20,10 @@ enum HintSource {
   /// Wartość wcześniejszej serii tego samego rodzaju w bieżącym treningu,
   /// gdy brak poprzedniego wykonania i planu (np. pierwsze wykonanie).
   earlierSet,
+
+  /// Poprzednie wykonanie po progresji podwójnej: większy ciężar i dolna
+  /// granica powtórzeń (ADR 0017).
+  progression,
 }
 
 /// Wartość pola z informacją o źródle.
@@ -130,7 +134,11 @@ SetHint hintForSet({
   required Measurement measurement,
   required LoadMode loadMode,
   SetHint? earlier,
+  bool progressed = false,
 }) {
+  final previousSource = progressed
+      ? HintSource.progression
+      : HintSource.previous;
   HintedValue? pick(
     int? entered,
     int? fromPrevious,
@@ -140,7 +148,7 @@ SetHint hintForSet({
   }) {
     if (entered != null) return (value: entered, source: HintSource.entered);
     if (fromPrevious != null) {
-      return (value: fromPrevious, source: HintSource.previous);
+      return (value: fromPrevious, source: previousSource);
     }
     if (fromPlan != null) return (value: fromPlan, source: HintSource.plan);
     if (fromEarlier != null) {
@@ -192,20 +200,34 @@ SetHint hintForSet({
 /// dziedziczy brakujące wartości po wcześniejszej serii tego samego rodzaju
 /// (rozgrzewkowej albo roboczej), więc po wpisaniu ciężaru w pierwszej serii
 /// kolejne zatwierdza się jednym tapnięciem także przy pierwszym wykonaniu.
+///
+/// Z [progressionWeightG] (porada progresji, ADR 0017) serie robocze
+/// dostają ten ciężar i dolną granicę zakresu powtórzeń zamiast wyniku
+/// z poprzedniego wykonania.
 Map<String, SetHint> hintsForExercise(
   SessionExercise exercise,
-  List<SessionSet> previousSets,
-) {
+  List<SessionSet> previousSets, {
+  int? progressionWeightG,
+}) {
   final matched = matchPreviousSets(exercise.sets, previousSets);
   final lastByKind = <bool, SetHint>{};
   final result = <String, SetHint>{};
   for (final set in exercise.sets.sortedBy<num>((s) => s.position)) {
+    final previous = matched[set.id];
+    final progressed =
+        progressionWeightG != null && previous != null && !isWarmup(set);
     final hint = hintForSet(
       set: set,
-      previous: matched[set.id],
+      previous: progressed
+          ? previous.copyWith(
+              weightG: progressionWeightG,
+              reps: set.targetMin ?? previous.reps,
+            )
+          : previous,
       measurement: exercise.measurementSnapshot,
       loadMode: exercise.loadModeSnapshot,
       earlier: lastByKind[isWarmup(set)],
+      progressed: progressed,
     );
     result[set.id] = hint;
     lastByKind[isWarmup(set)] = hint;

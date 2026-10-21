@@ -50,6 +50,7 @@ final class DriftSettingsRepository implements SettingsRepository {
     SettingKeys.effortScale: s.effortScale?.code ?? 'off',
     SettingKeys.defaultRestSeconds: s.defaultRestSeconds,
     SettingKeys.keepScreenOn: s.keepScreenOn,
+    SettingKeys.autoProgression: s.autoProgression,
     SettingKeys.exactAlarmPrompted: s.exactAlarmPrompted,
     SettingKeys.assistantUrl: s.assistantUrl,
     SettingKeys.assistantModel: s.assistantModel,
@@ -117,6 +118,11 @@ final class DriftSettingsRepository implements SettingsRepository {
       keepScreenOn: pick(
         SettingKeys.keepScreenOn,
         defaults.keepScreenOn,
+        (raw) => raw is bool ? raw : null,
+      ),
+      autoProgression: pick(
+        SettingKeys.autoProgression,
+        defaults.autoProgression,
         (raw) => raw is bool ? raw : null,
       ),
       exactAlarmPrompted: pick(

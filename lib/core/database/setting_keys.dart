@@ -9,6 +9,9 @@ abstract final class SettingKeys {
   static const defaultRestSeconds = 'default_rest_seconds';
   static const keepScreenOn = 'keep_screen_on';
 
+  /// Progresja podwójna w podpowiedziach (ADR 0017).
+  static const autoProgression = 'auto_progression';
+
   /// Czy pokazano już prośbę o dokładne alarmy końca przerwy (ADR 0009).
   static const exactAlarmPrompted = 'exact_alarm_prompted';
 

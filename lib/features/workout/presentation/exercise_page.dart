@@ -1,25 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/domain/glossary.dart';
 import '../../../core/domain/training.dart';
 import '../../../core/domain/units.dart';
 import '../../../core/l10n/formatters.dart';
 import '../../../core/l10n/generated/app_localizations.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/theme/tokens.dart';
+import '../../../core/widgets/term_info.dart';
+import '../../exercises/domain/exercise.dart';
 import '../../settings/data/settings_providers.dart';
 import '../data/workout_providers.dart';
+import '../domain/progression.dart';
 import '../domain/session_editing.dart';
 import '../domain/set_hints.dart';
 import '../domain/workout_session.dart';
 import 'workout_labels.dart';
 
-/// Podpowiedzi serii ćwiczenia: dopasowane poprzednie wykonanie i wartości
-/// do zatwierdzenia. `loaded` jest false, dopóki trwa odczyt historii.
+/// Podpowiedzi serii ćwiczenia: dopasowane poprzednie wykonanie, wartości
+/// do zatwierdzenia i porada progresji (ADR 0017). `loaded` jest false,
+/// dopóki trwa odczyt historii.
 typedef ExerciseHints = ({
   Map<String, SessionSet> previous,
   Map<String, SetHint> hints,
   bool loaded,
+  ProgressionAdvice? advice,
 });
 
 /// Podpowiedzi dla wszystkich serii ćwiczenia sesji.
@@ -31,11 +37,25 @@ ExerciseHints watchExerciseHints(
   final history = ref.watch(
     previousSetsProvider((exercise.exerciseId, sessionId)),
   );
+  final settings = ref.watch(appSettingsProvider).value;
   final previousSets = history.value ?? const <SessionSet>[];
+  final advice = settings != null && settings.autoProgression
+      ? progressionFor(
+          exercise,
+          previousSets,
+          step: settings.weightStep,
+          unit: settings.weightUnit,
+        )
+      : null;
   return (
     previous: matchPreviousSets(exercise.sets, previousSets),
-    hints: hintsForExercise(exercise, previousSets),
+    hints: hintsForExercise(
+      exercise,
+      previousSets,
+      progressionWeightG: advice?.weightG,
+    ),
     loaded: history.hasValue,
+    advice: advice,
   );
 }
 
@@ -125,6 +145,14 @@ class ExercisePage extends ConsumerWidget {
                       ),
                       if (hints.loaded && hints.previous.isEmpty)
                         Text(l10n.workoutNoPrevious, style: secondary),
+                      if (hints.advice case final advice?)
+                        _ProgressionNote(
+                          advice: advice,
+                          assisted:
+                              exercise.loadModeSnapshot == LoadMode.assisted,
+                          unit: unit,
+                          locale: locale,
+                        ),
                       if (exercise.note case final note?)
                         Text(note, style: secondary),
                       Align(
@@ -419,6 +447,71 @@ class _Values extends StatelessWidget {
       TextSpan(children: spans),
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
+    );
+  }
+}
+
+/// Etykieta progresji pod planem ćwiczenia, np. „+2,5 kg · ostatnio
+/// 3 × 12 przy 80 kg” ze strzałką i ⓘ do hasła słowniczka.
+class _ProgressionNote extends StatelessWidget {
+  const _ProgressionNote({
+    required this.advice,
+    required this.assisted,
+    required this.unit,
+    required this.locale,
+  });
+
+  final ProgressionAdvice advice;
+  final bool assisted;
+  final WeightUnit unit;
+  final String locale;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final change = formatWeight(
+      (advice.weightG - advice.previousWeightG).abs(),
+      unit,
+      locale,
+    );
+    final changeText = assisted
+        ? l10n.workoutProgressionLessAssist(change)
+        : l10n.workoutProgressionAdd(change);
+    final previous = formatWeight(advice.previousWeightG, unit, locale);
+    final text = switch (advice.reason) {
+      ProgressionReason.topOfRange => l10n.workoutProgression(
+        changeText,
+        advice.previousSets,
+        advice.previousReps,
+        previous,
+      ),
+      ProgressionReason.easyEffort => l10n.workoutProgressionEasy(
+        changeText,
+        advice.previousSets,
+        advice.previousReps,
+        previous,
+      ),
+    };
+    return Row(
+      children: [
+        Icon(
+          Icons.trending_up_rounded,
+          size: 18,
+          color: theme.colorScheme.primary,
+        ),
+        const SizedBox(width: AppSpacing.xs),
+        Flexible(
+          child: Text(
+            text,
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: theme.colorScheme.primary,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+        const TermInfoButton([GlossaryTerm.doubleProgression]),
+      ],
     );
   }
 }

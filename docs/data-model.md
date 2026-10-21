@@ -34,7 +34,7 @@ Model rozdziela trzy warstwy: definicję ćwiczenia, plan (szablon) i wykonanie 
 | WeightUnit (ustawienia) | kg, lb |
 | PlannedKind (v2) | workout, rest |
 
-Klucze `settings`: `theme_mode`, `weight_unit`, `weight_step`, `effort_scale` (`off` / `rir` / `rpe`), `default_rest_seconds`, `keep_screen_on`, `exact_alarm_prompted` (czy pokazano prośbę o dokładne alarmy), `assistant_url` i `assistant_model` (serwer Ollama i model asystenta AI, [ADR 0014](decisions/0014-asystent-ai-ollama.md); `null` wyłącza asystenta), `plan_reminders` i `plan_reminder_minutes` (przypomnienia o treningach z planu i ich godzina w minutach od północy, [ADR 0015](decisions/0015-plan-treningow.md)), `duration_step_seconds` i `distance_step_meters` (kroki stepperów czasu i dystansu, [ADR 0016](decisions/0016-zamienniki-cwiczen.md)).
+Klucze `settings`: `theme_mode`, `weight_unit`, `weight_step`, `effort_scale` (`off` / `rir` / `rpe`), `default_rest_seconds`, `keep_screen_on`, `exact_alarm_prompted` (czy pokazano prośbę o dokładne alarmy), `assistant_url` i `assistant_model` (serwer Ollama i model asystenta AI, [ADR 0014](decisions/0014-asystent-ai-ollama.md); `null` wyłącza asystenta), `plan_reminders` i `plan_reminder_minutes` (przypomnienia o treningach z planu i ich godzina w minutach od północy, [ADR 0015](decisions/0015-plan-treningow.md)), `duration_step_seconds` i `distance_step_meters` (kroki stepperów czasu i dystansu, [ADR 0016](decisions/0016-zamienniki-cwiczen.md)), `auto_progression` (progresja podwójna w podpowiedziach, [ADR 0017](decisions/0017-progresja-podwojna.md)).
 
 ## `exercises`
 
@@ -155,6 +155,7 @@ exercises 1─N exercise_substitutes N─1 exercises
 - **`buildSessionFromTemplate(...)`** kopiuje efektywny plan i snapshoty ćwiczeń. **`buildEmptySession(...)`** tworzy pusty trening.
 - **`previousPerformance(exerciseId)`**: ostatnia zakończona sesja z tym ćwiczeniem, niezależnie od szablonu ([ADR 0006](decisions/0006-poprzednie-wykonanie-i-podpowiedzi.md)).
 - **`hintFor(set)`**: podpowiedź liczona dynamicznie, nigdy nie oznacza serii jako wykonanej.
+- **`progressionFor(exercise, previousSets, step, unit)`** (`lib/features/workout/domain/progression.dart`): progresja podwójna dla serii roboczych ([ADR 0017](decisions/0017-progresja-podwojna.md)).
 - **`localDateFor(utc, ianaZone)`** na pakiecie `timezone`.
 - **`normalizeForSearch`**: małe litery i usunięte polskie znaki, więc „lawka” znajduje „ławka”.
 - **Metryki:** e1RM, objętość, rekordy, treningi w tygodniu (tydzień od poniedziałku) ([ADR 0007](decisions/0007-metryki.md)).

@@ -32,3 +32,7 @@ Aktywny trening pokazuje wynik poprzedniego wykonania przy każdej serii i wstę
 - Podpowiedzi są wyszarzone (kolor `textHint`, zwykła grubość), wpisane i zatwierdzone wartości mają pełny kontrast i pogrubienie. Czytnik ekranu dostaje „Ciężar: 80 kg, podpowiedź”.
 - Zatwierdzenie w kontrolerze liczy podpowiedź od nowa z bazy, więc nie zależy od stanu ekranu.
 - Test widżetu sprawdza, że wpisanie wartości i upływ czasu nie zatwierdzają serii.
+
+## Progresja (2026-10-21)
+
+Piąte źródło podpowiedzi: progresja podwójna ([ADR 0017](0017-progresja-podwojna.md)). Gdy poprzednie wykonanie doszło do góry zakresu (albo było w zakresie z dużym zapasem), serie robocze dostają ciężar o krok wyżej i dolną granicę powtórzeń zamiast wyniku z poprzedniego razu. Kolejność bez zmian: wartość wpisana wygrywa.

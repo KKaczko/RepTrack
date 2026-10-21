@@ -36,9 +36,11 @@ Future<AppDatabase> _launch(
     }
     await DriftTemplateRepository(db, testClock()).save(pushTemplate());
     await DriftWorkoutRepository(db, testClock()).save(
+      // 3 × 12: w treningu widać etykietę progresji (ADR 0017).
       finishedPush('a', DateTime.utc(2026, 10, 12, 16), [
-        (80000, 10),
-        (80000, 9),
+        (80000, 12),
+        (80000, 12),
+        (80000, 12),
       ]),
     );
     await DriftSettingsRepository(db, testClock()).save(

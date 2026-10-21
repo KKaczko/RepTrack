@@ -18,7 +18,9 @@ Funkcje spoza MVP. Nie implementujemy ich bez decyzji właściciela.
 
 - Komunikaty walidacji pliku kopii (szczegóły błędów) są tylko po polsku; tytuł i opis błędu są przetłumaczone.
 - Snackbar na ekranie „Kopia i eksport” przez kilka sekund zasłania przyciski eksportu na dole listy.
-- Własne długości przerw (obecnie lista 0:30–5:00) i własne kroki stepperów czasu i dystansu.
+- Własne długości przerw (obecnie lista 0:30–5:00).
+- Osobne kroki ciężaru dla sprzętu (hantle, maszyny) w progresji i stepperach — ADR 0017.
+- Zmniejszanie ciężaru (deload) po kilku nieudanych treningach — ADR 0017.
 - Wybór zakresu na wykresach (obecnie 12 ostatnich tygodni i treningów) oraz wykres masy ciała.
 - Superserie w aktywnym treningu (`group_id` jest w schemacie, brak UI).
 - Przypomnienie o niezatwierdzonych seriach przed zakończeniem treningu (obecnie tylko informacja na podsumowaniu).

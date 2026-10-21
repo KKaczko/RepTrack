@@ -30,6 +30,7 @@ void main() {
       effortScale: null,
       defaultRestSeconds: 90,
       keepScreenOn: false,
+      autoProgression: false,
       assistantUrl: 'http://192.168.1.10:11434',
       assistantModel: 'qwen3.5:4b',
       planReminders: true,

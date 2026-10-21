@@ -165,6 +165,13 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             },
           ),
           SwitchListTile(
+            title: Text(l10n.settingsAutoProgression),
+            subtitle: Text(l10n.settingsAutoProgressionHint),
+            value: settings.autoProgression,
+            onChanged: (value) =>
+                _save(settings.copyWith(autoProgression: value)),
+          ),
+          SwitchListTile(
             title: Text(l10n.settingsKeepScreenOn),
             value: settings.keepScreenOn,
             onChanged: (value) => _save(settings.copyWith(keepScreenOn: value)),

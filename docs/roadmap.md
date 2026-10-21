@@ -307,3 +307,12 @@ Zewnętrzny przegląd zgłosił 11 problemów; wszystkie potwierdziłem w kodzie
   - publiczny `http://example.com` jest odrzucany w dialogu (komunikat dostał więcej linii, bo na 360 dp był ucięty);
   - przy `http://10.0.2.2` widać ostrzeżenie i opis wysyłanych danych;
   - rozmowa z Ollamą 0.40.7 (`qwen3.5:4b`) działa z nowym budżetem kontekstu.
+
+### Po wydaniu: progresja podwójna (2026-10-21)
+
+- **Decyzja właściciela:** progresja wbudowana w podpowiedź ([ADR 0017](decisions/0017-progresja-podwojna.md)).
+- **Testy:**
+  - domena: góra zakresu, zapas RIR/RPE, kg i lb, ciężar spoza siatki, wspomaganie, dociążenie od zera, przypadki bez porady;
+  - ekran: podpowiedź 82,5 kg × 8 zatwierdzana jednym tapnięciem;
+  - wyłączone ustawienie;
+  - dostępność przy czcionce 2× z etykietą progresji.- **Sprawdzone na emulatorze:** po treningu z 3 × 12 przy 50 kg (wyciskanie na maszynie) kolejny Push A ma etykietę „+2,5 kg · ostatnio 3 × 12 przy 50 kg”, podpowiedzi 52,5 × 8 i ⓘ z hasłem „Progresja podwójna”.

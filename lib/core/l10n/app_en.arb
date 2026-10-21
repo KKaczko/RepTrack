@@ -685,5 +685,14 @@
   "assistantErrorInsecure": "A public address needs https://. Without encryption (http) the app only connects to your home network and Tailscale.",
   "assistantServerUnencrypted": "Unencrypted — trusted home network only",
   "assistantDataSent": "What the assistant sends",
-  "assistantDataSentBody": "A summary of your workouts, the plan, templates, notes and how you felt — only to the server address above. Nothing goes to other services."
+  "assistantDataSentBody": "A summary of your workouts, the plan, templates, notes and how you felt — only to the server address above. Nothing goes to other services.",
+  "workoutProgression": "{change} · last time {sets} × {reps} at {weight}",
+  "workoutProgressionEasy": "{change} · last time {sets} × {reps} at {weight}, with reps to spare",
+  "workoutProgressionAdd": "+{weight}",
+  "workoutProgressionLessAssist": "{weight} less assistance",
+  "workoutProgressionHintSemantics": "{field}: {value}, progression suggestion",
+  "glossaryDoubleProgressionTitle": "Double progression",
+  "glossaryDoubleProgressionBody": "Add reps within the range (e.g. 8–12) at the same weight first. When every working set reaches the top of the range, add one weight step and go back to the bottom of the range. RepTrack does this in the suggestion: it adds one weight step from the settings when last time every working set reached the top of the range, or stayed in the range with plenty in reserve (RIR 3 or more, RPE 7 or less). You can always change the value before confirming.",
+  "settingsAutoProgression": "Automatic progression",
+  "settingsAutoProgressionHint": "After you hit the top of the rep range, the suggestion adds one weight step"
 }
