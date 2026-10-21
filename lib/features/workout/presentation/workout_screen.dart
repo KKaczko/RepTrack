@@ -574,7 +574,7 @@ class _WorkoutScreenState extends ConsumerState<WorkoutScreen> {
       case _MenuAction.unlink:
         if (current != null) await _controller.unlink(current.id);
       case _MenuAction.finish:
-        _openFinish();
+        await _finishFromMenu(session);
       case _MenuAction.discard:
         await _discard();
     }
@@ -692,6 +692,26 @@ class _WorkoutScreenState extends ConsumerState<WorkoutScreen> {
 
   void _openFinish() => unawaited(context.push(AppRoutes.workoutFinish));
 
+  /// „Zakończ trening” z menu przy niezatwierdzonych seriach najpierw pyta;
+  /// seria nigdy nie zatwierdza się sama.
+  Future<void> _finishFromMenu(WorkoutSession session) async {
+    final l10n = AppLocalizations.of(context);
+    final open = session.exercises
+        .expand((e) => e.sets)
+        .where((s) => !s.isCompleted)
+        .length;
+    if (open > 0) {
+      final ok = await _confirmDialog(
+        title: l10n.workoutUnconfirmedTitle(open),
+        message: l10n.workoutUnconfirmedMessage,
+        action: l10n.workoutUnconfirmedFinish,
+        cancel: l10n.workoutUnconfirmedBack,
+      );
+      if (!ok || !mounted) return;
+    }
+    _openFinish();
+  }
+
   Future<void> _discard() async {
     final l10n = AppLocalizations.of(context);
     final rootMessenger = ScaffoldMessenger.of(context);
@@ -715,6 +735,7 @@ class _WorkoutScreenState extends ConsumerState<WorkoutScreen> {
     required String title,
     required String? message,
     required String action,
+    String? cancel,
     bool destructive = false,
   }) async {
     final l10n = AppLocalizations.of(context);
@@ -727,7 +748,7 @@ class _WorkoutScreenState extends ConsumerState<WorkoutScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: Text(l10n.commonCancel),
+            child: Text(cancel ?? l10n.commonCancel),
           ),
           TextButton(
             style: destructive

@@ -741,5 +741,13 @@
   "workoutWarmup": "Warm-up",
   "workoutWarmupAdded": "{count, plural, =1{Added 1 warm-up set} other{Added {count} warm-up sets}}",
   "workoutProgressionRemove": "−{weight}",
-  "workoutProgressionDeload": "{change} · 2 workouts below the range"
+  "workoutProgressionDeload": "{change} · 2 workouts below the range",
+  "restCustom": "Other…",
+  "restCustomTitle": "Custom rest",
+  "restCustomHint": "e.g. 1:45 or 105",
+  "restCustomInvalid": "Enter a time from 0:05 to 15:00",
+  "workoutUnconfirmedTitle": "{count, plural, =1{1 unconfirmed set} other{{count} unconfirmed sets}}",
+  "workoutUnconfirmedMessage": "They won't count in history or stats. Confirm them or finish anyway.",
+  "workoutUnconfirmedFinish": "Finish anyway",
+  "workoutUnconfirmedBack": "Back to workout"
 }

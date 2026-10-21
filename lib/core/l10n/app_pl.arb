@@ -1465,5 +1465,21 @@
   "workoutProgressionRemove": "−{weight}",
   "@workoutProgressionRemove": {"description": "Zmiana ciężaru w deloadzie", "placeholders": {"weight": {"type": "String"}}},
   "workoutProgressionDeload": "{change} · 2 treningi poniżej zakresu",
-  "@workoutProgressionDeload": {"description": "Etykieta deloadu", "placeholders": {"change": {"type": "String"}}}
+  "@workoutProgressionDeload": {"description": "Etykieta deloadu", "placeholders": {"change": {"type": "String"}}},
+  "restCustom": "Inna…",
+  "@restCustom": {"description": "Wybór przerwy: własny czas"},
+  "restCustomTitle": "Inna przerwa",
+  "@restCustomTitle": {"description": "Okno własnej przerwy"},
+  "restCustomHint": "np. 1:45 albo 105",
+  "@restCustomHint": {"description": "Podpowiedź pola przerwy"},
+  "restCustomInvalid": "Podaj czas od 0:05 do 15:00",
+  "@restCustomInvalid": {"description": "Błąd pola przerwy"},
+  "workoutUnconfirmedTitle": "{count, plural, =1{1 niezatwierdzona seria} few{{count} niezatwierdzone serie} other{{count} niezatwierdzonych serii}}",
+  "@workoutUnconfirmedTitle": {"description": "Kończenie treningu z niezatwierdzonymi seriami", "placeholders": {"count": {"type": "int"}}},
+  "workoutUnconfirmedMessage": "Nie trafią do historii ani statystyk. Zatwierdź je albo zakończ mimo to.",
+  "@workoutUnconfirmedMessage": {"description": "Kończenie z niezatwierdzonymi seriami: opis"},
+  "workoutUnconfirmedFinish": "Zakończ mimo to",
+  "@workoutUnconfirmedFinish": {"description": "Kończenie z niezatwierdzonymi seriami"},
+  "workoutUnconfirmedBack": "Wróć do treningu",
+  "@workoutUnconfirmedBack": {"description": "Kończenie z niezatwierdzonymi seriami"}
 }

@@ -258,6 +258,7 @@ void main() {
 
       await _tap(tester, find.byTooltip('Opcje treningu'));
       await _tap(tester, find.text('Zakończ trening'));
+      await _tap(tester, find.text('Zakończ mimo to'));
 
       expect(find.text('Podsumowanie'), findsOneWidget);
       expect(find.text('640 kg'), findsOneWidget);
@@ -447,6 +448,27 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Zatwierdź serię 1'), findsOneWidget);
+
+    await closeRepTrack(tester, db);
+  });
+
+  testWidgets('kończenie z niezatwierdzonymi seriami pyta', (tester) async {
+    final db = await _launch(tester);
+    await _startPushA(tester);
+    await _tap(tester, find.text('Zatwierdź serię 1'));
+    await tester.pump(_afterCooldown);
+
+    await _tap(tester, find.byTooltip('Opcje treningu'));
+    await _tap(tester, find.text('Zakończ trening'));
+    expect(find.text('6 niezatwierdzonych serii'), findsOneWidget);
+    await _tap(tester, find.text('Wróć do treningu'));
+    expect(find.text('Podsumowanie'), findsNothing);
+    expect(find.text('Zatwierdź serię 2'), findsOneWidget);
+
+    await _tap(tester, find.byTooltip('Opcje treningu'));
+    await _tap(tester, find.text('Zakończ trening'));
+    await _tap(tester, find.text('Zakończ mimo to'));
+    expect(find.text('Podsumowanie'), findsOneWidget);
 
     await closeRepTrack(tester, db);
   });

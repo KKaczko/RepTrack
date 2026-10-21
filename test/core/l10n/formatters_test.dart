@@ -87,4 +87,16 @@ void main() {
       minute: 5,
     ));
   });
+
+  test('parseClock: m:ss albo sekundy', () {
+    expect(parseClock('1:45'), 105);
+    expect(parseClock(' 105 '), 105);
+    expect(parseClock('0:05'), 5);
+    expect(parseClock('15:00'), 900);
+    expect(parseClock('1:60'), isNull);
+    expect(parseClock('1:2:3'), isNull);
+    expect(parseClock('abc'), isNull);
+    expect(parseClock('-5'), isNull);
+    expect(parseClock(''), isNull);
+  });
 }

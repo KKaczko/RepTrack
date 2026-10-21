@@ -66,4 +66,36 @@ void main() {
 
     await closeRepTrack(tester, db);
   });
+
+  testWidgets('domyślna przerwa „Inna…”', (tester) async {
+    tester.view.physicalSize = const Size(1080, 2400);
+    tester.view.devicePixelRatio = 3;
+    addTearDown(tester.view.reset);
+    final db = await pumpRepTrack(tester, seed: false, clock: testClock());
+
+    await _tap(tester, find.byTooltip('Otwórz ustawienia'));
+    await _choose(tester, 'Domyślna przerwa', 'Inna…');
+    await tester.enterText(
+      find.descendant(
+        of: find.byType(AlertDialog),
+        matching: find.byType(TextField),
+      ),
+      '2:15',
+    );
+    await _tap(
+      tester,
+      find.descendant(
+        of: find.byType(AlertDialog),
+        matching: find.text('Zapisz'),
+      ),
+    );
+
+    expect(find.text('2:15'), findsOneWidget);
+    final saved = await tester.runAsync(
+      () => DriftSettingsRepository(db, testClock()).load(),
+    );
+    expect(saved!.defaultRestSeconds, 135);
+
+    await closeRepTrack(tester, db);
+  });
 }

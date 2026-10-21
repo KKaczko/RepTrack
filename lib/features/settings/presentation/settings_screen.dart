@@ -12,6 +12,7 @@ import '../../../core/l10n/formatters.dart';
 import '../../../core/l10n/generated/app_localizations.dart';
 import '../../../core/platform/rest_notifications.dart';
 import '../../../core/theme/tokens.dart';
+import '../../../core/widgets/clock_input_dialog.dart';
 import '../../../core/widgets/term_info.dart';
 import '../../exercises/presentation/exercise_labels.dart';
 import '../data/settings_providers.dart';
@@ -172,7 +173,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             title: Text(l10n.settingsDefaultRest),
             trailing: _Value(formatClock(settings.defaultRestSeconds)),
             onTap: () async {
-              final seconds = await _choose<int>(
+              final picked = await _choose<int>(
                 title: l10n.settingsDefaultRest,
                 current: settings.defaultRestSeconds,
                 options: {
@@ -181,8 +182,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     settings.defaultRestSeconds,
                   }.toList()..sort())
                     s: formatClock(s),
+                  -1: l10n.restCustom,
                 },
               );
+              if (!context.mounted) return;
+              final seconds = picked == -1
+                  ? await showRestInputDialog(
+                      context,
+                      initial: settings.defaultRestSeconds,
+                    )
+                  : picked;
               if (seconds != null) {
                 await _save(settings.copyWith(defaultRestSeconds: seconds));
               }

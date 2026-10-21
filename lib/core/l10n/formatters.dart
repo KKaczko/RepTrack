@@ -68,6 +68,21 @@ int? parseCount(String input) {
   return value == null || value < 0 ? null : value;
 }
 
+/// Czas wpisany jako „m:ss” (np. „1:45”) albo w sekundach („105”). Null
+/// dla tekstu, który nie jest czasem.
+int? parseClock(String input) {
+  final text = input.trim();
+  if (text.isEmpty) return null;
+  final parts = text.split(':');
+  if (parts.length > 2) return null;
+  final numbers = [for (final p in parts) int.tryParse(p.trim())];
+  if (numbers.any((n) => n == null || n < 0)) return null;
+  if (numbers.length == 1) return numbers.single;
+  final [minutes, seconds] = numbers.nonNulls.toList();
+  if (seconds > 59) return null;
+  return minutes * 60 + seconds;
+}
+
 /// Czas w formacie zegara, np. „1:30”, „12:05”, „1:02:03”.
 String formatClock(int seconds) {
   final h = seconds ~/ 3600;

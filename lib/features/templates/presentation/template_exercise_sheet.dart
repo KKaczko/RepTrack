@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,6 +12,7 @@ import '../../../core/l10n/formatters.dart';
 import '../../../core/l10n/generated/app_localizations.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/theme/tokens.dart';
+import '../../../core/widgets/clock_input_dialog.dart';
 import '../../settings/data/settings_providers.dart';
 import '../domain/set_plan.dart';
 import '../domain/template.dart';
@@ -579,7 +582,10 @@ class _WeightFieldState extends State<_WeightField> {
   );
 }
 
-class _RestDropdown extends StatelessWidget {
+/// Wartość pozycji „Inna…” w wyborze przerwy (otwiera wpis czasu).
+const _customRest = -1;
+
+class _RestDropdown extends StatefulWidget {
   const _RestDropdown({
     required this.value,
     required this.nullLabel,
@@ -591,11 +597,30 @@ class _RestDropdown extends StatelessWidget {
   final ValueChanged<int?> onChanged;
 
   @override
+  State<_RestDropdown> createState() => _RestDropdownState();
+}
+
+class _RestDropdownState extends State<_RestDropdown> {
+  /// Odświeża pole po anulowaniu „Inna…”, żeby nie zostało na nim.
+  int _reset = 0;
+
+  Future<void> _custom() async {
+    final seconds = await showRestInputDialog(context, initial: widget.value);
+    if (!mounted) return;
+    if (seconds == null) {
+      setState(() => _reset++);
+    } else {
+      widget.onChanged(seconds);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final value = widget.value;
     final options = {...restOptions, value}.toList();
     return DropdownButtonFormField<int?>(
-      key: ValueKey('rest-$value'),
+      key: ValueKey('rest-$value-$_reset'),
       initialValue: value,
       isExpanded: true,
       decoration: InputDecoration(labelText: l10n.configRest),
@@ -603,10 +628,15 @@ class _RestDropdown extends StatelessWidget {
         for (final seconds in options)
           DropdownMenuItem(
             value: seconds,
-            child: Text(seconds == null ? nullLabel : formatClock(seconds)),
+            child: Text(
+              seconds == null ? widget.nullLabel : formatClock(seconds),
+            ),
           ),
+        DropdownMenuItem(value: _customRest, child: Text(l10n.restCustom)),
       ],
-      onChanged: onChanged,
+      onChanged: (seconds) => seconds == _customRest
+          ? unawaited(_custom())
+          : widget.onChanged(seconds),
     );
   }
 }

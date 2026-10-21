@@ -280,4 +280,60 @@ void main() {
 
     await closeRepTrack(tester, db);
   });
+
+  testWidgets('własna przerwa „Inna…” w ćwiczeniu szablonu', (tester) async {
+    final db = await _openTemplates(tester);
+    await _seedTemplate(tester, db);
+    await tester.tap(find.text('Push A'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Arnoldki'));
+    await tester.pumpAndSettle();
+
+    await _scrollSheetTo(tester, find.text('Domyślna z ustawień'));
+    await tester.tap(find.text('Domyślna z ustawień'));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('Inna…').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Inna…').last);
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.descendant(
+        of: find.byType(AlertDialog),
+        matching: find.byType(TextField),
+      ),
+      '1:61',
+    );
+    await tester.tap(
+      find.descendant(
+        of: find.byType(AlertDialog),
+        matching: find.text('Zapisz'),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('Podaj czas od 0:05 do 15:00'), findsOneWidget);
+    await tester.enterText(
+      find.descendant(
+        of: find.byType(AlertDialog),
+        matching: find.byType(TextField),
+      ),
+      '1:45',
+    );
+    await tester.tap(
+      find.descendant(
+        of: find.byType(AlertDialog),
+        matching: find.text('Zapisz'),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('1:45'), findsOneWidget);
+
+    await tester.tap(find.text('Gotowe'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Zapisz'));
+    await tester.pumpAndSettle();
+    final saved = (await _templates(tester, db)).single;
+    expect(saved.exercises.firstWhere((e) => e.position == 0).restSeconds, 105);
+
+    await closeRepTrack(tester, db);
+  });
 }

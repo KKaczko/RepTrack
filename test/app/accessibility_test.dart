@@ -110,6 +110,8 @@ void main() {
     await _tap(tester, find.byTooltip('Opcje treningu'));
     await _tap(tester, find.text('Zakończ trening'));
     expect(tester.takeException(), isNull);
+    await _tap(tester, find.text('Zakończ mimo to'));
+    expect(tester.takeException(), isNull);
     await _tap(tester, find.byTooltip('Wstecz'));
     await _tap(tester, find.byTooltip('Zminimalizuj trening'));
 
