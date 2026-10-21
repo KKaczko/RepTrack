@@ -16,4 +16,8 @@ abstract interface class PlanRepository {
 
   /// Zastępuje wpisy dla [date]; pusta lista przywraca plan tygodniowy.
   Future<void> setDay(LocalDate date, List<PlannedDay> entries);
+
+  /// Zastępuje wpisy kilku dat w jednej transakcji: przy błędzie żadna
+  /// data się nie zmienia (np. przeniesienie treningu i jego cofnięcie).
+  Future<void> setDays(Map<LocalDate, List<PlannedDay>> changes);
 }

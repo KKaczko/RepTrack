@@ -80,6 +80,41 @@ void main() {
     expect((await repo.load()).days, isEmpty);
   });
 
+  test('przeniesienie: błąd przy drugiej dacie nie zmienia żadnej', () async {
+    const tuesday = LocalDate(2026, 10, 13);
+    const workout = PlannedDay(
+      id: 'p1',
+      date: _monday,
+      kind: PlannedKind.workout,
+      templateId: 'tpl',
+      position: 0,
+    );
+    await repo.setDay(_monday, const [workout]);
+    await db.customStatement(
+      'CREATE TRIGGER fail_tuesday BEFORE INSERT ON planned_days '
+      "WHEN NEW.date = '${tuesday.toIso()}' "
+      "BEGIN SELECT RAISE(ABORT, 'awaria zapisu'); END",
+    );
+
+    await expectLater(
+      repo.setDays({
+        _monday: const [
+          PlannedDay(
+            id: 'r',
+            date: _monday,
+            kind: PlannedKind.rest,
+            position: 0,
+          ),
+        ],
+        tuesday: [workout.copyWith(id: 'p2', date: tuesday)],
+      }),
+      throwsA(anything),
+    );
+
+    final days = (await repo.load()).days;
+    expect(days.map((d) => (d.id, d.date)), [('p1', _monday)]);
+  });
+
   test('trening na datę wymaga szablonu (CHECK w bazie)', () async {
     await expectLater(
       repo.setDay(_monday, const [

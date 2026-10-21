@@ -155,11 +155,23 @@ final class DriftPlanRepository implements PlanRepository {
   });
 
   @override
-  Future<void> setDay(
+  Future<void> setDay(LocalDate date, List<PlannedDay> entries) =>
+      setDays({date: entries});
+
+  @override
+  Future<void> setDays(Map<LocalDate, List<PlannedDay>> changes) =>
+      _db.transaction(() async {
+        final now = _clock.nowUtc();
+        for (final MapEntry(key: date, value: entries) in changes.entries) {
+          await _writeDay(date, entries, now);
+        }
+      });
+
+  Future<void> _writeDay(
     LocalDate date,
     List<PlannedDay> entries,
-  ) => _db.transaction(() async {
-    final now = _clock.nowUtc();
+    DateTime now,
+  ) async {
     final existing = {
       for (final row in await (_db.select(
         _db.plannedDays,
@@ -195,5 +207,5 @@ final class DriftPlanRepository implements PlanRepository {
         now: now,
       );
     }
-  });
+  }
 }

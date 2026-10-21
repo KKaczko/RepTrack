@@ -46,6 +46,54 @@ List<PlanReminder> planReminderList({
   ];
 }
 
+/// Szereguje planowanie przypomnień: naraz trwa najwyżej jedno
+/// [PlanReminders.schedule], a prośby z jego czasu zastępuje najnowsza.
+/// Bez tego starsze, wolniejsze przeliczenie mogło skończyć się po nowszym
+/// i przywrócić nieaktualne alarmy.
+final class PlanReminderScheduler {
+  PlanReminderScheduler(this._reminders, {this.onError});
+
+  final PlanReminders _reminders;
+  final void Function(Object error, StackTrace stack)? onError;
+
+  List<PlanReminder>? _pending;
+  Future<void>? _running;
+
+  /// Kończy się, gdy w systemie obowiązuje najnowsza zgłoszona lista.
+  Future<void> request(List<PlanReminder> reminders) {
+    _pending = reminders;
+    return _running ??= _drain();
+  }
+
+  Future<void> _drain() async {
+    try {
+      for (var next = _pending; next != null; next = _pending) {
+        _pending = null;
+        try {
+          await _reminders.schedule(next);
+        } on Object catch (error, stack) {
+          onError?.call(error, stack);
+        }
+      }
+    } finally {
+      _running = null;
+    }
+  }
+}
+
+final planReminderSchedulerProvider = Provider<PlanReminderScheduler>(
+  (ref) => PlanReminderScheduler(
+    ref.watch(planRemindersProvider),
+    onError: (error, stack) => FlutterError.reportError(
+      FlutterErrorDetails(
+        exception: error,
+        stack: stack,
+        library: 'reptrack plan',
+      ),
+    ),
+  ),
+);
+
 /// Przelicza przypomnienia po każdej zmianie planu, ustawień, szablonów
 /// i zakończonych treningów. Obserwuje go [RepTrackApp]; zaplanowane
 /// alarmy zostają w systemie także po zamknięciu aplikacji.
@@ -69,18 +117,5 @@ final planReminderSyncProvider = Provider<void>((ref) {
           minutes: settings.planReminderMinutes,
         )
       : const <PlanReminder>[];
-  unawaited(
-    ref
-        .read(planRemindersProvider)
-        .schedule(reminders)
-        .catchError(
-          (Object error, StackTrace stack) => FlutterError.reportError(
-            FlutterErrorDetails(
-              exception: error,
-              stack: stack,
-              library: 'reptrack plan',
-            ),
-          ),
-        ),
-  );
+  unawaited(ref.read(planReminderSchedulerProvider).request(reminders));
 });

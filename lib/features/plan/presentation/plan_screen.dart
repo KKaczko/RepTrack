@@ -353,11 +353,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
     SnackBarAction undo(Map<LocalDate, List<PlannedDay>> before) =>
         SnackBarAction(
           label: l10n.planUndo,
-          onPressed: () => unawaited(() async {
-            for (final MapEntry(key: date, value: entries) in before.entries) {
-              await repo.setDay(date, entries);
-            }
-          }()),
+          onPressed: () => unawaited(repo.setDays(before)),
         );
     switch (action) {
       case PlanEntryAction.moveTomorrow || PlanEntryAction.moveTo:
@@ -370,8 +366,7 @@ class _PlanScreenState extends ConsumerState<PlanScreen> {
           target: entriesOf(target),
         };
         final moved = moveItem(day, index, dayPlan(data.plan, target), ids);
-        await repo.setDay(day.date, moved.from);
-        await repo.setDay(target, moved.to);
+        await repo.setDays({day.date: moved.from, target: moved.to});
         messenger.showSnackBar(
           SnackBar(
             action: undo(before),
