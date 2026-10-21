@@ -104,10 +104,11 @@ final class WorkoutController {
             set.isCompleted) {
           return const <SetField>[];
         }
-        final previous = await _repo.lastCompletedSets(
+        final recent = await _repo.recentCompletedSets(
           exercise.exerciseId,
           excludeSessionId: session.id,
         );
+        final previous = recent.firstOrNull ?? const <SessionSet>[];
         final measurement = exercise.measurementSnapshot;
         final settings = await _ref.read(settingsRepositoryProvider).load();
         final equipment =
@@ -124,6 +125,7 @@ final class WorkoutController {
                   previous,
                   step: weightStepFor(equipment, settings),
                   unit: settings.weightUnit,
+                  earlierSets: recent.elementAtOrNull(1) ?? const [],
                 )?.weightG
               : null,
         )[set.id]!;

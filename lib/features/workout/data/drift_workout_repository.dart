@@ -118,10 +118,24 @@ SELECT 'completed_history' AS watch_key,
   Future<List<SessionSet>> lastCompletedSets(
     String exerciseId, {
     String? excludeSessionId,
+  }) async =>
+      (await recentCompletedSets(
+        exerciseId,
+        count: 1,
+        excludeSessionId: excludeSessionId,
+      )).firstOrNull ??
+      const [];
+
+  @override
+  Future<List<List<SessionSet>>> recentCompletedSets(
+    String exerciseId, {
+    int count = 2,
+    String? excludeSessionId,
   }) async {
     final latest = await _db
         .customSelect(
-          'SELECT se.id AS id FROM session_exercises se '
+          'SELECT se.id AS id, se.session_id AS session_id '
+          'FROM session_exercises se '
           'JOIN workout_sessions ws ON ws.id = se.session_id '
           'WHERE se.exercise_id = ?1 AND se.deleted_at IS NULL '
           '  AND ws.deleted_at IS NULL AND ws.status = ?2 '
@@ -131,7 +145,7 @@ SELECT 'completed_history' AS watch_key,
           '  AND EXISTS (SELECT 1 FROM session_sets ss '
           '    WHERE ss.session_exercise_id = se.id '
           '      AND ss.deleted_at IS NULL AND ss.completed_at IS NOT NULL) '
-          'ORDER BY ws.started_at DESC, se.position ASC LIMIT 1',
+          'ORDER BY ws.started_at DESC, se.position ASC',
           variables: [
             Variable.withString(exerciseId),
             Variable.withString(SessionStatus.completed.code),
@@ -143,19 +157,32 @@ SELECT 'completed_history' AS watch_key,
             _db.sessionSets,
           },
         )
-        .getSingleOrNull();
-    if (latest == null) return const [];
-    final rows =
-        await (_db.select(_db.sessionSets)
-              ..where(
-                (t) =>
-                    t.sessionExerciseId.equals(latest.read<String>('id')) &
-                    t.deletedAt.isNull() &
-                    t.completedAt.isNotNull(),
-              )
-              ..orderBy([(t) => OrderingTerm.asc(t.position)]))
-            .get();
-    return [for (final row in rows) _setFromRow(row)];
+        .get();
+    // Jedno wystąpienie na sesję (ćwiczenie dodane dwa razy liczy się raz).
+    final ids = <String>[];
+    final sessions = <String>{};
+    for (final row in latest) {
+      if (sessions.add(row.read<String>('session_id'))) {
+        ids.add(row.read<String>('id'));
+      }
+      if (ids.length == count) break;
+    }
+    return [
+      for (final id in ids)
+        [
+          for (final row
+              in await (_db.select(_db.sessionSets)
+                    ..where(
+                      (t) =>
+                          t.sessionExerciseId.equals(id) &
+                          t.deletedAt.isNull() &
+                          t.completedAt.isNotNull(),
+                    )
+                    ..orderBy([(t) => OrderingTerm.asc(t.position)]))
+                  .get())
+            _setFromRow(row),
+        ],
+    ];
   }
 
   @override

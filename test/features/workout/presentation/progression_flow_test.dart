@@ -19,6 +19,7 @@ const _label = '+2,5 kg · ostatnio 3 × 12 przy 80 kg';
 Future<AppDatabase> _launch(
   WidgetTester tester, {
   bool autoProgression = true,
+  List<WorkoutSession>? history,
 }) async {
   tester.view.physicalSize = const Size(1080, 2400);
   tester.view.devicePixelRatio = 3;
@@ -29,13 +30,17 @@ Future<AppDatabase> _launch(
       await DriftExerciseRepository(db, testClock()).save(e);
     }
     await DriftTemplateRepository(db, testClock()).save(pushTemplate());
-    await DriftWorkoutRepository(db, testClock()).save(
-      finishedPush('a', DateTime.utc(2026, 10, 12, 16), [
-        (80000, 12),
-        (80000, 12),
-        (80000, 12),
-      ]),
-    );
+    for (final session
+        in history ??
+            [
+              finishedPush('a', DateTime.utc(2026, 10, 12, 16), [
+                (80000, 12),
+                (80000, 12),
+                (80000, 12),
+              ]),
+            ]) {
+      await DriftWorkoutRepository(db, testClock()).save(session);
+    }
     if (!autoProgression) {
       await DriftSettingsRepository(
         db,
@@ -99,6 +104,35 @@ void main() {
 
     final sets = await _benchSets(tester, db);
     expect((sets[1].weightG, sets[1].reps), (80000, 12));
+
+    await tester.pump(const Duration(milliseconds: 400));
+    await closeRepTrack(tester, db);
+  });
+
+  testWidgets('deload: dwa słabe treningi, podpowiedź −10%', (tester) async {
+    final db = await _launch(
+      tester,
+      history: [
+        finishedPush('a', DateTime.utc(2026, 10, 5, 16), [
+          (80000, 7),
+          (80000, 6),
+          (80000, 6),
+        ]),
+        finishedPush('b', DateTime.utc(2026, 10, 12, 16), [
+          (80000, 7),
+          (80000, 7),
+          (80000, 6),
+        ]),
+      ],
+    );
+
+    expect(find.text('−10 kg · 2 treningi poniżej zakresu'), findsOneWidget);
+    await _tap(tester, find.text('Zatwierdź serię 1'));
+    await tester.pump(const Duration(milliseconds: 400));
+    await _tap(tester, find.text('Zatwierdź serię 2'));
+
+    final sets = await _benchSets(tester, db);
+    expect((sets[1].weightG, sets[1].reps), (70000, 8));
 
     await tester.pump(const Duration(milliseconds: 400));
     await closeRepTrack(tester, db);

@@ -1364,7 +1364,7 @@
   "@workoutProgressionHintSemantics": {"description": "Czytnik ekranu: wartość z progresji", "placeholders": {"field": {"type": "String"}, "value": {"type": "String"}}},
   "glossaryDoubleProgressionTitle": "Progresja podwójna",
   "@glossaryDoubleProgressionTitle": {"description": "Pojęcie"},
-  "glossaryDoubleProgressionBody": "Najpierw dokładasz powtórzenia w zakresie (np. 8–12) przy tym samym ciężarze. Gdy we wszystkich seriach roboczych dojdziesz do górnej granicy, zwiększasz ciężar o krok i wracasz do dolnej granicy. RepTrack robi to w podpowiedzi sam: podnosi ciężar o krok z ustawień, gdy ostatnio wszystkie serie robocze doszły do góry zakresu albo były w zakresie z dużym zapasem (RIR 3 lub więcej, RPE 7 lub mniej). Zawsze możesz zmienić wartość przed zatwierdzeniem.",
+  "glossaryDoubleProgressionBody": "Najpierw dokładasz powtórzenia w zakresie (np. 8–12) przy tym samym ciężarze. Gdy we wszystkich seriach roboczych dojdziesz do górnej granicy, zwiększasz ciężar o krok i wracasz do dolnej granicy. RepTrack robi to w podpowiedzi sam: podnosi ciężar o krok z ustawień, gdy ostatnio wszystkie serie robocze doszły do góry zakresu albo były w zakresie z dużym zapasem (RIR 3 lub więcej, RPE 7 lub mniej). Gdy dwa treningi z rzędu przy tym samym ciężarze nie dojdą do dolnej granicy, podpowiedź zmniejsza ciężar o ok. 10% (deload). Zawsze możesz zmienić wartość przed zatwierdzeniem.",
   "@glossaryDoubleProgressionBody": {"description": "Opis pojęcia"},
   "settingsAutoProgression": "Automatyczna progresja",
   "@settingsAutoProgression": {"description": "Ustawienia: progresja w podpowiedziach"},
@@ -1461,5 +1461,9 @@
   "workoutWarmup": "Rozgrzewka",
   "@workoutWarmup": {"description": "Przycisk dodania serii rozgrzewkowych"},
   "workoutWarmupAdded": "{count, plural, =1{Dodano 1 serię rozgrzewkową} few{Dodano {count} serie rozgrzewkowe} other{Dodano {count} serii rozgrzewkowych}}",
-  "@workoutWarmupAdded": {"description": "Komunikat po dodaniu rozgrzewki", "placeholders": {"count": {"type": "int"}}}
+  "@workoutWarmupAdded": {"description": "Komunikat po dodaniu rozgrzewki", "placeholders": {"count": {"type": "int"}}},
+  "workoutProgressionRemove": "−{weight}",
+  "@workoutProgressionRemove": {"description": "Zmiana ciężaru w deloadzie", "placeholders": {"weight": {"type": "String"}}},
+  "workoutProgressionDeload": "{change} · 2 treningi poniżej zakresu",
+  "@workoutProgressionDeload": {"description": "Etykieta deloadu", "placeholders": {"change": {"type": "String"}}}
 }

@@ -44,20 +44,22 @@ ExerciseHints watchExerciseHints(
   SessionExercise exercise,
 ) {
   final history = ref.watch(
-    previousSetsProvider((exercise.exerciseId, sessionId)),
+    recentSetsProvider((exercise.exerciseId, sessionId)),
   );
   final settings = ref.watch(appSettingsProvider).value;
   final equipment = ref
       .watch(exercisesByIdProvider)
       .value?[exercise.exerciseId]
       ?.equipment;
-  final previousSets = history.value ?? const <SessionSet>[];
+  final recent = history.value ?? const <List<SessionSet>>[];
+  final previousSets = recent.firstOrNull ?? const <SessionSet>[];
   final advice = settings != null && settings.autoProgression
       ? progressionFor(
           exercise,
           previousSets,
           step: weightStepFor(equipment, settings),
           unit: settings.weightUnit,
+          earlierSets: recent.elementAtOrNull(1) ?? const [],
         )
       : null;
   return (
@@ -543,7 +545,10 @@ class _ProgressionNote extends StatelessWidget {
       unit,
       locale,
     );
-    final changeText = assisted
+    final deload = advice.reason == ProgressionReason.deload;
+    final changeText = deload
+        ? l10n.workoutProgressionRemove(change)
+        : assisted
         ? l10n.workoutProgressionLessAssist(change)
         : l10n.workoutProgressionAdd(change);
     final previous = formatWeight(advice.previousWeightG, unit, locale);
@@ -560,11 +565,12 @@ class _ProgressionNote extends StatelessWidget {
         advice.previousReps,
         previous,
       ),
+      ProgressionReason.deload => l10n.workoutProgressionDeload(changeText),
     };
     return Row(
       children: [
         Icon(
-          Icons.trending_up_rounded,
+          deload ? Icons.trending_down_rounded : Icons.trending_up_rounded,
           size: 18,
           color: theme.colorScheme.primary,
         ),

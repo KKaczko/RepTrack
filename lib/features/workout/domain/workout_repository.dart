@@ -40,6 +40,15 @@ abstract interface class WorkoutRepository {
     String? excludeSessionId,
   });
 
+  /// Zatwierdzone serie [count] ostatnich wykonań ćwiczenia, od
+  /// najnowszego; wykonania bez zatwierdzonych serii są pomijane
+  /// (progresja i deload, ADR 0017 i 0020).
+  Future<List<List<SessionSet>>> recentCompletedSets(
+    String exerciseId, {
+    int count = 2,
+    String? excludeSessionId,
+  });
+
   /// Wszystkie zatwierdzone serie podanych ćwiczeń z zakończonych sesji,
   /// z trybem obciążenia z chwili wykonania (do rekordów).
   Future<Map<String, List<PerformedSet>>> completedSetsFor(

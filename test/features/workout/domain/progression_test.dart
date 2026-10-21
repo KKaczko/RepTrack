@@ -226,4 +226,53 @@ void main() {
       expect(hints[id]!.reps, (value: 8, source: HintSource.progression));
     }
   });
+
+  group('deload', () {
+    final weak = [(80000, 7), (80000, 6), (80000, 6)];
+
+    test('dwa słabe treningi przy tym samym ciężarze: −10% w dół do kroku', () {
+      final advice = progressionFor(
+        _exercise(),
+        _previous(weak),
+        step: 2.5,
+        unit: WeightUnit.kg,
+        earlierSets: _previous([(80000, 8), (80000, 7), (80000, 7)]),
+      );
+
+      expect(advice, (
+        weightG: 70000,
+        previousWeightG: 80000,
+        previousSets: 3,
+        previousReps: 6,
+        reason: ProgressionReason.deload,
+      ));
+    });
+
+    test('jeden słaby trening, inny ciężar wcześniej albo brak historii', () {
+      ProgressionAdvice? advice(List<(int, int)> earlier) => progressionFor(
+        _exercise(),
+        _previous(weak),
+        step: 2.5,
+        unit: WeightUnit.kg,
+        earlierSets: earlier.isEmpty ? const [] : _previous(earlier),
+      );
+
+      expect(advice([(80000, 9), (80000, 8), (80000, 8)]), isNull);
+      expect(advice([(77500, 6), (77500, 6), (77500, 6)]), isNull);
+      expect(advice(const []), isNull);
+    });
+
+    test('wspomaganie bez deloadu', () {
+      expect(
+        progressionFor(
+          _exercise(loadMode: LoadMode.assisted),
+          _previous(weak),
+          step: 2.5,
+          unit: WeightUnit.kg,
+          earlierSets: _previous(weak),
+        ),
+        isNull,
+      );
+    });
+  });
 }

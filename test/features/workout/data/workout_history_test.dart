@@ -119,6 +119,24 @@ void main() {
     );
   });
 
+  test('dwa ostatnie wykonania od najnowszego, bez pustych', () async {
+    await finishedSession('a', DateTime.utc(2026, 10, 1, 16), [(70000, 10)]);
+    await finishedSession('b', DateTime.utc(2026, 10, 5, 16), [(75000, 10)]);
+    await finishedSession('c', DateTime.utc(2026, 10, 8, 16), []);
+    await finishedSession('d', DateTime.utc(2026, 10, 12, 16), [(80000, 8)]);
+
+    final recent = await workouts.recentCompletedSets('bench');
+
+    expect([for (final sets in recent) sets.single.weightG], [80000, 75000]);
+    expect(
+      (await workouts.recentCompletedSets(
+        'bench',
+        count: 3,
+      )).last.single.weightG,
+      70000,
+    );
+  });
+
   test('porzucona sesja nie jest poprzednim wykonaniem ani historią', () async {
     await finishedSession('a', DateTime.utc(2026, 10, 5, 16), [(75000, 10)]);
     final newer = await finishedSession('b', DateTime.utc(2026, 10, 12, 16), [

@@ -691,7 +691,7 @@
   "workoutProgressionLessAssist": "{weight} less assistance",
   "workoutProgressionHintSemantics": "{field}: {value}, progression suggestion",
   "glossaryDoubleProgressionTitle": "Double progression",
-  "glossaryDoubleProgressionBody": "Add reps within the range (e.g. 8–12) at the same weight first. When every working set reaches the top of the range, add one weight step and go back to the bottom of the range. RepTrack does this in the suggestion: it adds one weight step from the settings when last time every working set reached the top of the range, or stayed in the range with plenty in reserve (RIR 3 or more, RPE 7 or less). You can always change the value before confirming.",
+  "glossaryDoubleProgressionBody": "Add reps within the range (e.g. 8–12) at the same weight first. When every working set reaches the top of the range, add one weight step and go back to the bottom of the range. RepTrack does this in the suggestion: it adds one weight step from the settings when last time every working set reached the top of the range, or stayed in the range with plenty in reserve (RIR 3 or more, RPE 7 or less). When two workouts in a row at the same weight fall short of the bottom of the range, the suggestion lowers the weight by about 10% (deload). You can always change the value before confirming.",
   "settingsAutoProgression": "Automatic progression",
   "settingsAutoProgressionHint": "After you hit the top of the rep range, the suggestion adds one weight step",
   "workoutSupersetLink": "Make a superset with the next one",
@@ -739,5 +739,7 @@
   "platesBar": "Bar: {equipment}",
   "platesAvailable": "Available plates",
   "workoutWarmup": "Warm-up",
-  "workoutWarmupAdded": "{count, plural, =1{Added 1 warm-up set} other{Added {count} warm-up sets}}"
+  "workoutWarmupAdded": "{count, plural, =1{Added 1 warm-up set} other{Added {count} warm-up sets}}",
+  "workoutProgressionRemove": "−{weight}",
+  "workoutProgressionDeload": "{change} · 2 workouts below the range"
 }

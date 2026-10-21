@@ -29,13 +29,14 @@ final completedSessionsProvider = StreamProvider<List<WorkoutSession>>(
   (ref) => ref.watch(workoutRepositoryProvider).watchCompleted(),
 );
 
-/// Zatwierdzone serie ostatniego wykonania ćwiczenia poza bieżącą sesją
-/// (ADR 0006). Klucz: (id ćwiczenia, id bieżącej sesji).
-final previousSetsProvider = FutureProvider.autoDispose
-    .family<List<SessionSet>, (String, String)>(
+/// Zatwierdzone serie dwóch ostatnich wykonań ćwiczenia poza bieżącą
+/// sesją, od najnowszego (podpowiedzi ADR 0006, progresja i deload).
+/// Klucz: (id ćwiczenia, id bieżącej sesji).
+final recentSetsProvider = FutureProvider.autoDispose
+    .family<List<List<SessionSet>>, (String, String)>(
       (ref, key) => ref
           .watch(workoutRepositoryProvider)
-          .lastCompletedSets(key.$1, excludeSessionId: key.$2),
+          .recentCompletedSets(key.$1, excludeSessionId: key.$2),
     );
 
 final workoutStarterProvider = Provider<WorkoutStarter>(WorkoutStarter.new);
