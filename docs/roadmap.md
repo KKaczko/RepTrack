@@ -284,3 +284,26 @@ Testy integracyjne na urządzeniu (`integration_test`) dochodzą w Etapie 7. `ch
   - aktualizacja z danymi v2 (plan i historia bez strat);
   - „Zamiennik” w treningu: lista, przypięcie ★ i podmiana; para widoczna w obie strony, z powodem „robione wcześniej”;
   - krok dystansu 250 m w Ustawieniach i stepper biegu (2 × + = 500 m).
+
+### Po wydaniu: poprawki z przeglądu kodu (2026-10-21)
+
+Zewnętrzny przegląd zgłosił 11 problemów; wszystkie potwierdziłem w kodzie i każdy ma test regresyjny, który bez poprawki nie przechodzi.
+- **Plan:**
+  - przeniesienie treningu i „Cofnij” w jednej transakcji (`setDays`);
+  - kolejka planowania przypomnień.
+- **Asystent:**
+  - czat bez historii (szablony w kontekście);
+  - przegląd liczony przy każdym pytaniu;
+  - budżet kontekstu;
+  - `http` tylko lokalnie i `https` na 443 ([ADR 0014](decisions/0014-asystent-ai-ollama.md)).
+- **Backup:**
+  - przywracanie pustych tabel odświeża ekrany;
+  - spójny eksport w transakcji;
+  - walidacja `exportedAt`, `appVersion` i `units`;
+  - przerwa z kopii dostaje powiadomienie ([ADR 0008](decisions/0008-backup-i-eksport.md)).
+- **Trening:** poprzednie wykonanie pomija wystąpienia bez zatwierdzonych serii ([ADR 0006](decisions/0006-poprzednie-wykonanie-i-podpowiedzi.md)).
+- **Sprawdzone na emulatorze:**
+  - przeniesienie na inny dzień i „Cofnij” przywracają obie daty razem;
+  - publiczny `http://example.com` jest odrzucany w dialogu (komunikat dostał więcej linii, bo na 360 dp był ucięty);
+  - przy `http://10.0.2.2` widać ostrzeżenie i opis wysyłanych danych;
+  - rozmowa z Ollamą 0.40.7 (`qwen3.5:4b`) działa z nowym budżetem kontekstu.

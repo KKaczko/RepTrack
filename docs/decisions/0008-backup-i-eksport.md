@@ -24,6 +24,13 @@ Pełny backup i eksport filtrowany to osobne funkcje. Backup musi przetrwać zmi
 - CSV: kolumna „Notatka” to notatka treningu; RIR i RPE w osobnych kolumnach.
 - Android Auto Backup: reguły obejmują tylko bazę; checkpoint WAL przy przejściu w tło.
 
+## Poprawki z przeglądu (2026-10-21)
+
+- Eksport czyta wszystkie tabele w jednej transakcji: zapis w trakcie (np. seria w trwającym treningu) czeka, więc kopia jest spójna.
+- Przywracanie usuwa wiersze z powiadomieniem Drift (`UpdateKind.delete`), więc tabele puste po przywróceniu (np. plan) odświeżają ekrany bez restartu.
+- Walidacja metadanych: `exportedAt` wymagany (czas UTC), `appVersion` tekstem, `units` (jeśli jest) równe `backupUnits`. Plik z innymi jednostkami jest odrzucany, bo wartości byłyby źle odczytane.
+- Po przywróceniu przerwa poprzedniego treningu jest anulowana, a przerwa aktywnego treningu z kopii dostaje powiadomienie od nowa.
+
 ## Konsekwencje
 
 - Zmiana formatu backupu wymaga nowej `formatVersion` i migracji przy imporcie.

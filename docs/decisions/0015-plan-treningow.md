@@ -31,7 +31,7 @@ Cykl co N dni nie wszedł.
   - „zamień szablon”;
   - „przywróć plan tygodnia” (usunięcie wpisów daty).
 
-  „Pomiń” i „przesuń” mają „Cofnij” (poprzednie wpisy wracają).
+  „Pomiń” i „przesuń” mają „Cofnij” (poprzednie wpisy wracają). Przeniesienie i jego cofnięcie zapisują obie daty w jednej transakcji (`setDays`, od 2026-10-21), więc błąd zapisu nie gubi treningu.
 - **Stan treningu z planu** wynika z zakończonych treningów tego dnia (`local_date`, `template_id`), bez kluczy obcych do sesji:
   - zrobiony (ten sam szablon);
   - zastąpiony (inny trening tego dnia);
@@ -58,5 +58,6 @@ Cykl co N dni nie wszedł.
 
 - Baza v2: migracja v1 → v2 tworzy tabele i indeksy, z testem na danych (`test/drift/app_database/migration_test.dart`).
 - Backup v2: pliki v1 dostają puste tablice planu (`migrateBackupV1ToV2`); plik z wersji wyższej niż obsługiwana jest odrzucany.
+- Planowanie przypomnień idzie przez kolejkę (`PlanReminderScheduler`): naraz najwyżej jedno przeliczenie, a prośby z jego czasu zastępuje najnowsza, więc starsze przeliczenie nie przywróci nieaktualnych alarmów.
 - Przypomnienia działają tylko za zgodą na powiadomienia, tak jak timer przerwy. Bez otwierania aplikacji przez dwa tygodnie zaplanowane przypomnienia się kończą, bo przeliczanie dzieje się w aplikacji.
 - Usunięty albo zarchiwizowany szablon w planie pokazuje się jako „(usunięty szablon)” i nie przypomina.

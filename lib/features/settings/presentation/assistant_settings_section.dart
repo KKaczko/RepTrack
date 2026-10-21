@@ -227,7 +227,7 @@ class _ServerDialogState extends State<_ServerDialog> {
         decoration: InputDecoration(
           hintText: l10n.assistantServerHint,
           errorText: _error,
-          errorMaxLines: 3,
+          errorMaxLines: 5,
         ),
       ),
       actions: [

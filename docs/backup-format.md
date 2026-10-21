@@ -43,6 +43,7 @@ Jeden plik UTF-8 z obiektem JSON. Kopia obejmuje wszystko: także zarchiwizowane
 1. Plik jest odczytywany i sprawdzany w całości, zanim cokolwiek trafi do bazy:
    - format;
    - wersja;
+   - metadane: `exportedAt` (czas UTC, wymagany), `appVersion` (tekst), `units` (jeśli jest, dokładnie jak w przykładzie wyżej);
    - typy pól, kody i zakresy;
    - unikalne identyfikatory i klucze obce;
    - co najmniej jedno pole pomiaru w każdym ćwiczeniu;
@@ -51,6 +52,8 @@ Jeden plik UTF-8 z obiektem JSON. Kopia obejmuje wszystko: także zarchiwizowane
 3. Starsze wersje przechodzą przez migracje formatu (`backupMigrations`, każda z wersji `n` do `n + 1`). Migracja 1 → 2 dodaje puste tablice `weeklyPlans`, `weeklyPlanDays` i `plannedDays` (kopia sprzed planu treningów), a 2 → 3 pustą tablicę `exerciseSubstitutes` (kopia sprzed zamienników).
 4. Przed zastąpieniem aplikacja zapisuje kopię bieżących danych w pamięci telefonu (`files/kopie`, 5 najnowszych, poza Android Auto Backup).
 5. Zastąpienie odbywa się w jednej transakcji: usunięcie wszystkich wierszy i wstawienie danych z pliku. Przy jakimkolwiek błędzie baza zostaje bez zmian.
+
+Eksport czyta wszystkie tabele w jednej transakcji, więc plik jest spójny także wtedy, gdy w tle trwa trening.
 
 Tryb importu w MVP to „zastąp wszystko”. Scalanie jest w [backlogu](backlog.md).
 

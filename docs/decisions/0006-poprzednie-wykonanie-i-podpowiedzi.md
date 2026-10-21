@@ -9,7 +9,7 @@ Aktywny trening pokazuje wynik poprzedniego wykonania przy każdej serii i wstę
 
 ## Decyzja
 
-- **Poprzednie wykonanie:** ostatnia zakończona sesja zawierająca to ćwiczenie, niezależnie od szablonu. Serie robocze dopasowane po kolejności wśród roboczych, rozgrzewkowe wśród rozgrzewkowych.
+- **Poprzednie wykonanie:** ostatnia zakończona sesja zawierająca to ćwiczenie z co najmniej jedną zatwierdzoną serią (od 2026-10-21; wcześniej trening z pominiętym ćwiczeniem przesłaniał starszy wynik), niezależnie od szablonu. Serie robocze dopasowane po kolejności wśród roboczych, rozgrzewkowe wśród rozgrzewkowych.
 - **Podpowiedź** dla każdego pola, w kolejności:
   1. wartość wpisana przez użytkownika,
   2. poprzednie wykonanie,
