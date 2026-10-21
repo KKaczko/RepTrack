@@ -9,6 +9,7 @@ import '../domain/session_builder.dart';
 import '../domain/workout_repository.dart';
 import '../domain/workout_session.dart';
 import 'drift_workout_repository.dart';
+import 'rest_restore.dart';
 
 /// Publiczne providery funkcji „trening” (docs/architecture.md).
 final workoutRepositoryProvider = Provider<WorkoutRepository>(
@@ -96,3 +97,14 @@ final class WorkoutStarter {
     return true;
   }
 }
+
+/// Przywraca powiadomienie przerwy aktywnego treningu z bazy (np. po
+/// przywróceniu kopii).
+final restResyncProvider = Provider<Future<void> Function()>(
+  (ref) =>
+      () => restoreRestNotification(
+        ref.read(workoutRepositoryProvider),
+        ref.read(restNotificationsProvider),
+        ref.read(clockProvider).nowUtc(),
+      ),
+);

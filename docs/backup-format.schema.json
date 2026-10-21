@@ -35,7 +35,13 @@
       "format": "date-time"
     },
     "units": {
-      "type": "object"
+      "const": {
+        "weight": "g",
+        "distance": "m",
+        "duration": "s",
+        "effort": "tenths",
+        "time": "ISO 8601 UTC"
+      }
     },
     "exercises": {
       "type": "array",

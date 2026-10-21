@@ -1,14 +1,14 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:reptrack/app/bootstrap.dart';
 import 'package:reptrack/features/exercises/data/drift_exercise_repository.dart';
 import 'package:reptrack/features/templates/data/drift_template_repository.dart';
 import 'package:reptrack/features/workout/data/drift_workout_repository.dart';
+import 'package:reptrack/features/workout/data/rest_restore.dart';
 import 'package:reptrack/features/workout/domain/session_builder.dart';
 
-import '../support/fake_devices.dart';
-import '../support/fakes.dart';
-import '../support/test_database.dart';
-import '../support/workout_fixtures.dart';
+import '../../../support/fake_devices.dart';
+import '../../../support/fakes.dart';
+import '../../../support/test_database.dart';
+import '../../../support/workout_fixtures.dart';
 
 void main() {
   test('trwająca przerwa wraca do powiadomień po restarcie', () async {
@@ -35,7 +35,11 @@ void main() {
     );
     final notifications = FakeRestNotifications();
 
-    await restoreRestNotification(db, notifications);
+    await restoreRestNotification(
+      DriftWorkoutRepository(db, clock),
+      notifications,
+      now,
+    );
 
     expect(notifications.endsAt, endsAt);
     expect(notifications.nextName, 'Wyciskanie');
@@ -61,7 +65,11 @@ void main() {
     );
     final notifications = FakeRestNotifications();
 
-    await restoreRestNotification(db, notifications);
+    await restoreRestNotification(
+      DriftWorkoutRepository(db, clock),
+      notifications,
+      now,
+    );
 
     expect(notifications.endsAt, isNull);
   });

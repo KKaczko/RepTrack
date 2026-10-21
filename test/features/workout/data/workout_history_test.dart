@@ -103,6 +103,22 @@ void main() {
     },
   );
 
+  test('wystąpienie bez zatwierdzonych serii nie przesłania wyniku', () async {
+    await finishedSession('a', DateTime.utc(2026, 10, 5, 16), [
+      (75000, 10),
+      (75000, 9),
+    ]);
+    // Nowszy trening z ławką, ale bez żadnej zatwierdzonej serii.
+    await finishedSession('b', DateTime.utc(2026, 10, 12, 16), []);
+
+    final previous = await workouts.lastCompletedSets('bench');
+
+    expect(
+      [for (final s in previous) (s.weightG, s.reps)],
+      [(75000, 10), (75000, 9)],
+    );
+  });
+
   test('porzucona sesja nie jest poprzednim wykonaniem ani historią', () async {
     await finishedSession('a', DateTime.utc(2026, 10, 5, 16), [(75000, 10)]);
     final newer = await finishedSession('b', DateTime.utc(2026, 10, 12, 16), [

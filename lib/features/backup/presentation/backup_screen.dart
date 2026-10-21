@@ -449,12 +449,14 @@ class _BackupScreenState extends ConsumerState<BackupScreen> {
     if (ok != true) return;
     await _run(() async {
       await service.restore(prepared);
-      // Przerwa poprzedniego treningu nie dotyczy przywróconych danych.
+      // Przerwa poprzedniego treningu nie dotyczy przywróconych danych;
+      // przerwa z kopii (aktywny trening) dostaje powiadomienie od nowa.
       try {
         await ref.read(restNotificationsProvider).cancelRest();
       } on Object {
         // Brak powiadomień nie blokuje przywrócenia.
       }
+      await ref.read(restResyncProvider)();
       if (mounted) _snack(l10n.backupRestoredSnack);
     });
   }

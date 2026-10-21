@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:collection/collection.dart';
+
 import '../../../core/domain/local_date.dart';
 import 'backup_format.dart';
 
@@ -115,6 +117,18 @@ List<String> validateBackup(Map<String, Object?> backup) {
   final problems = <String>[];
   void report(String problem) {
     if (problems.length < maxReportedProblems) problems.add(problem);
+  }
+
+  // Metadane pliku.
+  if (_checkTime(backup['exportedAt']) case final problem?) {
+    report('exportedAt: $problem');
+  }
+  if (backup['appVersion'] case final version? when version is! String) {
+    report('appVersion: oczekiwano tekstu.');
+  }
+  if (backup.containsKey('units') &&
+      !const DeepCollectionEquality().equals(backup['units'], backupUnits)) {
+    report('units: nieobsługiwane jednostki ${jsonEncode(backup['units'])}.');
   }
 
   final ids = <String, Set<String>>{};

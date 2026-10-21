@@ -25,7 +25,8 @@ final class BackupSummary {
   final bool hasActiveWorkout;
 }
 
-/// Podsumowanie zweryfikowanej kopii w bieżącym formacie.
+/// Podsumowanie kopii zweryfikowanej przez `readBackup` (czas eksportu
+/// jest sprawdzony, więc odczyt nie zawiedzie).
 BackupSummary summarizeBackup(Map<String, Object?> backup) {
   List<Map<String, Object?>> rows(String table) =>
       (backup[table]! as List).cast<Map<String, Object?>>();

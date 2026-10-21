@@ -186,4 +186,56 @@ void main() {
     ).exportAll(appVersion: '1.0.0+1');
     expect(_withoutExportTime(after), _withoutExportTime(before));
   });
+
+  test('przywrócenie pustej tabeli powiadamia obserwatorów', () async {
+    final db = memoryDatabase();
+    addTearDown(db.close);
+    await _fill(db);
+    final empty = memoryDatabase();
+    addTearDown(empty.close);
+    final emptyBackup = await BackupStore(
+      empty,
+      testClock(),
+    ).exportAll(appVersion: '1.0.0+1');
+    final plan = DriftPlanRepository(db, testClock());
+    final states = <int>[];
+    final subscription = plan.watch().listen((s) => states.add(s.days.length));
+    addTearDown(subscription.cancel);
+    await pumpEventQueue();
+    expect(states, [1]);
+
+    await BackupStore(
+      db,
+      testClock(),
+    ).replaceAll(readBackup(jsonEncode(emptyBackup)));
+    await pumpEventQueue();
+
+    expect(states.last, 0);
+  });
+
+  test('zapis w trakcie eksportu czeka na jego koniec', () async {
+    final db = memoryDatabase();
+    addTearDown(db.close);
+    await _fill(db);
+    final store = BackupStore(db, testClock());
+    final before =
+        (await store.exportAll(appVersion: 'x'))['workoutSessions']! as List;
+
+    final export = store.exportAll(appVersion: 'x');
+    final write = DriftWorkoutRepository(
+      db,
+      testClock(),
+    ).save(finishedPush('n', DateTime.utc(2026, 10, 19, 17), [(90000, 5)]));
+    final exported = await export;
+    await write;
+
+    final sessions = exported['workoutSessions']! as List;
+    expect(sessions, hasLength(before.length));
+    final sessionIds = {for (final s in sessions) (s as Map)['id']};
+    for (final e in exported['sessionExercises']! as List) {
+      expect(sessionIds, contains((e as Map)['sessionId']));
+    }
+    final after = await store.exportAll(appVersion: 'x');
+    expect(after['workoutSessions'], hasLength(before.length + 1));
+  });
 }

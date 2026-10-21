@@ -17,19 +17,18 @@ final class BackupStore {
 
   /// Pełna kopia: wszystkie wiersze, także zarchiwizowane i usunięte,
   /// oraz ustawienia.
-  Future<Map<String, Object?>> exportAll({required String appVersion}) async {
+  /// Odczyt w jednej transakcji: zapis zgłoszony w trakcie (np. seria
+  /// w trwającym treningu) czeka na koniec, więc kopia jest spójna.
+  Future<Map<String, Object?>> exportAll({required String appVersion}) =>
+      _db.transaction(() => _readAll(appVersion));
+
+  Future<Map<String, Object?>> _readAll(String appVersion) async {
     final backup = <String, Object?>{
       'format': backupFormatId,
       'formatVersion': backupFormatVersion,
       'appVersion': appVersion,
       'exportedAt': _iso(_clock.nowUtc().millisecondsSinceEpoch),
-      'units': const {
-        'weight': 'g',
-        'distance': 'm',
-        'duration': 's',
-        'effort': 'tenths',
-        'time': 'ISO 8601 UTC',
-      },
+      'units': backupUnits,
     };
     for (final table in backupTables) {
       final rows = await _db
@@ -63,10 +62,20 @@ final class BackupStore {
     Map<String, Object?> backup,
   ) => _db.transaction(() async {
     final tables = {for (final t in _db.allTables) t.actualTableName: t};
+    // Usuwanie z powiadomieniem: strumienie tabel, które po przywróceniu
+    // są puste, też dostają nowy stan.
     for (final table in backupTables.reversed) {
-      await _db.customStatement('DELETE FROM ${table.sql}');
+      await _db.customUpdate(
+        'DELETE FROM ${table.sql}',
+        updates: {tables[table.sql]!},
+        updateKind: UpdateKind.delete,
+      );
     }
-    await _db.customStatement('DELETE FROM settings');
+    await _db.customUpdate(
+      'DELETE FROM settings',
+      updates: {_db.settings},
+      updateKind: UpdateKind.delete,
+    );
     for (final table in backupTables) {
       final columns = table.fields.map((f) => f.column).join(', ');
       final marks = List.filled(table.fields.length, '?').join(', ');

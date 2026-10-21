@@ -126,13 +126,22 @@ SELECT 'completed_history' AS watch_key,
           'WHERE se.exercise_id = ?1 AND se.deleted_at IS NULL '
           '  AND ws.deleted_at IS NULL AND ws.status = ?2 '
           '  AND ws.id IS NOT ?3 '
+          // Wystąpienie bez zatwierdzonych serii nie przesłania
+          // wcześniejszego wyniku.
+          '  AND EXISTS (SELECT 1 FROM session_sets ss '
+          '    WHERE ss.session_exercise_id = se.id '
+          '      AND ss.deleted_at IS NULL AND ss.completed_at IS NOT NULL) '
           'ORDER BY ws.started_at DESC, se.position ASC LIMIT 1',
           variables: [
             Variable.withString(exerciseId),
             Variable.withString(SessionStatus.completed.code),
             Variable(excludeSessionId),
           ],
-          readsFrom: {_db.sessionExercises, _db.workoutSessions},
+          readsFrom: {
+            _db.sessionExercises,
+            _db.workoutSessions,
+            _db.sessionSets,
+          },
         )
         .getSingleOrNull();
     if (latest == null) return const [];

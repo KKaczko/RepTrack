@@ -17,6 +17,16 @@ const backupFormatId = 'reptrack-backup';
 /// Bieżąca wersja formatu.
 const backupFormatVersion = 3;
 
+/// Jednostki wartości w kopii (pole `units`). Plik z innymi jednostkami
+/// jest odrzucany, bo wartości byłyby źle odczytane.
+const backupUnits = {
+  'weight': 'g',
+  'distance': 'm',
+  'duration': 's',
+  'effort': 'tenths',
+  'time': 'ISO 8601 UTC',
+};
+
 /// Rodzaj wartości pola w pliku.
 enum BackupFieldType {
   /// Identyfikator (UUIDv7 albo stały identyfikator z seeda).
@@ -644,7 +654,7 @@ Map<String, Object?> backupJsonSchema() {
       'formatVersion': {'const': backupFormatVersion},
       'appVersion': {'type': 'string'},
       'exportedAt': {'type': 'string', 'format': 'date-time'},
-      'units': {'type': 'object'},
+      'units': {'const': backupUnits},
       for (final table in backupTables)
         table.json: {
           'type': 'array',

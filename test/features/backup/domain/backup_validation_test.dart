@@ -309,4 +309,31 @@ void main() {
     expect(summary.hasActiveWorkout, isTrue);
     expect(summary.exportedAt, DateTime.utc(2026, 10, 19, 16));
   });
+
+  test('metadane: czas eksportu, wersja aplikacji i jednostki', () {
+    expect(_problems(_backup()..remove('exportedAt')), [
+      'exportedAt: oczekiwano czasu ISO 8601.',
+    ]);
+    expect(
+      _problems(_backup()..['exportedAt'] = 'wczoraj').single,
+      startsWith('exportedAt: niepoprawny czas'),
+    );
+    expect(_problems(_backup()..['appVersion'] = 7), [
+      'appVersion: oczekiwano tekstu.',
+    ]);
+    expect(
+      _problems(_backup()..['units'] = {...backupUnits, 'weight': 'lb'}).single,
+      startsWith('units: nieobsługiwane jednostki'),
+    );
+    // Brak wersji aplikacji i jednostek jest dozwolony (pola opcjonalne).
+    expect(
+      _problems(
+        _backup()
+          ..remove('appVersion')
+          ..remove('units'),
+      ),
+      isEmpty,
+    );
+    expect(_problems(_backup()..['units'] = backupUnits), isEmpty);
+  });
 }

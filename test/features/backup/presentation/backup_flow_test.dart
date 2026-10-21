@@ -9,6 +9,7 @@ import 'package:reptrack/features/backup/domain/backup_validation.dart';
 import 'package:reptrack/features/exercises/data/drift_exercise_repository.dart';
 import 'package:reptrack/features/templates/data/drift_template_repository.dart';
 import 'package:reptrack/features/workout/data/drift_workout_repository.dart';
+import 'package:reptrack/features/workout/domain/workout_session.dart';
 
 import '../../../support/app_harness.dart';
 import '../../../support/fake_devices.dart';
@@ -21,6 +22,7 @@ Future<AppDatabase> _openBackup(
   WidgetTester tester, {
   required FakeFileExchange files,
   List<String>? safetyCopies,
+  FakeRestNotifications? notifications,
   double height = 800,
 }) async {
   tester.view.physicalSize = Size(1080, height * 3);
@@ -42,6 +44,7 @@ Future<AppDatabase> _openBackup(
     db: db,
     clock: testClock(),
     files: files,
+    notifications: notifications,
     overrides: [
       safetyCopyWriterProvider.overrideWithValue(
         (json) async => safetyCopies?.add(json),
@@ -51,6 +54,8 @@ Future<AppDatabase> _openBackup(
   await tester.tap(find.byTooltip('Otwórz ustawienia'));
   await tester.pumpAndSettle();
   await tester.scrollUntilVisible(find.text('Kopia i eksport'), 200);
+  await tester.ensureVisible(find.text('Kopia i eksport'));
+  await tester.pumpAndSettle();
   await tester.tap(find.text('Kopia i eksport'));
   await tester.pumpAndSettle();
   return db;
@@ -174,6 +179,76 @@ void main() {
     // Trening z 12 października mieści się w ostatnich 30 dniach.
     await _tap(tester, find.text('30 dni'));
     expect(find.text('Serii: 1 · treningów: 1'), findsOneWidget);
+
+    await closeRepTrack(tester, db);
+  });
+
+  testWidgets('przerwa z kopii dostaje powiadomienie od nowa', (tester) async {
+    final restEnds = DateTime.utc(2026, 10, 19, 18, 2);
+    final other = memoryDatabase();
+    late String backupJson;
+    await tester.runAsync(() async {
+      for (final e in catalog.values) {
+        await DriftExerciseRepository(other, testClock()).save(e);
+      }
+      await DriftTemplateRepository(other, testClock()).save(pushTemplate());
+      await DriftWorkoutRepository(other, testClock()).save(
+        finishedPush('r', DateTime.utc(2026, 10, 19, 17, 30), [
+          (80000, 10),
+        ]).copyWith(
+          status: SessionStatus.active,
+          endedAt: null,
+          restEndsAt: restEnds,
+        ),
+      );
+      backupJson = jsonEncode(
+        await BackupStore(other, testClock()).exportAll(appVersion: 'test'),
+      );
+      await other.close();
+    });
+    final notifications = FakeRestNotifications();
+    final db = await _openBackup(
+      tester,
+      files: FakeFileExchange()..toPick = backupJson,
+      notifications: notifications,
+    );
+
+    await _tap(tester, find.text('Przywróć z pliku'));
+    await _tap(tester, find.text('Przywróć'));
+
+    expect(find.text('Przywrócono dane z kopii'), findsOneWidget);
+    expect(notifications.cancelCount, greaterThanOrEqualTo(1));
+    expect(notifications.endsAt, restEnds);
+
+    await closeRepTrack(tester, db);
+  });
+
+  testWidgets('kopia bez treningu: powiadomienie przerwy znika', (
+    tester,
+  ) async {
+    final other = memoryDatabase();
+    late String backupJson;
+    await tester.runAsync(() async {
+      backupJson = jsonEncode(
+        await BackupStore(other, testClock()).exportAll(appVersion: 'test'),
+      );
+      await other.close();
+    });
+    final notifications = FakeRestNotifications();
+    final db = await _openBackup(
+      tester,
+      files: FakeFileExchange()..toPick = backupJson,
+      notifications: notifications,
+    );
+    await notifications.startRest(
+      endsAt: DateTime.utc(2026, 10, 19, 18, 3),
+      nextName: 'Wyciskanie',
+    );
+
+    await _tap(tester, find.text('Przywróć z pliku'));
+    await _tap(tester, find.text('Przywróć'));
+
+    expect(notifications.endsAt, isNull);
 
     await closeRepTrack(tester, db);
   });
