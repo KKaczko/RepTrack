@@ -547,7 +547,6 @@
   "assistantNotConfiguredTitle": "Connect the assistant",
   "assistantNotConfiguredBody": "The assistant uses free Ollama on your computer. Set its address in settings.",
   "assistantOpenSettings": "Open settings",
-  "assistantNoData": "You have no finished workouts yet, so there is nothing to analyse.",
   "assistantPromptMonth": "How am I doing this month?",
   "assistantPromptMuscles": "Which muscle groups am I neglecting?",
   "assistantPromptStrength": "How is my strength developing?",
@@ -680,5 +679,11 @@
   "settingsDurationStep": "Time step",
   "settingsDistanceStep": "Distance step",
   "settingsSeconds": "{value} s",
-  "settingsMeters": "{value} m"
+  "settingsMeters": "{value} m",
+  "assistantCtxTemplates": "Workout templates (set plan)",
+  "assistantCtxNoWorkouts": "No finished workouts yet. Answer from the templates and the plan, and say plainly that there is no history when it matters.",
+  "assistantErrorInsecure": "A public address needs https://. Without encryption (http) the app only connects to your home network and Tailscale.",
+  "assistantServerUnencrypted": "Unencrypted — trusted home network only",
+  "assistantDataSent": "What the assistant sends",
+  "assistantDataSentBody": "A summary of your workouts, the plan, templates, notes and how you felt — only to the server address above. Nothing goes to other services."
 }

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import '../domain/assistant.dart';
+import '../domain/context_budget.dart';
 import 'assistant_client.dart';
 
 /// Klient API Ollamy (`/api/version`, `/api/tags`, `/api/chat`) przez
@@ -19,8 +20,8 @@ final class OllamaClient implements AssistantClient {
   /// komputerze model długo czyta kontekst przed pierwszym słowem.
   final Duration idleTimeout;
 
-  /// Kontekst modelu w tokenach: dane treningowe i rozmowa.
-  static const contextTokens = 8192;
+  /// Kontekst modelu w tokenach: dane treningowe, rozmowa i odpowiedź.
+  static const contextTokens = assistantContextTokens;
 
   @override
   Future<String> version(Uri server) async {
@@ -67,6 +68,7 @@ final class OllamaClient implements AssistantClient {
 
     Future<void> start() async {
       try {
+        requireAllowedServer(server);
         request = await client.postUrl(server.resolve('/api/chat'));
         request!.headers.contentType = ContentType.json;
         request!.write(
@@ -140,6 +142,7 @@ final class OllamaClient implements AssistantClient {
   Future<Map<String, Object?>> _getJson(Uri uri) async {
     final client = _client();
     try {
+      requireAllowedServer(uri);
       final request = await client.getUrl(uri);
       final response = await request.close().timeout(connectTimeout * 2);
       if (response.statusCode != HttpStatus.ok) {

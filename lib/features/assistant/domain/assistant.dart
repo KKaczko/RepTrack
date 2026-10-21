@@ -8,7 +8,7 @@ enum ChatRole { system, user, assistant }
 /// Wiadomość rozmowy.
 typedef ChatMessage = ({ChatRole role, String content});
 
-/// Port Ollamy, gdy adres go nie podaje.
+/// Port Ollamy, gdy adres `http` go nie podaje (`https` bez portu: 443).
 const ollamaDefaultPort = 11434;
 
 enum AssistantFailureKind {
@@ -26,6 +26,9 @@ enum AssistantFailureKind {
 
   /// Inny błąd serwera albo nieczytelna odpowiedź.
   server,
+
+  /// Adres publiczny bez szyfrowania (`http`); wymagany `https`.
+  insecure,
 }
 
 final class AssistantException implements Exception {
@@ -56,8 +59,59 @@ Uri? normalizeServerUrl(String input) {
   return Uri(
     scheme: uri.scheme,
     host: uri.host,
-    port: uri.hasPort ? uri.port : ollamaDefaultPort,
+    port: uri.hasPort
+        ? uri.port
+        : uri.scheme == 'https'
+        ? 443
+        : ollamaDefaultPort,
   );
+}
+
+/// Czy [host] jest w sieci domowej, w Tailscale albo na tym samym
+/// urządzeniu. Tylko z takimi adresami aplikacja łączy się bez szyfrowania.
+bool isLocalNetworkHost(String host) {
+  final name = host.toLowerCase();
+  if (name == 'localhost' ||
+      name.endsWith('.localhost') ||
+      name.endsWith('.local') ||
+      name.endsWith('.ts.net')) {
+    return true;
+  }
+  if (name.contains(':')) {
+    // IPv6: pętla zwrotna, adresy lokalne łącza (fe80::/10)
+    // i prywatne (fc00::/7, w tym Tailscale fd7a:115c:a1e0::/48).
+    return name == '::1' ||
+        RegExp('^fe[89ab]').hasMatch(name) ||
+        RegExp('^f[cd]').hasMatch(name);
+  }
+  final parts = name.split('.');
+  final octets = [for (final p in parts) int.tryParse(p)];
+  final isIpv4 =
+      parts.length == 4 && octets.every((o) => o != null && o >= 0 && o <= 255);
+  if (!isIpv4) {
+    // Nazwa jednoczłonowa (np. „komputer”) działa tylko w sieci lokalnej.
+    return parts.length == 1;
+  }
+  final [a, b, ...] = octets.nonNulls.toList();
+  return a == 10 ||
+      a == 127 ||
+      (a == 172 && b >= 16 && b <= 31) ||
+      (a == 192 && b == 168) ||
+      (a == 169 && b == 254) ||
+      (a == 100 && b >= 64 && b <= 127);
+}
+
+/// Czy wolno łączyć się z [server]: `https` zawsze, `http` tylko w sieci
+/// domowej i Tailscale, bo asystent wysyła dane treningowe i notatki.
+bool isAllowedServer(Uri server) =>
+    server.scheme == 'https' ||
+    (server.scheme == 'http' && isLocalNetworkHost(server.host));
+
+/// Rzuca [AssistantFailureKind.insecure] dla niedozwolonego adresu.
+void requireAllowedServer(Uri server) {
+  if (!isAllowedServer(server)) {
+    throw const AssistantException(AssistantFailureKind.insecure);
+  }
 }
 
 /// Model do użycia: zapisany w ustawieniach, jeśli serwer go ma, a inaczej

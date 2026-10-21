@@ -56,4 +56,6 @@ AssistantContextLabels assistantContextLabels(
   planExtra: l10n.assistantCtxPlanExtra,
   planStatus: l10n.planStatus,
   weekday: (weekday) => weekdayName(weekday, locale ?? l10n.localeName),
+  templates: l10n.assistantCtxTemplates,
+  noWorkouts: l10n.assistantCtxNoWorkouts,
 );

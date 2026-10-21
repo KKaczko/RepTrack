@@ -25,6 +25,8 @@ Future<AppDatabase> _launch(
   FakeAssistantClient assistant, {
   bool configured = true,
   bool withPlan = false,
+  bool withHistory = true,
+  String url = 'http://10.0.2.2:11434',
 }) async {
   tester.view.physicalSize = const Size(1080, 2400);
   tester.view.devicePixelRatio = 3;
@@ -36,18 +38,20 @@ Future<AppDatabase> _launch(
     }
     await DriftTemplateRepository(db, testClock()).save(pushTemplate());
     final workouts = DriftWorkoutRepository(db, testClock());
-    await workouts.save(
-      finishedPush('b', DateTime.utc(2026, 10, 12, 16), [
-        (80000, 10),
-        (80000, 9),
-      ]),
-    );
-    await workouts.save(
-      finishedPush('c', DateTime.utc(2026, 10, 19, 16), [
-        (85000, 8),
-        (85000, 7),
-      ]),
-    );
+    if (withHistory) {
+      await workouts.save(
+        finishedPush('b', DateTime.utc(2026, 10, 12, 16), [
+          (80000, 10),
+          (80000, 9),
+        ]),
+      );
+      await workouts.save(
+        finishedPush('c', DateTime.utc(2026, 10, 19, 16), [
+          (85000, 8),
+          (85000, 7),
+        ]),
+      );
+    }
     if (withPlan) {
       await DriftPlanRepository(db, testClock()).saveWeekly(
         save: const [
@@ -70,7 +74,7 @@ Future<AppDatabase> _launch(
       await DriftSettingsRepository(
         db,
         testClock(),
-      ).save(const AppSettings(assistantUrl: 'http://10.0.2.2:11434'));
+      ).save(AppSettings(assistantUrl: url));
     }
   });
   return pumpRepTrack(
@@ -269,6 +273,66 @@ void main() {
     final system = assistant.chats.single.messages.first.content;
     expect(system, contains('## Plan treningów'));
     expect(system, contains('Poniedziałek 2026-10-19: Push A (Zrobiony)'));
+
+    await closeRepTrack(tester, db);
+  });
+
+  testWidgets('bez treningów: rozmowa o szablonach', (tester) async {
+    final assistant = FakeAssistantClient();
+    final db = await _launch(tester, assistant, withHistory: false);
+
+    await _openAssistant(tester);
+    await tester.enterText(find.byType(TextField), 'Czy mój plan jest dobry?');
+    await _tap(tester, find.byTooltip('Wyślij'));
+
+    expect(find.text('Dobra robota!'), findsOneWidget);
+    final system = assistant.chats.single.messages.first.content;
+    expect(system, contains('Brak zakończonych treningów'));
+    expect(system, contains('### Push A'));
+
+    await closeRepTrack(tester, db);
+  });
+
+  testWidgets('każde pytanie dostaje aktualne dane', (tester) async {
+    final assistant = FakeAssistantClient();
+    final db = await _launch(tester, assistant);
+
+    await _openAssistant(tester);
+    await tester.enterText(find.byType(TextField), 'Ile trenuję?');
+    await _tap(tester, find.byTooltip('Wyślij'));
+    await tester.runAsync(
+      () => DriftWorkoutRepository(
+        db,
+        testClock(),
+      ).save(finishedPush('d', DateTime.utc(2026, 10, 19, 17), [(90000, 5)])),
+    );
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextField), 'A teraz?');
+    await _tap(tester, find.byTooltip('Wyślij'));
+
+    final [first, second] = [
+      for (final chat in assistant.chats) chat.messages.first.content,
+    ];
+    expect(first, contains('- Treningi: 2 '));
+    expect(second, contains('- Treningi: 3 '));
+
+    await closeRepTrack(tester, db);
+  });
+
+  testWidgets('publiczny adres http: błąd bez łączenia', (tester) async {
+    final assistant = FakeAssistantClient();
+    final db = await _launch(
+      tester,
+      assistant,
+      url: 'http://ollama.example.com:11434',
+    );
+
+    await _openAssistant(tester);
+    await tester.enterText(find.byType(TextField), 'Ile trenuję?');
+    await _tap(tester, find.byTooltip('Wyślij'));
+
+    expect(find.textContaining('Adres publiczny wymaga https://'), findsOne);
+    expect(assistant.chats, isEmpty);
 
     await closeRepTrack(tester, db);
   });

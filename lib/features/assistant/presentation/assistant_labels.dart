@@ -9,5 +9,6 @@ extension AssistantLabels on AppLocalizations {
     AssistantFailureKind.modelMissing => assistantErrorModelMissing,
     AssistantFailureKind.timeout => assistantErrorTimeout,
     AssistantFailureKind.server => assistantErrorServer(error.detail ?? '—'),
+    AssistantFailureKind.insecure => assistantErrorInsecure,
   };
 }

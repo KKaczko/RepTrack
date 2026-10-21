@@ -1076,8 +1076,6 @@
   "@assistantNotConfiguredBody": {"description": "Opis braku konfiguracji"},
   "assistantOpenSettings": "Otwórz ustawienia",
   "@assistantOpenSettings": {"description": "Przycisk do ustawień"},
-  "assistantNoData": "Nie masz jeszcze zakończonych treningów, więc asystent nie ma czego analizować.",
-  "@assistantNoData": {"description": "Brak danych"},
   "assistantPromptMonth": "Jak mi idzie w ostatnim miesiącu?",
   "@assistantPromptMonth": {"description": "Gotowe pytanie"},
   "assistantPromptMuscles": "Które partie mięśniowe zaniedbuję?",
@@ -1343,5 +1341,17 @@
   "settingsSeconds": "{value} s",
   "@settingsSeconds": {"description": "Sekundy w ustawieniach", "placeholders": {"value": {"type": "int"}}},
   "settingsMeters": "{value} m",
-  "@settingsMeters": {"description": "Metry w ustawieniach", "placeholders": {"value": {"type": "int"}}}
+  "@settingsMeters": {"description": "Metry w ustawieniach", "placeholders": {"value": {"type": "int"}}},
+  "assistantCtxTemplates": "Szablony treningów (plan serii)",
+  "@assistantCtxTemplates": {"description": "Kontekst asystenta: nagłówek szablonów"},
+  "assistantCtxNoWorkouts": "Brak zakończonych treningów. Odpowiadaj na podstawie szablonów i planu, a o brak historii powiedz wprost, gdy ma znaczenie.",
+  "@assistantCtxNoWorkouts": {"description": "Kontekst asystenta: brak historii"},
+  "assistantErrorInsecure": "Adres publiczny wymaga https://. Bez szyfrowania (http) aplikacja łączy się tylko z siecią domową i Tailscale.",
+  "@assistantErrorInsecure": {"description": "Błąd: publiczny adres po http"},
+  "assistantServerUnencrypted": "Bez szyfrowania — tylko w zaufanej sieci domowej",
+  "@assistantServerUnencrypted": {"description": "Ostrzeżenie przy adresie http"},
+  "assistantDataSent": "Co wysyła asystent",
+  "@assistantDataSent": {"description": "Ustawienia: tytuł informacji o danych"},
+  "assistantDataSentBody": "Podsumowanie treningów, plan, szablony, notatki i samopoczucie — tylko na podany adres serwera. Nic nie trafia do innych usług.",
+  "@assistantDataSentBody": {"description": "Ustawienia: opis wysyłanych danych"}
 }

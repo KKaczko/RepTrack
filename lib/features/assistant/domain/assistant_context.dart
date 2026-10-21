@@ -68,7 +68,15 @@ final class AssistantContextLabels {
     required this.planExtra,
     required this.planStatus,
     required this.weekday,
+    required this.templates,
+    required this.noWorkouts,
   });
+
+  /// Nagłówek sekcji szablonów.
+  final String templates;
+
+  /// Informacja, że nie ma jeszcze zakończonych treningów.
+  final String noWorkouts;
 
   /// Teksty tabel treningów (eksport Markdown).
   final ExportLabels export;
@@ -132,10 +140,45 @@ typedef AssistantFormat = ({
 const assistantMaxExercises = 8;
 const assistantRecentWorkouts = 3;
 const assistantPerformancesPerExercise = 3;
+const assistantMaxTemplates = 8;
+
+/// Ile danych trafia do przeglądu; [noteChars] null = notatki w całości.
+typedef AssistantLimits = ({
+  int exercises,
+  int recentWorkouts,
+  int? noteChars,
+  int templates,
+});
+
+/// Kolejne, coraz krótsze warianty przeglądu: najpierw skrócone notatki,
+/// potem jeden ostatni trening zamiast trzech, na końcu połowa ćwiczeń
+/// i szablonów.
+const assistantLimitLevels = <AssistantLimits>[
+  (
+    exercises: assistantMaxExercises,
+    recentWorkouts: assistantRecentWorkouts,
+    noteChars: null,
+    templates: assistantMaxTemplates,
+  ),
+  (
+    exercises: assistantMaxExercises,
+    recentWorkouts: assistantRecentWorkouts,
+    noteChars: 200,
+    templates: assistantMaxTemplates,
+  ),
+  (
+    exercises: assistantMaxExercises,
+    recentWorkouts: 1,
+    noteChars: 200,
+    templates: assistantMaxTemplates,
+  ),
+  (exercises: 4, recentWorkouts: 1, noteChars: 200, templates: 4),
+];
 
 /// Ogólny przegląd do rozmowy: podsumowanie 4 tygodni z porównaniem, serie
-/// na partię, postęp ćwiczeń z 3 miesięcy, plan treningów (gdy jest)
-/// i ostatnie treningi. [history] od najnowszego, jak w historii.
+/// na partię, postęp ćwiczeń z 3 miesięcy, aktywne szablony, plan treningów
+/// (gdy jest) i ostatnie treningi. [history] od najnowszego, jak
+/// w historii. Bez zakończonych treningów zostają szablony i plan.
 String coachContext({
   required List<WorkoutSession> history,
   required Map<String, Exercise> catalog,
@@ -143,12 +186,79 @@ String coachContext({
   required AssistantFormat format,
   PlanState plan = emptyPlan,
   Map<String, String> templateNames = const {},
+  List<Template> templates = const [],
+  AssistantLimits limits = (
+    exercises: assistantMaxExercises,
+    recentWorkouts: assistantRecentWorkouts,
+    noteChars: null,
+    templates: assistantMaxTemplates,
+  ),
 }) {
   final (:labels, :unit, :locale) = format;
   final buffer = StringBuffer()
     ..writeln('# ${labels.title(today.toIso())}')
     ..writeln()
     ..writeln(labels.intro(weightUnitLabel(unit)));
+  if (history.isEmpty) {
+    buffer
+      ..writeln()
+      ..writeln(labels.noWorkouts);
+  } else {
+    _historyOverview(buffer, history, catalog, today, format, limits);
+  }
+  _templatesSection(buffer, templates, catalog, format, limits.templates);
+
+  if (plan.weekly.isNotEmpty || plan.days.isNotEmpty) {
+    buffer.write(
+      planContext(
+        plan: plan,
+        history: history,
+        templateNames: {
+          for (final t in templates) t.id: t.name,
+          ...templateNames,
+        },
+        today: today,
+        labels: labels,
+      ),
+    );
+  }
+
+  // Ostatnie treningi w tabelach.
+  final recent = [
+    for (final session in history.take(limits.recentWorkouts))
+      if (limits.noteChars case final max?)
+        _shortNotes(session, max)
+      else
+        session,
+  ].reversed;
+  final rows = exportRows(recent.toList(), const ExportFilter());
+  if (rows.isNotEmpty) {
+    buffer
+      ..writeln()
+      ..write(
+        _demote(
+          exportMarkdown(
+            rows,
+            labels: labels.export,
+            unit: unit,
+            exerciseNames: _names(catalog),
+          ),
+        ),
+      );
+  }
+  return buffer.toString();
+}
+
+/// Podsumowanie 4 tygodni, serie na partię i postęp ćwiczeń.
+void _historyOverview(
+  StringBuffer buffer,
+  List<WorkoutSession> history,
+  Map<String, Exercise> catalog,
+  LocalDate today,
+  AssistantFormat format,
+  AssistantLimits limits,
+) {
+  final (:labels, :unit, :locale) = format;
 
   // Podsumowanie 4 tygodni.
   final range = periodRange(ProgressPeriod.weeks4, today);
@@ -222,7 +332,7 @@ String coachContext({
       ..writeln()
       ..writeln('## ${labels.exercises}')
       ..writeln();
-    for (final id in ids.take(assistantMaxExercises)) {
+    for (final id in ids.take(limits.exercises)) {
       final performances = [
         for (final p in exercisePerformances(history, id))
           if (_worked(p.exercise)) p,
@@ -248,37 +358,59 @@ String coachContext({
       buffer.writeln('- $name: ${parts.join('; ')}');
     }
   }
+}
 
-  if (plan.weekly.isNotEmpty || plan.days.isNotEmpty) {
-    buffer.write(
-      planContext(
-        plan: plan,
-        history: history,
-        templateNames: templateNames,
-        today: today,
-        labels: labels,
-      ),
-    );
-  }
-
-  // Ostatnie treningi w tabelach.
-  final recent = history.take(assistantRecentWorkouts).toList().reversed;
-  final rows = exportRows(recent.toList(), const ExportFilter());
-  if (rows.isNotEmpty) {
+/// Aktywne szablony z planem serii, np. „3 × Robocza: 8–12 powt., 80 kg”.
+void _templatesSection(
+  StringBuffer buffer,
+  List<Template> templates,
+  Map<String, Exercise> catalog,
+  AssistantFormat format,
+  int limit,
+) {
+  final active = [
+    for (final t in templates)
+      if (!t.isArchived) t,
+  ];
+  if (active.isEmpty) return;
+  buffer
+    ..writeln()
+    ..writeln('## ${format.labels.templates}');
+  for (final template in active.take(limit)) {
     buffer
       ..writeln()
-      ..write(
-        _demote(
-          exportMarkdown(
-            rows,
-            labels: labels.export,
-            unit: unit,
-            exerciseNames: _names(catalog),
-          ),
-        ),
+      ..writeln('### ${template.name}');
+    final exercises = [...template.exercises]
+      ..sort((a, b) => a.position.compareTo(b.position));
+    for (final planned in exercises) {
+      final name = catalog[planned.exerciseId]?.name ?? planned.exerciseId;
+      final groups = <({String text, int count})>[];
+      for (final set in resolveEffectiveSets(planned)) {
+        final text = _planSet(format, set);
+        if (groups.lastOrNull case final last? when last.text == text) {
+          groups.last = (text: text, count: last.count + 1);
+        } else {
+          groups.add((text: text, count: 1));
+        }
+      }
+      buffer.writeln(
+        '- $name: ${[for (final g in groups) '${g.count} × ${g.text}'].join('; ')}',
       );
+    }
   }
-  return buffer.toString();
+}
+
+/// Trening z notatkami skróconymi do [max] znaków.
+WorkoutSession _shortNotes(WorkoutSession session, int max) {
+  String? clip(String? text) => text == null || text.length <= max
+      ? text
+      : '${text.substring(0, max).trimRight()}…';
+  return session.copyWith(
+    notes: clip(session.notes),
+    exercises: [
+      for (final e in session.exercises) e.copyWith(note: clip(e.note)),
+    ],
+  );
 }
 
 /// Sekcja planu: realizacja i seria, bieżący tydzień ze stanami, najbliższe

@@ -25,6 +25,7 @@ import '../../workout/domain/workout_session.dart';
 import '../data/assistant_providers.dart';
 import '../domain/assistant.dart';
 import '../domain/assistant_context.dart';
+import '../domain/context_budget.dart';
 import 'assistant_context_labels.dart';
 import 'assistant_labels.dart';
 import 'assistant_markdown.dart';
@@ -69,8 +70,9 @@ class _AssistantScreenState extends ConsumerState<AssistantScreen> {
   /// Numer bieżącej odpowiedzi; spóźnione wyniki starszej są pomijane.
   int _generation = 0;
 
-  /// Dane w instrukcji systemowej: przegląd albo kontekst zadania z trasy.
-  String? _context;
+  /// Dane omawianego treningu (komentarz z trasy). Bez niego instrukcja
+  /// systemowa ma przegląd liczony od nowa przy każdym pytaniu.
+  String? _taskContext;
   bool _taskStarted = false;
 
   @override
@@ -104,12 +106,6 @@ class _AssistantScreenState extends ConsumerState<AssistantScreen> {
           label: Text(l10n.assistantOpenSettings),
           onPressed: () => context.push(AppRoutes.settings),
         ),
-      );
-    } else if (history.isEmpty && widget.templateId == null) {
-      body = EmptyState(
-        icon: Icons.smart_toy_outlined,
-        title: l10n.assistantTitle,
-        message: l10n.assistantNoData,
       );
     } else {
       _scheduleTask(history, catalog, templates, settings.weightUnit);
@@ -284,7 +280,7 @@ class _AssistantScreenState extends ConsumerState<AssistantScreen> {
     final session = history.firstWhereOrNull((s) => s.id == sessionId);
     if (session == null) return;
     final format = _format();
-    _context = sessionReviewContext(
+    _taskContext = sessionReviewContext(
       session: session,
       history: history,
       catalog: ref.read(exercisesByIdProvider).value ?? const {},
@@ -377,21 +373,28 @@ class _AssistantScreenState extends ConsumerState<AssistantScreen> {
     );
   }
 
-  /// Przegląd danych do instrukcji systemowej, liczony przy pierwszym
-  /// pytaniu.
-  String _overview() {
+  /// Przegląd aktualnych danych do instrukcji systemowej, od
+  /// najpełniejszego do najkrótszego wariantu (budżet kontekstu). Liczony
+  /// przy każdym pytaniu, więc nowy trening albo zmiana planu w trakcie
+  /// rozmowy od razu trafiają do modelu.
+  Iterable<String> _overviews() sync* {
     final now = ref.read(clockProvider).nowUtc().toLocal();
-    return coachContext(
-      history: ref.read(completedSessionsProvider).value ?? const [],
-      catalog: ref.read(exercisesByIdProvider).value ?? const {},
-      today: LocalDate(now.year, now.month, now.day),
-      format: _format(),
-      plan: ref.read(planProvider).value ?? emptyPlan,
-      templateNames: {
-        for (final t in ref.read(templatesProvider).value ?? const <Template>[])
-          t.id: t.name,
-      },
-    );
+    final history = ref.read(completedSessionsProvider).value ?? const [];
+    final catalog = ref.read(exercisesByIdProvider).value ?? const {};
+    final plan = ref.read(planProvider).value ?? emptyPlan;
+    final templates = ref.read(templatesProvider).value ?? const <Template>[];
+    final format = _format();
+    for (final limits in assistantLimitLevels) {
+      yield coachContext(
+        history: history,
+        catalog: catalog,
+        today: LocalDate(now.year, now.month, now.day),
+        format: format,
+        plan: plan,
+        templates: templates,
+        limits: limits,
+      );
+    }
   }
 
   void _ask() {
@@ -456,24 +459,29 @@ class _AssistantScreenState extends ConsumerState<AssistantScreen> {
     }
     final server = Uri.parse(url);
     final client = ref.read(assistantClientProvider);
-    _context ??= _overview();
     final previous = _turns
         .sublist(0, _turns.length - 1)
         .where((t) => t.fromUser || (t.error == null && t.shown.isNotEmpty))
         .toList();
-    final messages = <ChatMessage>[
-      (role: ChatRole.system, content: '${l10n.assistantSystem}\n\n$_context'),
-      for (final turn in previous.skip(
-        previous.length > _historyTurns ? previous.length - _historyTurns : 0,
-      ))
-        turn.fromUser
-            ? (role: ChatRole.user, content: turn.sent)
-            : (role: ChatRole.assistant, content: stripThinking(turn.shown)),
-    ];
+    final task = _taskContext;
+    final messages = fitAssistantMessages(
+      systemVariants: (task != null ? [task] : _overviews()).map(
+        (data) => '${l10n.assistantSystem}\n\n$data',
+      ),
+      turns: [
+        for (final turn in previous.skip(
+          previous.length > _historyTurns ? previous.length - _historyTurns : 0,
+        ))
+          turn.fromUser
+              ? (role: ChatRole.user, content: turn.sent)
+              : (role: ChatRole.assistant, content: stripThinking(turn.shown)),
+      ],
+    );
 
     final generation = ++_generation;
     setState(() => _busy = true);
     try {
+      requireAllowedServer(server);
       final model =
           settings!.assistantModel ??
           pickModel(await client.models(server), null);

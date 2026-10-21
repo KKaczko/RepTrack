@@ -25,7 +25,13 @@ class AssistantSettingsSection extends ConsumerWidget {
         ListTile(
           leading: const Icon(Icons.dns_outlined),
           title: Text(l10n.assistantServer),
-          subtitle: Text(server ?? l10n.assistantServerNone),
+          subtitle: Text(
+            server == null
+                ? l10n.assistantServerNone
+                : Uri.parse(server).scheme == 'http'
+                ? '$server\n${l10n.assistantServerUnencrypted}'
+                : server,
+          ),
           onTap: () => _editServer(context, ref),
         ),
         ListTile(
@@ -40,6 +46,11 @@ class AssistantSettingsSection extends ConsumerWidget {
           title: Text(l10n.assistantTest),
           enabled: server != null,
           onTap: () => _test(context, ref),
+        ),
+        ListTile(
+          leading: const Icon(Icons.privacy_tip_outlined),
+          title: Text(l10n.assistantDataSent),
+          subtitle: Text(l10n.assistantDataSentBody),
         ),
         ListTile(
           leading: const Icon(Icons.help_outline_rounded),
@@ -68,6 +79,7 @@ class AssistantSettingsSection extends ConsumerWidget {
     final server = Uri.parse(settings.assistantUrl!);
     final List<String> models;
     try {
+      requireAllowedServer(server);
       models = await ref.read(assistantClientProvider).models(server);
     } on AssistantException catch (error) {
       messenger.showSnackBar(
@@ -116,6 +128,7 @@ class AssistantSettingsSection extends ConsumerWidget {
     final server = Uri.parse(settings.assistantUrl!);
     String message;
     try {
+      requireAllowedServer(server);
       final version = await client.version(server);
       final models = await client.models(server);
       message = models.isEmpty
@@ -177,7 +190,7 @@ class _ServerDialog extends StatefulWidget {
 
 class _ServerDialogState extends State<_ServerDialog> {
   late final _controller = TextEditingController(text: widget.initial);
-  bool _invalid = false;
+  String? _error;
 
   @override
   void dispose() {
@@ -186,9 +199,14 @@ class _ServerDialogState extends State<_ServerDialog> {
   }
 
   void _submit() {
+    final l10n = AppLocalizations.of(context);
     final url = normalizeServerUrl(_controller.text);
     if (url == null) {
-      setState(() => _invalid = true);
+      setState(() => _error = l10n.assistantServerInvalid);
+      return;
+    }
+    if (!isAllowedServer(url)) {
+      setState(() => _error = l10n.assistantErrorInsecure);
       return;
     }
     Navigator.of(context).pop<_ServerResult>((url: url));
@@ -208,7 +226,8 @@ class _ServerDialogState extends State<_ServerDialog> {
         onSubmitted: (_) => _submit(),
         decoration: InputDecoration(
           hintText: l10n.assistantServerHint,
-          errorText: _invalid ? l10n.assistantServerInvalid : null,
+          errorText: _error,
+          errorMaxLines: 3,
         ),
       ),
       actions: [

@@ -59,12 +59,34 @@ void main() {
     await _tap(tester, find.text('Zapisz'));
     expect(find.text('To nie jest poprawny adres.'), findsOneWidget);
 
+    await tester.enterText(find.byType(TextField), 'http://example.com');
+    await _tap(tester, find.text('Zapisz'));
+    expect(find.textContaining('Adres publiczny wymaga https://'), findsOne);
+
     await tester.enterText(find.byType(TextField), '192.168.1.10');
     await _tap(tester, find.text('Zapisz'));
-    expect(find.text('http://192.168.1.10:11434'), findsOneWidget);
+    expect(
+      find.text(
+        'http://192.168.1.10:11434\n'
+        'Bez szyfrowania — tylko w zaufanej sieci domowej',
+      ),
+      findsOneWidget,
+    );
     expect(
       (await _settings(tester, db)).assistantUrl,
       'http://192.168.1.10:11434',
+    );
+
+    await _tap(tester, find.text('Serwer Ollama'));
+    await tester.enterText(
+      find.byType(TextField),
+      'https://ollama.example.com',
+    );
+    await _tap(tester, find.text('Zapisz'));
+    expect(find.text('https://ollama.example.com'), findsOneWidget);
+    expect(
+      (await _settings(tester, db)).assistantUrl,
+      'https://ollama.example.com',
     );
 
     await _tap(tester, find.text('Serwer Ollama'));

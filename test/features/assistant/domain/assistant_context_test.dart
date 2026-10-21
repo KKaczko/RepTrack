@@ -209,4 +209,56 @@ void main() {
       isNot(contains('## Plan treningów')),
     );
   });
+
+  test('bez treningów: szablony z planem serii i informacja o braku', () {
+    final text = coachContext(
+      history: const [],
+      catalog: catalog,
+      today: const LocalDate(2026, 10, 19),
+      format: _format('pl'),
+      templates: [
+        pushTemplate(),
+        pushTemplate().copyWith(
+          id: 'old',
+          name: 'Stary',
+          archivedAt: DateTime.utc(2026),
+        ),
+      ],
+    );
+
+    expect(text, contains('Brak zakończonych treningów'));
+    expect(text, contains('## Szablony treningów (plan serii)'));
+    expect(text, contains('### Push A'));
+    expect(text, contains('- Wyciskanie: '));
+    expect(text, isNot(contains('Stary')));
+    expect(text, isNot(contains('Serie robocze na partię')));
+  });
+
+  test('limity: notatki skrócone i jeden ostatni trening', () {
+    final note = 'n' * 500;
+    final history = [
+      finishedPush('c', DateTime.utc(2026, 10, 19, 16), [
+        (85000, 8),
+      ]).copyWith(notes: note),
+      finishedPush('b', DateTime.utc(2026, 10, 12, 16), [(80000, 10)]),
+    ];
+    String context(AssistantLimits limits) => coachContext(
+      history: history,
+      catalog: catalog,
+      today: const LocalDate(2026, 10, 19),
+      format: _format('pl'),
+      limits: limits,
+    );
+
+    final full = context(assistantLimitLevels.first);
+    final short = context(assistantLimitLevels[2]);
+
+    expect(full, contains(note));
+    expect(short, isNot(contains(note)));
+    expect(short, contains('${'n' * 200}…'));
+    expect(short.length, lessThan(full.length));
+    expect(full, contains('2026-10-12'));
+    // Jeden ostatni trening w tabelach: bez nagłówka z datą starszego.
+    expect(RegExp('### .*2026-10-12').hasMatch(short), isFalse);
+  });
 }
