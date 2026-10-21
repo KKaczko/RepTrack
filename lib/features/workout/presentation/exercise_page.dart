@@ -53,6 +53,7 @@ class ExercisePage extends ConsumerWidget {
     required this.onSetOptions,
     required this.onAddSet,
     required this.onPage,
+    required this.onSubstitute,
     super.key,
   });
 
@@ -66,6 +67,9 @@ class ExercisePage extends ConsumerWidget {
   final ValueChanged<SessionSet> onSetOptions;
   final VoidCallback onAddSet;
   final ValueChanged<int> onPage;
+
+  /// Zamiennik ćwiczenia, np. gdy sprzęt jest zajęty (ADR 0016).
+  final VoidCallback onSubstitute;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -123,6 +127,19 @@ class ExercisePage extends ConsumerWidget {
                         Text(l10n.workoutNoPrevious, style: secondary),
                       if (exercise.note case final note?)
                         Text(note, style: secondary),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: TextButton.icon(
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: AppSpacing.xs,
+                            ),
+                          ),
+                          icon: const Icon(Icons.swap_horiz_rounded),
+                          label: Text(l10n.workoutSubstitute),
+                          onPressed: onSubstitute,
+                        ),
+                      ),
                     ],
                   ),
                 ),

@@ -662,5 +662,19 @@
   "assistantCtxPlanRest": "rest",
   "assistantCtxPlanExtra": "not planned",
   "assistantPromptPlan": "How am I doing with my plan?",
-  "assistantCtxPlanSection": "Training plan"
+  "assistantCtxPlanSection": "Training plan",
+  "workoutSubstitute": "Substitute",
+  "substitutesTitle": "Substitutes: {name}",
+  "substitutesHint": "Tap to swap the exercise. ★ pins a substitute for good.",
+  "substitutesLibrary": "Choose from the whole library",
+  "substitutesEmpty": "No similar exercises in the library.",
+  "substitutePin": "Pin substitute: {name}",
+  "substituteUnpin": "Unpin substitute: {name}",
+  "substitutePinned": "pinned",
+  "substituteReasonMuscles": "same muscles",
+  "substituteReasonMovement": "same movement",
+  "substituteReasonEquipment": "other equipment",
+  "substituteReasonDone": "done before",
+  "exerciseSubstitutes": "Substitutes",
+  "exerciseSubstitutesHint": "They show up in a workout under the “Substitute” button. ★ pins a substitute for good."
 }

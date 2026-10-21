@@ -89,6 +89,10 @@ void main() {
 
     await _tap(tester, find.text('Dziś wg planu: Push A'));
     expect(tester.takeException(), isNull);
+    await _tap(tester, find.text('Zamiennik'));
+    expect(tester.takeException(), isNull);
+    await tester.tapAt(const Offset(180, 20));
+    await tester.pumpAndSettle();
     await _tap(tester, find.byTooltip('Zwiększ: Ciężar'));
     await _tap(tester, find.byKey(const ValueKey('workout-value-reps')));
     expect(tester.takeException(), isNull);
@@ -180,6 +184,10 @@ void main() {
       await _meetsGuidelines(tester);
       await _tap(tester, find.text('Dziś wg planu: Push A'));
       await _meetsGuidelines(tester);
+      await _tap(tester, find.text('Zamiennik'));
+      await _meetsGuidelines(tester);
+      await tester.tapAt(const Offset(180, 20));
+      await tester.pumpAndSettle();
       await _tap(tester, find.text('Zatwierdź serię 1'));
       await tester.pump(const Duration(milliseconds: 400));
       await _meetsGuidelines(tester);

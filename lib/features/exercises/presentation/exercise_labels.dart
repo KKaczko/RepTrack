@@ -1,5 +1,6 @@
 import '../../../core/l10n/generated/app_localizations.dart';
 import '../domain/exercise.dart';
+import '../domain/substitutes.dart';
 
 /// Zlokalizowane etykiety enumów ćwiczeń.
 extension ExerciseLabels on AppLocalizations {
@@ -84,4 +85,24 @@ extension ExerciseLabels on AppLocalizations {
     exercise.primaryMuscles.map(muscle).join(', '),
     if (exercise.equipment != null) equipment(exercise.equipment!),
   ].where((part) => part.isNotEmpty).join(' · ');
+
+  /// Opis zamiennika: mięśnie i sprzęt, w drugiej linii powody, np.
+  /// „przypięty · ten sam ruch · inny sprzęt” (ADR 0016).
+  String substituteSubtitle(Substitute substitute) {
+    final reasons = [
+      if (substitute.pinned) substitutePinned,
+      for (final reason in SubstituteReason.values)
+        if (substitute.reasons.contains(reason))
+          switch (reason) {
+            SubstituteReason.sameMuscles => substituteReasonMuscles,
+            SubstituteReason.sameMovement => substituteReasonMovement,
+            SubstituteReason.otherEquipment => substituteReasonEquipment,
+            SubstituteReason.doneBefore => substituteReasonDone,
+          },
+    ];
+    return [
+      exerciseSummary(substitute.exercise),
+      if (reasons.isNotEmpty) reasons.join(' · '),
+    ].join('\n');
+  }
 }

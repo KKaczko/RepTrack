@@ -27,6 +27,7 @@ import '../domain/session_editing.dart';
 import '../domain/set_hints.dart';
 import '../domain/workout_session.dart';
 import 'exercise_page.dart';
+import 'substitute_sheet.dart';
 import 'thumb_zone.dart';
 import 'value_sheets.dart';
 import 'workout_controller.dart';
@@ -262,6 +263,7 @@ class _WorkoutScreenState extends ConsumerState<WorkoutScreen> {
       onSetOptions: (set) => _setOptions(exercise, set),
       onAddSet: () => unawaited(_controller.addSet(exercise.id)),
       onPage: _goToIndex,
+      onSubstitute: () => unawaited(_substitute(exercise)),
     );
   }
 
@@ -541,17 +543,49 @@ class _WorkoutScreenState extends ConsumerState<WorkoutScreen> {
     setState(() => _currentId = added);
   }
 
-  Future<void> _replace(SessionExercise current) async {
+  /// Zamiana czyści zatwierdzone serie, więc wymaga potwierdzenia.
+  Future<bool> _confirmReplace(SessionExercise current) async {
+    if (!current.sets.any((s) => s.isCompleted)) return true;
     final l10n = AppLocalizations.of(context);
-    if (current.sets.any((s) => s.isCompleted)) {
-      final ok = await _confirmDialog(
-        title: l10n.workoutReplaceTitle,
-        message: l10n.workoutReplaceMessage(current.exerciseNameSnapshot),
-        action: l10n.workoutReplaceConfirm,
-        destructive: true,
-      );
-      if (!ok) return;
+    return _confirmDialog(
+      title: l10n.workoutReplaceTitle,
+      message: l10n.workoutReplaceMessage(current.exerciseNameSnapshot),
+      action: l10n.workoutReplaceConfirm,
+      destructive: true,
+    );
+  }
+
+  /// Zamiennik z podpowiedzi (ADR 0016): przypięte i podobne ćwiczenia;
+  /// „Wybierz z całej biblioteki” prowadzi do zwykłej zamiany.
+  Future<void> _substitute(SessionExercise current) async {
+    final catalog = await _catalog();
+    final target = catalog.firstWhereOrNull((e) => e.id == current.exerciseId);
+    if (!mounted) return;
+    if (target == null) return _replace(current);
+    final history = ref.read(completedSessionsProvider).value ?? const [];
+    final choice = await showSubstituteSheet(
+      context,
+      target: target,
+      catalog: catalog,
+      used: {
+        for (final session in history)
+          for (final e in session.exercises) e.exerciseId,
+      },
+    );
+    if (!mounted) return;
+    switch (choice) {
+      case null:
+        return;
+      case SubstituteLibrary():
+        await _replace(current);
+      case SubstitutePicked(:final exercise):
+        if (!await _confirmReplace(current)) return;
+        await _controller.replaceExercise(current.id, exercise);
     }
+  }
+
+  Future<void> _replace(SessionExercise current) async {
+    if (!await _confirmReplace(current)) return;
     final ids = await _pickExercises(single: true);
     if (ids.isEmpty) return;
     final catalog = await _catalog();

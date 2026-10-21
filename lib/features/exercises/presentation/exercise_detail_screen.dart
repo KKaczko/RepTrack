@@ -9,9 +9,11 @@ import '../../../core/theme/app_theme.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/widgets/empty_state.dart';
 import '../../../core/widgets/term_info.dart';
+import '../../workout/data/workout_providers.dart';
 import '../data/exercise_providers.dart';
 import '../domain/exercise.dart';
 import '../domain/exercise_repository.dart';
+import '../domain/substitutes.dart';
 import 'exercise_labels.dart';
 import 'exercise_providers.dart';
 import 'exercises_screen.dart';
@@ -350,6 +352,7 @@ class _ExerciseDetails extends StatelessWidget {
                 ),
             ],
           ),
+        _SubstitutesSection(exercise: exercise),
         _Section(
           title: l10n.exerciseSource,
           children: [
@@ -374,6 +377,73 @@ class _ExerciseDetails extends StatelessWidget {
             ],
           ],
         ),
+      ],
+    );
+  }
+}
+
+/// Zamienniki ćwiczenia (ADR 0016): przypięte i do 5 propozycji; ★ przypina
+/// albo odpina, dotknięcie otwiera zamiennik.
+class _SubstitutesSection extends ConsumerWidget {
+  const _SubstitutesSection({required this.exercise});
+
+  final Exercise exercise;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final catalog = ref.watch(exerciseCatalogProvider).value ?? const [];
+    final pins = ref.watch(substitutePinsProvider).value ?? const [];
+    final history = ref.watch(completedSessionsProvider).value ?? const [];
+    final repo = ref.read(substituteRepositoryProvider);
+    final substitutes = suggestSubstitutes(
+      exercise,
+      catalog,
+      pinned: pinnedFor(exercise.id, pins),
+      used: {
+        for (final session in history)
+          for (final e in session.exercises) e.exerciseId,
+      },
+      limit: 5,
+    );
+    return _Section(
+      title: l10n.exerciseSubstitutes,
+      children: [
+        Text(
+          l10n.exerciseSubstitutesHint,
+          style: theme.textTheme.bodySmall?.copyWith(
+            color: theme.colorScheme.onSurfaceVariant,
+          ),
+        ),
+        if (substitutes.isEmpty)
+          Padding(
+            padding: const EdgeInsets.only(top: AppSpacing.s),
+            child: Text(l10n.substitutesEmpty),
+          ),
+        for (final substitute in substitutes)
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            title: Text(substitute.exercise.name),
+            subtitle: Text(l10n.substituteSubtitle(substitute)),
+            isThreeLine: true,
+            trailing: IconButton(
+              tooltip: substitute.pinned
+                  ? l10n.substituteUnpin(substitute.exercise.name)
+                  : l10n.substitutePin(substitute.exercise.name),
+              icon: Icon(
+                substitute.pinned
+                    ? Icons.star_rounded
+                    : Icons.star_outline_rounded,
+                color: substitute.pinned ? theme.colorScheme.primary : null,
+              ),
+              onPressed: () => substitute.pinned
+                  ? repo.unpin(exercise.id, substitute.exercise.id)
+                  : repo.pin(exercise.id, substitute.exercise.id),
+            ),
+            onTap: () =>
+                context.push(AppRoutes.exerciseDetail(substitute.exercise.id)),
+          ),
       ],
     );
   }
