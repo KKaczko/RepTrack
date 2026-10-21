@@ -37,4 +37,23 @@ void main() {
       isEmpty,
     );
   });
+
+  test('gryf i talerze: domyślne dla jednostki, zmiana jednostki czyści', () {
+    const kg = AppSettings();
+    expect(barWeightFor(Equipment.barbell, kg), 20);
+    expect(barWeightFor(Equipment.ezBar, kg), 10);
+    expect(platesFor(kg), contains(1.25));
+    const lb = AppSettings(weightUnit: WeightUnit.lb);
+    expect(barWeightFor(Equipment.barbell, lb), 45);
+    expect(platesFor(lb).first, 45);
+
+    const custom = AppSettings(
+      barWeights: {Equipment.barbell: 15},
+      plates: [20, 10],
+    );
+    expect(barWeightFor(Equipment.barbell, custom), 15);
+    final switched = withWeightUnit(custom, WeightUnit.lb);
+    expect(switched.barWeights, isEmpty);
+    expect(switched.plates, isNull);
+  });
 }

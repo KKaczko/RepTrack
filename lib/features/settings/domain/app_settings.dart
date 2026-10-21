@@ -33,6 +33,14 @@ abstract class AppSettings with _$AppSettings {
     /// krok ogólny [weightStep] (ADR 0020).
     @Default(<Equipment, double>{}) Map<Equipment, double> equipmentWeightSteps,
 
+    /// Waga gryfu dla sztangi i gryfu łamanego w jednostce wyświetlania;
+    /// brak wpisu oznacza wartość domyślną (ADR 0020).
+    @Default(<Equipment, double>{}) Map<Equipment, double> barWeights,
+
+    /// Dostępne talerze w jednostce wyświetlania; null oznacza zestaw
+    /// domyślny dla jednostki.
+    List<double>? plates,
+
     /// Krok stepperów czasu (sekundy) i dystansu (metry) w treningu.
     @Default(5) int durationStepSeconds,
     @Default(100) int distanceStepMeters,
@@ -113,4 +121,43 @@ AppSettings withWeightUnit(AppSettings settings, WeightUnit unit) =>
           ? settings.weightStep
           : defaultWeightStep(unit),
       equipmentWeightSteps: const {},
+      barWeights: const {},
+      plates: null,
     );
+
+/// Sprzęt z kalkulatorem talerzy.
+const equipmentWithPlates = [Equipment.barbell, Equipment.ezBar];
+
+/// Domyślna waga gryfu: sztanga 20 kg / 45 lb, gryf łamany 10 kg / 20 lb.
+double defaultBarWeight(Equipment equipment, WeightUnit unit) =>
+    switch ((equipment, unit)) {
+      (Equipment.ezBar, WeightUnit.kg) => 10,
+      (Equipment.ezBar, WeightUnit.lb) => 20,
+      (_, WeightUnit.kg) => 20,
+      (_, WeightUnit.lb) => 45,
+    };
+
+/// Wagi gryfu do wyboru w danej jednostce.
+List<double> barWeightOptions(WeightUnit unit) => switch (unit) {
+  WeightUnit.kg => const [5, 7.5, 10, 15, 20],
+  WeightUnit.lb => const [15, 20, 25, 35, 45],
+};
+
+/// Talerze do wyboru (nominały) w danej jednostce.
+List<double> plateOptions(WeightUnit unit) => switch (unit) {
+  WeightUnit.kg => const [25, 20, 15, 10, 5, 2.5, 2, 1.25, 1, 0.5],
+  WeightUnit.lb => const [55, 45, 35, 25, 10, 5, 2.5, 1.25],
+};
+
+/// Domyślny zestaw talerzy na siłowni.
+List<double> defaultPlates(WeightUnit unit) => switch (unit) {
+  WeightUnit.kg => const [25, 20, 15, 10, 5, 2.5, 1.25],
+  WeightUnit.lb => const [45, 35, 25, 10, 5, 2.5],
+};
+
+double barWeightFor(Equipment equipment, AppSettings settings) =>
+    settings.barWeights[equipment] ??
+    defaultBarWeight(equipment, settings.weightUnit);
+
+List<double> platesFor(AppSettings settings) =>
+    settings.plates ?? defaultPlates(settings.weightUnit);

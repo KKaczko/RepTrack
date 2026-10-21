@@ -116,6 +116,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             onTap: () => showEquipmentStepsSheet(context),
           ),
           ListTile(
+            title: Text(l10n.platesTitle),
+            subtitle: Text(l10n.platesSettingsSubtitle),
+            trailing: const Icon(Icons.chevron_right_rounded),
+            onTap: () => context.push(AppRoutes.plates),
+          ),
+          ListTile(
             title: Text(l10n.settingsDurationStep),
             trailing: _Value(
               l10n.settingsSeconds(settings.durationStepSeconds),

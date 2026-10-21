@@ -1,6 +1,9 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../app/routes.dart';
 import '../../../core/domain/exercise_groups.dart';
 import '../../../core/domain/glossary.dart';
 import '../../../core/domain/training.dart';
@@ -16,6 +19,7 @@ import '../../exercises/domain/exercise.dart';
 import '../../settings/data/settings_providers.dart';
 import '../../settings/domain/app_settings.dart';
 import '../data/workout_providers.dart';
+import '../domain/plates.dart';
 import '../domain/progression.dart';
 import '../domain/session_editing.dart';
 import '../domain/set_hints.dart';
@@ -187,6 +191,18 @@ class ExercisePage extends ConsumerWidget {
                         ),
                       if (exercise.note case final note?)
                         Text(note, style: secondary),
+                      if (_platesLine(
+                            ref,
+                            l10n,
+                            exercise,
+                            selectedSetId,
+                            sets,
+                            hints,
+                            unit,
+                            locale,
+                          )
+                          case final text?)
+                        _PlatesLine(text: text),
                       Align(
                         alignment: Alignment.centerLeft,
                         child: TextButton.icon(
@@ -544,6 +560,96 @@ class _ProgressionNote extends StatelessWidget {
         ),
         const TermInfoButton([GlossaryTerm.doubleProgression]),
       ],
+    );
+  }
+}
+
+/// Linia kalkulatora talerzy dla sztangi i gryfu łamanego (ADR 0020),
+/// liczona z ciężaru wybranej serii (wpisanego albo z podpowiedzi).
+String? _platesLine(
+  WidgetRef ref,
+  AppLocalizations l10n,
+  SessionExercise exercise,
+  String? selectedSetId,
+  List<SessionSet> sets,
+  ExerciseHints hints,
+  WeightUnit unit,
+  String locale,
+) {
+  final settings = ref.watch(appSettingsProvider).value;
+  final equipment = ref
+      .watch(exercisesByIdProvider)
+      .value?[exercise.exerciseId]
+      ?.equipment;
+  if (settings == null ||
+      equipment == null ||
+      !equipmentWithPlates.contains(equipment) ||
+      !exercise.measurementSnapshot.weight) {
+    return null;
+  }
+  final set =
+      sets.firstWhereOrNull((s) => s.id == selectedSetId) ?? sets.lastOrNull;
+  if (set == null) return null;
+  final grams =
+      setValue(set, SetField.weight) ?? hints.hints[set.id]?.weightG?.value;
+  if (grams == null) return null;
+  String weight(double value) =>
+      '${formatDecimal(value, locale)} ${weightUnitLabel(unit)}';
+  final bar = barWeightFor(equipment, settings);
+  final load = platesPerSide(
+    gramsToDisplay(grams, unit),
+    bar,
+    platesFor(settings),
+  );
+  if (load == null) return l10n.workoutPlatesBelowBar(weight(bar));
+  final main = load.perSide.isEmpty
+      ? l10n.workoutPlatesBarOnly(weight(bar))
+      : l10n.workoutPlates(
+          [for (final p in load.perSide) formatDecimal(p, locale)].join(' + '),
+          weight(bar),
+        );
+  return load.remainder > 0
+      ? '$main · ${l10n.workoutPlatesRemainder(weight(load.remainder))}'
+      : main;
+}
+
+/// Linia talerzy; dotknięcie otwiera „Gryf i talerze”.
+class _PlatesLine extends StatelessWidget {
+  const _PlatesLine({required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
+    return Semantics(
+      button: true,
+      hint: l10n.platesTitle,
+      child: InkWell(
+        onTap: () => context.push(AppRoutes.plates),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: AppSizes.minTouch),
+          child: Row(
+            children: [
+              Icon(
+                Icons.fitness_center_rounded,
+                size: 18,
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+              const SizedBox(width: AppSpacing.xs),
+              Flexible(
+                child: Text(
+                  text,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

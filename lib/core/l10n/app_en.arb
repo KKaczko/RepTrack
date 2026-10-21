@@ -728,5 +728,14 @@
   "settingsEquipmentSteps": "Steps per equipment",
   "settingsEquipmentStepsNone": "General step everywhere",
   "settingsEquipmentStepsHint": "Dumbbells, machines and cables often jump differently than plates. Without its own step, equipment uses the general step ({step}).",
-  "settingsEquipmentStepGeneral": "general"
+  "settingsEquipmentStepGeneral": "general",
+  "workoutPlates": "Per side: {plates} · bar {bar}",
+  "workoutPlatesBarOnly": "Bar only ({bar})",
+  "workoutPlatesBelowBar": "Less than the bar ({bar})",
+  "workoutPlatesRemainder": "{weight} can't be loaded",
+  "platesTitle": "Bar and plates",
+  "platesSettingsSubtitle": "Bar weight and available plates for the calculator in workouts",
+  "platesIntro": "During a workout, barbell exercises show which plates to load on each side. Select the plates your gym has.",
+  "platesBar": "Bar: {equipment}",
+  "platesAvailable": "Available plates"
 }

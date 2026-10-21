@@ -6,6 +6,10 @@ abstract final class SettingKeys {
 
   /// Kroki ciężaru dla sprzętu: obiekt kod sprzętu → krok (ADR 0020).
   static const equipmentWeightSteps = 'equipment_weight_steps';
+
+  /// Waga gryfu (kod sprzętu → waga) i dostępne talerze (ADR 0020).
+  static const barWeights = 'bar_weights';
+  static const plates = 'plates';
   static const durationStepSeconds = 'duration_step_seconds';
   static const distanceStepMeters = 'distance_step_meters';
   static const effortScale = 'effort_scale';

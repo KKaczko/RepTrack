@@ -22,6 +22,9 @@ abstract final class AppRoutes {
   static const licenses = '/settings/licenses';
   static const backup = '/settings/backup';
 
+  /// Gryf i talerze (kalkulator talerzy, ADR 0020).
+  static const plates = '/settings/plates';
+
   /// Asystent AI (ADR 0014).
   static const assistant = '/assistant';
 

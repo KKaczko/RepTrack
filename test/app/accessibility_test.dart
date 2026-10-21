@@ -251,12 +251,22 @@ void main() {
       );
       await _tap(tester, find.text('Push/Pull/Nogi (3× w tygodniu)'));
       await _meetsGuidelines(tester);
+      await _tap(tester, find.byTooltip('Wstecz'));
+      await _tap(tester, find.byTooltip('Wstecz'));
+
+      await _tap(tester, navTab('Start'));
+      await _tap(tester, find.byTooltip('Otwórz ustawienia'));
+      await tester.scrollUntilVisible(find.text('Gryf i talerze'), 200);
+      await _tap(tester, find.text('Gryf i talerze'));
+      await _meetsGuidelines(tester);
 
       await closeRepTrack(tester, db);
     });
   }
 
-  testWidgets('czcionka 2× na 360 dp: gotowe programy', (tester) async {
+  testWidgets('czcionka 2× na 360 dp: gotowe programy, gryf i talerze', (
+    tester,
+  ) async {
     final db = await _launch(tester, textScale: 2);
 
     await _tap(tester, navTab('Szablony'));
@@ -267,6 +277,14 @@ void main() {
     await _tap(tester, find.text('Góra/Dół (4× w tygodniu)'));
     expect(tester.takeException(), isNull);
     await tester.scrollUntilVisible(find.text('Dół B'), 300);
+    expect(tester.takeException(), isNull);
+    await _tap(tester, find.byTooltip('Wstecz'));
+    await _tap(tester, find.byTooltip('Wstecz'));
+
+    await _tap(tester, navTab('Start'));
+    await _tap(tester, find.byTooltip('Otwórz ustawienia'));
+    await tester.scrollUntilVisible(find.text('Gryf i talerze'), 200);
+    await _tap(tester, find.text('Gryf i talerze'));
     expect(tester.takeException(), isNull);
 
     await closeRepTrack(tester, db);

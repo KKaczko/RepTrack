@@ -19,6 +19,7 @@ import '../features/programs/presentation/program_detail_screen.dart';
 import '../features/programs/presentation/programs_screen.dart';
 import '../features/settings/presentation/glossary_screen.dart';
 import '../features/settings/presentation/licenses_screen.dart';
+import '../features/settings/presentation/plates_screen.dart';
 import '../features/settings/presentation/settings_screen.dart';
 import '../features/templates/presentation/template_editor_screen.dart';
 import '../features/templates/presentation/templates_screen.dart';
@@ -137,6 +138,10 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: 'backup',
             builder: (context, state) => const BackupScreen(),
+          ),
+          GoRoute(
+            path: 'plates',
+            builder: (context, state) => const PlatesScreen(),
           ),
         ],
       ),

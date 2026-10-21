@@ -50,6 +50,11 @@ final class DriftSettingsRepository implements SettingsRepository {
       for (final MapEntry(:key, :value) in s.equipmentWeightSteps.entries)
         key.code: value,
     },
+    SettingKeys.barWeights: {
+      for (final MapEntry(:key, :value) in s.barWeights.entries)
+        key.code: value,
+    },
+    SettingKeys.plates: s.plates,
     SettingKeys.durationStepSeconds: s.durationStepSeconds,
     SettingKeys.distanceStepMeters: s.distanceStepMeters,
     SettingKeys.effortScale: s.effortScale?.code ?? 'off',
@@ -101,13 +106,19 @@ final class DriftSettingsRepository implements SettingsRepository {
       equipmentWeightSteps: pick(
         SettingKeys.equipmentWeightSteps,
         defaults.equipmentWeightSteps,
-        (raw) => raw is Map<String, Object?>
-            ? {
-                for (final MapEntry(:key, :value) in raw.entries)
-                  if (tryEnumFromCode(Equipment.values, key)
-                      case final equipment?)
-                    if (value is num && value > 0) equipment: value.toDouble(),
-              }
+        _equipmentMap,
+      ),
+      barWeights: pick(
+        SettingKeys.barWeights,
+        defaults.barWeights,
+        _equipmentMap,
+      ),
+      plates: pick(
+        SettingKeys.plates,
+        defaults.plates,
+        (raw) =>
+            raw is List && raw.isNotEmpty && raw.every((v) => v is num && v > 0)
+            ? [for (final v in raw) (v as num).toDouble()]
             : null,
       ),
       durationStepSeconds: pick(
@@ -164,4 +175,15 @@ final class DriftSettingsRepository implements SettingsRepository {
 
   static String? _nonEmptyText(Object? raw) =>
       raw is String && raw.isNotEmpty ? raw : null;
+
+  /// Obiekt kod sprzętu → liczba dodatnia; nieznany sprzęt i złe wartości
+  /// są pomijane.
+  static Map<Equipment, double>? _equipmentMap(Object? raw) =>
+      raw is Map<String, Object?>
+      ? {
+          for (final MapEntry(:key, :value) in raw.entries)
+            if (tryEnumFromCode(Equipment.values, key) case final equipment?)
+              if (value is num && value > 0) equipment: value.toDouble(),
+        }
+      : null;
 }

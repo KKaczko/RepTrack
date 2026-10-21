@@ -27,6 +27,8 @@ void main() {
       weightUnit: WeightUnit.lb,
       weightStep: 5,
       equipmentWeightSteps: {Equipment.dumbbell: 2, Equipment.kettlebell: 4},
+      barWeights: {Equipment.barbell: 15, Equipment.ezBar: 7.5},
+      plates: [20, 10, 5, 2.5],
       durationStepSeconds: 30,
       distanceStepMeters: 250,
       effortScale: null,
