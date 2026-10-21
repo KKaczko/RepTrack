@@ -11,8 +11,10 @@ import '../../../core/theme/app_theme.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/widgets/superset_badge.dart';
 import '../../../core/widgets/term_info.dart';
+import '../../exercises/data/exercise_providers.dart';
 import '../../exercises/domain/exercise.dart';
 import '../../settings/data/settings_providers.dart';
+import '../../settings/domain/app_settings.dart';
 import '../data/workout_providers.dart';
 import '../domain/progression.dart';
 import '../domain/session_editing.dart';
@@ -40,12 +42,16 @@ ExerciseHints watchExerciseHints(
     previousSetsProvider((exercise.exerciseId, sessionId)),
   );
   final settings = ref.watch(appSettingsProvider).value;
+  final equipment = ref
+      .watch(exercisesByIdProvider)
+      .value?[exercise.exerciseId]
+      ?.equipment;
   final previousSets = history.value ?? const <SessionSet>[];
   final advice = settings != null && settings.autoProgression
       ? progressionFor(
           exercise,
           previousSets,
-          step: settings.weightStep,
+          step: weightStepFor(equipment, settings),
           unit: settings.weightUnit,
         )
       : null;

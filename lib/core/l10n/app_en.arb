@@ -724,5 +724,9 @@
   "programAdded": "Program added: {name}",
   "homeProgramsTitle": "Start with a ready-made program",
   "homeProgramsBody": "Pick a plan for 2–4 days a week. Templates and the calendar are set up for you, and the weight goes up with progression.",
-  "homeProgramsAction": "Choose a program"
+  "homeProgramsAction": "Choose a program",
+  "settingsEquipmentSteps": "Steps per equipment",
+  "settingsEquipmentStepsNone": "General step everywhere",
+  "settingsEquipmentStepsHint": "Dumbbells, machines and cables often jump differently than plates. Without its own step, equipment uses the general step ({step}).",
+  "settingsEquipmentStepGeneral": "general"
 }

@@ -1431,5 +1431,13 @@
   "homeProgramsBody": "Wybierz plan na 2–4 dni w tygodniu. Szablony i kalendarz ustawią się same, a ciężar będzie rósł z progresją.",
   "@homeProgramsBody": {"description": "Start bez szablonów"},
   "homeProgramsAction": "Wybierz program",
-  "@homeProgramsAction": {"description": "Start bez szablonów"}
+  "@homeProgramsAction": {"description": "Start bez szablonów"},
+  "settingsEquipmentSteps": "Kroki dla sprzętu",
+  "@settingsEquipmentSteps": {"description": "Ustawienia: kroki ciężaru dla sprzętu"},
+  "settingsEquipmentStepsNone": "Wszędzie krok ogólny",
+  "@settingsEquipmentStepsNone": {"description": "Ustawienia: brak własnych kroków"},
+  "settingsEquipmentStepsHint": "Hantle, maszyny i wyciągi często mają inne skoki niż talerze. Bez własnego kroku obowiązuje krok ogólny ({step}).",
+  "@settingsEquipmentStepsHint": {"description": "Arkusz kroków dla sprzętu", "placeholders": {"step": {"type": "String"}}},
+  "settingsEquipmentStepGeneral": "jak ogólny",
+  "@settingsEquipmentStepGeneral": {"description": "Krok sprzętu: jak ogólny"}
 }

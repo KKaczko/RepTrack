@@ -13,9 +13,11 @@ import '../../../core/l10n/generated/app_localizations.dart';
 import '../../../core/platform/rest_notifications.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/widgets/term_info.dart';
+import '../../exercises/presentation/exercise_labels.dart';
 import '../data/settings_providers.dart';
 import '../domain/app_settings.dart';
 import 'assistant_settings_section.dart';
+import 'equipment_steps_sheet.dart';
 
 /// Ustawienia (ADR 0010): trening, wygląd i informacje o aplikacji. Każda
 /// zmiana zapisuje się od razu.
@@ -96,6 +98,22 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 await _save(settings.copyWith(weightStep: step));
               }
             },
+          ),
+          ListTile(
+            title: Text(l10n.settingsEquipmentSteps),
+            subtitle: Text(
+              settings.equipmentWeightSteps.isEmpty
+                  ? l10n.settingsEquipmentStepsNone
+                  : [
+                      for (final e in equipmentWithOwnStep)
+                        if (settings.equipmentWeightSteps[e] case final step?)
+                          '${l10n.equipment(e)} '
+                              '${formatDecimal(step, locale)} '
+                              '${weightUnitLabel(unit)}',
+                    ].join(' · '),
+            ),
+            trailing: const Icon(Icons.chevron_right_rounded),
+            onTap: () => showEquipmentStepsSheet(context),
           ),
           ListTile(
             title: Text(l10n.settingsDurationStep),

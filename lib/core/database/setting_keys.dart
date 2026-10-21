@@ -3,6 +3,9 @@ abstract final class SettingKeys {
   static const themeMode = 'theme_mode';
   static const weightUnit = 'weight_unit';
   static const weightStep = 'weight_step';
+
+  /// Kroki ciężaru dla sprzętu: obiekt kod sprzętu → krok (ADR 0020).
+  static const equipmentWeightSteps = 'equipment_weight_steps';
   static const durationStepSeconds = 'duration_step_seconds';
   static const distanceStepMeters = 'distance_step_meters';
   static const effortScale = 'effort_scale';

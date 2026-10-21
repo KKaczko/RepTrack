@@ -6,6 +6,7 @@ import '../../../core/domain/clock.dart';
 import '../../../core/domain/coded_enum.dart';
 import '../../../core/domain/training.dart';
 import '../../../core/domain/units.dart';
+import '../../exercises/domain/exercise.dart';
 import '../domain/app_settings.dart';
 import '../domain/settings_repository.dart';
 
@@ -45,6 +46,10 @@ final class DriftSettingsRepository implements SettingsRepository {
     SettingKeys.themeMode: s.themeMode.code,
     SettingKeys.weightUnit: s.weightUnit.code,
     SettingKeys.weightStep: s.weightStep,
+    SettingKeys.equipmentWeightSteps: {
+      for (final MapEntry(:key, :value) in s.equipmentWeightSteps.entries)
+        key.code: value,
+    },
     SettingKeys.durationStepSeconds: s.durationStepSeconds,
     SettingKeys.distanceStepMeters: s.distanceStepMeters,
     SettingKeys.effortScale: s.effortScale?.code ?? 'off',
@@ -92,6 +97,18 @@ final class DriftSettingsRepository implements SettingsRepository {
         SettingKeys.weightStep,
         defaults.weightStep,
         (raw) => raw is num && raw > 0 ? raw.toDouble() : null,
+      ),
+      equipmentWeightSteps: pick(
+        SettingKeys.equipmentWeightSteps,
+        defaults.equipmentWeightSteps,
+        (raw) => raw is Map<String, Object?>
+            ? {
+                for (final MapEntry(:key, :value) in raw.entries)
+                  if (tryEnumFromCode(Equipment.values, key)
+                      case final equipment?)
+                    if (value is num && value > 0) equipment: value.toDouble(),
+              }
+            : null,
       ),
       durationStepSeconds: pick(
         SettingKeys.durationStepSeconds,

@@ -5,15 +5,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/database/database_providers.dart';
 import '../../../core/domain/training.dart';
 import '../../../core/platform/rest_notifications.dart';
+import '../../exercises/data/exercise_providers.dart';
 import '../../exercises/domain/exercise.dart';
 import '../../settings/data/settings_providers.dart';
+import '../../settings/domain/app_settings.dart';
 import '../../templates/data/template_providers.dart';
 import '../../templates/domain/template.dart';
 import '../data/workout_providers.dart';
 import '../domain/progression.dart';
 import '../domain/rest_timer.dart';
-import '../domain/session_editing.dart';
 import '../domain/session_editing.dart' as editing;
+import '../domain/session_editing.dart';
 import '../domain/set_hints.dart';
 import '../domain/template_sync.dart';
 import '../domain/workout_repository.dart';
@@ -107,6 +109,11 @@ final class WorkoutController {
         );
         final measurement = exercise.measurementSnapshot;
         final settings = await _ref.read(settingsRepositoryProvider).load();
+        final equipment =
+            (await _ref
+                    .read(exerciseRepositoryProvider)
+                    .findById(exercise.exerciseId))
+                ?.equipment;
         final hint = hintsForExercise(
           exercise,
           previous,
@@ -114,7 +121,7 @@ final class WorkoutController {
               ? progressionFor(
                   exercise,
                   previous,
-                  step: settings.weightStep,
+                  step: weightStepFor(equipment, settings),
                   unit: settings.weightUnit,
                 )?.weightG
               : null,

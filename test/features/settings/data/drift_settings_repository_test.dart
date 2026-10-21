@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:reptrack/core/database/app_database.dart';
 import 'package:reptrack/core/domain/units.dart';
+import 'package:reptrack/features/exercises/domain/exercise.dart';
 import 'package:reptrack/features/settings/data/drift_settings_repository.dart';
 import 'package:reptrack/features/settings/domain/app_settings.dart';
 
@@ -25,6 +26,7 @@ void main() {
       themeMode: AppThemeMode.light,
       weightUnit: WeightUnit.lb,
       weightStep: 5,
+      equipmentWeightSteps: {Equipment.dumbbell: 2, Equipment.kettlebell: 4},
       durationStepSeconds: 30,
       distanceStepMeters: 250,
       effortScale: null,
@@ -72,5 +74,18 @@ void main() {
     final loaded = await repo.load();
 
     expect((loaded.durationStepSeconds, loaded.distanceStepMeters), (5, 100));
+  });
+
+  test('kroki dla sprzętu: nieznany sprzęt i zły krok są pomijane', () async {
+    await repo.save(const AppSettings());
+    await db.customStatement(
+      'UPDATE settings SET value = '
+      """'{"dumbbell": 2, "rocket": 3, "machine": -5}' """
+      "WHERE key = 'equipment_weight_steps'",
+    );
+
+    final loaded = await repo.load();
+
+    expect(loaded.equipmentWeightSteps, {Equipment.dumbbell: 2.0});
   });
 }

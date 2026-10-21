@@ -442,11 +442,15 @@ class _WorkoutScreenState extends ConsumerState<WorkoutScreen> {
   ) {
     final current = setValue(set, field) ?? hintValue(hint, field)?.value ?? 0;
     final unit = settings.weightUnit;
+    final equipment = ref
+        .read(exercisesByIdProvider)
+        .value?[exercise.exerciseId]
+        ?.equipment;
     final next = switch (field) {
       SetField.weight => displayToGrams(
         stepValue(
           gramsToDisplay(current, unit),
-          settings.weightStep,
+          weightStepFor(equipment, settings),
           direction,
         ),
         unit,
