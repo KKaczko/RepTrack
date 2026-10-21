@@ -189,14 +189,24 @@ void main() {
     );
   });
 
-  test('kopia w wersji 1 dostaje pusty plan treningów (1 → 2)', () {
+  test('kopia w wersji 1: pusty plan i zamienniki (1 → 2 → 3)', () {
     final migrated = readBackup(jsonEncode(_backup()));
 
-    expect(migrated['formatVersion'], 2);
+    expect(migrated['formatVersion'], 3);
     expect(migrated['weeklyPlans'], isEmpty);
     expect(migrated['weeklyPlanDays'], isEmpty);
     expect(migrated['plannedDays'], isEmpty);
+    expect(migrated['exerciseSubstitutes'], isEmpty);
     expect(migrated['templates'], hasLength(1));
+  });
+
+  test('kopia w wersji 2 dostaje pustą tablicę zamienników (2 → 3)', () {
+    final v2 = migrateBackupV1ToV2(_backup())..['formatVersion'] = 2;
+
+    final migrated = readBackup(jsonEncode(v2));
+
+    expect(migrated['formatVersion'], 3);
+    expect(migrated['exerciseSubstitutes'], isEmpty);
   });
 
   test('typy, kody, daty i zakresy pól', () {
@@ -271,15 +281,18 @@ void main() {
 
     final migrated = readBackup(
       jsonEncode(old),
-      migrations: {1: (b) => migrateBackupV1ToV2(rename(b))},
-      currentVersion: 2,
+      migrations: {
+        1: (b) => migrateBackupV1ToV2(rename(b)),
+        2: migrateBackupV2ToV3,
+      },
+      currentVersion: 3,
     );
 
-    expect(migrated['formatVersion'], 2);
+    expect(migrated['formatVersion'], 3);
     expect(migrated['workoutSessions'], hasLength(1));
     expect(
       () =>
-          readBackup(jsonEncode(old), migrations: const {}, currentVersion: 2),
+          readBackup(jsonEncode(old), migrations: const {}, currentVersion: 3),
       throwsA(isA<BackupInvalidException>()),
     );
   });

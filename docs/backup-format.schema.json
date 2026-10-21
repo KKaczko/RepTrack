@@ -17,6 +17,7 @@
     "weeklyPlans",
     "weeklyPlanDays",
     "plannedDays",
+    "exerciseSubstitutes",
     "settings"
   ],
   "properties": {
@@ -24,7 +25,7 @@
       "const": "reptrack-backup"
     },
     "formatVersion": {
-      "const": 2
+      "const": 3
     },
     "appVersion": {
       "type": "string"
@@ -1209,6 +1210,57 @@
                 "type": "null"
               }
             ]
+          }
+        }
+      }
+    },
+    "exerciseSubstitutes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "createdAt",
+          "updatedAt",
+          "exerciseId",
+          "substituteId",
+          "position"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "deletedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "exerciseId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "substituteId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "position": {
+            "type": "integer",
+            "minimum": 0
           }
         }
       }

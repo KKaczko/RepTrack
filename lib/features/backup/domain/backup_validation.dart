@@ -36,7 +36,17 @@ typedef BackupMigration = Map<String, Object?> Function(
 );
 
 /// Migracje formatu: klucz to wersja źródłowa.
-const Map<int, BackupMigration> backupMigrations = {1: migrateBackupV1ToV2};
+const Map<int, BackupMigration> backupMigrations = {
+  1: migrateBackupV1ToV2,
+  2: migrateBackupV2ToV3,
+};
+
+/// Wersja 3 dodaje przypięte zamienniki ćwiczeń (ADR 0016); kopia z wersji 2
+/// dostaje pustą tablicę.
+Map<String, Object?> migrateBackupV2ToV3(Map<String, Object?> backup) => {
+  ...backup,
+  'exerciseSubstitutes': backup['exerciseSubstitutes'] ?? const <Object?>[],
+};
 
 /// Wersja 2 dodaje plan treningów (ADR 0015); kopia z wersji 1 dostaje
 /// puste tablice planu.

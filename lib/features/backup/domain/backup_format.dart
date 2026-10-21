@@ -15,7 +15,7 @@ import '../../workout/domain/workout_session.dart';
 const backupFormatId = 'reptrack-backup';
 
 /// Bieżąca wersja formatu.
-const backupFormatVersion = 2;
+const backupFormatVersion = 3;
 
 /// Rodzaj wartości pola w pliku.
 enum BackupFieldType {
@@ -534,6 +534,23 @@ final List<BackupTable> backupTables = [
     ),
     const BackupField('position', 'position', BackupFieldType.integer, min: 0),
     const BackupField('note', 'note', BackupFieldType.text, nullable: true),
+  ]),
+  // Wersja 3: przypięte zamienniki ćwiczeń (ADR 0016).
+  const BackupTable('exerciseSubstitutes', 'exercise_substitutes', [
+    ..._sync,
+    BackupField(
+      'exerciseId',
+      'exercise_id',
+      BackupFieldType.id,
+      references: 'exercises',
+    ),
+    BackupField(
+      'substituteId',
+      'substitute_id',
+      BackupFieldType.id,
+      references: 'exercises',
+    ),
+    BackupField('position', 'position', BackupFieldType.integer, min: 0),
   ]),
 ];
 

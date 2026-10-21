@@ -30,6 +30,7 @@ part 'app_database.g.dart';
     WeeklyPlans,
     WeeklyPlanDays,
     PlannedDays,
+    ExerciseSubstitutes,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -66,7 +67,7 @@ class AppDatabase extends _$AppDatabase {
   }
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -80,6 +81,12 @@ class AppDatabase extends _$AppDatabase {
         await m.createTable(schema.plannedDays);
         await m.createIndex(schema.idxWeeklyPlanDaysPlan);
         await m.createIndex(schema.idxPlannedDaysDate);
+      },
+      // v3: przypięte zamienniki ćwiczeń (ADR 0016).
+      from2To3: (m, schema) async {
+        await m.createTable(schema.exerciseSubstitutes);
+        await m.createIndex(schema.idxExerciseSubstitutesExercise);
+        await m.createIndex(schema.idxExerciseSubstitutesSubstitute);
       },
     ),
     beforeOpen: (details) async {

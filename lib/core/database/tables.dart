@@ -216,6 +216,19 @@ class SessionSets extends Table with SyncColumns {
       integer().map(const UtcMillisConverter()).nullable()();
 }
 
+/// Przypięte zamienniki ćwiczeń (ADR 0016): para działa w obie strony.
+@DataClassName('ExerciseSubstituteRow')
+@TableIndex(name: 'idx_exercise_substitutes_exercise', columns: {#exerciseId})
+@TableIndex(
+  name: 'idx_exercise_substitutes_substitute',
+  columns: {#substituteId},
+)
+class ExerciseSubstitutes extends Table with SyncColumns {
+  TextColumn get exerciseId => text().references(Exercises, #id)();
+  TextColumn get substituteId => text().references(Exercises, #id)();
+  IntColumn get position => integer()();
+}
+
 /// Wersje planu tygodniowego (ADR 0015).
 @DataClassName('WeeklyPlanRow')
 class WeeklyPlans extends Table with SyncColumns {

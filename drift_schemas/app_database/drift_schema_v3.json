@@ -1,0 +1,2866 @@
+{
+  "_meta": {
+    "description": "This file contains a serialized version of schema entities for drift.",
+    "version": "1.3.0"
+  },
+  "options": {
+    "store_date_time_values_as_text": false
+  },
+  "entities": [
+    {
+      "id": 0,
+      "references": [],
+      "type": "table",
+      "data": {
+        "name": "exercises",
+        "was_declared_in_moor": false,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "created_at",
+            "getter_name": "createdAt",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "updated_at",
+            "getter_name": "updatedAt",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "deleted_at",
+            "getter_name": "deletedAt",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "name",
+            "getter_name": "name",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "aliases",
+            "getter_name": "aliases",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const StringListConverter()",
+              "dart_type_name": "List<String>"
+            }
+          },
+          {
+            "name": "search_text",
+            "getter_name": "searchText",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "primary_muscles",
+            "getter_name": "primaryMuscles",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const CodedEnumListConverter<MuscleGroup>(MuscleGroup.values)",
+              "dart_type_name": "List<MuscleGroup>"
+            }
+          },
+          {
+            "name": "secondary_muscles",
+            "getter_name": "secondaryMuscles",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const CodedEnumListConverter<MuscleGroup>(MuscleGroup.values)",
+              "dart_type_name": "List<MuscleGroup>"
+            }
+          },
+          {
+            "name": "equipment",
+            "getter_name": "equipment",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const CodedEnumConverter<Equipment>(Equipment.values)",
+              "dart_type_name": "Equipment"
+            }
+          },
+          {
+            "name": "category",
+            "getter_name": "category",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const CodedEnumConverter<ExerciseCategory>(ExerciseCategory.values)",
+              "dart_type_name": "ExerciseCategory"
+            }
+          },
+          {
+            "name": "mechanic",
+            "getter_name": "mechanic",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const CodedEnumConverter<Mechanic>(Mechanic.values)",
+              "dart_type_name": "Mechanic"
+            }
+          },
+          {
+            "name": "force",
+            "getter_name": "force",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const CodedEnumConverter<Force>(Force.values)",
+              "dart_type_name": "Force"
+            }
+          },
+          {
+            "name": "instructions",
+            "getter_name": "instructions",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "measure_weight",
+            "getter_name": "measureWeight",
+            "moor_type": "bool",
+            "nullable": false,
+            "customConstraints": null,
+            "defaultConstraints": "CHECK (\"measure_weight\" IN (0, 1))",
+            "dialectAwareDefaultConstraints": {
+              "sqlite": "CHECK (\"measure_weight\" IN (0, 1))"
+            },
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "measure_reps",
+            "getter_name": "measureReps",
+            "moor_type": "bool",
+            "nullable": false,
+            "customConstraints": null,
+            "defaultConstraints": "CHECK (\"measure_reps\" IN (0, 1))",
+            "dialectAwareDefaultConstraints": {
+              "sqlite": "CHECK (\"measure_reps\" IN (0, 1))"
+            },
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "measure_duration",
+            "getter_name": "measureDuration",
+            "moor_type": "bool",
+            "nullable": false,
+            "customConstraints": null,
+            "defaultConstraints": "CHECK (\"measure_duration\" IN (0, 1))",
+            "dialectAwareDefaultConstraints": {
+              "sqlite": "CHECK (\"measure_duration\" IN (0, 1))"
+            },
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "measure_distance",
+            "getter_name": "measureDistance",
+            "moor_type": "bool",
+            "nullable": false,
+            "customConstraints": null,
+            "defaultConstraints": "CHECK (\"measure_distance\" IN (0, 1))",
+            "dialectAwareDefaultConstraints": {
+              "sqlite": "CHECK (\"measure_distance\" IN (0, 1))"
+            },
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "load_mode",
+            "getter_name": "loadMode",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const CodedEnumConverter<LoadMode>(LoadMode.values)",
+              "dart_type_name": "LoadMode"
+            }
+          },
+          {
+            "name": "weight_semantics",
+            "getter_name": "weightSemantics",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const CodedEnumConverter<WeightSemantics>(WeightSemantics.values)",
+              "dart_type_name": "WeightSemantics"
+            }
+          },
+          {
+            "name": "is_unilateral",
+            "getter_name": "isUnilateral",
+            "moor_type": "bool",
+            "nullable": false,
+            "customConstraints": null,
+            "defaultConstraints": "CHECK (\"is_unilateral\" IN (0, 1))",
+            "dialectAwareDefaultConstraints": {
+              "sqlite": "CHECK (\"is_unilateral\" IN (0, 1))"
+            },
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "image_ref",
+            "getter_name": "imageRef",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "source",
+            "getter_name": "source",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const CodedEnumConverter<ExerciseSource>(ExerciseSource.values)",
+              "dart_type_name": "ExerciseSource"
+            }
+          },
+          {
+            "name": "origin_ref",
+            "getter_name": "originRef",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "license",
+            "getter_name": "license",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "license_author",
+            "getter_name": "licenseAuthor",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "seed_version",
+            "getter_name": "seedVersion",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "user_modified",
+            "getter_name": "userModified",
+            "moor_type": "bool",
+            "nullable": false,
+            "customConstraints": null,
+            "defaultConstraints": "CHECK (\"user_modified\" IN (0, 1))",
+            "dialectAwareDefaultConstraints": {
+              "sqlite": "CHECK (\"user_modified\" IN (0, 1))"
+            },
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "archived_at",
+            "getter_name": "archivedAt",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "CHECK (measure_weight OR measure_reps OR measure_duration OR measure_distance)"
+        ],
+        "explicit_pk": [
+          "id"
+        ]
+      }
+    },
+    {
+      "id": 1,
+      "references": [],
+      "type": "table",
+      "data": {
+        "name": "templates",
+        "was_declared_in_moor": false,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "created_at",
+            "getter_name": "createdAt",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "updated_at",
+            "getter_name": "updatedAt",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "deleted_at",
+            "getter_name": "deletedAt",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "name",
+            "getter_name": "name",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "description",
+            "getter_name": "description",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "archived_at",
+            "getter_name": "archivedAt",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [],
+        "explicit_pk": [
+          "id"
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "references": [
+        1,
+        0
+      ],
+      "type": "table",
+      "data": {
+        "name": "template_exercises",
+        "was_declared_in_moor": false,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "created_at",
+            "getter_name": "createdAt",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "updated_at",
+            "getter_name": "updatedAt",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "deleted_at",
+            "getter_name": "deletedAt",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "template_id",
+            "getter_name": "templateId",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "defaultConstraints": "REFERENCES templates (id)",
+            "dialectAwareDefaultConstraints": {
+              "sqlite": "REFERENCES templates (id)"
+            },
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              {
+                "foreign_key": {
+                  "to": {
+                    "table": "templates",
+                    "column": "id"
+                  },
+                  "initially_deferred": false,
+                  "on_update": null,
+                  "on_delete": null
+                }
+              }
+            ]
+          },
+          {
+            "name": "exercise_id",
+            "getter_name": "exerciseId",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "defaultConstraints": "REFERENCES exercises (id)",
+            "dialectAwareDefaultConstraints": {
+              "sqlite": "REFERENCES exercises (id)"
+            },
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              {
+                "foreign_key": {
+                  "to": {
+                    "table": "exercises",
+                    "column": "id"
+                  },
+                  "initially_deferred": false,
+                  "on_update": null,
+                  "on_delete": null
+                }
+              }
+            ]
+          },
+          {
+            "name": "position",
+            "getter_name": "position",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "target_kind",
+            "getter_name": "targetKind",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const CodedEnumConverter<TargetKind>(TargetKind.values)",
+              "dart_type_name": "TargetKind"
+            }
+          },
+          {
+            "name": "target_min",
+            "getter_name": "targetMin",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "target_max",
+            "getter_name": "targetMax",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "target_weight_g",
+            "getter_name": "targetWeightG",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "rest_seconds",
+            "getter_name": "restSeconds",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "default_set_type",
+            "getter_name": "defaultSetType",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const CodedEnumConverter<SetType>(SetType.values)",
+              "dart_type_name": "SetType"
+            }
+          },
+          {
+            "name": "note",
+            "getter_name": "note",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "group_id",
+            "getter_name": "groupId",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [],
+        "explicit_pk": [
+          "id"
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "references": [
+        2
+      ],
+      "type": "table",
+      "data": {
+        "name": "template_sets",
+        "was_declared_in_moor": false,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "created_at",
+            "getter_name": "createdAt",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "updated_at",
+            "getter_name": "updatedAt",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "deleted_at",
+            "getter_name": "deletedAt",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "template_exercise_id",
+            "getter_name": "templateExerciseId",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "defaultConstraints": "REFERENCES template_exercises (id)",
+            "dialectAwareDefaultConstraints": {
+              "sqlite": "REFERENCES template_exercises (id)"
+            },
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              {
+                "foreign_key": {
+                  "to": {
+                    "table": "template_exercises",
+                    "column": "id"
+                  },
+                  "initially_deferred": false,
+                  "on_update": null,
+                  "on_delete": null
+                }
+              }
+            ]
+          },
+          {
+            "name": "position",
+            "getter_name": "position",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "set_type",
+            "getter_name": "setType",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const CodedEnumConverter<SetType>(SetType.values)",
+              "dart_type_name": "SetType"
+            }
+          },
+          {
+            "name": "target_min",
+            "getter_name": "targetMin",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "target_max",
+            "getter_name": "targetMax",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "target_weight_g",
+            "getter_name": "targetWeightG",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "rest_seconds",
+            "getter_name": "restSeconds",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [],
+        "explicit_pk": [
+          "id"
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "references": [
+        1
+      ],
+      "type": "table",
+      "data": {
+        "name": "workout_sessions",
+        "was_declared_in_moor": false,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "created_at",
+            "getter_name": "createdAt",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "updated_at",
+            "getter_name": "updatedAt",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "deleted_at",
+            "getter_name": "deletedAt",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "status",
+            "getter_name": "status",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const CodedEnumConverter<SessionStatus>(SessionStatus.values)",
+              "dart_type_name": "SessionStatus"
+            }
+          },
+          {
+            "name": "started_at",
+            "getter_name": "startedAt",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "ended_at",
+            "getter_name": "endedAt",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "time_zone",
+            "getter_name": "timeZone",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "local_date",
+            "getter_name": "localDate",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const LocalDateConverter()",
+              "dart_type_name": "LocalDate"
+            }
+          },
+          {
+            "name": "template_id",
+            "getter_name": "templateId",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "defaultConstraints": "REFERENCES templates (id)",
+            "dialectAwareDefaultConstraints": {
+              "sqlite": "REFERENCES templates (id)"
+            },
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              {
+                "foreign_key": {
+                  "to": {
+                    "table": "templates",
+                    "column": "id"
+                  },
+                  "initially_deferred": false,
+                  "on_update": null,
+                  "on_delete": null
+                }
+              }
+            ]
+          },
+          {
+            "name": "template_name_snapshot",
+            "getter_name": "templateNameSnapshot",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "title",
+            "getter_name": "title",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "notes",
+            "getter_name": "notes",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "wellbeing",
+            "getter_name": "wellbeing",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              {
+                "check": {
+                  "dart_expression": {
+                    "elements": [
+                      {
+                        "lexeme": "ComparableExpr",
+                        "import_uri": "package:drift/src/runtime/query_builder/query_builder.dart"
+                      },
+                      "(",
+                      {
+                        "lexeme": "wellbeing",
+                        "tag": "wellbeing"
+                      },
+                      ").isBetweenValues(1,5)"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "rest_ends_at",
+            "getter_name": "restEndsAt",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [],
+        "explicit_pk": [
+          "id"
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "references": [
+        4,
+        0
+      ],
+      "type": "table",
+      "data": {
+        "name": "session_exercises",
+        "was_declared_in_moor": false,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "created_at",
+            "getter_name": "createdAt",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "updated_at",
+            "getter_name": "updatedAt",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "deleted_at",
+            "getter_name": "deletedAt",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "session_id",
+            "getter_name": "sessionId",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "defaultConstraints": "REFERENCES workout_sessions (id)",
+            "dialectAwareDefaultConstraints": {
+              "sqlite": "REFERENCES workout_sessions (id)"
+            },
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              {
+                "foreign_key": {
+                  "to": {
+                    "table": "workout_sessions",
+                    "column": "id"
+                  },
+                  "initially_deferred": false,
+                  "on_update": null,
+                  "on_delete": null
+                }
+              }
+            ]
+          },
+          {
+            "name": "exercise_id",
+            "getter_name": "exerciseId",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "defaultConstraints": "REFERENCES exercises (id)",
+            "dialectAwareDefaultConstraints": {
+              "sqlite": "REFERENCES exercises (id)"
+            },
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              {
+                "foreign_key": {
+                  "to": {
+                    "table": "exercises",
+                    "column": "id"
+                  },
+                  "initially_deferred": false,
+                  "on_update": null,
+                  "on_delete": null
+                }
+              }
+            ]
+          },
+          {
+            "name": "position",
+            "getter_name": "position",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "template_exercise_id",
+            "getter_name": "templateExerciseId",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "exercise_name_snapshot",
+            "getter_name": "exerciseNameSnapshot",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "measure_weight_snapshot",
+            "getter_name": "measureWeightSnapshot",
+            "moor_type": "bool",
+            "nullable": false,
+            "customConstraints": null,
+            "defaultConstraints": "CHECK (\"measure_weight_snapshot\" IN (0, 1))",
+            "dialectAwareDefaultConstraints": {
+              "sqlite": "CHECK (\"measure_weight_snapshot\" IN (0, 1))"
+            },
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "measure_reps_snapshot",
+            "getter_name": "measureRepsSnapshot",
+            "moor_type": "bool",
+            "nullable": false,
+            "customConstraints": null,
+            "defaultConstraints": "CHECK (\"measure_reps_snapshot\" IN (0, 1))",
+            "dialectAwareDefaultConstraints": {
+              "sqlite": "CHECK (\"measure_reps_snapshot\" IN (0, 1))"
+            },
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "measure_duration_snapshot",
+            "getter_name": "measureDurationSnapshot",
+            "moor_type": "bool",
+            "nullable": false,
+            "customConstraints": null,
+            "defaultConstraints": "CHECK (\"measure_duration_snapshot\" IN (0, 1))",
+            "dialectAwareDefaultConstraints": {
+              "sqlite": "CHECK (\"measure_duration_snapshot\" IN (0, 1))"
+            },
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "measure_distance_snapshot",
+            "getter_name": "measureDistanceSnapshot",
+            "moor_type": "bool",
+            "nullable": false,
+            "customConstraints": null,
+            "defaultConstraints": "CHECK (\"measure_distance_snapshot\" IN (0, 1))",
+            "dialectAwareDefaultConstraints": {
+              "sqlite": "CHECK (\"measure_distance_snapshot\" IN (0, 1))"
+            },
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "load_mode_snapshot",
+            "getter_name": "loadModeSnapshot",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const CodedEnumConverter<LoadMode>(LoadMode.values)",
+              "dart_type_name": "LoadMode"
+            }
+          },
+          {
+            "name": "weight_semantics_snapshot",
+            "getter_name": "weightSemanticsSnapshot",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const CodedEnumConverter<WeightSemantics>(WeightSemantics.values)",
+              "dart_type_name": "WeightSemantics"
+            }
+          },
+          {
+            "name": "is_unilateral_snapshot",
+            "getter_name": "isUnilateralSnapshot",
+            "moor_type": "bool",
+            "nullable": false,
+            "customConstraints": null,
+            "defaultConstraints": "CHECK (\"is_unilateral_snapshot\" IN (0, 1))",
+            "dialectAwareDefaultConstraints": {
+              "sqlite": "CHECK (\"is_unilateral_snapshot\" IN (0, 1))"
+            },
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "note",
+            "getter_name": "note",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "group_id",
+            "getter_name": "groupId",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [],
+        "explicit_pk": [
+          "id"
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "references": [
+        5
+      ],
+      "type": "table",
+      "data": {
+        "name": "session_sets",
+        "was_declared_in_moor": false,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "created_at",
+            "getter_name": "createdAt",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "updated_at",
+            "getter_name": "updatedAt",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "deleted_at",
+            "getter_name": "deletedAt",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "session_exercise_id",
+            "getter_name": "sessionExerciseId",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "defaultConstraints": "REFERENCES session_exercises (id)",
+            "dialectAwareDefaultConstraints": {
+              "sqlite": "REFERENCES session_exercises (id)"
+            },
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              {
+                "foreign_key": {
+                  "to": {
+                    "table": "session_exercises",
+                    "column": "id"
+                  },
+                  "initially_deferred": false,
+                  "on_update": null,
+                  "on_delete": null
+                }
+              }
+            ]
+          },
+          {
+            "name": "position",
+            "getter_name": "position",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "set_type",
+            "getter_name": "setType",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const CodedEnumConverter<SetType>(SetType.values)",
+              "dart_type_name": "SetType"
+            }
+          },
+          {
+            "name": "target_kind",
+            "getter_name": "targetKind",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const CodedEnumConverter<TargetKind>(TargetKind.values)",
+              "dart_type_name": "TargetKind"
+            }
+          },
+          {
+            "name": "target_min",
+            "getter_name": "targetMin",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "target_max",
+            "getter_name": "targetMax",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "target_weight_g",
+            "getter_name": "targetWeightG",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "rest_seconds",
+            "getter_name": "restSeconds",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "weight_g",
+            "getter_name": "weightG",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "reps",
+            "getter_name": "reps",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              {
+                "check": {
+                  "dart_expression": {
+                    "elements": [
+                      {
+                        "lexeme": "ComparableExpr",
+                        "import_uri": "package:drift/src/runtime/query_builder/query_builder.dart"
+                      },
+                      "(",
+                      {
+                        "lexeme": "reps",
+                        "tag": "reps"
+                      },
+                      ").isBiggerOrEqualValue(0)"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "duration_s",
+            "getter_name": "durationS",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              {
+                "check": {
+                  "dart_expression": {
+                    "elements": [
+                      {
+                        "lexeme": "ComparableExpr",
+                        "import_uri": "package:drift/src/runtime/query_builder/query_builder.dart"
+                      },
+                      "(",
+                      {
+                        "lexeme": "durationS",
+                        "tag": "durationS"
+                      },
+                      ").isBiggerOrEqualValue(0)"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "distance_m",
+            "getter_name": "distanceM",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              {
+                "check": {
+                  "dart_expression": {
+                    "elements": [
+                      {
+                        "lexeme": "ComparableExpr",
+                        "import_uri": "package:drift/src/runtime/query_builder/query_builder.dart"
+                      },
+                      "(",
+                      {
+                        "lexeme": "distanceM",
+                        "tag": "distanceM"
+                      },
+                      ").isBiggerOrEqualValue(0)"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "effort_scale",
+            "getter_name": "effortScale",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const CodedEnumConverter<EffortScale>(EffortScale.values)",
+              "dart_type_name": "EffortScale"
+            }
+          },
+          {
+            "name": "effort_tenths",
+            "getter_name": "effortTenths",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "side",
+            "getter_name": "side",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const CodedEnumConverter<Side>(Side.values)",
+              "dart_type_name": "Side"
+            }
+          },
+          {
+            "name": "completed_at",
+            "getter_name": "completedAt",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [],
+        "explicit_pk": [
+          "id"
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "references": [],
+      "type": "table",
+      "data": {
+        "name": "settings",
+        "was_declared_in_moor": false,
+        "columns": [
+          {
+            "name": "key",
+            "getter_name": "key",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "value",
+            "getter_name": "value",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "updated_at",
+            "getter_name": "updatedAt",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [],
+        "explicit_pk": [
+          "key"
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "references": [],
+      "type": "table",
+      "data": {
+        "name": "weekly_plans",
+        "was_declared_in_moor": false,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "created_at",
+            "getter_name": "createdAt",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "updated_at",
+            "getter_name": "updatedAt",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "deleted_at",
+            "getter_name": "deletedAt",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "starts_on",
+            "getter_name": "startsOn",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const LocalDateConverter()",
+              "dart_type_name": "LocalDate"
+            }
+          },
+          {
+            "name": "ends_on",
+            "getter_name": "endsOn",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const LocalDateConverter()",
+              "dart_type_name": "LocalDate"
+            }
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [],
+        "explicit_pk": [
+          "id"
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "references": [
+        8,
+        1
+      ],
+      "type": "table",
+      "data": {
+        "name": "weekly_plan_days",
+        "was_declared_in_moor": false,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "created_at",
+            "getter_name": "createdAt",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "updated_at",
+            "getter_name": "updatedAt",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "deleted_at",
+            "getter_name": "deletedAt",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "plan_id",
+            "getter_name": "planId",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "defaultConstraints": "REFERENCES weekly_plans (id)",
+            "dialectAwareDefaultConstraints": {
+              "sqlite": "REFERENCES weekly_plans (id)"
+            },
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              {
+                "foreign_key": {
+                  "to": {
+                    "table": "weekly_plans",
+                    "column": "id"
+                  },
+                  "initially_deferred": false,
+                  "on_update": null,
+                  "on_delete": null
+                }
+              }
+            ]
+          },
+          {
+            "name": "weekday",
+            "getter_name": "weekday",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              {
+                "check": {
+                  "dart_expression": {
+                    "elements": [
+                      {
+                        "lexeme": "ComparableExpr",
+                        "import_uri": "package:drift/src/runtime/query_builder/query_builder.dart"
+                      },
+                      "(",
+                      {
+                        "lexeme": "weekday",
+                        "tag": "weekday"
+                      },
+                      ").isBetweenValues(1,7)"
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "template_id",
+            "getter_name": "templateId",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "defaultConstraints": "REFERENCES templates (id)",
+            "dialectAwareDefaultConstraints": {
+              "sqlite": "REFERENCES templates (id)"
+            },
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              {
+                "foreign_key": {
+                  "to": {
+                    "table": "templates",
+                    "column": "id"
+                  },
+                  "initially_deferred": false,
+                  "on_update": null,
+                  "on_delete": null
+                }
+              }
+            ]
+          },
+          {
+            "name": "position",
+            "getter_name": "position",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [],
+        "explicit_pk": [
+          "id"
+        ]
+      }
+    },
+    {
+      "id": 10,
+      "references": [
+        1
+      ],
+      "type": "table",
+      "data": {
+        "name": "planned_days",
+        "was_declared_in_moor": false,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "created_at",
+            "getter_name": "createdAt",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "updated_at",
+            "getter_name": "updatedAt",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "deleted_at",
+            "getter_name": "deletedAt",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "date",
+            "getter_name": "date",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const LocalDateConverter()",
+              "dart_type_name": "LocalDate"
+            }
+          },
+          {
+            "name": "kind",
+            "getter_name": "kind",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const CodedEnumConverter<PlannedKind>(PlannedKind.values)",
+              "dart_type_name": "PlannedKind"
+            }
+          },
+          {
+            "name": "template_id",
+            "getter_name": "templateId",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "defaultConstraints": "REFERENCES templates (id)",
+            "dialectAwareDefaultConstraints": {
+              "sqlite": "REFERENCES templates (id)"
+            },
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              {
+                "foreign_key": {
+                  "to": {
+                    "table": "templates",
+                    "column": "id"
+                  },
+                  "initially_deferred": false,
+                  "on_update": null,
+                  "on_delete": null
+                }
+              }
+            ]
+          },
+          {
+            "name": "position",
+            "getter_name": "position",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "note",
+            "getter_name": "note",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [
+          "CHECK (kind <> 'workout' OR template_id IS NOT NULL)"
+        ],
+        "explicit_pk": [
+          "id"
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "references": [
+        0
+      ],
+      "type": "table",
+      "data": {
+        "name": "exercise_substitutes",
+        "was_declared_in_moor": false,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "created_at",
+            "getter_name": "createdAt",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "updated_at",
+            "getter_name": "updatedAt",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "deleted_at",
+            "getter_name": "deletedAt",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const UtcMillisConverter()",
+              "dart_type_name": "DateTime"
+            }
+          },
+          {
+            "name": "exercise_id",
+            "getter_name": "exerciseId",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "defaultConstraints": "REFERENCES exercises (id)",
+            "dialectAwareDefaultConstraints": {
+              "sqlite": "REFERENCES exercises (id)"
+            },
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              {
+                "foreign_key": {
+                  "to": {
+                    "table": "exercises",
+                    "column": "id"
+                  },
+                  "initially_deferred": false,
+                  "on_update": null,
+                  "on_delete": null
+                }
+              }
+            ]
+          },
+          {
+            "name": "substitute_id",
+            "getter_name": "substituteId",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "defaultConstraints": "REFERENCES exercises (id)",
+            "dialectAwareDefaultConstraints": {
+              "sqlite": "REFERENCES exercises (id)"
+            },
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              {
+                "foreign_key": {
+                  "to": {
+                    "table": "exercises",
+                    "column": "id"
+                  },
+                  "initially_deferred": false,
+                  "on_update": null,
+                  "on_delete": null
+                }
+              }
+            ]
+          },
+          {
+            "name": "position",
+            "getter_name": "position",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [],
+        "explicit_pk": [
+          "id"
+        ]
+      }
+    },
+    {
+      "id": 12,
+      "references": [
+        0
+      ],
+      "type": "index",
+      "data": {
+        "on": 0,
+        "name": "idx_exercises_source",
+        "sql": null,
+        "unique": false,
+        "columns": [
+          {
+            "column": "source",
+            "order_by": null
+          }
+        ]
+      }
+    },
+    {
+      "id": 13,
+      "references": [
+        2
+      ],
+      "type": "index",
+      "data": {
+        "on": 2,
+        "name": "idx_template_exercises_template",
+        "sql": null,
+        "unique": false,
+        "columns": [
+          {
+            "column": "template_id",
+            "order_by": null
+          },
+          {
+            "column": "position",
+            "order_by": null
+          }
+        ]
+      }
+    },
+    {
+      "id": 14,
+      "references": [
+        2
+      ],
+      "type": "index",
+      "data": {
+        "on": 2,
+        "name": "idx_template_exercises_exercise",
+        "sql": null,
+        "unique": false,
+        "columns": [
+          {
+            "column": "exercise_id",
+            "order_by": null
+          }
+        ]
+      }
+    },
+    {
+      "id": 15,
+      "references": [
+        3
+      ],
+      "type": "index",
+      "data": {
+        "on": 3,
+        "name": "idx_template_sets_template_exercise",
+        "sql": null,
+        "unique": false,
+        "columns": [
+          {
+            "column": "template_exercise_id",
+            "order_by": null
+          },
+          {
+            "column": "position",
+            "order_by": null
+          }
+        ]
+      }
+    },
+    {
+      "id": 16,
+      "references": [
+        4
+      ],
+      "type": "index",
+      "data": {
+        "on": 4,
+        "name": "ux_workout_sessions_one_active",
+        "sql": "CREATE UNIQUE INDEX ux_workout_sessions_one_active ON workout_sessions (status) WHERE status = 'active' AND deleted_at IS NULL",
+        "unique": true,
+        "columns": []
+      }
+    },
+    {
+      "id": 17,
+      "references": [
+        4
+      ],
+      "type": "index",
+      "data": {
+        "on": 4,
+        "name": "idx_workout_sessions_local_date",
+        "sql": null,
+        "unique": false,
+        "columns": [
+          {
+            "column": "local_date",
+            "order_by": null
+          }
+        ]
+      }
+    },
+    {
+      "id": 18,
+      "references": [
+        4
+      ],
+      "type": "index",
+      "data": {
+        "on": 4,
+        "name": "idx_workout_sessions_started_at",
+        "sql": null,
+        "unique": false,
+        "columns": [
+          {
+            "column": "started_at",
+            "order_by": null
+          }
+        ]
+      }
+    },
+    {
+      "id": 19,
+      "references": [
+        4
+      ],
+      "type": "index",
+      "data": {
+        "on": 4,
+        "name": "idx_workout_sessions_template",
+        "sql": null,
+        "unique": false,
+        "columns": [
+          {
+            "column": "template_id",
+            "order_by": null
+          },
+          {
+            "column": "started_at",
+            "order_by": null
+          }
+        ]
+      }
+    },
+    {
+      "id": 20,
+      "references": [
+        5
+      ],
+      "type": "index",
+      "data": {
+        "on": 5,
+        "name": "idx_session_exercises_session",
+        "sql": null,
+        "unique": false,
+        "columns": [
+          {
+            "column": "session_id",
+            "order_by": null
+          },
+          {
+            "column": "position",
+            "order_by": null
+          }
+        ]
+      }
+    },
+    {
+      "id": 21,
+      "references": [
+        5
+      ],
+      "type": "index",
+      "data": {
+        "on": 5,
+        "name": "idx_session_exercises_exercise",
+        "sql": null,
+        "unique": false,
+        "columns": [
+          {
+            "column": "exercise_id",
+            "order_by": null
+          }
+        ]
+      }
+    },
+    {
+      "id": 22,
+      "references": [
+        6
+      ],
+      "type": "index",
+      "data": {
+        "on": 6,
+        "name": "idx_session_sets_session_exercise",
+        "sql": null,
+        "unique": false,
+        "columns": [
+          {
+            "column": "session_exercise_id",
+            "order_by": null
+          },
+          {
+            "column": "position",
+            "order_by": null
+          }
+        ]
+      }
+    },
+    {
+      "id": 23,
+      "references": [
+        9
+      ],
+      "type": "index",
+      "data": {
+        "on": 9,
+        "name": "idx_weekly_plan_days_plan",
+        "sql": null,
+        "unique": false,
+        "columns": [
+          {
+            "column": "plan_id",
+            "order_by": null
+          },
+          {
+            "column": "weekday",
+            "order_by": null
+          },
+          {
+            "column": "position",
+            "order_by": null
+          }
+        ]
+      }
+    },
+    {
+      "id": 24,
+      "references": [
+        10
+      ],
+      "type": "index",
+      "data": {
+        "on": 10,
+        "name": "idx_planned_days_date",
+        "sql": null,
+        "unique": false,
+        "columns": [
+          {
+            "column": "date",
+            "order_by": null
+          },
+          {
+            "column": "position",
+            "order_by": null
+          }
+        ]
+      }
+    },
+    {
+      "id": 25,
+      "references": [
+        11
+      ],
+      "type": "index",
+      "data": {
+        "on": 11,
+        "name": "idx_exercise_substitutes_exercise",
+        "sql": null,
+        "unique": false,
+        "columns": [
+          {
+            "column": "exercise_id",
+            "order_by": null
+          }
+        ]
+      }
+    },
+    {
+      "id": 26,
+      "references": [
+        11
+      ],
+      "type": "index",
+      "data": {
+        "on": 11,
+        "name": "idx_exercise_substitutes_substitute",
+        "sql": null,
+        "unique": false,
+        "columns": [
+          {
+            "column": "substitute_id",
+            "order_by": null
+          }
+        ]
+      }
+    }
+  ],
+  "fixed_sql": [
+    {
+      "name": "exercises",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"exercises\" (\"id\" TEXT NOT NULL, \"created_at\" INTEGER NOT NULL, \"updated_at\" INTEGER NOT NULL, \"deleted_at\" INTEGER NULL, \"name\" TEXT NOT NULL, \"aliases\" TEXT NOT NULL, \"search_text\" TEXT NOT NULL, \"primary_muscles\" TEXT NOT NULL, \"secondary_muscles\" TEXT NOT NULL, \"equipment\" TEXT NULL, \"category\" TEXT NOT NULL, \"mechanic\" TEXT NULL, \"force\" TEXT NULL, \"instructions\" TEXT NULL, \"measure_weight\" INTEGER NOT NULL CHECK (\"measure_weight\" IN (0, 1)), \"measure_reps\" INTEGER NOT NULL CHECK (\"measure_reps\" IN (0, 1)), \"measure_duration\" INTEGER NOT NULL CHECK (\"measure_duration\" IN (0, 1)), \"measure_distance\" INTEGER NOT NULL CHECK (\"measure_distance\" IN (0, 1)), \"load_mode\" TEXT NOT NULL, \"weight_semantics\" TEXT NOT NULL, \"is_unilateral\" INTEGER NOT NULL CHECK (\"is_unilateral\" IN (0, 1)), \"image_ref\" TEXT NULL, \"source\" TEXT NOT NULL, \"origin_ref\" TEXT NULL, \"license\" TEXT NULL, \"license_author\" TEXT NULL, \"seed_version\" INTEGER NULL, \"user_modified\" INTEGER NOT NULL CHECK (\"user_modified\" IN (0, 1)), \"archived_at\" INTEGER NULL, PRIMARY KEY (\"id\"), CHECK (measure_weight OR measure_reps OR measure_duration OR measure_distance));"
+        }
+      ]
+    },
+    {
+      "name": "templates",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"templates\" (\"id\" TEXT NOT NULL, \"created_at\" INTEGER NOT NULL, \"updated_at\" INTEGER NOT NULL, \"deleted_at\" INTEGER NULL, \"name\" TEXT NOT NULL, \"description\" TEXT NULL, \"archived_at\" INTEGER NULL, PRIMARY KEY (\"id\"));"
+        }
+      ]
+    },
+    {
+      "name": "template_exercises",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"template_exercises\" (\"id\" TEXT NOT NULL, \"created_at\" INTEGER NOT NULL, \"updated_at\" INTEGER NOT NULL, \"deleted_at\" INTEGER NULL, \"template_id\" TEXT NOT NULL REFERENCES templates (id), \"exercise_id\" TEXT NOT NULL REFERENCES exercises (id), \"position\" INTEGER NOT NULL, \"target_kind\" TEXT NOT NULL, \"target_min\" INTEGER NULL, \"target_max\" INTEGER NULL, \"target_weight_g\" INTEGER NULL, \"rest_seconds\" INTEGER NULL, \"default_set_type\" TEXT NOT NULL, \"note\" TEXT NULL, \"group_id\" TEXT NULL, PRIMARY KEY (\"id\"));"
+        }
+      ]
+    },
+    {
+      "name": "template_sets",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"template_sets\" (\"id\" TEXT NOT NULL, \"created_at\" INTEGER NOT NULL, \"updated_at\" INTEGER NOT NULL, \"deleted_at\" INTEGER NULL, \"template_exercise_id\" TEXT NOT NULL REFERENCES template_exercises (id), \"position\" INTEGER NOT NULL, \"set_type\" TEXT NULL, \"target_min\" INTEGER NULL, \"target_max\" INTEGER NULL, \"target_weight_g\" INTEGER NULL, \"rest_seconds\" INTEGER NULL, PRIMARY KEY (\"id\"));"
+        }
+      ]
+    },
+    {
+      "name": "workout_sessions",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"workout_sessions\" (\"id\" TEXT NOT NULL, \"created_at\" INTEGER NOT NULL, \"updated_at\" INTEGER NOT NULL, \"deleted_at\" INTEGER NULL, \"status\" TEXT NOT NULL, \"started_at\" INTEGER NOT NULL, \"ended_at\" INTEGER NULL, \"time_zone\" TEXT NOT NULL, \"local_date\" TEXT NOT NULL, \"template_id\" TEXT NULL REFERENCES templates (id), \"template_name_snapshot\" TEXT NULL, \"title\" TEXT NULL, \"notes\" TEXT NULL, \"wellbeing\" INTEGER NULL CHECK(\"wellbeing\" BETWEEN 1 AND 5), \"rest_ends_at\" INTEGER NULL, PRIMARY KEY (\"id\"));"
+        }
+      ]
+    },
+    {
+      "name": "session_exercises",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"session_exercises\" (\"id\" TEXT NOT NULL, \"created_at\" INTEGER NOT NULL, \"updated_at\" INTEGER NOT NULL, \"deleted_at\" INTEGER NULL, \"session_id\" TEXT NOT NULL REFERENCES workout_sessions (id), \"exercise_id\" TEXT NOT NULL REFERENCES exercises (id), \"position\" INTEGER NOT NULL, \"template_exercise_id\" TEXT NULL, \"exercise_name_snapshot\" TEXT NOT NULL, \"measure_weight_snapshot\" INTEGER NOT NULL CHECK (\"measure_weight_snapshot\" IN (0, 1)), \"measure_reps_snapshot\" INTEGER NOT NULL CHECK (\"measure_reps_snapshot\" IN (0, 1)), \"measure_duration_snapshot\" INTEGER NOT NULL CHECK (\"measure_duration_snapshot\" IN (0, 1)), \"measure_distance_snapshot\" INTEGER NOT NULL CHECK (\"measure_distance_snapshot\" IN (0, 1)), \"load_mode_snapshot\" TEXT NOT NULL, \"weight_semantics_snapshot\" TEXT NOT NULL, \"is_unilateral_snapshot\" INTEGER NOT NULL CHECK (\"is_unilateral_snapshot\" IN (0, 1)), \"note\" TEXT NULL, \"group_id\" TEXT NULL, PRIMARY KEY (\"id\"));"
+        }
+      ]
+    },
+    {
+      "name": "session_sets",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"session_sets\" (\"id\" TEXT NOT NULL, \"created_at\" INTEGER NOT NULL, \"updated_at\" INTEGER NOT NULL, \"deleted_at\" INTEGER NULL, \"session_exercise_id\" TEXT NOT NULL REFERENCES session_exercises (id), \"position\" INTEGER NOT NULL, \"set_type\" TEXT NOT NULL, \"target_kind\" TEXT NULL, \"target_min\" INTEGER NULL, \"target_max\" INTEGER NULL, \"target_weight_g\" INTEGER NULL, \"rest_seconds\" INTEGER NULL, \"weight_g\" INTEGER NULL, \"reps\" INTEGER NULL CHECK(\"reps\" >= 0), \"duration_s\" INTEGER NULL CHECK(\"duration_s\" >= 0), \"distance_m\" INTEGER NULL CHECK(\"distance_m\" >= 0), \"effort_scale\" TEXT NULL, \"effort_tenths\" INTEGER NULL, \"side\" TEXT NULL, \"completed_at\" INTEGER NULL, PRIMARY KEY (\"id\"));"
+        }
+      ]
+    },
+    {
+      "name": "settings",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"settings\" (\"key\" TEXT NOT NULL, \"value\" TEXT NOT NULL, \"updated_at\" INTEGER NOT NULL, PRIMARY KEY (\"key\"));"
+        }
+      ]
+    },
+    {
+      "name": "weekly_plans",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"weekly_plans\" (\"id\" TEXT NOT NULL, \"created_at\" INTEGER NOT NULL, \"updated_at\" INTEGER NOT NULL, \"deleted_at\" INTEGER NULL, \"starts_on\" TEXT NOT NULL, \"ends_on\" TEXT NULL, PRIMARY KEY (\"id\"));"
+        }
+      ]
+    },
+    {
+      "name": "weekly_plan_days",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"weekly_plan_days\" (\"id\" TEXT NOT NULL, \"created_at\" INTEGER NOT NULL, \"updated_at\" INTEGER NOT NULL, \"deleted_at\" INTEGER NULL, \"plan_id\" TEXT NOT NULL REFERENCES weekly_plans (id), \"weekday\" INTEGER NOT NULL CHECK(\"weekday\" BETWEEN 1 AND 7), \"template_id\" TEXT NOT NULL REFERENCES templates (id), \"position\" INTEGER NOT NULL, PRIMARY KEY (\"id\"));"
+        }
+      ]
+    },
+    {
+      "name": "planned_days",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"planned_days\" (\"id\" TEXT NOT NULL, \"created_at\" INTEGER NOT NULL, \"updated_at\" INTEGER NOT NULL, \"deleted_at\" INTEGER NULL, \"date\" TEXT NOT NULL, \"kind\" TEXT NOT NULL, \"template_id\" TEXT NULL REFERENCES templates (id), \"position\" INTEGER NOT NULL, \"note\" TEXT NULL, PRIMARY KEY (\"id\"), CHECK (kind <> 'workout' OR template_id IS NOT NULL));"
+        }
+      ]
+    },
+    {
+      "name": "exercise_substitutes",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"exercise_substitutes\" (\"id\" TEXT NOT NULL, \"created_at\" INTEGER NOT NULL, \"updated_at\" INTEGER NOT NULL, \"deleted_at\" INTEGER NULL, \"exercise_id\" TEXT NOT NULL REFERENCES exercises (id), \"substitute_id\" TEXT NOT NULL REFERENCES exercises (id), \"position\" INTEGER NOT NULL, PRIMARY KEY (\"id\"));"
+        }
+      ]
+    },
+    {
+      "name": "idx_exercises_source",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX idx_exercises_source ON exercises (source)"
+        }
+      ]
+    },
+    {
+      "name": "idx_template_exercises_template",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX idx_template_exercises_template ON template_exercises (template_id, position)"
+        }
+      ]
+    },
+    {
+      "name": "idx_template_exercises_exercise",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX idx_template_exercises_exercise ON template_exercises (exercise_id)"
+        }
+      ]
+    },
+    {
+      "name": "idx_template_sets_template_exercise",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX idx_template_sets_template_exercise ON template_sets (template_exercise_id, position)"
+        }
+      ]
+    },
+    {
+      "name": "ux_workout_sessions_one_active",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE UNIQUE INDEX ux_workout_sessions_one_active ON workout_sessions (status) WHERE status = 'active' AND deleted_at IS NULL"
+        }
+      ]
+    },
+    {
+      "name": "idx_workout_sessions_local_date",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX idx_workout_sessions_local_date ON workout_sessions (local_date)"
+        }
+      ]
+    },
+    {
+      "name": "idx_workout_sessions_started_at",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX idx_workout_sessions_started_at ON workout_sessions (started_at)"
+        }
+      ]
+    },
+    {
+      "name": "idx_workout_sessions_template",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX idx_workout_sessions_template ON workout_sessions (template_id, started_at)"
+        }
+      ]
+    },
+    {
+      "name": "idx_session_exercises_session",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX idx_session_exercises_session ON session_exercises (session_id, position)"
+        }
+      ]
+    },
+    {
+      "name": "idx_session_exercises_exercise",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX idx_session_exercises_exercise ON session_exercises (exercise_id)"
+        }
+      ]
+    },
+    {
+      "name": "idx_session_sets_session_exercise",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX idx_session_sets_session_exercise ON session_sets (session_exercise_id, position)"
+        }
+      ]
+    },
+    {
+      "name": "idx_weekly_plan_days_plan",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX idx_weekly_plan_days_plan ON weekly_plan_days (plan_id, weekday, position)"
+        }
+      ]
+    },
+    {
+      "name": "idx_planned_days_date",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX idx_planned_days_date ON planned_days (date, position)"
+        }
+      ]
+    },
+    {
+      "name": "idx_exercise_substitutes_exercise",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX idx_exercise_substitutes_exercise ON exercise_substitutes (exercise_id)"
+        }
+      ]
+    },
+    {
+      "name": "idx_exercise_substitutes_substitute",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE INDEX idx_exercise_substitutes_substitute ON exercise_substitutes (substitute_id)"
+        }
+      ]
+    }
+  ]
+}

@@ -2,10 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:reptrack/core/database/app_database.dart';
+import 'package:reptrack/core/domain/ids.dart';
 import 'package:reptrack/core/domain/local_date.dart';
 import 'package:reptrack/features/backup/data/backup_store.dart';
 import 'package:reptrack/features/backup/domain/backup_validation.dart';
 import 'package:reptrack/features/exercises/data/drift_exercise_repository.dart';
+import 'package:reptrack/features/exercises/data/drift_substitute_repository.dart';
 import 'package:reptrack/features/plan/data/drift_plan_repository.dart';
 import 'package:reptrack/features/plan/domain/plan.dart';
 import 'package:reptrack/features/settings/data/drift_settings_repository.dart';
@@ -71,6 +73,11 @@ Future<void> _fill(AppDatabase db) async {
       ),
     ],
   );
+  await DriftSubstituteRepository(
+    db,
+    clock,
+    const UuidV7Generator(),
+  ).pin('bench', 'pushup');
   await plan.setDay(const LocalDate(2026, 10, 21), const [
     PlannedDay(
       id: 'pd1',
@@ -120,6 +127,8 @@ void main() {
     final plan = await DriftPlanRepository(target, testClock()).load();
     expect(plan.weekly.last.days.single.weekday, 3);
     expect(plan.days.single.kind, PlannedKind.rest);
+    // Przypięte zamienniki (format v3).
+    expect(exported['exerciseSubstitutes'], hasLength(1));
     final active = await DriftWorkoutRepository(
       target,
       testClock(),
