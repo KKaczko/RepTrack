@@ -202,3 +202,15 @@ Przy pierwszym w ogóle treningu dochodzą jednorazowe okna zgód: systemowa zgo
   - na dole „Dodaj program”;
   - przy działającym planie tygodnia pytanie „Zastąpić plan tygodnia?” („szablony i historia zostają”);
   - po dodaniu powrót na Start z komunikatem „Dodano program: …”.
+
+## Narzędzia treningu (ADR 0020)
+
+- **Pod nagłówkiem ćwiczenia:**
+  - przy sztandze i gryfie łamanym linia „Na stronę: 25 + 15 · gryf 20 kg”, liczona z ciężaru wybranej serii; reszta „2,5 kg nie da się złożyć”. Dotknięcie otwiera „Gryf i talerze”;
+  - obok „Zamiennik” przycisk „Rozgrzewka” (tylko przed pierwszą zatwierdzoną serią, gdy nie ma rozgrzewek). Dodaje 40% × 8, 60% × 5, 80% × 3, a komunikat ma „Cofnij”;
+  - etykieta deloadu ze strzałką w dół: „−10 kg · 2 treningi poniżej zakresu”.
+- **Ustawienia → Trening:**
+  - „Kroki dla sprzętu” (arkusz: hantle, kettlebell, maszyna, wyciąg, suwnica Smitha, gryf łamany; „jak ogólny” albo krok);
+  - „Gryf i talerze” (`/settings/plates`: waga gryfu dla sztangi i gryfu łamanego, przełączniki talerzy).
+- **Przerwy:** „Inna…” w wyborze przerwy w szablonie i w domyślnej przerwie otwiera okno „Inna przerwa” (np. 1:45 albo 105, od 0:05 do 15:00).
+- **Kończenie:** „Zakończ trening” z menu przy niezatwierdzonych seriach pyta „6 niezatwierdzonych serii” z opcjami „Wróć do treningu” i „Zakończ mimo to”.

@@ -61,6 +61,10 @@ class WorkoutScreen extends ConsumerStatefulWidget {
 
 class _WorkoutScreenState extends ConsumerState<WorkoutScreen> {
   final _messenger = GlobalKey<ScaffoldMessengerState>();
+
+  /// Strefa kciuka: komunikaty z akcją pojawiają się nad nią, żeby nie
+  /// zasłaniały głównego przycisku.
+  final _thumbZone = GlobalKey();
   PageController? _pages;
 
   /// Ćwiczenie sesji na widocznej stronie; przetrwa zmianę kolejności.
@@ -233,7 +237,10 @@ class _WorkoutScreenState extends ConsumerState<WorkoutScreen> {
                           _buildPage(session, exercises, i),
                     ),
                   ),
-                  _buildThumbZone(session, exercises[index], settings),
+                  KeyedSubtree(
+                    key: _thumbZone,
+                    child: _buildThumbZone(session, exercises[index], settings),
+                  ),
                 ],
               ),
       ),
@@ -627,8 +634,16 @@ class _WorkoutScreenState extends ConsumerState<WorkoutScreen> {
     if (!mounted || added.isEmpty) return;
     setState(() => _selected.remove(exercise.id));
     // Własny messenger ekranu treningu: główny pokazałby komunikat pod nim.
+    final thumbHeight = _thumbZone.currentContext?.size?.height ?? 0;
     _messenger.currentState?.showSnackBar(
       SnackBar(
+        behavior: SnackBarBehavior.floating,
+        margin: EdgeInsets.fromLTRB(
+          AppSpacing.gutter,
+          0,
+          AppSpacing.gutter,
+          thumbHeight + AppSpacing.s,
+        ),
         content: Text(l10n.workoutWarmupAdded(added.length)),
         // Z akcją snackbar domyślnie zostaje; tu ma zniknąć sam.
         persist: false,

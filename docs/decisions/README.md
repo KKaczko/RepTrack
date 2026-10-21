@@ -23,6 +23,7 @@ Decyzje łatwo odwracalne agent podejmuje sam i zapisuje tutaj. Decyzje trudno o
 | [0017](0017-progresja-podwojna.md) | Automatyczna progresja podwójna | po wydaniu 1.0.0 |
 | [0018](0018-superserie.md) | Superserie | po wydaniu 1.0.0 |
 | [0019](0019-gotowe-programy.md) | Gotowe programy i start bez szablonów | po wydaniu 1.0.0 |
+| [0020](0020-narzedzia-treningu.md) | Narzędzia treningu: kroki dla sprzętu, talerze, rozgrzewka, deload, przerwy | po wydaniu 1.0.0 |
 
 ## Szablon
 

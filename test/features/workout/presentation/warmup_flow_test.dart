@@ -81,6 +81,11 @@ void main() {
     await _tap(tester, find.text('Rozgrzewka'));
 
     expect(find.text('Dodano 3 serie rozgrzewkowe'), findsOneWidget);
+    // Komunikat nad strefą kciuka: nie zasłania „Zatwierdź serię”.
+    expect(
+      tester.getBottomLeft(find.text('Dodano 3 serie rozgrzewkowe')).dy,
+      lessThanOrEqualTo(tester.getTopLeft(find.text('Ciężar (kg)')).dy),
+    );
     expect((await _sets(tester, db)).take(3), [
       (SetType.warmup, 40000, 8),
       (SetType.warmup, 60000, 5),

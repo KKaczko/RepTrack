@@ -41,5 +41,10 @@ Decyzja właściciela (2026-10-21): progresja jest wbudowana w podpowiedź, a ni
 ## Konsekwencje
 
 - Dane katalogu i szablonu decydują o jakości: bez celu powtórzeń w szablonie (np. pusty trening) nie ma progresji.
-- Dostępne obciążenia to jeden krok na całą aplikację. Osobne kroki dla hantli i maszyn są w backlogu.
+- Dostępne obciążenia: krok ogólny albo krok dla sprzętu (od ADR 0020).
 - Asystent AI dalej może proponować trening opisowo (ADR 0014); progresja w podpowiedzi działa bez niego.
+
+## Uzupełnienie (2026-10-21, ADR 0020)
+
+- **Krok ciężaru** pochodzi z kroku dla sprzętu (`weightStepFor`), np. hantle co 2 kg.
+- **Deload:** gdy dwa ostatnie wykonania przy tym samym ciężarze miały choć jedną serię roboczą poniżej dolnej granicy, podpowiedź zmniejsza ciężar o ok. 10% (w dół do kroku) i wraca do dolnej granicy powtórzeń. Etykieta ze strzałką w dół: „−10 kg · 2 treningi poniżej zakresu”. Nie dotyczy wspomagania.

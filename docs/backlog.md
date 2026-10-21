@@ -17,11 +17,7 @@ Funkcje spoza MVP. Nie implementujemy ich bez decyzji właściciela.
 
 - Komunikaty walidacji pliku kopii (szczegóły błędów) są tylko po polsku; tytuł i opis błędu są przetłumaczone.
 - Snackbar na ekranie „Kopia i eksport” przez kilka sekund zasłania przyciski eksportu na dole listy.
-- Własne długości przerw (obecnie lista 0:30–5:00).
-- Osobne kroki ciężaru dla sprzętu (hantle, maszyny) w progresji i stepperach — ADR 0017.
-- Zmniejszanie ciężaru (deload) po kilku nieudanych treningach — ADR 0017.
 - Wybór zakresu na wykresach (obecnie 12 ostatnich tygodni i treningów) oraz wykres masy ciała.
-- Przypomnienie o niezatwierdzonych seriach przed zakończeniem treningu (obecnie tylko informacja na podsumowaniu).
 
 ## Wynikłe z planu Etapu 0
 
@@ -35,3 +31,4 @@ Funkcje spoza MVP. Nie implementujemy ich bez decyzji właściciela.
 - Cel serii jako dystans (obecnie: powtórzenia albo czas)
 - Wyszukiwanie odporne na odmianę polskich słów („ławka” → „na ławce”), np. przez proste ucinanie końcówek lub więcej aliasów — ADR 0005
 - Cykliczne programy A/B (na zmianę co tydzień) i ciężary startowe w programach — ADR 0019.
+- Kalkulator talerzy z liczbą sztuk każdego nominału; rozgrzewka dodawana także w trakcie ćwiczenia — ADR 0020.

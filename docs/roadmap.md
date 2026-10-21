@@ -344,3 +344,19 @@ Zewnętrzny przegląd zgłosił 11 problemów; wszystkie potwierdziłem w kodzie
   - w Szablonach „Gotowe programy” → filtr „bez sprzętu” → podgląd z planem tygodnia i plakietkami A1/A2;
   - „Dodaj program” zapytał o zastąpienie planu i dodał „Masa ciała A/B”;
   - Start pokazuje następny trening z nowego planu („piątek · Masa ciała A”). Dzisiejszy trening z programu jest „zastąpiony”, bo tego dnia był już inny trening (zasada z ADR 0015).
+
+### Po wydaniu: kierunek rozwoju i runda „Trening na siłowni” (2026-10-21)
+
+- **Kierunek:** cztery rundy (trening, AI, które działa, ciało i zdrowie, na co dzień) i ścieżka do premium AI tylko jako projekt: [rozwój i premium](future/rozwoj-i-premium.md).
+- **Runda 1** ([ADR 0020](decisions/0020-narzedzia-treningu.md)): kroki dla sprzętu, kalkulator talerzy, rozgrzewka, deload, własne przerwy, pytanie o niezatwierdzone serie. Bez zmian schematu.
+- **Wychwycone w testach, poprawione:**
+  - komunikat rozgrzewki szedł do głównego messengera i był niewidoczny pod ekranem treningu (ekran ma własny `ScaffoldMessenger`);
+  - w funtach błąd zaokrąglenia gramów obniżał rozgrzewkę o krok (większy zapas przy zaokrąglaniu w dół).  - komunikat „Dodano 3 serie rozgrzewkowe” z „Cofnij” przez 6 s zasłaniał „Zatwierdź serię” (wychwycone na emulatorze); teraz pływa nad strefą kciuka.
+- **Sprawdzone na emulatorze:**
+  - talerze dla przysiadu i martwego ciągu (także dla serii rozgrzewkowej);
+  - rozgrzewka 47,5 × 8, 70 × 5, 95 × 3 dla 120 kg;
+  - pytanie „6 niezatwierdzonych serii”;
+  - arkusz „Kroki dla sprzętu”.
+
+  Deload i własne przerwy sprawdzone tylko testami.
+- **Emulator:** po wielu buildach przestał startować z oknem (błąd kontekstu OpenGL i okno raportu awarii). Działa bez okna: `emulator -avd RepTrack_360dp -no-snapshot-load -no-window -gpu swiftshader_indirect` (flaga uruchomienia, bez zmian w ustawieniach).

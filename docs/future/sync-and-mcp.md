@@ -2,7 +2,7 @@
 
 Status: projekt, **nie do implementacji w MVP** (spec. 10). Ten dokument opisuje docelową ścieżkę i sprawdza, że model danych z MVP jej nie blokuje.
 
-Docelowo: aplikacja → synchronizacja → backend z PostgreSQL → autoryzowany zdalny serwer MCP → ChatGPT albo inny klient MCP. Do tego czasu są dwa pomosty:
+Docelowo: aplikacja → synchronizacja → backend z PostgreSQL → autoryzowany zdalny serwer MCP → ChatGPT albo inny klient MCP. Konta z tego projektu są też warunkiem hostowanego asystenta premium ([rozwój i premium](rozwoj-i-premium.md)). Do tego czasu są dwa pomosty:
 - eksport Markdown ([backup-format.md](../backup-format.md#eksport-markdown));
 - darmowy asystent AI z Ollamą na komputerze właściciela, działający bez backendu ([ADR 0014](../decisions/0014-asystent-ai-ollama.md)).
 
