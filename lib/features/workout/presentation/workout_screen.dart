@@ -26,6 +26,7 @@ import '../../settings/domain/app_settings.dart';
 import '../data/workout_providers.dart';
 import '../domain/session_editing.dart';
 import '../domain/set_hints.dart';
+import '../domain/warmup.dart';
 import '../domain/workout_session.dart';
 import 'exercise_page.dart';
 import 'substitute_sheet.dart';
@@ -295,6 +296,7 @@ class _WorkoutScreenState extends ConsumerState<WorkoutScreen> {
       onAddSet: () => unawaited(_controller.addSet(exercise.id)),
       onPage: _goToIndex,
       onSubstitute: () => unawaited(_substitute(exercise)),
+      onWarmup: (plan) => unawaited(_addWarmups(exercise, plan)),
     );
   }
 
@@ -615,6 +617,31 @@ class _WorkoutScreenState extends ConsumerState<WorkoutScreen> {
 
   /// Zamiennik z podpowiedzi (ADR 0016): przypięte i podobne ćwiczenia;
   /// „Wybierz z całej biblioteki” prowadzi do zwykłej zamiany.
+  /// Dodaje rozgrzewkę i daje „Cofnij” na kilka sekund.
+  Future<void> _addWarmups(
+    SessionExercise exercise,
+    List<WarmupSet> plan,
+  ) async {
+    final l10n = AppLocalizations.of(context);
+    final added = await _controller.addWarmups(exercise.id, plan);
+    if (!mounted || added.isEmpty) return;
+    setState(() => _selected.remove(exercise.id));
+    // Własny messenger ekranu treningu: główny pokazałby komunikat pod nim.
+    _messenger.currentState?.showSnackBar(
+      SnackBar(
+        content: Text(l10n.workoutWarmupAdded(added.length)),
+        // Z akcją snackbar domyślnie zostaje; tu ma zniknąć sam.
+        persist: false,
+        duration: const Duration(seconds: 6),
+        action: SnackBarAction(
+          label: l10n.planUndo,
+          onPressed: () =>
+              unawaited(_controller.removeSets(exercise.id, added.toSet())),
+        ),
+      ),
+    );
+  }
+
   Future<void> _substitute(SessionExercise current) async {
     final catalog = await _catalog();
     final target = catalog.firstWhereOrNull((e) => e.id == current.exerciseId);

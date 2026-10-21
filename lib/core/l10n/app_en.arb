@@ -737,5 +737,7 @@
   "platesSettingsSubtitle": "Bar weight and available plates for the calculator in workouts",
   "platesIntro": "During a workout, barbell exercises show which plates to load on each side. Select the plates your gym has.",
   "platesBar": "Bar: {equipment}",
-  "platesAvailable": "Available plates"
+  "platesAvailable": "Available plates",
+  "workoutWarmup": "Warm-up",
+  "workoutWarmupAdded": "{count, plural, =1{Added 1 warm-up set} other{Added {count} warm-up sets}}"
 }

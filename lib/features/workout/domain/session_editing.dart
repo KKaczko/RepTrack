@@ -5,6 +5,7 @@ import '../../../core/domain/ids.dart';
 import '../../../core/domain/training.dart';
 import '../../exercises/domain/exercise.dart';
 import 'session_builder.dart';
+import 'warmup.dart';
 import 'workout_session.dart';
 
 /// Zmiany sesji w trakcie treningu (spec. 5.3): serie i ćwiczenia można
@@ -66,6 +67,56 @@ WorkoutSession addSet(
     ],
   );
 });
+
+/// Przerwa po serii rozgrzewkowej (krótsza niż po roboczej).
+const warmupRestSeconds = 60;
+
+/// Wstawia serie rozgrzewkowe z [plan] na początek ćwiczenia (ADR 0020).
+/// Zwraca sesję i identyfikatory nowych serii (do „Cofnij”).
+({WorkoutSession session, List<String> setIds}) addWarmupSets(
+  WorkoutSession session,
+  String exerciseId,
+  List<WarmupSet> plan,
+  IdGenerator ids,
+) {
+  final added = [
+    for (final warmup in plan)
+      SessionSet(
+        id: ids.newId(),
+        position: 0,
+        setType: SetType.warmup,
+        targetKind: TargetKind.reps,
+        targetMin: warmup.reps,
+        targetMax: warmup.reps,
+        targetWeightG: warmup.weightG,
+        restSeconds: warmupRestSeconds,
+      ),
+  ];
+  return (
+    session: updateExercise(
+      session,
+      exerciseId,
+      (e) => e.copyWith(sets: _renumberSets([...added, ...sortedSets(e)])),
+    ),
+    setIds: [for (final s in added) s.id],
+  );
+}
+
+/// Usuwa serie [setIds] ćwiczenia i przenumerowuje pozostałe.
+WorkoutSession removeSets(
+  WorkoutSession session,
+  String exerciseId,
+  Set<String> setIds,
+) => updateExercise(
+  session,
+  exerciseId,
+  (e) => e.copyWith(
+    sets: _renumberSets([
+      for (final s in sortedSets(e))
+        if (!setIds.contains(s.id)) s,
+    ]),
+  ),
+);
 
 /// Usuwa serię i przenumerowuje pozostałe.
 WorkoutSession removeSet(

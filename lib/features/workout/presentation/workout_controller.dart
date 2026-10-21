@@ -18,6 +18,7 @@ import '../domain/session_editing.dart' as editing;
 import '../domain/session_editing.dart';
 import '../domain/set_hints.dart';
 import '../domain/template_sync.dart';
+import '../domain/warmup.dart';
 import '../domain/workout_repository.dart';
 import '../domain/workout_session.dart';
 
@@ -183,6 +184,30 @@ final class WorkoutController {
 
   Future<void> removeExercise(String exerciseId) =>
       _mutate((s) => removeExerciseFromSession(s, exerciseId));
+
+  /// Dodaje serie rozgrzewkowe na początek ćwiczenia (ADR 0020); zwraca
+  /// ich identyfikatory do „Cofnij”.
+  Future<List<String>> addWarmups(
+    String exerciseId,
+    List<WarmupSet> plan,
+  ) async {
+    var added = const <String>[];
+    await _mutate((s) {
+      final result = editing.addWarmupSets(
+        s,
+        exerciseId,
+        plan,
+        _ref.read(idGeneratorProvider),
+      );
+      added = result.setIds;
+      return result.session;
+    });
+    return added;
+  }
+
+  /// Usuwa kilka serii naraz (np. cofnięcie rozgrzewki).
+  Future<void> removeSets(String exerciseId, Set<String> setIds) =>
+      _mutate((s) => editing.removeSets(s, exerciseId, setIds));
 
   /// Łączy ćwiczenie z następnym w superserię (ADR 0018).
   Future<void> linkWithNext(String exerciseId) => _mutate(

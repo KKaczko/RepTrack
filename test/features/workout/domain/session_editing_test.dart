@@ -153,4 +153,35 @@ void main() {
     expect(summary.exercisesDone, 1);
     expect(summary.volumeG, 2 * 80000 * 10);
   });
+
+  test('rozgrzewka na początku ćwiczenia i cofnięcie', () {
+    final session = buildSessionFromTemplate(
+      template: pushTemplate(),
+      exercises: catalog,
+      ids: SequentialIds('s'),
+      startedAt: DateTime.utc(2026, 10, 19, 16),
+      timeZone: 'Europe/Warsaw',
+    );
+    final bench = sortedExercises(session).first;
+    final before = sortedSets(bench);
+
+    final result = addWarmupSets(session, bench.id, const [
+      (weightG: 40000, reps: 8),
+      (weightG: 60000, reps: 5),
+    ], SequentialIds('w'));
+
+    final sets = sortedSets(sortedExercises(result.session).first);
+    expect(sets.map((s) => s.position), List.generate(sets.length, (i) => i));
+    expect(sets.take(2).map((s) => (s.setType, s.targetWeightG, s.targetMin)), [
+      (SetType.warmup, 40000, 8),
+      (SetType.warmup, 60000, 5),
+    ]);
+    expect(sets.skip(2).map((s) => s.id), before.map((s) => s.id));
+
+    final undone = removeSets(result.session, bench.id, result.setIds.toSet());
+    expect(
+      sortedSets(sortedExercises(undone).first).map((s) => s.id),
+      before.map((s) => s.id),
+    );
+  });
 }

@@ -23,6 +23,7 @@ import '../domain/plates.dart';
 import '../domain/progression.dart';
 import '../domain/session_editing.dart';
 import '../domain/set_hints.dart';
+import '../domain/warmup.dart';
 import '../domain/workout_session.dart';
 import 'workout_labels.dart';
 
@@ -86,9 +87,13 @@ class ExercisePage extends ConsumerWidget {
     required this.onAddSet,
     required this.onPage,
     required this.onSubstitute,
+    required this.onWarmup,
     this.superset,
     super.key,
   });
+
+  /// Dodanie serii rozgrzewkowych z policzonego planu (ADR 0020).
+  final ValueChanged<List<WarmupSet>> onWarmup;
 
   /// Oznaczenie w superserii i pozostałe ćwiczenia grupy (ADR 0018).
   final ({GroupLabel label, List<String> partners})? superset;
@@ -203,18 +208,33 @@ class ExercisePage extends ConsumerWidget {
                           )
                           case final text?)
                         _PlatesLine(text: text),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: TextButton.icon(
-                          style: TextButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: AppSpacing.xs,
+                      Wrap(
+                        children: [
+                          TextButton.icon(
+                            style: TextButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: AppSpacing.xs,
+                              ),
                             ),
+                            icon: const Icon(Icons.swap_horiz_rounded),
+                            label: Text(l10n.workoutSubstitute),
+                            onPressed: onSubstitute,
                           ),
-                          icon: const Icon(Icons.swap_horiz_rounded),
-                          label: Text(l10n.workoutSubstitute),
-                          onPressed: onSubstitute,
-                        ),
+                          if (_warmupPlan(ref, exercise, sets, hints)
+                              case final plan? when plan.isNotEmpty)
+                            TextButton.icon(
+                              style: TextButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: AppSpacing.xs,
+                                ),
+                              ),
+                              icon: const Icon(
+                                Icons.local_fire_department_outlined,
+                              ),
+                              label: Text(l10n.workoutWarmup),
+                              onPressed: () => onWarmup(plan),
+                            ),
+                        ],
                       ),
                     ],
                   ),
@@ -652,4 +672,37 @@ class _PlatesLine extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Plan rozgrzewki dla ćwiczenia z ciężarem i powtórzeniami, gdy nie ma
+/// jeszcze rozgrzewek ani zatwierdzonych serii, a ciężar pierwszej serii
+/// roboczej jest znany (ADR 0020). Null, gdy przycisk ma się nie pokazać.
+List<WarmupSet>? _warmupPlan(
+  WidgetRef ref,
+  SessionExercise exercise,
+  List<SessionSet> sets,
+  ExerciseHints hints,
+) {
+  final m = exercise.measurementSnapshot;
+  if (!m.weight || !m.reps || sets.any((s) => isWarmup(s) || s.isCompleted)) {
+    return null;
+  }
+  final settings = ref.watch(appSettingsProvider).value;
+  final first = sets.firstOrNull;
+  if (settings == null || first == null) return null;
+  final working =
+      setValue(first, SetField.weight) ?? hints.hints[first.id]?.weightG?.value;
+  if (working == null) return null;
+  final equipment = ref
+      .watch(exercisesByIdProvider)
+      .value?[exercise.exerciseId]
+      ?.equipment;
+  return warmupPlan(
+    working,
+    step: weightStepFor(equipment, settings),
+    unit: settings.weightUnit,
+    minWeight: equipment != null && equipmentWithPlates.contains(equipment)
+        ? barWeightFor(equipment, settings)
+        : 0,
+  );
 }

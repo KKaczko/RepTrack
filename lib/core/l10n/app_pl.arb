@@ -1457,5 +1457,9 @@
   "platesBar": "Gryf: {equipment}",
   "@platesBar": {"description": "Ekran talerzy: nagłówek gryfu", "placeholders": {"equipment": {"type": "String"}}},
   "platesAvailable": "Dostępne talerze",
-  "@platesAvailable": {"description": "Ekran talerzy: nagłówek"}
+  "@platesAvailable": {"description": "Ekran talerzy: nagłówek"},
+  "workoutWarmup": "Rozgrzewka",
+  "@workoutWarmup": {"description": "Przycisk dodania serii rozgrzewkowych"},
+  "workoutWarmupAdded": "{count, plural, =1{Dodano 1 serię rozgrzewkową} few{Dodano {count} serie rozgrzewkowe} other{Dodano {count} serii rozgrzewkowych}}",
+  "@workoutWarmupAdded": {"description": "Komunikat po dodaniu rozgrzewki", "placeholders": {"count": {"type": "int"}}}
 }
