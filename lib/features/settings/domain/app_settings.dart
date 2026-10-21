@@ -28,6 +28,10 @@ abstract class AppSettings with _$AppSettings {
     /// Krok ciężaru w jednostce wyświetlania (2,5 kg albo np. 5 lb).
     @Default(2.5) double weightStep,
 
+    /// Krok stepperów czasu (sekundy) i dystansu (metry) w treningu.
+    @Default(5) int durationStepSeconds,
+    @Default(100) int distanceStepMeters,
+
     /// Skala wysiłku; null oznacza, że pole wysiłku jest wyłączone.
     @Default(EffortScale.rir) EffortScale? effortScale,
     @Default(120) int defaultRestSeconds,
@@ -49,6 +53,10 @@ abstract class AppSettings with _$AppSettings {
     @Default(1020) int planReminderMinutes,
   }) = _AppSettings;
 }
+
+/// Kroki czasu (sekundy) i dystansu (metry) do wyboru.
+const durationStepOptions = <int>[1, 5, 10, 15, 30, 60];
+const distanceStepOptions = <int>[10, 25, 50, 100, 250, 500, 1000];
 
 /// Kroki ciężaru do wyboru w danej jednostce.
 List<double> weightStepOptions(WeightUnit unit) => switch (unit) {

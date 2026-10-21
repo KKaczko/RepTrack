@@ -1335,5 +1335,13 @@
   "exerciseSubstitutes": "Zamienniki",
   "@exerciseSubstitutes": {"description": "Sekcja ekranu ćwiczenia"},
   "exerciseSubstitutesHint": "Pokazują się w treningu pod przyciskiem „Zamiennik”. ★ przypina zamiennik na stałe.",
-  "@exerciseSubstitutesHint": {"description": "Opis sekcji zamienników"}
+  "@exerciseSubstitutesHint": {"description": "Opis sekcji zamienników"},
+  "settingsDurationStep": "Krok czasu",
+  "@settingsDurationStep": {"description": "Ustawienie kroku czasu"},
+  "settingsDistanceStep": "Krok dystansu",
+  "@settingsDistanceStep": {"description": "Ustawienie kroku dystansu"},
+  "settingsSeconds": "{value} s",
+  "@settingsSeconds": {"description": "Sekundy w ustawieniach", "placeholders": {"value": {"type": "int"}}},
+  "settingsMeters": "{value} m",
+  "@settingsMeters": {"description": "Metry w ustawieniach", "placeholders": {"value": {"type": "int"}}}
 }

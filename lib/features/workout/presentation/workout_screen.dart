@@ -408,8 +408,14 @@ class _WorkoutScreenState extends ConsumerState<WorkoutScreen> {
         unit,
       ),
       SetField.reps => max(0, current + direction * repsStep),
-      SetField.duration => max(0, current + direction * durationStepSeconds),
-      SetField.distance => max(0, current + direction * distanceStepMeters),
+      SetField.duration => max(
+        0,
+        current + direction * settings.durationStepSeconds,
+      ),
+      SetField.distance => max(
+        0,
+        current + direction * settings.distanceStepMeters,
+      ),
     };
     unawaited(_controller.setValue(exercise.id, set.id, field, next));
   }

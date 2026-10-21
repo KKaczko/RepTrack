@@ -11,10 +11,9 @@ import '../domain/workout_session.dart';
 const rirChoices = <int>[0, 10, 20, 30, 40, 50];
 const rpeChoices = <int>[60, 70, 75, 80, 85, 90, 95, 100];
 
-/// Krok stepperów pól innych niż ciężar.
+/// Krok stepperów powtórzeń; kroki ciężaru, czasu i dystansu są
+/// w ustawieniach.
 const repsStep = 1;
-const durationStepSeconds = 5;
-const distanceStepMeters = 100;
 
 extension WorkoutLabels on AppLocalizations {
   String fieldLabel(SetField field) => switch (field) {

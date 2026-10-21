@@ -676,5 +676,9 @@
   "substituteReasonEquipment": "other equipment",
   "substituteReasonDone": "done before",
   "exerciseSubstitutes": "Substitutes",
-  "exerciseSubstitutesHint": "They show up in a workout under the “Substitute” button. ★ pins a substitute for good."
+  "exerciseSubstitutesHint": "They show up in a workout under the “Substitute” button. ★ pins a substitute for good.",
+  "settingsDurationStep": "Time step",
+  "settingsDistanceStep": "Distance step",
+  "settingsSeconds": "{value} s",
+  "settingsMeters": "{value} m"
 }

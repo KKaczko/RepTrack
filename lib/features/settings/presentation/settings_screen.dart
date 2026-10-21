@@ -97,6 +97,42 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               }
             },
           ),
+          ListTile(
+            title: Text(l10n.settingsDurationStep),
+            trailing: _Value(
+              l10n.settingsSeconds(settings.durationStepSeconds),
+            ),
+            onTap: () async {
+              final step = await _choose<int>(
+                title: l10n.settingsDurationStep,
+                current: settings.durationStepSeconds,
+                options: {
+                  for (final s in durationStepOptions)
+                    s: l10n.settingsSeconds(s),
+                },
+              );
+              if (step != null) {
+                await _save(settings.copyWith(durationStepSeconds: step));
+              }
+            },
+          ),
+          ListTile(
+            title: Text(l10n.settingsDistanceStep),
+            trailing: _Value(l10n.settingsMeters(settings.distanceStepMeters)),
+            onTap: () async {
+              final step = await _choose<int>(
+                title: l10n.settingsDistanceStep,
+                current: settings.distanceStepMeters,
+                options: {
+                  for (final m in distanceStepOptions)
+                    m: l10n.settingsMeters(m),
+                },
+              );
+              if (step != null) {
+                await _save(settings.copyWith(distanceStepMeters: step));
+              }
+            },
+          ),
           _SegmentedTile<EffortScale?>(
             title: l10n.settingsEffortScale,
             info: const [GlossaryTerm.rir, GlossaryTerm.rpe],

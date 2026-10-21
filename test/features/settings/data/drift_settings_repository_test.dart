@@ -25,6 +25,8 @@ void main() {
       themeMode: AppThemeMode.light,
       weightUnit: WeightUnit.lb,
       weightStep: 5,
+      durationStepSeconds: 30,
+      distanceStepMeters: 250,
       effortScale: null,
       defaultRestSeconds: 90,
       keepScreenOn: false,
@@ -53,5 +55,21 @@ void main() {
     expect(loaded.weightUnit, WeightUnit.kg);
     expect(loaded.themeMode, AppThemeMode.dark);
     expect(loaded.defaultRestSeconds, 75);
+  });
+
+  test('niepoprawny krok czasu lub dystansu daje wartość domyślną', () async {
+    await repo.save(
+      const AppSettings(durationStepSeconds: 15, distanceStepMeters: 50),
+    );
+    await db.customStatement(
+      "UPDATE settings SET value = '0' WHERE key = 'duration_step_seconds'",
+    );
+    await db.customStatement(
+      "UPDATE settings SET value = '2.5' WHERE key = 'distance_step_meters'",
+    );
+
+    final loaded = await repo.load();
+
+    expect((loaded.durationStepSeconds, loaded.distanceStepMeters), (5, 100));
   });
 }

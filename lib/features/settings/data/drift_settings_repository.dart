@@ -45,6 +45,8 @@ final class DriftSettingsRepository implements SettingsRepository {
     SettingKeys.themeMode: s.themeMode.code,
     SettingKeys.weightUnit: s.weightUnit.code,
     SettingKeys.weightStep: s.weightStep,
+    SettingKeys.durationStepSeconds: s.durationStepSeconds,
+    SettingKeys.distanceStepMeters: s.distanceStepMeters,
     SettingKeys.effortScale: s.effortScale?.code ?? 'off',
     SettingKeys.defaultRestSeconds: s.defaultRestSeconds,
     SettingKeys.keepScreenOn: s.keepScreenOn,
@@ -89,6 +91,16 @@ final class DriftSettingsRepository implements SettingsRepository {
         SettingKeys.weightStep,
         defaults.weightStep,
         (raw) => raw is num && raw > 0 ? raw.toDouble() : null,
+      ),
+      durationStepSeconds: pick(
+        SettingKeys.durationStepSeconds,
+        defaults.durationStepSeconds,
+        (raw) => raw is int && raw > 0 ? raw : null,
+      ),
+      distanceStepMeters: pick(
+        SettingKeys.distanceStepMeters,
+        defaults.distanceStepMeters,
+        (raw) => raw is int && raw > 0 ? raw : null,
       ),
       effortScale: values[SettingKeys.effortScale] == 'off'
           ? null
