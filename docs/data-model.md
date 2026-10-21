@@ -163,6 +163,10 @@ exercises 1─N exercise_substitutes N─1 exercises
 - **Plan** (`lib/features/plan/domain/plan_schedule.dart`): `dayPlan`, `dayOverview` (stany), `weekAdherence`, `planStreak`, operacje na dniach i `editWeeklyPlan` (wersjonowanie).
 - **`suggestSubstitutes(target, catalog, {pinned, used})`** (`lib/features/exercises/domain/substitutes.dart`): przypięte na górze, potem propozycje według mięśni, ruchu, sprzętu i historii ([ADR 0016](decisions/0016-zamienniki-cwiczen.md)).
 
+## Seed ćwiczeń
+
+Wersja 2 (2026-10-21, [ADR 0019](decisions/0019-gotowe-programy.md)) dodaje 4 własne ćwiczenia z masą ciała do programu bez sprzętu; pozostałe pozycje bez zmian (rewizja 1). Gotowe programy wskazują ćwiczenia stabilnym kluczem seeda (`tool/seed/ids.json`).
+
 ## Migracje
 
 - **v1 → v2** (plan treningów): nowe tabele `weekly_plans`, `weekly_plan_days`, `planned_days` z indeksami; istniejące tabele bez zmian.

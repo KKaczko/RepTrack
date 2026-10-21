@@ -34,3 +34,4 @@ Funkcje spoza MVP. Nie implementujemy ich bez decyzji właściciela.
 - Nadpisanie pola serii wartością „brak” (flagi nadpisań) — ADR 0004
 - Cel serii jako dystans (obecnie: powtórzenia albo czas)
 - Wyszukiwanie odporne na odmianę polskich słów („ławka” → „na ławce”), np. przez proste ucinanie końcówek lub więcej aliasów — ADR 0005
+- Cykliczne programy A/B (na zmianę co tydzień) i ciężary startowe w programach — ADR 0019.

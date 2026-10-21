@@ -102,15 +102,7 @@ class HomeScreen extends ConsumerWidget {
                 ),
               )
             else
-              Padding(
-                padding: const EdgeInsets.only(bottom: AppSpacing.s),
-                child: Text(
-                  l10n.homeNoTemplates,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
-                ),
-              ),
+              const _ProgramsCard(),
             const SizedBox(height: AppSpacing.s),
             SizedBox(
               height: AppSizes.stepper,
@@ -428,6 +420,45 @@ class _ResumeCard extends StatelessWidget {
                 onPressed: () => context.push(AppRoutes.workout),
                 icon: const Icon(Icons.play_arrow_rounded),
                 label: Text(l10n.homeResume),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Bez szablonów: zachęta do gotowego programu (ADR 0019), żeby zacząć
+/// sensowny trening w minutę.
+class _ProgramsCard extends StatelessWidget {
+  const _ProgramsCard();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.l),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(l10n.homeProgramsTitle, style: theme.textTheme.titleMedium),
+            const SizedBox(height: AppSpacing.xs),
+            Text(
+              l10n.homeProgramsBody,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.m),
+            SizedBox(
+              height: AppSizes.primaryAction,
+              child: FilledButton.icon(
+                onPressed: () => context.push(AppRoutes.programs),
+                icon: const Icon(Icons.auto_awesome_motion_rounded),
+                label: Text(l10n.homeProgramsAction),
               ),
             ),
           ],

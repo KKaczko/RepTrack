@@ -328,3 +328,19 @@ Zewnętrzny przegląd zgłosił 11 problemów; wszystkie potwierdziłem w kodzie
   - ekran (trening, edytor, menu treningu) i dostępność z superserią w danych testowych.
 - **Wychwycone przy pisaniu:** „Zaktualizuj szablon” brał grupy ze starego szablonu, więc superseria utworzona w treningu by przepadła. Teraz grupy idą z treningu, a podsumowanie pokazuje „Zmienione superserie”.
 - **Sprawdzone na emulatorze:** w trwającym treningu „Połącz w superserię z następnym” daje plakietki A1/A2 i nagłówek „Superseria A · razem z: …”. Po A1 nie ma przerwy i jest „Dalej: …”; po A2 rusza przerwa 2:00 i przycisk wraca do A1.
+
+### Po wydaniu: gotowe programy i start bez szablonów (2026-10-21)
+
+- **Decyzja właściciela:** karta na Starcie i biblioteka programów ([ADR 0019](decisions/0019-gotowe-programy.md)).
+- **Treść:** 7 programów (2–4 dni, siłownia, hantle, bez sprzętu) i seed v2 z 4 ćwiczeniami z masą ciała.
+- **Testy:**
+  - plik programów wobec biblioteki ćwiczeń (klucze, cele, plan, superserie, PL/EN);
+  - dodanie programu (szablony, superserie, plan od dziś, zamknięcie działającego planu);
+  - seed v1 → v2;
+  - ekran: Start → program → „Dziś wg planu”, pytanie o zastąpienie planu, akcja w Szablonach;
+  - dostępność list i podglądu.
+- **Wychwycone w testach:** odczyt zasobów z pakietu trwa poza zegarem testu, więc wskaźnik ładowania blokował `pumpAndSettle` przy równoległych testach. Uprząż testowa podaje programy i klucze seeda z plików.- **Sprawdzone na emulatorze:**
+  - aktualizacja dała seed v2 (122 ćwiczenia);
+  - w Szablonach „Gotowe programy” → filtr „bez sprzętu” → podgląd z planem tygodnia i plakietkami A1/A2;
+  - „Dodaj program” zapytał o zastąpienie planu i dodał „Masa ciała A/B”;
+  - Start pokazuje następny trening z nowego planu („piątek · Masa ciała A”). Dzisiejszy trening z programu jest „zastąpiony”, bo tego dnia był już inny trening (zasada z ADR 0015).

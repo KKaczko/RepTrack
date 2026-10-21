@@ -48,4 +48,9 @@ abstract final class AppRoutes {
   static String sessionDetail(String id) => '/sessions/$id';
 
   static String sessionCompare(String id) => '/sessions/$id/compare';
+
+  /// Gotowe programy (ADR 0019).
+  static const programs = '/programs';
+
+  static String programDetail(String id) => '/programs/$id';
 }

@@ -1,6 +1,6 @@
 {
   "formatVersion": 1,
-  "seedVersion": 1,
+  "seedVersion": 2,
   "source": {
     "name": "free-exercise-db",
     "url": "https://github.com/yuhonas/free-exercise-db",
@@ -1105,6 +1105,40 @@
       "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
     },
     {
+      "id": "01a16024-27c6-767a-87f9-cad402a1d4db",
+      "key": "superman",
+      "rev": 2,
+      "name": "Superman (unoszenie rąk i nóg w leżeniu przodem)",
+      "aliases": [
+        "Superman",
+        "Wyprosty leżąc przodem",
+        "Prone extension"
+      ],
+      "primaryMuscles": [
+        "lower_back"
+      ],
+      "secondaryMuscles": [
+        "glutes"
+      ],
+      "equipment": "bodyweight",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "pull",
+      "instructions": "Leżenie przodem, ręce wyprostowane przed głową.\nUnieś jednocześnie ręce, klatkę i nogi; wzrok w podłogę.\nZatrzymaj na 1–2 s na górze i opuść powoli.",
+      "measurement": {
+        "weight": false,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "reptrack:superman",
+      "license": null,
+      "licenseAuthor": "RepTrack"
+    },
+    {
       "id": "01a1552d-d0df-7d40-a613-07de42f84ca3",
       "key": "back_squat",
       "rev": 1,
@@ -2158,6 +2192,112 @@
       "originRef": "free-exercise-db:Calf_Press_On_The_Leg_Press_Machine",
       "license": "Unlicense",
       "licenseAuthor": "yuhonas/free-exercise-db (na podstawie wrkout/exercises.json)"
+    },
+    {
+      "id": "01a16024-27cf-7c09-a0ed-6033dcef7349",
+      "key": "bodyweight_squat",
+      "rev": 2,
+      "name": "Przysiad bez obciążenia",
+      "aliases": [
+        "Przysiad z masą ciała",
+        "Przysiad",
+        "Air squat",
+        "Bodyweight squat"
+      ],
+      "primaryMuscles": [
+        "quadriceps"
+      ],
+      "secondaryMuscles": [
+        "glutes",
+        "hamstrings"
+      ],
+      "equipment": "bodyweight",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Stopy na szerokość bioder lub nieco szerzej, palce lekko na zewnątrz.\nBiodra w tył i w dół, kolana w linii stóp, pięty na podłodze.\nSchodź tak nisko, jak pozwalają proste plecy.",
+      "measurement": {
+        "weight": false,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "reptrack:bodyweight_squat",
+      "license": null,
+      "licenseAuthor": "RepTrack"
+    },
+    {
+      "id": "01a16024-27cf-7576-82e8-e212de3042e9",
+      "key": "bodyweight_reverse_lunge",
+      "rev": 2,
+      "name": "Wykroki w tył bez obciążenia",
+      "aliases": [
+        "Wykroki",
+        "Wykroki bez obciążenia",
+        "Reverse lunge",
+        "Bodyweight lunge"
+      ],
+      "primaryMuscles": [
+        "quadriceps"
+      ],
+      "secondaryMuscles": [
+        "glutes",
+        "hamstrings"
+      ],
+      "equipment": "bodyweight",
+      "category": "strength",
+      "mechanic": "compound",
+      "force": "push",
+      "instructions": "Krok w tył, tylne kolano prawie dotyka podłogi.\nPrzednie kolano nad stopą, tułów prosto.\nPowtórzenia licz na każdą nogę.",
+      "measurement": {
+        "weight": false,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": true,
+      "originRef": "reptrack:bodyweight_reverse_lunge",
+      "license": null,
+      "licenseAuthor": "RepTrack"
+    },
+    {
+      "id": "01a16024-27cf-7c7c-aeba-fdb8881defd2",
+      "key": "bodyweight_glute_bridge",
+      "rev": 2,
+      "name": "Mostek biodrowy bez obciążenia",
+      "aliases": [
+        "Mostek biodrowy",
+        "Glute bridge",
+        "Unoszenie bioder leżąc"
+      ],
+      "primaryMuscles": [
+        "glutes"
+      ],
+      "secondaryMuscles": [
+        "hamstrings"
+      ],
+      "equipment": "bodyweight",
+      "category": "strength",
+      "mechanic": "isolation",
+      "force": "push",
+      "instructions": "Leżenie na plecach, stopy blisko pośladków, na szerokość bioder.\nUnieś biodra, aż tułów i uda będą w jednej linii; napnij pośladki.\nNie wyginaj lędźwi na górze ruchu.",
+      "measurement": {
+        "weight": false,
+        "reps": true,
+        "duration": false,
+        "distance": false
+      },
+      "loadMode": "bodyweight",
+      "weightSemantics": "total",
+      "isUnilateral": false,
+      "originRef": "reptrack:bodyweight_glute_bridge",
+      "license": null,
+      "licenseAuthor": "RepTrack"
     },
     {
       "id": "01a1552d-d0e5-7f15-b2a1-fb5aec4636bf",

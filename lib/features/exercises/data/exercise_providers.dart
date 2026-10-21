@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/database/database_providers.dart';
@@ -7,6 +8,7 @@ import '../domain/substitute_repository.dart';
 import '../domain/substitutes.dart';
 import 'drift_exercise_repository.dart';
 import 'drift_substitute_repository.dart';
+import 'seed_catalog.dart';
 
 /// Publiczne providery funkcji „ćwiczenia”; inne funkcje mogą z nich
 /// korzystać (docs/architecture.md).
@@ -43,4 +45,10 @@ final substituteRepositoryProvider = Provider<SubstituteRepository>(
 /// Wszystkie przypięte pary zamienników.
 final substitutePinsProvider = StreamProvider<List<SubstitutePin>>(
   (ref) => ref.watch(substituteRepositoryProvider).watch(),
+);
+
+/// Identyfikatory ćwiczeń wbudowanych po kluczu seeda (gotowe programy,
+/// ADR 0019).
+final seedExerciseIdsProvider = FutureProvider<Map<String, String>>(
+  (ref) async => seedIdsByKey(await rootBundle.loadString(seedAssetPath)),
 );

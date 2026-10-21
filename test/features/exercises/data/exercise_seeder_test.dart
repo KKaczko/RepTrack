@@ -61,13 +61,14 @@ void main() {
       await repo.setArchived(archived.id, archived: true);
 
       clock.advance(const Duration(days: 30));
-      final result = await seeder.apply(bumped(catalog, version: 2));
+      final next = catalog.seedVersion + 1;
+      final result = await seeder.apply(bumped(catalog, version: next));
 
       expect(result.updated, catalog.exercises.length - 1);
       expect(result.skippedUserModified, 1);
       expect((await repo.findById(edited.id))!.name, 'Moja klata');
       final archivedNow = (await repo.findById(archived.id))!;
-      expect(archivedNow.name, '${archived.name} v2');
+      expect(archivedNow.name, '${archived.name} v$next');
       expect(archivedNow.isArchived, isTrue);
     },
   );
@@ -76,7 +77,7 @@ void main() {
     await repo.save(testExercise('moje', name: 'Moje ćwiczenie'));
 
     await seeder.apply(catalog);
-    await seeder.apply(bumped(catalog, version: 2));
+    await seeder.apply(bumped(catalog, version: catalog.seedVersion + 1));
 
     expect((await repo.findById('moje'))!.name, 'Moje ćwiczenie');
   });
@@ -84,12 +85,32 @@ void main() {
   test('pozycja usunięta z nowego seeda zostaje w bazie', () async {
     await seeder.apply(catalog);
     final shorter = SeedCatalog(
-      seedVersion: 2,
+      seedVersion: catalog.seedVersion + 1,
       exercises: catalog.exercises.skip(1).toList(),
     );
 
     await seeder.apply(shorter);
 
     expect(await repo.findById(catalog.exercises.first.id), isNotNull);
+  });
+
+  test('seed v1 → v2: dochodzą ćwiczenia z masą ciała (ADR 0019)', () async {
+    final v1 = SeedCatalog(
+      seedVersion: 1,
+      exercises: [
+        for (final e in catalog.exercises)
+          if (e.seedVersion == 1) e,
+      ],
+    );
+    await seeder.apply(v1);
+
+    final result = await seeder.apply(catalog);
+
+    expect(catalog.seedVersion, 2);
+    expect(result.inserted, 4);
+    expect(result.updated, 0);
+    final names = {for (final e in await repo.watchAll().first) e.name};
+    expect(names, contains('Przysiad bez obciążenia'));
+    expect(names, contains('Mostek biodrowy bez obciążenia'));
   });
 }

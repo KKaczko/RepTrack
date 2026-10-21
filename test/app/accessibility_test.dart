@@ -240,8 +240,35 @@ void main() {
       await _meetsGuidelines(tester);
       await _tap(tester, find.text('Jak mi idzie w ostatnim miesiącu?'));
       await _meetsGuidelines(tester);
+      await _tap(tester, find.byTooltip('Wstecz'));
+
+      await _tap(tester, navTab('Szablony'));
+      await _tap(tester, find.byTooltip('Gotowe programy'));
+      await _meetsGuidelines(tester);
+      await tester.scrollUntilVisible(
+        find.text('Push/Pull/Nogi (3× w tygodniu)'),
+        300,
+      );
+      await _tap(tester, find.text('Push/Pull/Nogi (3× w tygodniu)'));
+      await _meetsGuidelines(tester);
 
       await closeRepTrack(tester, db);
     });
   }
+
+  testWidgets('czcionka 2× na 360 dp: gotowe programy', (tester) async {
+    final db = await _launch(tester, textScale: 2);
+
+    await _tap(tester, navTab('Szablony'));
+    await _tap(tester, find.byTooltip('Gotowe programy'));
+    expect(tester.takeException(), isNull);
+    await _tap(tester, find.widgetWithText(FilterChip, '4×'));
+    expect(tester.takeException(), isNull);
+    await _tap(tester, find.text('Góra/Dół (4× w tygodniu)'));
+    expect(tester.takeException(), isNull);
+    await tester.scrollUntilVisible(find.text('Dół B'), 300);
+    expect(tester.takeException(), isNull);
+
+    await closeRepTrack(tester, db);
+  });
 }

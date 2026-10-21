@@ -19,7 +19,7 @@
 #   unilateral true/false (domyślnie false)
 #   equipment, category, mechanic, force, primary, secondary: nadpisania danych źródła
 
-seed_version: 1
+seed_version: 2
 
 exercises:
   # ── Klatka piersiowa ─────────────────────────────────────────────
@@ -364,6 +364,22 @@ exercises:
       - Unoś barki pionowo w górę.
       - Kontrolowane opuszczanie do pełnego rozciągnięcia.
 
+  - key: superman
+    name: Superman (unoszenie rąk i nóg w leżeniu przodem)
+    aliases: [Superman, Wyprosty leżąc przodem, Prone extension]
+    measure: [reps]
+    load: bodyweight
+    equipment: bodyweight
+    category: strength
+    mechanic: isolation
+    force: pull
+    primary: [lower_back]
+    secondary: [glutes]
+    cues:
+      - Leżenie przodem, ręce wyprostowane przed głową.
+      - Unieś jednocześnie ręce, klatkę i nogi; wzrok w podłogę.
+      - Zatrzymaj na 1–2 s na górze i opuść powoli.
+
   # ── Nogi i pośladki ──────────────────────────────────────────────
   - key: back_squat
     source: Barbell_Squat
@@ -685,6 +701,55 @@ exercises:
       - Na platformie tylko przednia część stopy.
       - Kolana proste, ale nie zablokowane.
       - Pełny zakres ruchu w stawie skokowym.
+
+  - key: bodyweight_squat
+    name: Przysiad bez obciążenia
+    aliases: [Przysiad z masą ciała, Przysiad, Air squat, Bodyweight squat]
+    measure: [reps]
+    load: bodyweight
+    equipment: bodyweight
+    category: strength
+    mechanic: compound
+    force: push
+    primary: [quadriceps]
+    secondary: [glutes, hamstrings]
+    cues:
+      - Stopy na szerokość bioder lub nieco szerzej, palce lekko na zewnątrz.
+      - Biodra w tył i w dół, kolana w linii stóp, pięty na podłodze.
+      - Schodź tak nisko, jak pozwalają proste plecy.
+
+  - key: bodyweight_reverse_lunge
+    name: Wykroki w tył bez obciążenia
+    aliases: [Wykroki, Wykroki bez obciążenia, Reverse lunge, Bodyweight lunge]
+    measure: [reps]
+    load: bodyweight
+    unilateral: true
+    equipment: bodyweight
+    category: strength
+    mechanic: compound
+    force: push
+    primary: [quadriceps]
+    secondary: [glutes, hamstrings]
+    cues:
+      - Krok w tył, tylne kolano prawie dotyka podłogi.
+      - Przednie kolano nad stopą, tułów prosto.
+      - Powtórzenia licz na każdą nogę.
+
+  - key: bodyweight_glute_bridge
+    name: Mostek biodrowy bez obciążenia
+    aliases: [Mostek biodrowy, Glute bridge, Unoszenie bioder leżąc]
+    measure: [reps]
+    load: bodyweight
+    equipment: bodyweight
+    category: strength
+    mechanic: isolation
+    force: push
+    primary: [glutes]
+    secondary: [hamstrings]
+    cues:
+      - Leżenie na plecach, stopy blisko pośladków, na szerokość bioder.
+      - Unieś biodra, aż tułów i uda będą w jednej linii; napnij pośladki.
+      - Nie wyginaj lędźwi na górze ruchu.
 
   # ── Barki ────────────────────────────────────────────────────────
   - key: overhead_press

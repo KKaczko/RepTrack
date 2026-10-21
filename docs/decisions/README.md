@@ -22,6 +22,7 @@ Decyzje łatwo odwracalne agent podejmuje sam i zapisuje tutaj. Decyzje trudno o
 | [0016](0016-zamienniki-cwiczen.md) | Ćwiczenia zastępcze i kroki stepperów ⚠ | po wydaniu 1.0.0 |
 | [0017](0017-progresja-podwojna.md) | Automatyczna progresja podwójna | po wydaniu 1.0.0 |
 | [0018](0018-superserie.md) | Superserie | po wydaniu 1.0.0 |
+| [0019](0019-gotowe-programy.md) | Gotowe programy i start bez szablonów | po wydaniu 1.0.0 |
 
 ## Szablon
 

@@ -13,11 +13,17 @@ import 'package:reptrack/core/platform/file_exchange.dart';
 import 'package:reptrack/core/platform/plan_reminders.dart';
 import 'package:reptrack/core/platform/rest_notifications.dart';
 import 'package:reptrack/features/assistant/data/assistant_providers.dart';
+import 'package:reptrack/features/exercises/data/exercise_providers.dart';
 import 'package:reptrack/features/exercises/data/exercise_seeder.dart';
 import 'package:reptrack/features/exercises/data/seed_catalog.dart';
+import 'package:reptrack/features/programs/data/program_providers.dart';
+import 'package:reptrack/features/programs/domain/program.dart';
 
 import 'fake_devices.dart';
 import 'test_database.dart';
+
+final _programsJson = File(programsAssetPath).readAsStringSync();
+final _seedJson = File(seedAssetPath).readAsStringSync();
 
 /// Uruchamia całą aplikację po polsku na bazie testowej, opcjonalnie
 /// z wbudowaną biblioteką ćwiczeń. Podanie [db] uruchamia aplikację ponownie
@@ -66,6 +72,12 @@ Future<AppDatabase> pumpRepTrack(
         planRemindersProvider.overrideWithValue(
           reminders ?? FakePlanReminders(),
         ),
+        // Zasoby z plików od razu: prawdziwy odczyt z pakietu zasobów trwa
+        // poza zegarem testu, a wskaźnik ładowania blokowałby pumpAndSettle.
+        programLibraryProvider.overrideWith(
+          (ref) => parsePrograms(_programsJson),
+        ),
+        seedExerciseIdsProvider.overrideWith((ref) => seedIdsByKey(_seedJson)),
         ...overrides,
       ],
       child: const RepTrackApp(),

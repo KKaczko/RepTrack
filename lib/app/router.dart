@@ -15,6 +15,8 @@ import '../features/history/presentation/session_detail_screen.dart';
 import '../features/home/presentation/home_screen.dart';
 import '../features/plan/presentation/plan_screen.dart';
 import '../features/plan/presentation/weekly_plan_screen.dart';
+import '../features/programs/presentation/program_detail_screen.dart';
+import '../features/programs/presentation/programs_screen.dart';
 import '../features/settings/presentation/glossary_screen.dart';
 import '../features/settings/presentation/licenses_screen.dart';
 import '../features/settings/presentation/settings_screen.dart';
@@ -148,6 +150,17 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.glossary,
         builder: (context, state) => const GlossaryScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.programs,
+        builder: (context, state) => const ProgramsScreen(),
+        routes: [
+          GoRoute(
+            path: ':id',
+            builder: (context, state) =>
+                ProgramDetailScreen(programId: state.pathParameters['id']!),
+          ),
+        ],
       ),
       GoRoute(
         path: '/sessions/:id',

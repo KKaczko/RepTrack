@@ -25,6 +25,7 @@ Poza shellem (pełny ekran):
   /sessions/:id/compare       porównanie z poprzednim wykonaniem każdego ćwiczenia
   /settings → /settings/backup (backup, przywracanie, CSV, MD) · /settings/licenses
   /glossary                   słowniczek pojęć (z ustawień, z zakładki Progres i z arkusza ⓘ)
+  /programs → /programs/:id   gotowe programy: lista z filtrami, podgląd, „Dodaj program” (Start, Szablony)
   /assistant                  asystent AI (Start, Progres); ?session=<id> komentarz, ?template=<id> propozycja
   /pick-exercises             wspólny wybór ćwiczeń (szablony, trening, filtr eksportu); zwraca listę id
                               ?single=true: jedno ćwiczenie jednym tapnięciem (zamiana w treningu)
@@ -188,3 +189,16 @@ Przy pierwszym w ogóle treningu dochodzą jednorazowe okna zgód: systemowa zgo
   - po zatwierdzeniu serii A1 główny przycisk to „Dalej: Podciąganie”, a przerwa nie rusza. Po A2 rusza przerwa, a przycisk prowadzi z powrotem do A1;
   - ręczne dotknięcie serii ma pierwszeństwo przed przyciskiem „Dalej”.
 - **Historia i plan:** plakietki A1/A2 w szczegółach treningu i w podglądzie szablonu.
+
+## Gotowe programy (ADR 0019)
+
+- **Start bez szablonów:** karta „Zacznij od gotowego programu” z krótkim opisem i przyciskiem „Wybierz program” zamiast tekstu „Utwórz szablon…”. „Pusty trening” zostaje pod kartą.
+- **Szablony:** akcja „Gotowe programy” w pasku i przycisk w pustym stanie.
+- **Lista** (`/programs`):
+  - filtry w trzech rzędach (dni w tygodniu, sprzęt, poziom); ponowne dotknięcie wybranego filtra go wyłącza;
+  - karta programu: nazwa, „3× w tygodniu · siłownia · początkujący”, opis do 3 linii.
+- **Podgląd** (`/programs/:id`):
+  - opis, plan tygodnia („Poniedziałek: FBW A”), treningi z ćwiczeniami („3 × 8–12 · przerwa 2:00”) i plakietki superserii;
+  - na dole „Dodaj program”;
+  - przy działającym planie tygodnia pytanie „Zastąpić plan tygodnia?” („szablony i historia zostają”);
+  - po dodaniu powrót na Start z komunikatem „Dodano program: …”.

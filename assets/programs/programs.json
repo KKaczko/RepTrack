@@ -1,0 +1,294 @@
+{
+  "formatVersion": 1,
+  "programs": [
+    {
+      "id": "fbw_beginner_3",
+      "name": {"pl": "FBW na start (3× w tygodniu)", "en": "Full body starter (3× a week)"},
+      "description": {
+        "pl": "Trzy różne treningi całego ciała na siłowni: przysiad, wyciskanie, wiosłowanie, martwy ciąg rumuński i brzuch. Dobry pierwszy plan; ciężar rośnie sam, gdy dojdziesz do góry zakresu powtórzeń.",
+        "en": "Three different full-body gym workouts: squat, press, row, Romanian deadlift and core. A good first plan; the weight goes up by itself once you reach the top of the rep range."
+      },
+      "level": "beginner",
+      "equipment": "gym",
+      "schedule": {"1": "A", "3": "B", "5": "C"},
+      "workouts": [
+        {
+          "key": "A",
+          "name": {"pl": "FBW A", "en": "Full body A"},
+          "exercises": [
+            {"exercise": "back_squat", "sets": 3, "reps": [6, 10], "rest": 150},
+            {"exercise": "dumbbell_bench_press", "sets": 3, "reps": [8, 12], "rest": 120},
+            {"exercise": "seated_cable_row", "sets": 3, "reps": [8, 12], "rest": 120},
+            {"exercise": "dumbbell_shoulder_press", "sets": 2, "reps": [8, 12], "rest": 90},
+            {"exercise": "plank", "sets": 3, "seconds": [30, 60], "rest": 60}
+          ]
+        },
+        {
+          "key": "B",
+          "name": {"pl": "FBW B", "en": "Full body B"},
+          "exercises": [
+            {"exercise": "romanian_deadlift", "sets": 3, "reps": [8, 10], "rest": 150},
+            {"exercise": "lat_pulldown", "sets": 3, "reps": [8, 12], "rest": 120},
+            {"exercise": "incline_dumbbell_press", "sets": 3, "reps": [8, 12], "rest": 120},
+            {"exercise": "split_squat", "sets": 2, "reps": [8, 12], "rest": 90},
+            {"exercise": "dead_bug", "sets": 3, "reps": [8, 12], "rest": 60}
+          ]
+        },
+        {
+          "key": "C",
+          "name": {"pl": "FBW C", "en": "Full body C"},
+          "exercises": [
+            {"exercise": "leg_press", "sets": 3, "reps": [10, 12], "rest": 120},
+            {"exercise": "machine_chest_press", "sets": 3, "reps": [8, 12], "rest": 120},
+            {"exercise": "dumbbell_row", "sets": 3, "reps": [8, 12], "rest": 90},
+            {"exercise": "lateral_raise", "sets": 3, "reps": [12, 15], "rest": 60},
+            {"exercise": "dumbbell_curl", "sets": 2, "reps": [10, 12], "rest": 60, "superset": "ramiona"},
+            {"exercise": "triceps_pushdown", "sets": 2, "reps": [10, 12], "rest": 60, "superset": "ramiona"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "strength_5x5",
+      "name": {"pl": "Siła 5×5", "en": "Strength 5×5"},
+      "description": {
+        "pl": "Klasyczny plan siłowy ze sztangą: mało ćwiczeń, ciężkie serie po 5 powtórzeń. Gdy zrobisz wszystkie serie po 5, następnym razem ciężar rośnie o krok. Treningi A i B na zmianę: pon. A, śr. B, pt. A.",
+        "en": "A classic barbell strength plan: few exercises, heavy sets of 5. Once you complete every set of 5, the weight goes up by one step next time. Workouts A and B alternate: Mon A, Wed B, Fri A."
+      },
+      "level": "beginner",
+      "equipment": "gym",
+      "schedule": {"1": "A", "3": "B", "5": "A"},
+      "workouts": [
+        {
+          "key": "A",
+          "name": {"pl": "5×5 A", "en": "5×5 A"},
+          "exercises": [
+            {"exercise": "back_squat", "sets": 5, "reps": [5, 5], "rest": 180},
+            {"exercise": "barbell_bench_press", "sets": 5, "reps": [5, 5], "rest": 180},
+            {"exercise": "barbell_row", "sets": 5, "reps": [5, 5], "rest": 150}
+          ]
+        },
+        {
+          "key": "B",
+          "name": {"pl": "5×5 B", "en": "5×5 B"},
+          "exercises": [
+            {"exercise": "back_squat", "sets": 5, "reps": [5, 5], "rest": 180},
+            {"exercise": "overhead_press", "sets": 5, "reps": [5, 5], "rest": 180},
+            {"exercise": "deadlift", "sets": 1, "reps": [5, 5], "rest": 180}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fbw_2",
+      "name": {"pl": "FBW 2× w tygodniu (mało czasu)", "en": "Full body 2× a week (short on time)"},
+      "description": {
+        "pl": "Dwa krótkie treningi całego ciała z superseriami, żeby zmieścić się w ok. 45 minutach. Dla zabieganych i na powrót po przerwie.",
+        "en": "Two short full-body workouts with supersets to fit into about 45 minutes. For busy weeks and for coming back after a break."
+      },
+      "level": "beginner",
+      "equipment": "gym",
+      "schedule": {"1": "A", "4": "B"},
+      "workouts": [
+        {
+          "key": "A",
+          "name": {"pl": "FBW 2× A", "en": "Full body 2× A"},
+          "exercises": [
+            {"exercise": "goblet_squat", "sets": 3, "reps": [8, 12], "rest": 120},
+            {"exercise": "dumbbell_bench_press", "sets": 3, "reps": [8, 12], "rest": 120, "superset": "gora"},
+            {"exercise": "lat_pulldown", "sets": 3, "reps": [8, 12], "rest": 120, "superset": "gora"},
+            {"exercise": "dumbbell_romanian_deadlift", "sets": 3, "reps": [8, 12], "rest": 90},
+            {"exercise": "plank", "sets": 2, "seconds": [30, 60], "rest": 60}
+          ]
+        },
+        {
+          "key": "B",
+          "name": {"pl": "FBW 2× B", "en": "Full body 2× B"},
+          "exercises": [
+            {"exercise": "leg_press", "sets": 3, "reps": [10, 12], "rest": 120},
+            {"exercise": "machine_shoulder_press", "sets": 3, "reps": [8, 12], "rest": 120, "superset": "gora"},
+            {"exercise": "seated_cable_row", "sets": 3, "reps": [8, 12], "rest": 120, "superset": "gora"},
+            {"exercise": "lying_leg_curl", "sets": 2, "reps": [10, 12], "rest": 60},
+            {"exercise": "dead_bug", "sets": 2, "reps": [8, 12], "rest": 60}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "upper_lower_4",
+      "name": {"pl": "Góra/Dół (4× w tygodniu)", "en": "Upper/Lower (4× a week)"},
+      "description": {
+        "pl": "Cztery treningi: dwa na górę ciała i dwa na nogi. Więcej objętości na partię niż w FBW; dla osób, które trenują regularnie od kilku miesięcy.",
+        "en": "Four workouts: two for the upper body and two for the legs. More volume per muscle than full body; for people who have trained regularly for a few months."
+      },
+      "level": "intermediate",
+      "equipment": "gym",
+      "schedule": {"1": "UA", "2": "LA", "4": "UB", "5": "LB"},
+      "workouts": [
+        {
+          "key": "UA",
+          "name": {"pl": "Góra A", "en": "Upper A"},
+          "exercises": [
+            {"exercise": "barbell_bench_press", "sets": 4, "reps": [6, 8], "rest": 150},
+            {"exercise": "barbell_row", "sets": 4, "reps": [6, 8], "rest": 150},
+            {"exercise": "dumbbell_shoulder_press", "sets": 3, "reps": [8, 12], "rest": 90},
+            {"exercise": "lat_pulldown", "sets": 3, "reps": [8, 12], "rest": 90},
+            {"exercise": "ez_bar_curl", "sets": 2, "reps": [10, 12], "rest": 60, "superset": "ramiona"},
+            {"exercise": "rope_pushdown", "sets": 2, "reps": [10, 12], "rest": 60, "superset": "ramiona"}
+          ]
+        },
+        {
+          "key": "LA",
+          "name": {"pl": "Dół A", "en": "Lower A"},
+          "exercises": [
+            {"exercise": "back_squat", "sets": 4, "reps": [6, 8], "rest": 180},
+            {"exercise": "romanian_deadlift", "sets": 3, "reps": [8, 10], "rest": 150},
+            {"exercise": "leg_extension", "sets": 3, "reps": [10, 15], "rest": 60},
+            {"exercise": "lying_leg_curl", "sets": 3, "reps": [10, 15], "rest": 60},
+            {"exercise": "standing_calf_raise", "sets": 3, "reps": [10, 15], "rest": 60}
+          ]
+        },
+        {
+          "key": "UB",
+          "name": {"pl": "Góra B", "en": "Upper B"},
+          "exercises": [
+            {"exercise": "overhead_press", "sets": 4, "reps": [6, 8], "rest": 150},
+            {"exercise": "pull_ups", "sets": 4, "reps": [6, 10], "rest": 150},
+            {"exercise": "incline_dumbbell_press", "sets": 3, "reps": [8, 12], "rest": 90},
+            {"exercise": "seated_cable_row", "sets": 3, "reps": [8, 12], "rest": 90},
+            {"exercise": "lateral_raise", "sets": 3, "reps": [12, 15], "rest": 60, "superset": "barki"},
+            {"exercise": "face_pull", "sets": 3, "reps": [12, 15], "rest": 60, "superset": "barki"}
+          ]
+        },
+        {
+          "key": "LB",
+          "name": {"pl": "Dół B", "en": "Lower B"},
+          "exercises": [
+            {"exercise": "deadlift", "sets": 3, "reps": [4, 6], "rest": 180},
+            {"exercise": "leg_press", "sets": 3, "reps": [10, 12], "rest": 120},
+            {"exercise": "bulgarian_split_squat", "sets": 3, "reps": [8, 12], "rest": 90},
+            {"exercise": "seated_leg_curl", "sets": 3, "reps": [10, 15], "rest": 60},
+            {"exercise": "hanging_leg_raise", "sets": 3, "reps": [8, 12], "rest": 60}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "push_pull_legs_3",
+      "name": {"pl": "Push/Pull/Nogi (3× w tygodniu)", "en": "Push/Pull/Legs (3× a week)"},
+      "description": {
+        "pl": "Podział na wypychanie (klatka, barki, triceps), przyciąganie (plecy, biceps) i nogi. Każda partia raz w tygodniu, za to z większą objętością.",
+        "en": "A split into push (chest, shoulders, triceps), pull (back, biceps) and legs. Each muscle once a week, with more volume."
+      },
+      "level": "intermediate",
+      "equipment": "gym",
+      "schedule": {"1": "PUSH", "3": "PULL", "5": "LEGS"},
+      "workouts": [
+        {
+          "key": "PUSH",
+          "name": {"pl": "Push", "en": "Push"},
+          "exercises": [
+            {"exercise": "barbell_bench_press", "sets": 4, "reps": [6, 10], "rest": 150},
+            {"exercise": "overhead_press", "sets": 3, "reps": [6, 10], "rest": 150},
+            {"exercise": "incline_dumbbell_press", "sets": 3, "reps": [8, 12], "rest": 90},
+            {"exercise": "lateral_raise", "sets": 3, "reps": [12, 15], "rest": 60, "superset": "izolacja"},
+            {"exercise": "rope_pushdown", "sets": 3, "reps": [10, 12], "rest": 60, "superset": "izolacja"}
+          ]
+        },
+        {
+          "key": "PULL",
+          "name": {"pl": "Pull", "en": "Pull"},
+          "exercises": [
+            {"exercise": "barbell_row", "sets": 4, "reps": [6, 10], "rest": 150},
+            {"exercise": "pull_ups", "sets": 3, "reps": [6, 10], "rest": 150},
+            {"exercise": "seated_cable_row", "sets": 3, "reps": [8, 12], "rest": 90},
+            {"exercise": "face_pull", "sets": 3, "reps": [12, 15], "rest": 60, "superset": "izolacja"},
+            {"exercise": "dumbbell_curl", "sets": 3, "reps": [10, 12], "rest": 60, "superset": "izolacja"}
+          ]
+        },
+        {
+          "key": "LEGS",
+          "name": {"pl": "Nogi", "en": "Legs"},
+          "exercises": [
+            {"exercise": "back_squat", "sets": 4, "reps": [6, 10], "rest": 180},
+            {"exercise": "romanian_deadlift", "sets": 3, "reps": [8, 10], "rest": 150},
+            {"exercise": "leg_press", "sets": 3, "reps": [10, 12], "rest": 120},
+            {"exercise": "lying_leg_curl", "sets": 3, "reps": [10, 15], "rest": 60},
+            {"exercise": "standing_calf_raise", "sets": 3, "reps": [10, 15], "rest": 60}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dumbbells_home_3",
+      "name": {"pl": "Hantle w domu (3× w tygodniu)", "en": "Dumbbells at home (3× a week)"},
+      "description": {
+        "pl": "Całe ciało z parą hantli (przyda się ławka albo stabilne krzesło). Treningi A i B na zmianę: pon. A, śr. B, pt. A.",
+        "en": "Full body with a pair of dumbbells (a bench or a sturdy chair helps). Workouts A and B alternate: Mon A, Wed B, Fri A."
+      },
+      "level": "beginner",
+      "equipment": "dumbbells",
+      "schedule": {"1": "A", "3": "B", "5": "A"},
+      "workouts": [
+        {
+          "key": "A",
+          "name": {"pl": "Hantle A", "en": "Dumbbells A"},
+          "exercises": [
+            {"exercise": "goblet_squat", "sets": 3, "reps": [10, 15], "rest": 90},
+            {"exercise": "dumbbell_bench_press", "sets": 3, "reps": [8, 12], "rest": 90},
+            {"exercise": "dumbbell_row", "sets": 3, "reps": [8, 12], "rest": 90},
+            {"exercise": "dumbbell_shoulder_press", "sets": 2, "reps": [8, 12], "rest": 90},
+            {"exercise": "plank", "sets": 3, "seconds": [30, 60], "rest": 60}
+          ]
+        },
+        {
+          "key": "B",
+          "name": {"pl": "Hantle B", "en": "Dumbbells B"},
+          "exercises": [
+            {"exercise": "dumbbell_romanian_deadlift", "sets": 3, "reps": [8, 12], "rest": 90},
+            {"exercise": "split_squat", "sets": 3, "reps": [8, 12], "rest": 90},
+            {"exercise": "push_ups", "sets": 3, "reps": [8, 15], "rest": 60},
+            {"exercise": "reverse_fly", "sets": 3, "reps": [12, 15], "rest": 60},
+            {"exercise": "dumbbell_curl", "sets": 2, "reps": [10, 12], "rest": 60, "superset": "ramiona"},
+            {"exercise": "overhead_dumbbell_extension", "sets": 2, "reps": [10, 12], "rest": 60, "superset": "ramiona"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bodyweight_3",
+      "name": {"pl": "Masa ciała (3× w tygodniu, bez sprzętu)", "en": "Bodyweight (3× a week, no equipment)"},
+      "description": {
+        "pl": "Trening w domu albo w podróży, bez sprzętu. Gdy dojdziesz do góry zakresu, dodaj powtórzenia albo wybierz trudniejszą wersję ćwiczenia. Treningi A i B na zmianę: pon. A, śr. B, pt. A.",
+        "en": "A workout for home or travel, with no equipment. When you reach the top of the range, add reps or pick a harder variation. Workouts A and B alternate: Mon A, Wed B, Fri A."
+      },
+      "level": "beginner",
+      "equipment": "bodyweight",
+      "schedule": {"1": "A", "3": "B", "5": "A"},
+      "workouts": [
+        {
+          "key": "A",
+          "name": {"pl": "Masa ciała A", "en": "Bodyweight A"},
+          "exercises": [
+            {"exercise": "bodyweight_squat", "sets": 3, "reps": [12, 20], "rest": 60},
+            {"exercise": "push_ups", "sets": 3, "reps": [6, 15], "rest": 60, "superset": "obwod"},
+            {"exercise": "superman", "sets": 3, "reps": [10, 15], "rest": 60, "superset": "obwod"},
+            {"exercise": "bodyweight_glute_bridge", "sets": 3, "reps": [12, 20], "rest": 60},
+            {"exercise": "plank", "sets": 3, "seconds": [30, 60], "rest": 60}
+          ]
+        },
+        {
+          "key": "B",
+          "name": {"pl": "Masa ciała B", "en": "Bodyweight B"},
+          "exercises": [
+            {"exercise": "bodyweight_reverse_lunge", "sets": 3, "reps": [8, 12], "rest": 60},
+            {"exercise": "close_grip_push_ups", "sets": 3, "reps": [6, 12], "rest": 60},
+            {"exercise": "bench_dips", "sets": 3, "reps": [8, 15], "rest": 60},
+            {"exercise": "dead_bug", "sets": 3, "reps": [8, 12], "rest": 60},
+            {"exercise": "side_plank", "sets": 2, "seconds": [20, 40], "rest": 45}
+          ]
+        }
+      ]
+    }
+  ]
+}

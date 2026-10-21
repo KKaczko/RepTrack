@@ -49,6 +49,7 @@ flutter:
 
   assets:
     - assets/fonts/Inter-OFL.txt
+    - assets/programs/programs.json
     - assets/seed/exercises.json
     - assets/seed/free-exercise-db-LICENSE.txt
 

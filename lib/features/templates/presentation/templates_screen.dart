@@ -38,6 +38,11 @@ class _TemplatesScreenState extends ConsumerState<TemplatesScreen> {
         title: Text(l10n.navTemplates),
         actions: [
           IconButton(
+            tooltip: l10n.programsTitle,
+            icon: const Icon(Icons.auto_awesome_motion_outlined),
+            onPressed: () => context.push(AppRoutes.programs),
+          ),
+          IconButton(
             tooltip: _showArchived
                 ? l10n.templatesShowActive
                 : l10n.templatesShowArchived,
@@ -81,6 +86,11 @@ class _TemplatesScreenState extends ConsumerState<TemplatesScreen> {
               icon: Icons.list_alt_rounded,
               title: l10n.templatesEmptyTitle,
               message: l10n.templatesEmptyMessage,
+              action: OutlinedButton.icon(
+                icon: const Icon(Icons.auto_awesome_motion_outlined),
+                label: Text(l10n.programsTitle),
+                onPressed: () => context.push(AppRoutes.programs),
+              ),
             );
     }
     return ListView.builder(

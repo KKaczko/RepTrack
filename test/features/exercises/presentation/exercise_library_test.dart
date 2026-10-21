@@ -35,7 +35,7 @@ void main() {
   ) async {
     final db = await _openLibrary(tester);
 
-    expect(find.text('118 ćwiczeń'), findsOneWidget);
+    expect(find.text('122 ćwiczenia'), findsOneWidget);
 
     await tester.enterText(find.byType(TextField), 'lawce rzymskiej');
     await tester.pumpAndSettle();
@@ -48,7 +48,7 @@ void main() {
 
     await tester.tap(find.byTooltip('Wyczyść wyszukiwanie'));
     await tester.pumpAndSettle();
-    expect(find.text('118 ćwiczeń'), findsOneWidget);
+    expect(find.text('122 ćwiczenia'), findsOneWidget);
 
     await closeRepTrack(tester, db);
   });
@@ -206,7 +206,7 @@ void main() {
 
     await tester.tap(find.byTooltip('Wstecz'));
     await tester.pumpAndSettle();
-    expect(find.text('117 ćwiczeń'), findsOneWidget);
+    expect(find.text('121 ćwiczeń'), findsOneWidget);
     expect(find.text('Arnoldki'), findsNothing);
 
     await tester.tap(find.byTooltip('Filtry'));

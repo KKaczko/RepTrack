@@ -52,7 +52,8 @@ lib/
     home/        presentation
     assistant/   domain (kontekst z danych) | data (klient Ollamy) | presentation (czat), ADR 0014
     plan/        domain (plan dnia, stany, realizacja) | data (repozytorium, przypomnienia) | presentation (zakładka Plan), ADR 0015
-assets/          seed/exercises.json, fonts/ (Inter, OFL)
+    programs/    domain (format, walidacja, dodanie) | data (asset, instalacja) | presentation (lista, podgląd), ADR 0019
+assets/          seed/exercises.json, programs/programs.json, fonts/ (Inter, OFL)
 drift_schemas/   zrzuty schematu per wersja (commitowane)
 test/            lustro lib/ + test/architecture/ + test/migrations/
 tool/            check.sh, seed/ (skrypt budujący seed z free-exercise-db + nadpisania PL)

@@ -81,3 +81,14 @@ Exercise _exercise(Map<String, dynamic> json) {
     seedVersion: json['rev'] as int,
   );
 }
+
+/// Identyfikatory ćwiczeń wbudowanych po stabilnym kluczu, np. „back_squat”
+/// (gotowe programy, ADR 0019).
+Map<String, String> seedIdsByKey(String source) {
+  final json = jsonDecode(source) as Map<String, dynamic>;
+  return {
+    for (final raw
+        in (json['exercises'] as List<dynamic>).cast<Map<String, dynamic>>())
+      raw['key'] as String: raw['id'] as String,
+  };
+}
