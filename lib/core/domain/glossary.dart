@@ -8,6 +8,7 @@ enum GlossaryTerm {
   warmupSet(GlossaryGroup.basics),
   workingSet(GlossaryGroup.basics),
   muscleRoles(GlossaryGroup.basics),
+  superset(GlossaryGroup.basics),
   loadMode(GlossaryGroup.basics),
   rir(GlossaryGroup.effort),
   rpe(GlossaryGroup.effort),

@@ -131,8 +131,12 @@ final class WorkoutController {
         );
         final rest = restAfter(set, settings.defaultRestSeconds);
         final anyLeft = nextExerciseToDo(next, exerciseId) != null;
+        // W superserii przerwa przychodzi dopiero po rundzie (ADR 0018).
+        final inRound = supersetRoundContinues(next, exerciseId);
         next = next.copyWith(
-          restEndsAt: anyLeft && rest > Duration.zero ? now.add(rest) : null,
+          restEndsAt: anyLeft && !inRound && rest > Duration.zero
+              ? now.add(rest)
+              : null,
         );
         await _repo.save(next);
         await _syncRest(next, exerciseId);
@@ -172,6 +176,21 @@ final class WorkoutController {
 
   Future<void> removeExercise(String exerciseId) =>
       _mutate((s) => removeExerciseFromSession(s, exerciseId));
+
+  /// Łączy ćwiczenie z następnym w superserię (ADR 0018).
+  Future<void> linkWithNext(String exerciseId) => _mutate(
+    (s) => editing.linkExerciseWithNext(
+      s,
+      exerciseId,
+      _ref.read(idGeneratorProvider),
+    ),
+  );
+
+  /// Odłącza ćwiczenie od superserii.
+  Future<void> unlink(String exerciseId) => _mutate(
+    (s) =>
+        editing.unlinkExercise(s, exerciseId, _ref.read(idGeneratorProvider)),
+  );
 
   /// Przenosi ćwiczenie na docelowy indeks (semantyka `onReorderItem`).
   Future<void> moveExercise(int from, int to) =>

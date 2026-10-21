@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/routes.dart';
 import '../../../core/database/database_providers.dart';
+import '../../../core/domain/exercise_groups.dart';
 import '../../../core/domain/training.dart';
 import '../../../core/domain/units.dart';
 import '../../../core/l10n/formatters.dart';
@@ -14,6 +15,7 @@ import '../../../core/l10n/generated/app_localizations.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/theme/tokens.dart';
 import '../../../core/widgets/empty_state.dart';
+import '../../../core/widgets/superset_badge.dart';
 import '../../exercises/data/exercise_providers.dart';
 import '../../settings/data/settings_providers.dart';
 import '../../workout/data/workout_providers.dart';
@@ -248,6 +250,9 @@ class _Body extends ConsumerWidget {
       color: theme.colorScheme.onSurfaceVariant,
     );
 
+    final groups = groupLabels([
+      for (final e in sortedExercises(session)) e.groupId,
+    ]);
     return ListView(
       padding: const EdgeInsets.fromLTRB(
         AppSpacing.gutter,
@@ -309,12 +314,13 @@ class _Body extends ConsumerWidget {
               child: Text(text),
             ),
         ],
-        for (final exercise in sortedExercises(session))
+        for (final (i, exercise) in sortedExercises(session).indexed)
           Padding(
             padding: const EdgeInsets.only(top: AppSpacing.l),
             child: _ExerciseCard(
               session: session,
               exercise: exercise,
+              group: groups[i],
               name: l10n.exerciseName(exercise, catalog),
               editing: editing,
               unit: unit,
@@ -359,6 +365,7 @@ class _ExerciseCard extends ConsumerWidget {
   const _ExerciseCard({
     required this.session,
     required this.exercise,
+    required this.group,
     required this.name,
     required this.editing,
     required this.unit,
@@ -367,6 +374,9 @@ class _ExerciseCard extends ConsumerWidget {
 
   final WorkoutSession session;
   final SessionExercise exercise;
+
+  /// Oznaczenie w superserii (ADR 0018).
+  final GroupLabel? group;
   final String name;
   final bool editing;
   final WeightUnit unit;
@@ -399,7 +409,17 @@ class _ExerciseCard extends ConsumerWidget {
                 horizontal: AppSpacing.l,
                 vertical: AppSpacing.xs,
               ),
-              child: Text(name, style: theme.textTheme.titleMedium),
+              child: Row(
+                children: [
+                  if (group case final label?) ...[
+                    SupersetBadge(label),
+                    const SizedBox(width: AppSpacing.s),
+                  ],
+                  Expanded(
+                    child: Text(name, style: theme.textTheme.titleMedium),
+                  ),
+                ],
+              ),
             ),
             for (final set in sets)
               InkWell(

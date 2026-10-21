@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 
+import '../../../core/domain/exercise_groups.dart';
 import '../../../core/domain/ids.dart';
 import '../../../core/domain/training.dart';
 import '../../templates/domain/set_plan.dart';
@@ -50,6 +51,11 @@ final class OrderChanged extends TemplateChange {
   const OrderChanged();
 }
 
+/// Superserie treningu różnią się od szablonu (ADR 0018).
+final class SupersetsChanged extends TemplateChange {
+  const SupersetsChanged();
+}
+
 /// Zmiany, które zastosowanie treningu wprowadziłoby do [template].
 List<TemplateChange> diffSessionAgainstTemplate(
   Template template,
@@ -95,7 +101,31 @@ List<TemplateChange> diffSessionAgainstTemplate(
   for (final te in template.exercises.sortedBy<num>((e) => e.position)) {
     if (!kept.contains(te.id)) changes.add(ExerciseRemoved(te.exerciseId));
   }
+  if (!_sameSupersets(template, session)) {
+    changes.add(const SupersetsChanged());
+  }
   return changes;
+}
+
+/// Te same superserie: grupy ćwiczeń (po id ćwiczenia szablonu, a dla
+/// dodanych w treningu po id ćwiczenia sesji), bez względu na kolejność.
+bool _sameSupersets(Template template, WorkoutSession session) {
+  final templateList = template.exercises.sortedBy<num>((e) => e.position);
+  final sessionList = _usable(session).toList();
+  Set<Set<String>> groups(List<String?> groupIds, List<String> keys) => {
+    for (final group in exerciseGroups(groupIds))
+      {for (final i in group) keys[i]},
+  };
+  return const DeepCollectionEquality.unordered().equals(
+    groups(
+      [for (final te in templateList) te.groupId],
+      [for (final te in templateList) te.id],
+    ),
+    groups(
+      [for (final se in sessionList) se.groupId],
+      [for (final se in sessionList) se.templateExerciseId ?? se.id],
+    ),
+  );
 }
 
 /// Nowa wersja szablonu o strukturze treningu. Ćwiczenia szablonu zachowują
@@ -116,7 +146,11 @@ Template applySessionToTemplate(
     if (te != null) {
       exercises.add(
         withSetCount(
-          te.copyWith(exerciseId: se.exerciseId, position: position),
+          te.copyWith(
+            exerciseId: se.exerciseId,
+            position: position,
+            groupId: se.groupId,
+          ),
           se.sets.length,
           ids,
         ),
@@ -138,7 +172,16 @@ Template applySessionToTemplate(
       );
     }
   }
-  return template.copyWith(exercises: exercises);
+  // Superserie jak w treningu; ćwiczenie bez serii mogło rozdzielić grupę.
+  final groupIds = normalizeGroupIds([
+    for (final e in exercises) e.groupId,
+  ], newId: ids.newId);
+  return template.copyWith(
+    exercises: [
+      for (final (i, e) in exercises.indexed)
+        e.groupId == groupIds[i] ? e : e.copyWith(groupId: groupIds[i]),
+    ],
+  );
 }
 
 /// Ćwiczenia sesji z co najmniej jedną serią, w kolejności.

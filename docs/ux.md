@@ -178,3 +178,13 @@ Przy pierwszym w ogóle treningu dochodzą jednorazowe okna zgód: systemowa zgo
 - Podpowiedź serii roboczych ma już nowy ciężar i dolną granicę powtórzeń, więc zatwierdzenie to dalej jedno tapnięcie. Zmienić wartość można stepperem jak zawsze.
 - Czytnik ekranu odróżnia wartość z progresji („podpowiedź z progresji”).
 - Ustawienia → Trening: przełącznik „Automatyczna progresja” z opisem.
+
+## Superserie (ADR 0018)
+
+- **Szablon:** menu ⋮ na karcie ćwiczenia (obok uchwytu) ma „Połącz w superserię z następnym” i „Odłącz od superserii”. Ćwiczenia w grupie mają plakietkę „A1”, „A2”, którą czytnik ekranu czyta jako „Superseria A, ćwiczenie 1”.
+- **Trening:**
+  - te same akcje w menu ⋮;
+  - pod nazwą ćwiczenia jest plakietka, „Superseria A · razem z: Podciąganie” i ⓘ;
+  - po zatwierdzeniu serii A1 główny przycisk to „Dalej: Podciąganie”, a przerwa nie rusza. Po A2 rusza przerwa, a przycisk prowadzi z powrotem do A1;
+  - ręczne dotknięcie serii ma pierwszeństwo przed przyciskiem „Dalej”.
+- **Historia i plan:** plakietki A1/A2 w szczegółach treningu i w podglądzie szablonu.

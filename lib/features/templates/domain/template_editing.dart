@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 
+import '../../../core/domain/exercise_groups.dart';
 import '../../../core/domain/ids.dart';
 import '../../../core/domain/training.dart';
 import '../../exercises/domain/exercise.dart';
@@ -76,11 +77,14 @@ Template addExercises(
   );
 }
 
-/// Usuwa ćwiczenie o identyfikatorze [templateExerciseId].
+/// Usuwa ćwiczenie o identyfikatorze [templateExerciseId]. Superseria,
+/// która zostaje z jednym ćwiczeniem, się rozpada.
 Template removeExercise(Template template, String templateExerciseId) =>
     template.copyWith(
-      exercises: _renumber(
-        _sorted(template).where((e) => e.id != templateExerciseId).toList(),
+      exercises: _normalizeGroups(
+        _renumber(
+          _sorted(template).where((e) => e.id != templateExerciseId).toList(),
+        ),
       ),
     );
 
@@ -100,8 +104,58 @@ Template moveExercise(Template template, int from, int to) {
   RangeError.checkValidIndex(to, list, 'to');
   final moved = list.removeAt(from);
   list.insert(to, moved);
-  return template.copyWith(exercises: _renumber(list));
+  return template.copyWith(exercises: _normalizeGroups(_renumber(list)));
 }
+
+/// Łączy ćwiczenie [templateExerciseId] z następnym w superserię
+/// (ADR 0018).
+Template linkTemplateExerciseWithNext(
+  Template template,
+  String templateExerciseId,
+  IdGenerator ids,
+) => _changeGroups(
+  template,
+  templateExerciseId,
+  (groupIds, index) => linkWithNext(groupIds, index, ids.newId),
+);
+
+/// Odłącza ćwiczenie [templateExerciseId] od superserii.
+Template unlinkTemplateExercise(
+  Template template,
+  String templateExerciseId,
+  IdGenerator ids,
+) => _changeGroups(
+  template,
+  templateExerciseId,
+  (groupIds, index) => unlinkAt(groupIds, index, ids.newId),
+);
+
+Template _changeGroups(
+  Template template,
+  String templateExerciseId,
+  List<String?> Function(List<String?> groupIds, int index) change,
+) {
+  final list = _sorted(template);
+  final index = list.indexWhere((e) => e.id == templateExerciseId);
+  if (index < 0) return template;
+  return template.copyWith(
+    exercises: _withGroupIds(
+      list,
+      change([for (final e in list) e.groupId], index),
+    ),
+  );
+}
+
+List<TemplateExercise> _normalizeGroups(List<TemplateExercise> list) =>
+    _withGroupIds(list, normalizeGroupIds([for (final e in list) e.groupId]));
+
+List<TemplateExercise> _withGroupIds(
+  List<TemplateExercise> list,
+  List<String?> groupIds,
+) => [
+  for (final (i, e) in list.indexed)
+    e.groupId == groupIds[i] ? e : e.copyWith(groupId: groupIds[i]),
+];
 
 /// Kopia szablonu z nowymi identyfikatorami wszystkich rekordów. Grupy
 /// superserii zachowują powiązania pod nowymi identyfikatorami.

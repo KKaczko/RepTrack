@@ -694,5 +694,14 @@
   "glossaryDoubleProgressionTitle": "Double progression",
   "glossaryDoubleProgressionBody": "Add reps within the range (e.g. 8–12) at the same weight first. When every working set reaches the top of the range, add one weight step and go back to the bottom of the range. RepTrack does this in the suggestion: it adds one weight step from the settings when last time every working set reached the top of the range, or stayed in the range with plenty in reserve (RIR 3 or more, RPE 7 or less). You can always change the value before confirming.",
   "settingsAutoProgression": "Automatic progression",
-  "settingsAutoProgressionHint": "After you hit the top of the rep range, the suggestion adds one weight step"
+  "settingsAutoProgressionHint": "After you hit the top of the rep range, the suggestion adds one weight step",
+  "workoutSupersetLink": "Make a superset with the next one",
+  "workoutSupersetUnlink": "Remove from superset",
+  "workoutSupersetWith": "Superset {letter} · with: {names}",
+  "workoutSupersetNext": "Next: {name}",
+  "supersetBadgeSemantics": "Superset {letter}, exercise {number}",
+  "templateExerciseMenu": "Options: {name}",
+  "glossarySupersetTitle": "Superset",
+  "glossarySupersetBody": "Two or more exercises done back to back without rest: a set of A1, straight into a set of A2, then rest and the next round. It saves time, especially for exercises that train different muscles. During a workout the “Next” button takes you to the next exercise of the group, and the rest timer starts after the whole round.",
+  "changeSupersets": "Changed supersets"
 }

@@ -9,7 +9,6 @@ Funkcje spoza MVP. Nie implementujemy ich bez decyzji właściciela.
 - Funkcje społecznościowe i udostępnianie
 - Wear OS, widżety, Health Connect
 - AI-coach i automatyczne generowanie planów
-- Interfejs do superserii (`group_id` jest w schemacie od początku)
 - Zdjęcia i animacje ćwiczeń (`image_ref` jest w schemacie)
 - Płatności i subskrypcje
 - Wersja na iOS
@@ -22,7 +21,6 @@ Funkcje spoza MVP. Nie implementujemy ich bez decyzji właściciela.
 - Osobne kroki ciężaru dla sprzętu (hantle, maszyny) w progresji i stepperach — ADR 0017.
 - Zmniejszanie ciężaru (deload) po kilku nieudanych treningach — ADR 0017.
 - Wybór zakresu na wykresach (obecnie 12 ostatnich tygodni i treningów) oraz wykres masy ciała.
-- Superserie w aktywnym treningu (`group_id` jest w schemacie, brak UI).
 - Przypomnienie o niezatwierdzonych seriach przed zakończeniem treningu (obecnie tylko informacja na podsumowaniu).
 
 ## Wynikłe z planu Etapu 0

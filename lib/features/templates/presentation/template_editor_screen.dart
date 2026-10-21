@@ -6,9 +6,11 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/routes.dart';
 import '../../../core/database/database_providers.dart';
+import '../../../core/domain/exercise_groups.dart';
 import '../../../core/domain/units.dart';
 import '../../../core/l10n/generated/app_localizations.dart';
 import '../../../core/theme/tokens.dart';
+import '../../../core/widgets/superset_badge.dart';
 import '../../exercises/data/exercise_providers.dart';
 import '../../exercises/domain/exercise.dart';
 import '../../settings/data/settings_providers.dart';
@@ -219,6 +221,7 @@ class _TemplateEditorScreenState extends ConsumerState<TemplateEditorScreen> {
     final locale = Localizations.localeOf(context).toString();
     final exercises = _draft.exercises;
 
+    final groups = groupLabels([for (final e in exercises) e.groupId]);
     return ReorderableListView.builder(
       buildDefaultDragHandles: false,
       padding: const EdgeInsets.fromLTRB(
@@ -289,6 +292,7 @@ class _TemplateEditorScreenState extends ConsumerState<TemplateEditorScreen> {
           setState(() => _draft = moveExercise(_draft, from, to)),
       itemBuilder: (context, index) {
         final item = exercises[index];
+        final group = groups[index];
         final info = byId[item.exerciseId];
         final name = info == null
             ? '…'
@@ -305,19 +309,53 @@ class _TemplateEditorScreenState extends ConsumerState<TemplateEditorScreen> {
                 left: AppSpacing.l,
                 right: AppSpacing.xs,
               ),
+              leading: group == null ? null : SupersetBadge(group),
               title: Text(name),
               subtitle: Text(l10n.templateExerciseSummary(item, unit, locale)),
               onTap: () => _editExercise(item, info),
-              trailing: ReorderableDragStartListener(
-                index: index,
-                child: Semantics(
-                  label: l10n.templateDragHandle(name),
-                  child: const SizedBox(
-                    width: AppSizes.minTouch,
-                    height: AppSizes.minTouch,
-                    child: Icon(Icons.drag_handle_rounded),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (exercises.length > 1)
+                    PopupMenuButton<bool>(
+                      tooltip: l10n.templateExerciseMenu(name),
+                      onSelected: (link) {
+                        final ids = ref.read(idGeneratorProvider);
+                        setState(
+                          () => _draft = link
+                              ? linkTemplateExerciseWithNext(
+                                  _draft,
+                                  item.id,
+                                  ids,
+                                )
+                              : unlinkTemplateExercise(_draft, item.id, ids),
+                        );
+                      },
+                      itemBuilder: (context) => [
+                        if (index < exercises.length - 1)
+                          PopupMenuItem(
+                            value: true,
+                            child: Text(l10n.workoutSupersetLink),
+                          ),
+                        if (item.groupId != null)
+                          PopupMenuItem(
+                            value: false,
+                            child: Text(l10n.workoutSupersetUnlink),
+                          ),
+                      ],
+                    ),
+                  ReorderableDragStartListener(
+                    index: index,
+                    child: Semantics(
+                      label: l10n.templateDragHandle(name),
+                      child: const SizedBox(
+                        width: AppSizes.minTouch,
+                        height: AppSizes.minTouch,
+                        child: Icon(Icons.drag_handle_rounded),
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
           ),

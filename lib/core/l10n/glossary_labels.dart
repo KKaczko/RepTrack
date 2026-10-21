@@ -27,6 +27,7 @@ extension GlossaryLabels on AppLocalizations {
     GlossaryTerm.setsPerMuscle => glossarySetsPerMuscleTitle,
     GlossaryTerm.periodChange => glossaryPeriodChangeTitle,
     GlossaryTerm.progressiveOverload => glossaryOverloadTitle,
+    GlossaryTerm.superset => glossarySupersetTitle,
     GlossaryTerm.doubleProgression => glossaryDoubleProgressionTitle,
   };
 
@@ -47,6 +48,7 @@ extension GlossaryLabels on AppLocalizations {
     GlossaryTerm.setsPerMuscle => glossarySetsPerMuscleBody,
     GlossaryTerm.periodChange => glossaryPeriodChangeBody,
     GlossaryTerm.progressiveOverload => glossaryOverloadBody,
+    GlossaryTerm.superset => glossarySupersetBody,
     GlossaryTerm.doubleProgression => glossaryDoubleProgressionBody,
   };
 }

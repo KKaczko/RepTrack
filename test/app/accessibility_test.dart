@@ -34,7 +34,15 @@ Future<AppDatabase> _launch(
     for (final e in catalog.values) {
       await DriftExerciseRepository(db, testClock()).save(e);
     }
-    await DriftTemplateRepository(db, testClock()).save(pushTemplate());
+    // Ławka i podciąganie w superserii: nagłówek z plakietką (ADR 0018).
+    final template = pushTemplate();
+    await DriftTemplateRepository(db, testClock()).save(
+      template.copyWith(
+        exercises: [
+          for (final e in template.exercises) e.copyWith(groupId: 'g'),
+        ],
+      ),
+    );
     await DriftWorkoutRepository(db, testClock()).save(
       // 3 × 12: w treningu widać etykietę progresji (ADR 0017).
       finishedPush('a', DateTime.utc(2026, 10, 12, 16), [

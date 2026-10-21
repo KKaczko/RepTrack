@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:collection/collection.dart';
 
+import '../../../core/domain/exercise_groups.dart';
 import '../../../core/domain/training.dart';
 import '../../exercises/domain/exercise.dart';
 import 'workout_session.dart';
@@ -285,4 +286,38 @@ SessionExercise? nextExerciseToDo(
     if (nextOpenSet(exercise) != null) return exercise;
   }
   return null;
+}
+
+/// Ćwiczenie superserii, które ma teraz kolej (ADR 0018): z grupy
+/// ćwiczenia [exerciseId] to z najmniejszą liczbą zatwierdzonych serii
+/// spośród mających niezatwierdzone serie, przy remisie wcześniejsze. Null,
+/// gdy ćwiczenie nie jest w superserii albo cała grupa jest zrobiona.
+SessionExercise? supersetTurn(WorkoutSession session, String exerciseId) {
+  final list = session.exercises.sortedBy<num>((e) => e.position);
+  final index = list.indexWhere((e) => e.id == exerciseId);
+  if (index < 0) return null;
+  final group = exerciseGroups([for (final e in list) e.groupId])
+      .firstWhereOrNull((g) => g.contains(index));
+  if (group == null) return null;
+  SessionExercise? turn;
+  int? fewest;
+  for (final i in group) {
+    final exercise = list[i];
+    if (nextOpenSet(exercise) == null) continue;
+    final done = exercise.sets.where((s) => s.isCompleted).length;
+    if (fewest == null || done < fewest) {
+      turn = exercise;
+      fewest = done;
+    }
+  }
+  return turn;
+}
+
+/// Runda superserii trwa: kolej ma późniejsze ćwiczenie grupy niż
+/// [exerciseId], więc po zatwierdzeniu serii nie ma przerwy. Przerwa
+/// przychodzi, gdy kolej wraca na początek grupy albo grupa jest zrobiona.
+bool supersetRoundContinues(WorkoutSession session, String exerciseId) {
+  final turn = supersetTurn(session, exerciseId);
+  final current = session.exercises.firstWhereOrNull((e) => e.id == exerciseId);
+  return turn != null && current != null && turn.position > current.position;
 }

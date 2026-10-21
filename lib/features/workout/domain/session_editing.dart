@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 
+import '../../../core/domain/exercise_groups.dart';
 import '../../../core/domain/ids.dart';
 import '../../../core/domain/training.dart';
 import '../../exercises/domain/exercise.dart';
@@ -95,13 +96,16 @@ WorkoutSession addExercisesToSession(
   );
 }
 
-/// Usuwa ćwiczenie z sesji wraz z jego seriami.
+/// Usuwa ćwiczenie z sesji wraz z jego seriami. Superseria, która zostaje
+/// z jednym ćwiczeniem, się rozpada.
 WorkoutSession removeExerciseFromSession(
   WorkoutSession session,
   String exerciseId,
 ) => session.copyWith(
-  exercises: _renumberExercises(
-    sortedExercises(session).where((e) => e.id != exerciseId).toList(),
+  exercises: _normalizeGroups(
+    _renumberExercises(
+      sortedExercises(session).where((e) => e.id != exerciseId).toList(),
+    ),
   ),
 );
 
@@ -146,8 +150,60 @@ WorkoutSession moveExerciseInSession(WorkoutSession session, int from, int to) {
   RangeError.checkValidIndex(to, list, 'to');
   final moved = list.removeAt(from);
   list.insert(to, moved);
-  return session.copyWith(exercises: _renumberExercises(list));
+  return session.copyWith(
+    exercises: _normalizeGroups(_renumberExercises(list)),
+  );
 }
+
+/// Łączy ćwiczenie [exerciseId] z następnym w superserię (ADR 0018).
+WorkoutSession linkExerciseWithNext(
+  WorkoutSession session,
+  String exerciseId,
+  IdGenerator ids,
+) => _changeGroups(
+  session,
+  (groupIds, index) => linkWithNext(groupIds, index, ids.newId),
+  exerciseId,
+);
+
+/// Odłącza ćwiczenie [exerciseId] od superserii.
+WorkoutSession unlinkExercise(
+  WorkoutSession session,
+  String exerciseId,
+  IdGenerator ids,
+) => _changeGroups(
+  session,
+  (groupIds, index) => unlinkAt(groupIds, index, ids.newId),
+  exerciseId,
+);
+
+WorkoutSession _changeGroups(
+  WorkoutSession session,
+  List<String?> Function(List<String?> groupIds, int index) change,
+  String exerciseId,
+) {
+  final list = sortedExercises(session);
+  final index = list.indexWhere((e) => e.id == exerciseId);
+  if (index < 0) return session;
+  return session.copyWith(
+    exercises: _withGroupIds(
+      list,
+      change([for (final e in list) e.groupId], index),
+    ),
+  );
+}
+
+/// Grupy po zmianie kolejności albo usunięciu: niespójna rozpada się.
+List<SessionExercise> _normalizeGroups(List<SessionExercise> list) =>
+    _withGroupIds(list, normalizeGroupIds([for (final e in list) e.groupId]));
+
+List<SessionExercise> _withGroupIds(
+  List<SessionExercise> list,
+  List<String?> groupIds,
+) => [
+  for (final (i, e) in list.indexed)
+    e.groupId == groupIds[i] ? e : e.copyWith(groupId: groupIds[i]),
+];
 
 List<SessionSet> _renumberSets(List<SessionSet> sets) => [
   for (final (i, s) in sets.indexed)

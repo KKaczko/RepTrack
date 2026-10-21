@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/routes.dart';
 import '../../../core/database/database_providers.dart';
+import '../../../core/domain/exercise_groups.dart';
 import '../../../core/domain/units.dart';
 import '../../../core/l10n/formatters.dart';
 import '../../../core/l10n/generated/app_localizations.dart';
@@ -37,7 +38,16 @@ import 'workout_labels.dart';
 /// żeby przypadkowe podwójne tapnięcie nie zatwierdziło dwóch serii.
 const _confirmCooldown = Duration(milliseconds: 350);
 
-enum _MenuAction { addExercises, replace, remove, reorder, finish, discard }
+enum _MenuAction {
+  addExercises,
+  replace,
+  remove,
+  reorder,
+  link,
+  unlink,
+  finish,
+  discard,
+}
 
 /// Aktywny trening (spec. 5.3, docs/ux.md): strona na ćwiczenie, tabela
 /// serii z podpowiedziami i strefa kciuka z głównym przyciskiem.
@@ -185,6 +195,16 @@ class _WorkoutScreenState extends ConsumerState<WorkoutScreen> {
                     value: _MenuAction.reorder,
                     child: Text(l10n.workoutReorder),
                   ),
+                if (exercises.isNotEmpty && index < exercises.length - 1)
+                  PopupMenuItem(
+                    value: _MenuAction.link,
+                    child: Text(l10n.workoutSupersetLink),
+                  ),
+                if (exercises.isNotEmpty && exercises[index].groupId != null)
+                  PopupMenuItem(
+                    value: _MenuAction.unlink,
+                    child: Text(l10n.workoutSupersetUnlink),
+                  ),
                 const PopupMenuDivider(),
                 PopupMenuItem(
                   value: _MenuAction.finish,
@@ -249,10 +269,21 @@ class _WorkoutScreenState extends ConsumerState<WorkoutScreen> {
     int index,
   ) {
     final exercise = exercises[index];
+    final labels = groupLabels([for (final e in exercises) e.groupId]);
     return ExercisePage(
       key: ValueKey(exercise.id),
       sessionId: session.id,
       exercise: exercise,
+      superset: labels[index] == null
+          ? null
+          : (
+              label: labels[index]!,
+              partners: [
+                for (final (i, e) in exercises.indexed)
+                  if (i != index && labels[i]?.letter == labels[index]!.letter)
+                    e.exerciseNameSnapshot,
+              ],
+            ),
       index: index,
       total: exercises.length,
       selectedSetId: _selectedSetId(exercise),
@@ -315,6 +346,19 @@ class _WorkoutScreenState extends ConsumerState<WorkoutScreen> {
     required bool loaded,
   }) {
     final l10n = AppLocalizations.of(context);
+    // Superseria (ADR 0018): gdy kolej ma inne ćwiczenie grupy, a serii nie
+    // wybrano ręcznie, główny przycisk prowadzi do niego.
+    final turn = supersetTurn(session, exercise.id);
+    if (turn != null &&
+        turn.id != exercise.id &&
+        (set == null || !set.isCompleted) &&
+        _selected[exercise.id] == null) {
+      return PrimaryAction(
+        label: l10n.workoutSupersetNext(turn.exerciseNameSnapshot),
+        icon: Icons.arrow_forward_rounded,
+        onPressed: () => _goToIndex(_exercises.indexOf(turn)),
+      );
+    }
     if (set != null && !set.isCompleted) {
       return PrimaryAction(
         label: l10n.workoutConfirmSet(set.position + 1),
@@ -519,6 +563,10 @@ class _WorkoutScreenState extends ConsumerState<WorkoutScreen> {
           isScrollControlled: true,
           builder: (context) => _ReorderSheet(exercises: _exercises),
         );
+      case _MenuAction.link:
+        if (current != null) await _controller.linkWithNext(current.id);
+      case _MenuAction.unlink:
+        if (current != null) await _controller.unlink(current.id);
       case _MenuAction.finish:
         _openFinish();
       case _MenuAction.discard:

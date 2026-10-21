@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/domain/exercise_groups.dart';
 import '../../../core/domain/glossary.dart';
 import '../../../core/domain/training.dart';
 import '../../../core/domain/units.dart';
@@ -8,6 +9,7 @@ import '../../../core/l10n/formatters.dart';
 import '../../../core/l10n/generated/app_localizations.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/theme/tokens.dart';
+import '../../../core/widgets/superset_badge.dart';
 import '../../../core/widgets/term_info.dart';
 import '../../exercises/domain/exercise.dart';
 import '../../settings/data/settings_providers.dart';
@@ -74,8 +76,12 @@ class ExercisePage extends ConsumerWidget {
     required this.onAddSet,
     required this.onPage,
     required this.onSubstitute,
+    this.superset,
     super.key,
   });
+
+  /// Oznaczenie w superserii i pozostałe ćwiczenia grupy (ADR 0018).
+  final ({GroupLabel label, List<String> partners})? superset;
 
   final String sessionId;
   final SessionExercise exercise;
@@ -139,6 +145,26 @@ class ExercisePage extends ConsumerWidget {
                         exercise.exerciseNameSnapshot,
                         style: theme.textTheme.titleLarge,
                       ),
+                      if (superset case (:final label, :final partners))
+                        Padding(
+                          padding: const EdgeInsets.only(top: AppSpacing.xs),
+                          child: Row(
+                            children: [
+                              SupersetBadge(label),
+                              const SizedBox(width: AppSpacing.s),
+                              Flexible(
+                                child: Text(
+                                  l10n.workoutSupersetWith(
+                                    label.letter,
+                                    partners.join(', '),
+                                  ),
+                                  style: secondary,
+                                ),
+                              ),
+                              const TermInfoButton([GlossaryTerm.superset]),
+                            ],
+                          ),
+                        ),
                       Text(
                         l10n.sessionExercisePlan(exercise),
                         style: secondary,

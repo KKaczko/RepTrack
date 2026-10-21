@@ -256,6 +256,7 @@ class _FinishWorkoutScreenState extends ConsumerState<FinishWorkoutScreen> {
       to,
     ),
     OrderChanged() => l10n.changeOrder,
+    SupersetsChanged() => l10n.changeSupersets,
   };
 }
 

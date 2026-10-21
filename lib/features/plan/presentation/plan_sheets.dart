@@ -6,10 +6,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/routes.dart';
+import '../../../core/domain/exercise_groups.dart';
 import '../../../core/domain/units.dart';
 import '../../../core/l10n/formatters.dart';
 import '../../../core/l10n/generated/app_localizations.dart';
 import '../../../core/theme/tokens.dart';
+import '../../../core/widgets/superset_badge.dart';
 import '../../exercises/domain/exercise.dart';
 import '../../settings/data/settings_providers.dart';
 import '../../templates/domain/set_plan.dart';
@@ -115,6 +117,7 @@ class _TemplatePreview extends ConsumerWidget {
     final unit =
         ref.watch(appSettingsProvider).value?.weightUnit ?? WeightUnit.kg;
     final exercises = template.exercises.sortedBy<num>((e) => e.position);
+    final groups = groupLabels([for (final e in exercises) e.groupId]);
     return SafeArea(
       child: ConstrainedBox(
         constraints: BoxConstraints(
@@ -140,15 +143,26 @@ class _TemplatePreview extends ConsumerWidget {
               ),
             ],
             const SizedBox(height: AppSpacing.m),
-            for (final exercise in exercises)
+            for (final (i, exercise) in exercises.indexed)
               Padding(
                 padding: const EdgeInsets.only(bottom: AppSpacing.m),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      catalog[exercise.exerciseId]?.name ?? exercise.exerciseId,
-                      style: theme.textTheme.titleSmall,
+                    Row(
+                      children: [
+                        if (groups[i] case final label?) ...[
+                          SupersetBadge(label),
+                          const SizedBox(width: AppSpacing.s),
+                        ],
+                        Expanded(
+                          child: Text(
+                            catalog[exercise.exerciseId]?.name ??
+                                exercise.exerciseId,
+                            style: theme.textTheme.titleSmall,
+                          ),
+                        ),
+                      ],
                     ),
                     Text(
                       _sets(exercise, unit, locale),

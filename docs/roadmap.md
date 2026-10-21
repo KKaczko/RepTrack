@@ -316,3 +316,15 @@ Zewnętrzny przegląd zgłosił 11 problemów; wszystkie potwierdziłem w kodzie
   - ekran: podpowiedź 82,5 kg × 8 zatwierdzana jednym tapnięciem;
   - wyłączone ustawienie;
   - dostępność przy czcionce 2× z etykietą progresji.- **Sprawdzone na emulatorze:** po treningu z 3 × 12 przy 50 kg (wyciskanie na maszynie) kolejny Push A ma etykietę „+2,5 kg · ostatnio 3 × 12 przy 50 kg”, podpowiedzi 52,5 × 8 i ⓘ z hasłem „Progresja podwójna”.
+
+### Po wydaniu: superserie (2026-10-21)
+
+- Interfejs do istniejącego `group_id` ([ADR 0018](decisions/0018-superserie.md)), bez zmian schematu i backupu.
+- **Testy:**
+  - domena grup (łączenie, scalanie, dzielenie, rozpad po zmianie kolejności);
+  - kolej i przerwa po rundzie (także przy nierównej liczbie serii);
+  - edycja w szablonie i w treningu;
+  - „zaktualizuj szablon” przenosi superserie;
+  - ekran (trening, edytor, menu treningu) i dostępność z superserią w danych testowych.
+- **Wychwycone przy pisaniu:** „Zaktualizuj szablon” brał grupy ze starego szablonu, więc superseria utworzona w treningu by przepadła. Teraz grupy idą z treningu, a podsumowanie pokazuje „Zmienione superserie”.
+- **Sprawdzone na emulatorze:** w trwającym treningu „Połącz w superserię z następnym” daje plakietki A1/A2 i nagłówek „Superseria A · razem z: …”. Po A1 nie ma przerwy i jest „Dalej: …”; po A2 rusza przerwa 2:00 i przycisk wraca do A1.

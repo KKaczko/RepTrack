@@ -68,7 +68,7 @@ Klucze `settings`: `theme_mode`, `weight_unit`, `weight_step`, `effort_scale` (`
 
 - `template_id` FK, `exercise_id` FK, `position`
 - `target_kind` (reps / duration), `target_min NULL`, `target_max NULL`
-- `target_weight_g NULL`, `rest_seconds NULL`, `default_set_type` (domyślnie working), `note NULL`, `group_id NULL` (superserie)
+- `target_weight_g NULL`, `rest_seconds NULL`, `default_set_type` (domyślnie working), `note NULL`, `group_id NULL` (superserie: kolejne ćwiczenia z tym samym `group_id`, [ADR 0018](decisions/0018-superserie.md))
 - **Liczby serii nie przechowujemy.** To liczba wierszy `template_sets`, więc licznik nie rozjedzie się z wierszami ([ADR 0004](decisions/0004-dziedziczenie-serii.md)).
 
 ## `template_sets`

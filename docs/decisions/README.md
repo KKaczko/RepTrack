@@ -21,6 +21,7 @@ Decyzje łatwo odwracalne agent podejmuje sam i zapisuje tutaj. Decyzje trudno o
 | [0015](0015-plan-treningow.md) | Plan treningów i kalendarz ⚠ | po wydaniu 1.0.0 |
 | [0016](0016-zamienniki-cwiczen.md) | Ćwiczenia zastępcze i kroki stepperów ⚠ | po wydaniu 1.0.0 |
 | [0017](0017-progresja-podwojna.md) | Automatyczna progresja podwójna | po wydaniu 1.0.0 |
+| [0018](0018-superserie.md) | Superserie | po wydaniu 1.0.0 |
 
 ## Szablon
 
